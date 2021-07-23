@@ -1,0 +1,5 @@
+.error-alert {
+  @at-root #{&}__container {
+    margin: 20px 0;
+  }
+}
