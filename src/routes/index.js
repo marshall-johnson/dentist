@@ -7,9 +7,9 @@ import LoginContainer from '@/containers/LoginContainer';
 import ProfileContainer from '@/containers/ProfileContainer';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import DashboardContainer from '@/containers/DashboardContainer';
-import StudentsScheduleContainer from '@/containers/students/ScheduleContainer';
-import StudentsSubmitDataContainer from '@/containers/students/SubmitDataContainer';
-import StudentsPurchaseItemsContainer from '@/containers/students/PurchaseItemsContainer';
+import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
+import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
+import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
 import ReportContainer from '@/containers/ReportContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
 
