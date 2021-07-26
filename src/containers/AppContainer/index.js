@@ -11,6 +11,7 @@ import {
 
 import Routes from '@/routes';
 import { clearErrors } from '@/actions/errorActions';
+import logoImage from '@/assets/images/logo.png';
 
 import '@/styles/index.scss';
 import './index.scss';
@@ -49,7 +50,9 @@ class AppContainer extends Component {
       <div className="app-container">
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-            <div className="logo" />
+            <div className="logo">
+              <img src={logoImage} alt="logo" />
+            </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="1" icon={<DesktopOutlined />}>
                 <Link to="/dashboard">Dashboard</Link>
