@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import AppConfig from '@/constants/AppConfig';
 import PrivateRoute from '@/routes/PrivateRoute';
 import HomeContainer from '@/containers/HomeContainer';
 import LoginContainer from '@/containers/LoginContainer';
@@ -12,6 +13,7 @@ import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContain
 import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
 import ReportContainer from '@/containers/ReportContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
+import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 
 function Routes() {
   return (
@@ -59,6 +61,11 @@ function Routes() {
         exact
         path='/coaching'
         component={CoachingContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.DENTISTRY}/:step`}
+        component={DensitySubmitDataContainer}
       />
       <Route
         path='*'
