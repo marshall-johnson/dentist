@@ -11,7 +11,7 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 
-class Collections extends Component {
+class CollectionsStep extends Component {
   render() {
     return (
       <>
@@ -78,7 +78,7 @@ class Collections extends Component {
                 Back
               </Button>
               <Button
-                // href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`}
+                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`}
                 type="primary"
               >
                 Next
@@ -91,4 +91,4 @@ class Collections extends Component {
   }
 }
 
-export default Collections;
+export default CollectionsStep;

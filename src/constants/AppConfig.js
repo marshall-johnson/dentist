@@ -4,7 +4,7 @@ const AppConfig = {
     HYGEINIST_PRODUCTION: 'hygeinist-production',
     COLLECTIONS: 'collections',
     PATIENT_ACTIVITY: 'patient-activity',
-    STAFF_COMPESATION: 'staff-compensation',
+    STAFF_COMPENSATION: 'staff-compensation',
     OCCUPANY_AND_H_P: 'occupany-and-human-physical',
     SUPPLIES_MARKETING: 'supplies-marketing',
     LABORTORY_DOCTORS: 'labortory-doctors',
