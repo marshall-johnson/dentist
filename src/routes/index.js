@@ -5,15 +5,16 @@ import AppConfig from '@/constants/AppConfig';
 import PrivateRoute from '@/routes/PrivateRoute';
 import HomeContainer from '@/containers/HomeContainer';
 import LoginContainer from '@/containers/LoginContainer';
+import ReportContainer from '@/containers/ReportContainer';
 import ProfileContainer from '@/containers/ProfileContainer';
 import NotFoundContainer from '@/containers/NotFoundContainer';
+import CoachingContainer from '@/containers/CoachingContainer';
 import DashboardContainer from '@/containers/DashboardContainer';
+import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
+import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
 import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
-import ReportContainer from '@/containers/ReportContainer';
-import CoachingContainer from '@/containers/CoachingContainer';
-import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 
 function Routes() {
   return (
@@ -66,6 +67,11 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.DENTISTRY}/:step`}
         component={DensitySubmitDataContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ORTHO}/:step`}
+        component={OrthoSubmitDataContainer}
       />
       <Route
         path='*'
