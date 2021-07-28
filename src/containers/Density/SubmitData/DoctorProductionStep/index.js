@@ -132,6 +132,7 @@ class DoctorProductionStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
+                href={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}
               >
                 Back
               </Button>

@@ -11,6 +11,7 @@ import {
 
 import Routes from '@/routes';
 import { clearErrors } from '@/actions/errorActions';
+import AppConfig from '@/constants/AppConfig';
 import logoImage from '@/assets/images/logo.png';
 
 import '@/styles/index.scss';
@@ -55,24 +56,24 @@ class AppContainer extends Component {
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="1" icon={<DesktopOutlined />}>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to={`${AppConfig.ROUTES.DASHBOARD}`}>Dashboard</Link>
               </Menu.Item>
               <SubMenu key="sub1" icon={<UserOutlined />} title="Students">
                 <Menu.Item key="2">
-                  <Link to="/students/schedule">Schedule</Link>
+                  <Link to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}`}>Schedule</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
-                  <Link to="/students/submit-data">Submit Data</Link>
+                  <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>Submit Data</Link>
                 </Menu.Item>
                 <Menu.Item key="4">
-                  <Link to="/students/purchase-items">Purchase Items</Link>
+                  <Link to={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}>Purchase Items</Link>
                 </Menu.Item>
               </SubMenu>
               <Menu.Item key="5" icon={<PieChartOutlined />}>
-                <Link to="/report">Reporting</Link>
+                <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
               </Menu.Item>
               <Menu.Item key="6" icon={<UserOutlined />}>
-                <Link to="/coaching">Coaching</Link>
+                <Link to={`${AppConfig.ROUTES.COACHING}`}>Coaching</Link>
               </Menu.Item>
             </Menu>
           </Sider>

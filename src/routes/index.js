@@ -2,11 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import AppConfig from '@/constants/AppConfig';
-import PrivateRoute from '@/routes/PrivateRoute';
-import HomeContainer from '@/containers/HomeContainer';
-import LoginContainer from '@/containers/LoginContainer';
 import ReportContainer from '@/containers/ReportContainer';
-import ProfileContainer from '@/containers/ProfileContainer';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
 import DashboardContainer from '@/containers/DashboardContainer';
@@ -20,47 +16,38 @@ function Routes() {
   return (
     <Switch>
       <Route
-        path='/login'
-        component={LoginContainer}
-      />
-      <Route
         exact
         path='/'
-        component={HomeContainer}
-      />
-      <PrivateRoute
-        exact
-        path='/me'
-        component={ProfileContainer}
-      />
-      <Route
-        exact
-        path='/dashboard'
         component={DashboardContainer}
       />
       <Route
         exact
-        path='/students/schedule'
+        path={`${AppConfig.ROUTES.DASHBOARD}`}
+        component={DashboardContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}`}
         component={StudentsScheduleContainer}
       />
       <Route
         exact
-        path='/students/submit-data'
+        path={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}
         component={StudentsSubmitDataContainer}
       />
       <Route
         exact
-        path='/students/purchase-items'
+        path={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}
         component={StudentsPurchaseItemsContainer}
       />
       <Route
         exact
-        path='/report'
+        path={`${AppConfig.ROUTES.REPORT}`}
         component={ReportContainer}
       />
       <Route
         exact
-        path='/coaching'
+        path={`${AppConfig.ROUTES.COACHING}`}
         component={CoachingContainer}
       />
       <Route
