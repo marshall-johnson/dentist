@@ -2,6 +2,9 @@
   "name": "antd-react-starter",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=14.15.4"
+  },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@craco/craco": "^6.2.0",
