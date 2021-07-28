@@ -21,7 +21,7 @@ class DoctorProductionStep extends Component {
       <>
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Ortho Submit Data"
           subTitle="Doctor Production"
         />
 
@@ -29,7 +29,7 @@ class DoctorProductionStep extends Component {
 
         <Form
           labelCol={{
-            span: 5,
+            span: 7,
           }}
           layout="horizontal"
         >
@@ -44,7 +44,7 @@ class DoctorProductionStep extends Component {
               <Form.Item label="Dr. Production">
                 <Input />
               </Form.Item>
-              <Form.Item label="Discounts">
+              <Form.Item label="Production Adj">
                 <Input />
               </Form.Item>
               <Form.Item label="Net Production">
@@ -53,16 +53,19 @@ class DoctorProductionStep extends Component {
               <Form.Item label="Hours Available">
                 <Input />
               </Form.Item>
-              <Form.Item label="Hours Scheduled">
+              <Form.Item label="Hours Schedule w/ Pts">
                 <Input />
               </Form.Item>
-              <Form.Item label="Hours Cancelled">
+              <Form.Item label="# of Start Appts Available">
                 <Input />
               </Form.Item>
-              <Form.Item label="Hours Recoverd">
+              <Form.Item label="# of Start Appts Available">
                 <Input />
               </Form.Item>
               <Form.Item label="# of Patient Visits">
+                <Input />
+              </Form.Item>
+              <Form.Item label="# of Appt Changes">
                 <Input />
               </Form.Item>
             </Col>
@@ -80,7 +83,7 @@ class DoctorProductionStep extends Component {
                       <Form.Item label="Dr. Production">
                         <Input />
                       </Form.Item>
-                      <Form.Item label="Discounts">
+                      <Form.Item label="Production Adj">
                         <Input />
                       </Form.Item>
                       <Form.Item label="Net Production">
@@ -89,16 +92,19 @@ class DoctorProductionStep extends Component {
                       <Form.Item label="Hours Available">
                         <Input />
                       </Form.Item>
-                      <Form.Item label="Hours Scheduled">
+                      <Form.Item label="Hours Schedule w/ Pts">
                         <Input />
                       </Form.Item>
-                      <Form.Item label="Hours Cancelled">
+                      <Form.Item label="# of Start Appts Available">
                         <Input />
                       </Form.Item>
-                      <Form.Item label="Hours Recoverd">
+                      <Form.Item label="# of Start Appts Available">
                         <Input />
                       </Form.Item>
                       <Form.Item label="# of Patient Visits">
+                        <Input />
+                      </Form.Item>
+                      <Form.Item label="# of Appt Changes">
                         <Input />
                       </Form.Item>
                       <Form.Item
@@ -137,7 +143,7 @@ class DoctorProductionStep extends Component {
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`}
+                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.COLLECTIONS}`}
                 type="primary"
               >
                 Next

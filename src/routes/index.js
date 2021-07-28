@@ -2,70 +2,63 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import AppConfig from '@/constants/AppConfig';
-import PrivateRoute from '@/routes/PrivateRoute';
-import HomeContainer from '@/containers/HomeContainer';
-import LoginContainer from '@/containers/LoginContainer';
-import ProfileContainer from '@/containers/ProfileContainer';
+import ReportContainer from '@/containers/ReportContainer';
 import NotFoundContainer from '@/containers/NotFoundContainer';
+import CoachingContainer from '@/containers/CoachingContainer';
 import DashboardContainer from '@/containers/DashboardContainer';
+import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
+import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
 import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
-import ReportContainer from '@/containers/ReportContainer';
-import CoachingContainer from '@/containers/CoachingContainer';
-import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 
 function Routes() {
   return (
     <Switch>
       <Route
-        path='/login'
-        component={LoginContainer}
-      />
-      <Route
         exact
         path='/'
-        component={HomeContainer}
-      />
-      <PrivateRoute
-        exact
-        path='/me'
-        component={ProfileContainer}
-      />
-      <Route
-        exact
-        path='/dashboard'
         component={DashboardContainer}
       />
       <Route
         exact
-        path='/students/schedule'
+        path={`${AppConfig.ROUTES.DASHBOARD}`}
+        component={DashboardContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}`}
         component={StudentsScheduleContainer}
       />
       <Route
         exact
-        path='/students/submit-data'
+        path={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}
         component={StudentsSubmitDataContainer}
       />
       <Route
         exact
-        path='/students/purchase-items'
+        path={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}
         component={StudentsPurchaseItemsContainer}
       />
       <Route
         exact
-        path='/report'
+        path={`${AppConfig.ROUTES.REPORT}`}
         component={ReportContainer}
       />
       <Route
         exact
-        path='/coaching'
+        path={`${AppConfig.ROUTES.COACHING}`}
         component={CoachingContainer}
       />
       <Route
         exact
         path={`${AppConfig.ROUTES.DENTISTRY}/:step`}
         component={DensitySubmitDataContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ORTHO}/:step`}
+        component={OrthoSubmitDataContainer}
       />
       <Route
         path='*'
