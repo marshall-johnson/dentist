@@ -23,7 +23,6 @@ const AppConfig = {
     SOLVENCY_SAVINGS_ROI_FUNDS: 'solvency-savings-roi-funds',
   },
   ROUTES: {
-    DASHBOARD: '/dashboard',
     STUDENTS_SCHEDULE: '/students/schedule',
     STUDENTS_SUBMIT_DATA: '/students/submit-data',
     STUDENTS_PURCHASE_ITEMS: '/students/purchase-items',

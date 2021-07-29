@@ -55,9 +55,6 @@ class AppContainer extends Component {
               <img src={logoImage} alt="logo" />
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<DesktopOutlined />}>
-                <Link to={`${AppConfig.ROUTES.DASHBOARD}`}>Dashboard</Link>
-              </Menu.Item>
               <SubMenu key="sub1" icon={<UserOutlined />} title="Students">
                 <Menu.Item key="2">
                   <Link to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}`}>Schedule</Link>

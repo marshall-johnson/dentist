@@ -5,7 +5,6 @@ import AppConfig from '@/constants/AppConfig';
 import ReportContainer from '@/containers/ReportContainer';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
-import DashboardContainer from '@/containers/DashboardContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
@@ -18,12 +17,6 @@ function Routes() {
       <Route
         exact
         path='/'
-        component={DashboardContainer}
-      />
-      <Route
-        exact
-        path={`${AppConfig.ROUTES.DASHBOARD}`}
-        component={DashboardContainer}
       />
       <Route
         exact
