@@ -29,7 +29,7 @@ class OccupanyAndHPStep extends Component {
           <Row gutter={32}>
             <Col span={12}>
               <Card title="Occupancy">
-                <Form.Item label="Bldg Port. Prac. Loan / Mortg / Rent / Park">
+                <Form.Item label="Mortgage / Rent">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Utilities">
@@ -57,19 +57,16 @@ class OccupanyAndHPStep extends Component {
             </Col>
             <Col span={12}>
               <Card title="Human & Physical Resource Development">
-                <Form.Item label="Office Furniture and Repairs">
-                  <Input />
-                </Form.Item>
                 <Form.Item label="Dental Equip Loan / Equip Maintenance">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Staff Other CE Expenses">
+                <Form.Item label="Office Furniture and Repairs">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Staff SCPD tuition/travel/lodge/meals">
+                <Form.Item label="Staff Continuing Education">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Total">
+                <Form.Item label="Staff SCPD Tuition / Travel">
                   <Input />
                 </Form.Item>
               </Card>

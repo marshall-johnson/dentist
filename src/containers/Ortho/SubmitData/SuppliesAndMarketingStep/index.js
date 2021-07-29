@@ -47,17 +47,14 @@ class SuppliesAndMarketingStep extends Component {
               </Card>
             </Col>
             <Col span={12}>
-              <Card title="Marketing / Advertising">
-                <Form.Item label="Advertising">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Internal and External Marketing">
-                  <Input />
-                </Form.Item>
+              <Card title="Marketing">
                 <Form.Item label="Website">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Total">
+                <Form.Item label="Marketing">
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Advertising">
                   <Input />
                 </Form.Item>
               </Card>
@@ -74,7 +71,7 @@ class SuppliesAndMarketingStep extends Component {
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.LABORTORY_DOCTORS}`}
+                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.LABORTORY}`}
                 type="primary"
               >
                 Next

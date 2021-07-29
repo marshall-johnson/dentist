@@ -32,22 +32,22 @@ class StaffCompensationStep extends Component {
                 <Form.Item label="Gross Salary">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Pension Contribution">
+                <Form.Item label="Employer Matching SocSec, Medicare">
                   <Input />
                 </Form.Item>
-                <Form.Item label="941 Deposit – Employer Match">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Profit Sharing / Bonus">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Uniform Allowance">
+                <Form.Item label="FUTA, SUTA">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Medical Insurance">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Sub Totals">
+                <Form.Item label="Pension / Profit Sharing">
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Bonus">
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Other Benefit">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Work Comp - all">
@@ -60,25 +60,22 @@ class StaffCompensationStep extends Component {
                 <Form.Item label="Gross Salary">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Pension Contribution">
+                <Form.Item label="Employer Matching SocSec, Medicare">
                   <Input />
                 </Form.Item>
-                <Form.Item label="941 Deposit – Employer Match">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Profit Sharing / Bonus">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Uniform Allowance">
+                <Form.Item label="FUTA, SUTA">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Medical Insurance">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Sub Totals">
+                <Form.Item label="Pension / Profit Sharing">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Work Comp - all">
+                <Form.Item label="Bonus">
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Other Benefit">
                   <Input />
                 </Form.Item>
               </Card>

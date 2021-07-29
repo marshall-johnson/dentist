@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 import AppConfig from '@/constants/AppConfig';
 
+import LaboratoryStep from '@/containers/Density/SubmitData/LaboratoryStep';
 import CollectionsStep from '@/containers/Density/SubmitData/CollectionsStep';
 import OccupanyAndHPStep from '@/containers/Density/SubmitData/OccupanyAndHPStep';
 import PatientActivityStep from '@/containers/Density/SubmitData/PatientActivityStep';
-import StaffCompensationStep from '@/containers/Density/SubmitData/StaffCompensationStep';
 import DoctorProductionStep from '@/containers/Density/SubmitData/DoctorProductionStep';
+import StaffCompensationStep from '@/containers/Density/SubmitData/StaffCompensationStep';
+import DoctorSalaryStep from '@/containers/Density/SubmitData/DoctorSalaryStep';
 import HygeinistProductionStep from '@/containers/Density/SubmitData/HygeinistProductionStep';
-import LabortoryAndDoctorsStep from '@/containers/Density/SubmitData/LabortoryAndDoctorsStep';
 import SuppliesAndMarketingStep from '@/containers/Density/SubmitData/SuppliesAndMarketingStep';
 import AdministrativeServicesStep from '@/containers/Density/SubmitData/AdministrativeServicesStep';
 import SolvencySavingsROIFundsStep from '@/containers/Density/SubmitData/SolvencySavingsROIFundsStep';
@@ -23,13 +24,14 @@ class DensitySubmitData extends Component {
     } = this.props;
 
     const {
+      LABORTORY,
       COLLECTIONS,
+      DOCTOR_SALARY,
       PATIENT_ACTIVITY,
       OCCUPANY_AND_H_P,
-      STAFF_COMPENSATION,
-      LABORTORY_DOCTORS,
       DOCTOR_PRODUCTION,
       SUPPLIES_MARKETING,
+      STAFF_COMPENSATION,
       HYGEINIST_PRODUCTION,
       ADMINISTRATIVE_SERVICES,
       SOLVENCY_SAVINGS_ROI_FUNDS,
@@ -44,8 +46,9 @@ class DensitySubmitData extends Component {
         {step === STAFF_COMPENSATION && <StaffCompensationStep />}
         {step === OCCUPANY_AND_H_P && <OccupanyAndHPStep />}
         {step === SUPPLIES_MARKETING && <SuppliesAndMarketingStep />}
-        {step === LABORTORY_DOCTORS && <LabortoryAndDoctorsStep />}
+        {step === LABORTORY && <LaboratoryStep />}
         {step === ADMINISTRATIVE_SERVICES && <AdministrativeServicesStep />}
+        {step === DOCTOR_SALARY && <DoctorSalaryStep />}
         {step === SOLVENCY_SAVINGS_ROI_FUNDS && <SolvencySavingsROIFundsStep />}
       </div>
     );

@@ -32,7 +32,7 @@ class SolvencySavingsROIFundsStep extends Component {
                 <Form.Item label="Deposits Made">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Pymts on Pre-Mgmt Year Short-Term Debt">
+                <Form.Item label="Retiring Past Due Debt">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Transferred out of Solvency Acct">
@@ -72,7 +72,7 @@ class SolvencySavingsROIFundsStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`}
+                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`}
               >
                 Back
               </Button>

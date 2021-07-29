@@ -51,7 +51,10 @@ class AdministrativeServicesStep extends Component {
               <Form.Item label="Prof fees / Legal / Acct">
                 <Input />
               </Form.Item>
-              <Form.Item label="Licensees">
+              <Form.Item label="Licenses">
+                <Input />
+              </Form.Item>
+              <Form.Item label="CRM Software">
                 <Input />
               </Form.Item>
             </Col>
@@ -77,10 +80,13 @@ class AdministrativeServicesStep extends Component {
               <Form.Item label="Subscriptions">
                 <Input />
               </Form.Item>
-              <Form.Item label="Taxes">
+              <Form.Item label="Personal Property Taxes">
                 <Input />
               </Form.Item>
               <Form.Item label="Telephone">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Uniforms">
                 <Input />
               </Form.Item>
             </Col>
@@ -96,12 +102,12 @@ class AdministrativeServicesStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY_DOCTORS}`}
+                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`}
               >
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SOLVENCY_SAVINGS_ROI_FUNDS}`}
+                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`}
                 type="primary"
               >
                 Next

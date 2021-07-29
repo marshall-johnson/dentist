@@ -29,38 +29,29 @@ class SuppliesAndMarketingStep extends Component {
           <Row gutter={32}>
             <Col span={12}>
               <Card title="Supplies / Raw Materials">
-                <Form.Item label="Shared Supplies">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Doctors Supplies (hazard waste)">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Orthodontic Supplies">
+                <Form.Item label="Dr. Supplies">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Hygiene Supplies">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Hygiene Product">
+                <Form.Item label="Shared Supplies">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Total">
+                <Form.Item label="Hygiene Product">
                   <Input />
                 </Form.Item>
               </Card>
             </Col>
             <Col span={12}>
-              <Card title="Marketing / Advertising">
-                <Form.Item label="Advertising">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Marketing">
-                  <Input />
-                </Form.Item>
+              <Card title="Marketing">
                 <Form.Item label="Website">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Total">
+                <Form.Item label="Marketing">
+                <Input />
+                </Form.Item>
+                <Form.Item label="Advertising">
                   <Input />
                 </Form.Item>
               </Card>
@@ -77,7 +68,7 @@ class SuppliesAndMarketingStep extends Component {
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY_DOCTORS}`}
+                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`}
                 type="primary"
               >
                 Next

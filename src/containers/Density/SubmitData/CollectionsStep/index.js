@@ -23,9 +23,6 @@ class CollectionsStep extends Component {
         <Divider />
 
         <Form
-          labelCol={{
-            span: 8,
-          }}
           layout="vertical"
         >
           <Row gutter={[32, 16]}>
@@ -33,13 +30,13 @@ class CollectionsStep extends Component {
               <Form.Item label="Total Gross Collection">
                 <Input />
               </Form.Item>
-              <Form.Item label="Refunds">
+              <Form.Item label="Refunds to Patients or Insurance Companies">
                 <Input />
               </Form.Item>
               <Form.Item label="Total Net Collections">
                 <Input />
               </Form.Item>
-              <Form.Item label="Over The Counter Collection">
+              <Form.Item label="Collections at Time of Service">
                 <Input />
               </Form.Item>
             </Col>

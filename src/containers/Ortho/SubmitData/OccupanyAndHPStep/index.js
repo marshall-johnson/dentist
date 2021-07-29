@@ -29,7 +29,7 @@ class OccupanyAndHPStep extends Component {
           <Row gutter={32}>
             <Col span={12}>
               <Card title="Occupancy">
-                <Form.Item label="Bldg Port. Prac. Loan / Mortg / Rent / Park">
+                <Form.Item label="Mortgage / Rent">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Utilities">
