@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import {
-  DesktopOutlined,
   PieChartOutlined,
   UserOutlined,
 } from '@ant-design/icons';

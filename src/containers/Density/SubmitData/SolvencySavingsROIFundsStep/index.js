@@ -32,7 +32,7 @@ class SolvencySavingsROIFundsStep extends Component {
                 <Form.Item label="Deposits Made">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Pymts on Pre-Mgmt Year Short-Term Debt">
+                <Form.Item label="Retiring Past Due Debt">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Transferred out of Solvency Acct">
@@ -48,7 +48,7 @@ class SolvencySavingsROIFundsStep extends Component {
                 <Form.Item label="Dr. Pension">
                   <Input />
                 </Form.Item>
-                <Form.Item label="Other CE">
+                <Form.Item label="Dr. CE">
                   <Input />
                 </Form.Item>
                 <Form.Item label="Long-Term Investments">
@@ -60,13 +60,7 @@ class SolvencySavingsROIFundsStep extends Component {
                 <Form.Item label="SCPD Expenses">
                   <Input />
                 </Form.Item>
-                <Form.Item label="SCPD Expenses">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Profitability Pay for Team and Doctor">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Transferred out of ROI Acct">
+                <Form.Item label="Profitability Pay for Team">
                   <Input />
                 </Form.Item>
               </Card>
@@ -83,7 +77,7 @@ class SolvencySavingsROIFundsStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`}
+                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`}
               >
                 Back
               </Button>

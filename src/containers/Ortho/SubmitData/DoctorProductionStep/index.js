@@ -29,7 +29,7 @@ class DoctorProductionStep extends Component {
 
         <Form
           labelCol={{
-            span: 7,
+            span: 9,
           }}
           layout="horizontal"
         >
@@ -50,10 +50,10 @@ class DoctorProductionStep extends Component {
               <Form.Item label="Net Production">
                 <Input />
               </Form.Item>
-              <Form.Item label="Hours Available">
+              <Form.Item label="Dr Patient Hours Available">
                 <Input />
               </Form.Item>
-              <Form.Item label="Hours Schedule w/ Pts">
+              <Form.Item label="Dr. Patient Hours Schedule w/ Pts">
                 <Input />
               </Form.Item>
               <Form.Item label="# of Start Appts Available">

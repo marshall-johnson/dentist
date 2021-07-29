@@ -112,16 +112,16 @@ class PatientActivityStep extends Component {
               <Form.Item label="Patients of Record">
                 <Input />
               </Form.Item>
-              <Form.Item label="Yellow Pages">
-                <Input />
-              </Form.Item>
-              <Form.Item label="Doctors">
-                <Input />
-              </Form.Item>
-              <Form.Item label="Family">
+              <Form.Item label="Other Doctors">
                 <Input />
               </Form.Item>
               <Form.Item label="Website">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Signage">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Team Members">
                 <Input />
               </Form.Item>
               <Form.Item label="Other">
@@ -134,14 +134,14 @@ class PatientActivityStep extends Component {
 
           <Row gutter={[32, 16]}>
             <Col span={12}>
-              <h3 className="ant-form-text">Production By Category $</h3>
-              <Form.Item label="A Services">
+              <h3 className="ant-form-text">Perio Production $</h3>
+              <Form.Item label="RPC Quadrant">
                 <Input />
               </Form.Item>
-              <Form.Item label="B Services">
+              <Form.Item label="RPC 1-3 teeth">
                 <Input />
               </Form.Item>
-              <Form.Item label="C Services">
+              <Form.Item label="Perio Maintenance">
                 <Input />
               </Form.Item>
             </Col>
