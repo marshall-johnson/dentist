@@ -20,7 +20,7 @@ function Routes() {
       />
       <Route
         exact
-        path={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}`}
+        path={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/:step`}
         component={StudentsScheduleContainer}
       />
       <Route

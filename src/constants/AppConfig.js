@@ -24,6 +24,10 @@ const AppConfig = {
     ADMINISTRATIVE_SERVICES: 'administrative-services',
     SOLVENCY_SAVINGS_ROI_FUNDS: 'solvency-savings-roi-funds',
   },
+  SCHEDULE_CLASS_STEPS: {
+    REGISTER_CLASS: 'register-class',
+    CONFIRM: 'confirm',
+  },
   ROUTES: {
     STUDENTS_SCHEDULE: '/students/schedule',
     STUDENTS_SUBMIT_DATA: '/students/submit-data',
