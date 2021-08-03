@@ -1,13 +1,71 @@
 import React, { Component } from 'react';
 import {
+  Row,
+  Col,
+  Form,
+  Radio,
+  Upload,
   Button,
+  Divider,
   PageHeader,
-  Space,
 } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 import AppConfig from '@/constants/AppConfig';
 
 class SubmitDataContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      practiceType: null
+    };
+  }
+
+  normFile = (e) => {
+    console.log('Upload event:', e);
+
+    if (Array.isArray(e)) {
+      return e;
+    }
+
+    return e && e.fileList;
+  };
+
+  onFinish = (values) => {
+    console.log('Received values of form: ', values);
+  };
+
+  renderManuallyEnterData = () => {
+    const { practiceType } = this.state;
+    let href = null;
+
+    if (practiceType === 'dentistry') {
+      href = `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`;
+    }
+
+    if (practiceType === 'ortho') {
+      href = `${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`;
+    }
+
+    if (href) {
+      return (
+        <Button
+          size='large'
+          href={href}
+          type="primary"
+        >
+          Manually Enter Data
+        </Button>
+      );
+    }
+
+    return null;
+  }
+
+  onChangePracticeType = (e) => {
+    this.setState({ practiceType: e.target.value });
+  }
 
   render() {
     return (
@@ -16,20 +74,67 @@ class SubmitDataContainer extends Component {
           className="site-page-header"
           title="Submit Data Page"
         />
-        <Space>
-          <Button
-            href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`}
-            type="primary"
-          >
-            Manually Enter Density Data
-          </Button>
-          <Button
-            href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`}
-            type="primary"
-          >
-            Manually Enter Ortho Data
-          </Button>
-        </Space>
+
+        <Divider />
+
+        <Row align="bottom">
+          <Col span={12}>
+            <Form
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 14 }}
+              onFinish={this.onFinish}
+            >
+              <Form.Item
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please pick an item!',
+                  },
+                ]}
+                name="radio-group"
+                label="Select Practice Type:"
+              >
+                <Radio.Group
+                  onChange={this.onChangePracticeType}
+                >
+                  <Radio value="dentistry">Dentistry</Radio>
+                  <Radio value="ortho">Ortho</Radio>
+                </Radio.Group>
+              </Form.Item>
+
+              <Form.Item
+                name="upload"
+                label="Upload"
+                valuePropName="fileList"
+                getValueFromEvent={this.normFile}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please upload an item!',
+                  },
+                ]}
+              >
+                <Upload name="file" listType="picture">
+                  <Button icon={<UploadOutlined />}>Click to upload</Button>
+                </Upload>
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  span: 12,
+                  offset: 6,
+                }}
+                style={{ marginBottom: 0 }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </Col>
+          <Col span={12}>
+            {this.renderManuallyEnterData()}
+          </Col>
+        </Row>
       </div>
     );
   }
