@@ -56,7 +56,7 @@ class AppContainer extends Component {
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <SubMenu key="sub1" icon={<UserOutlined />} title="Students">
                 <Menu.Item key="2">
-                  <Link to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}`}>Schedule</Link>
+                  <Link to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}>Schedule</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
                   <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>Submit Data</Link>
