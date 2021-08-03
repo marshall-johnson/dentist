@@ -104,7 +104,6 @@ class SubmitDataContainer extends Component {
 
               <Form.Item
                 name="upload"
-                label="Upload"
                 valuePropName="fileList"
                 getValueFromEvent={this.normFile}
                 rules={[
@@ -113,9 +112,13 @@ class SubmitDataContainer extends Component {
                     message: 'Please upload an item!',
                   },
                 ]}
+                wrapperCol={{
+                  span: 12,
+                  offset: 6,
+                }}
               >
                 <Upload name="file" listType="picture">
-                  <Button icon={<UploadOutlined />}>Click to upload</Button>
+                  <Button icon={<UploadOutlined />}>Browser</Button>
                 </Upload>
               </Form.Item>
               <Form.Item
