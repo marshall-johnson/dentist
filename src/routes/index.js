@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import AppConfig from '@/constants/AppConfig';
-import ReportContainer from '@/containers/ReportContainer';
+import ReportContainer from '@/containers/Reports';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
