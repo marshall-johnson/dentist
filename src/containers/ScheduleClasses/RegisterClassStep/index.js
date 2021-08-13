@@ -1,115 +1,99 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  forEach,
+} from 'lodash';
 import {
   Row,
   Col,
   Form,
-  Table,
   Button,
-  Select,
   Divider,
   Calendar,
   PageHeader,
 } from 'antd';
+import camelcaseKeys from 'camelcase-keys';
 
-import AppConfig from '@/constants/AppConfig';
+import api from '@/api';
+import DebounceSelect from '@/components/DebounceSelect';
+import {
+  fetchClassRooms
+} from '@/actions/classRoomActions';
 
+import ClassScheduled from './ClassScheduled';
+import ClassCompleted from './ClassCompleted';
 import './index.scss';
 
-const { Option } = Select;
-
-const classScheduledColumns = [
-  {
-    title: 'Class Name',
-    dataIndex: 'className',
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-  },
-  {
-    title: 'Start Time',
-    dataIndex: 'startTime',
-  },
-  {
-    title: 'End Time',
-    dataIndex: 'endTime',
-  },
-  {
-    title: 'Material',
-    dataIndex: 'material',
-    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-    render: text => <a href='#'>{text}</a>,
-  },
-];
-
-const classScheduledData = [
-  {
-    key: '1',
-    className: 'Class C',
-    date: '7/14/2021',
-    startTime: '8:00 AM PST',
-    endTime: '9:00 AM PST',
-    material: 'Link',
-  },
-  {
-    key: '2',
-    className: 'Class D',
-    date: '8/15/2021',
-    startTime: '12:00 PM PST',
-    endTime: '3:00 PM PST',
-    material: 'Link',
-  },
-  {
-    key: '3',
-    className: 'Class F',
-    date: '8/16/2021',
-    startTime: '8:00 AM PST',
-    endTime: '11:00 AM PST',
-    material: 'Link',
-  },
-];
-
-const classCompletedColumns = [
-  {
-    title: 'Class Name',
-    dataIndex: 'className',
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-  },
-  {
-    title: 'Materials',
-    dataIndex: 'material',
-    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-    render: text => <a href='#'>{text}</a>,
-  },
-];
-
-const classCompletedData = [
-  {
-    key: '1',
-    className: 'Class A',
-    date: '4/1/2021',
-    material: 'Link',
-  },
-  {
-    key: '2',
-    className: 'Class B',
-    date: '4/15/2021',
-    material: 'Link',
-  },
-  {
-    key: '3',
-    className: 'Class E',
-    date: '6/1/2021',
-    material: 'Link',
-  },
-];
-
 class RegisterClassStep extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      classSelected: null,
+      dateSelected: moment(),
+    };
+  }
+
+  componentDidMount() {
+    const { fetchClassRooms, page } = this.props;
+    fetchClassRooms({ page });
+  }
+
+  fetchClassList = (keyword) => api
+    .get('/api/v1/class_rooms', { params: { search: keyword } })
+    .then(({ data: response }) => camelcaseKeys(response, { deep: true }))
+    .then(({ result }) => result.data.map((item) => ({
+      label: item.attributes.name,
+      value: item.id,
+    })))
+    .catch((error) => {
+      throw error;
+    })
+
+  optionInit = () => {
+    const {
+      items
+    } = this.props;
+
+    const data = [];
+
+    forEach(items, item => {
+      const {
+        name: className,
+      } = item.attributes;
+
+      data.push({
+        label: className,
+        value: item.id,
+      });
+    });
+
+    return data;
+  }
+
+  onChangeSelect = (classSelected) => {
+    this.setState({ classSelected });
+  }
+
+  onCalendarSelect = (value) => {
+    console.log('🚀 ~ file: index.js ~ line 83 ~ RegisterClassStep ~ value', value);
+    this.setState({ dateSelected: value });
+  }
+
+  onPanelChange = (value, mode) => {
+    this.setState({ dateSelected: value });
+  }
 
   render() {
+    const {
+      classSelected,
+      dateSelected
+    } = this.state;
+
+    const { onNextPage } = this.props;
+
     return (
       <div className="schedule-class-register-container">
         <PageHeader
@@ -120,30 +104,41 @@ class RegisterClassStep extends Component {
 
         <Form
           layout="vertical"
+          onFinish={onNextPage}
         >
           <Row gutter={48}>
             <Col span={8}>
-              <Form.Item label="Select Class">
-                <Select
+              <Form.Item
+                label="Select Class"
+                name="classSelected"
+                rules={[{ required: true, message: 'Class is required' }]}
+              >
+                <DebounceSelect
                   showSearch
+                  value={classSelected}
+                  optionInit={this.optionInit()}
                   placeholder="Select class"
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  <Option value="classA">Class A</Option>
-                  <Option value="classB">Class B</Option>
-                  <Option value="classC">Class C</Option>
-                  <Option value="classD">Class D</Option>
-                  <Option value="classE">Class E</Option>
-                  <Option value="classF">Class F</Option>
-                </Select>
+                  fetchOptions={this.fetchClassList}
+                  onChange={this.onChangeSelect}
+                  style={{
+                    width: '100%',
+                  }}
+                />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <div className="calendar">
-                <Calendar fullscreen={false} />
-              </div>
+              <Form.Item
+                name="date"
+                className="calendar"
+                initialValue={dateSelected}
+              >
+                <Calendar
+                  fullscreen={false}
+                  value={dateSelected}
+                  onSelect={this.onCalendarSelect}
+                  onPanelChange={this.onPanelChange}
+                />
+              </Form.Item>
             </Col>
           </Row>
 
@@ -151,7 +146,7 @@ class RegisterClassStep extends Component {
             <Col>
               <Button
                 type="primary"
-                href={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.CONFIRM}`}
+                htmlType="submit"
               >
                 Register
               </Button>
@@ -161,20 +156,30 @@ class RegisterClassStep extends Component {
 
         <Divider />
 
-        <div className="class-scheduled-container">
-          <h1>Classes Scheduled</h1>
-          <Table columns={classScheduledColumns} dataSource={classScheduledData} />
-        </div>
+        <ClassScheduled />
 
         <Divider />
 
-        <div className="class-scheduled-container">
-          <h1>Classes Completed</h1>
-          <Table columns={classCompletedColumns} dataSource={classCompletedData} />
-        </div>
+        <ClassCompleted />
       </div>
     );
   }
 }
 
-export default RegisterClassStep;
+RegisterClassStep.propTypes = {
+  fetchClassRooms: PropTypes.func,
+  items: PropTypes.array,
+  page: PropTypes.number,
+  onNextPage: PropTypes.func,
+};
+
+const mapStateToProps = ({ classRoom, error }) => ({
+  items: classRoom.items,
+  totalCount: classRoom.totalCount,
+  page: classRoom.page,
+  loading: classRoom.loading,
+});
+
+export default connect(mapStateToProps, {
+  fetchClassRooms,
+})(RegisterClassStep);

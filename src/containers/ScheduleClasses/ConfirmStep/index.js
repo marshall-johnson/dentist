@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Row,
   Col,
@@ -10,42 +13,69 @@ import {
   Descriptions,
 } from 'antd';
 
-import AppConfig from '@/constants/AppConfig';
+import {
+  getClassDetail
+} from '@/actions/classRoomActions';
 
-class RegisterClassStep extends Component {
-  renderInformationConfirm = () => (
-    <div>
-      <Descriptions title="Class Selected">
-        <Descriptions.Item label="Class Name">Class G</Descriptions.Item>
-      </Descriptions>
-      <Descriptions>
-        <Descriptions.Item label="Date">7/17/2021</Descriptions.Item>
-      </Descriptions>
-      <Descriptions>
-        <Descriptions.Item label="Start Time">9:00 AM PST</Descriptions.Item>
-      </Descriptions>
-      <Descriptions>
-        <Descriptions.Item label="End Time">12:00 PM PST</Descriptions.Item>
-      </Descriptions>
-      <Descriptions>
-        <Descriptions.Item label="Description">
-          Training on managing and accounting with Accounts Receivable
-        </Descriptions.Item>
-      </Descriptions>
-      <Descriptions>
-        <Descriptions.Item label="Instructor">
-          Brenda Penwell
-        </Descriptions.Item>
-      </Descriptions>
-      <Descriptions>
-        <Descriptions.Item label="Meterial Include">
-          Worksheets, Training Manual
-        </Descriptions.Item>
-      </Descriptions>
-    </div>
-  )
+class ConfirmRegisterClassStep extends Component {
+  componentDidMount() {
+    const { getClassDetail, classIdSelected } = this.props;
+
+    getClassDetail({ classId: classIdSelected });
+  }
+
+  renderInformationConfirm = (data) => {
+    const {
+      endTime,
+      startTime,
+      instructor,
+      description,
+      name: className,
+      materialInclude,
+    } = data;
+
+    const { dateSelected: date } = this.props;
+
+    return (
+      <div>
+        <Descriptions title="Class Selected">
+          <Descriptions.Item label="Class Name">{className}</Descriptions.Item>
+        </Descriptions>
+        <Descriptions>
+          <Descriptions.Item label="Date">{date && moment(date).format('MM/DD/YYYY')}</Descriptions.Item>
+        </Descriptions>
+        <Descriptions>
+          <Descriptions.Item label="Start Time">{startTime}</Descriptions.Item>
+        </Descriptions>
+        <Descriptions>
+          <Descriptions.Item label="End Time">{endTime}</Descriptions.Item>
+        </Descriptions>
+        <Descriptions>
+          <Descriptions.Item label="Description">
+            {description}
+          </Descriptions.Item>
+        </Descriptions>
+        <Descriptions>
+          <Descriptions.Item label="Instructor">
+            {instructor}
+          </Descriptions.Item>
+        </Descriptions>
+        <Descriptions>
+          <Descriptions.Item label="Material Include">
+            {materialInclude}
+          </Descriptions.Item>
+        </Descriptions>
+      </div>
+    );
+  }
 
   render() {
+    const {
+      item,
+      onBack,
+      onSubmit,
+    } = this.props;
+
     return (
       <div className="schedule-class-confirm-container">
         <PageHeader
@@ -59,7 +89,7 @@ class RegisterClassStep extends Component {
         >
           <Row>
             <Col span={12}>
-              {this.renderInformationConfirm()}
+              {item && this.renderInformationConfirm(item.attributes)}
             </Col>
           </Row>
 
@@ -68,12 +98,13 @@ class RegisterClassStep extends Component {
               <Space>
                 <Button
                   type="primary"
-                  href={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}
+                  onClick={onBack}
                 >
                   Back
                 </Button>
                 <Button
                   type="primary"
+                  onClick={onSubmit}
                 >
                   Submit
                 </Button>
@@ -86,4 +117,19 @@ class RegisterClassStep extends Component {
   }
 }
 
-export default RegisterClassStep;
+ConfirmRegisterClassStep.propTypes = {
+  onBack: PropTypes.func,
+  item: PropTypes.object,
+  onSubmit: PropTypes.func,
+  dateSelected: PropTypes.string,
+  getClassDetail: PropTypes.func,
+  classIdSelected: PropTypes.string,
+};
+
+const mapStateToProps = ({ classRoom }) => ({
+  item: classRoom.item,
+});
+
+export default connect(mapStateToProps, {
+  getClassDetail,
+})(ConfirmRegisterClassStep);
