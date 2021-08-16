@@ -78,7 +78,6 @@ class RegisterClassStep extends Component {
   }
 
   onCalendarSelect = (value) => {
-    console.log('🚀 ~ file: index.js ~ line 83 ~ RegisterClassStep ~ value', value);
     this.setState({ dateSelected: value });
   }
 

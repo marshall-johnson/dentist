@@ -5,11 +5,13 @@ import auth from './auth';
 import classRoom from './classRoom';
 import classRoomScheduled from './classRoomScheduled';
 import classRoomCompleted from './classRoomCompleted';
+import flashMessage from './flashMessage';
 
 const reducer = combineReducers({
   error,
   auth,
   classRoom,
+  flashMessage,
   classRoomScheduled,
   classRoomCompleted,
 });

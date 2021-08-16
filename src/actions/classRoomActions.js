@@ -10,6 +10,10 @@ import {
   throwErrors,
   clearErrors
 } from '@/actions/errorActions';
+import {
+  setFlashError,
+  setFlashSuccess,
+} from '@/actions/flashMessageActions';
 
 export const fetchClassRooms = ({ page }) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -64,7 +68,7 @@ export const getClassDetail = ({ classId }) => async (dispatch) => {
     });
 };
 
-export const createRegisterClass = ({ classRoomId, date }) => async (dispatch) => {
+export const createRegisterClass = ({ classRoomId, date, history }) => async (dispatch) => {
   dispatch(setLoading(true));
 
   const params = {
@@ -76,8 +80,14 @@ export const createRegisterClass = ({ classRoomId, date }) => async (dispatch) =
 
   return api
     .post('/api/v1/register_class', snakecaseKeys(params))
-    .then(() => {
-      dispatch(clearErrors('registerClass'));
+    .then(({ data: { success, message } }) => {
+      if (success) {
+        dispatch(clearErrors('registerClass'));
+        dispatch(setFlashSuccess({ message }));
+        history.go(0);
+      } else {
+        dispatch(setFlashError({ message }));
+      }
     })
     .catch((error) => {
       dispatch(setLoading(false));
