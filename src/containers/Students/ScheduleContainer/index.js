@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import RegisterClassStep from '@/containers/ScheduleClasses/RegisterClassStep';
 import ScheduleClassesConfirmStep from '@/containers/ScheduleClasses/ConfirmStep';
-import Success from '@/components/Success';
 import {
   createRegisterClass
 } from '@/actions/classRoomActions';
@@ -39,9 +38,8 @@ class ScheduleContainer extends Component {
 
   onSubmit = () => {
     const { formData } = this.state;
-    const { createRegisterClass } = this.props;
-    createRegisterClass(formData);
-    this.setState({ step: 'successPage' });
+    const { createRegisterClass, history } = this.props;
+    createRegisterClass({ history, ...formData });
   }
 
   render() {
@@ -68,11 +66,6 @@ class ScheduleContainer extends Component {
             classIdSelected={classRoomId}
           />
         }
-        {step === 'successPage' &&
-          <Success
-            message="Register Class Successfully"
-          />
-        }
       </div>
     );
   }
@@ -80,6 +73,7 @@ class ScheduleContainer extends Component {
 
 ScheduleContainer.propTypes = {
   createRegisterClass: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export default connect(null, {

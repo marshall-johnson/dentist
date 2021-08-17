@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 
 import Routes from '@/routes';
+import FlashMessage from '@/components/FlashMessage';
 import { clearErrors } from '@/actions/errorActions';
 import AppConfig from '@/constants/AppConfig';
 import logoImage from '@/assets/images/logo.png';
@@ -76,6 +77,7 @@ class AppContainer extends Component {
           <Layout className="site-layout">
             <Content style={{ margin: '16px' }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                <FlashMessage />
                 <Routes />
               </div>
             </Content>

@@ -26,7 +26,6 @@ const AppConfig = {
   },
   SCHEDULE_CLASS_STEPS: {
     REGISTER_CLASS: 'register-class',
-    CONFIRM: 'confirm',
   },
   ROUTES: {
     STUDENTS_SCHEDULE: '/students/schedule',
