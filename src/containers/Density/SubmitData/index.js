@@ -16,13 +16,6 @@ import AdministrativeServicesStep from '@/containers/Density/SubmitData/Administ
 import SolvencySavingsROIFundsStep from '@/containers/Density/SubmitData/SolvencySavingsROIFundsStep';
 
 class DensitySubmitData extends Component {
-  componentDidMount() {
-    window.onbeforeunload = (e) => {
-      localStorage.removeItem('doctorProduction');
-      localStorage.removeItem('hygienistProduction');
-    };
-  }
-
   render() {
     const {
       match: {
