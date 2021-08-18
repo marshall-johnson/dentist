@@ -22,6 +22,15 @@ class SubmitDataContainer extends Component {
     };
   }
 
+  componentDidMount() {
+    window.onbeforeunload = (e) => {
+      localStorage.removeItem('doctorProduction');
+      localStorage.removeItem('hygienistProduction');
+      localStorage.removeItem('patientActivity');
+      localStorage.removeItem('collections');
+    };
+  }
+
   normFile = (e) => {
     console.log('Upload event:', e);
 

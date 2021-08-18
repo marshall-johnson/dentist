@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,6 +15,11 @@ import {
 import AppConfig from '@/constants/AppConfig';
 
 class StaffCompensationStep extends Component {
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`);
+  }
+
   render() {
     return (
       <>
@@ -137,7 +144,7 @@ class StaffCompensationStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
@@ -155,4 +162,8 @@ class StaffCompensationStep extends Component {
   }
 }
 
-export default StaffCompensationStep;
+StaffCompensationStep.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(StaffCompensationStep);
