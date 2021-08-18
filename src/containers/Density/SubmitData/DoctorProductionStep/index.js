@@ -63,6 +63,10 @@ class DoctorProductionStep extends Component {
     fetchDoctors({ page });
 
     this.formRef.current.setFieldsValue(formData);
+
+    window.onbeforeunload = (e) => {
+      localStorage.removeItem('doctorProduction');
+    };
   }
 
   fetchDoctorList = (keyword) => api

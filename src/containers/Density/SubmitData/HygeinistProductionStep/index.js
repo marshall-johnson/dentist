@@ -64,6 +64,10 @@ class HygeinistProductionStep extends Component {
     fetchHygienists({ page });
 
     this.formRef.current.setFieldsValue(formData);
+
+    window.onbeforeunload = (e) => {
+      localStorage.removeItem('hygienistProduction');
+    };
   }
 
   fetchHygienistList = (keyword) => api
@@ -103,6 +107,11 @@ class HygeinistProductionStep extends Component {
 
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`);
+  }
+
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`);
   }
 
   render() {
@@ -322,7 +331,7 @@ class HygeinistProductionStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
