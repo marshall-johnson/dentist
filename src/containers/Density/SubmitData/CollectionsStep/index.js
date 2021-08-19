@@ -46,12 +46,12 @@ class CollectionsStep extends Component {
   }
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('collections'));
+    const formData = JSON.parse(localStorage.getItem('dentistryCollections'));
 
     this.formRef.current.setFieldsValue(formData);
 
     window.onbeforeunload = (e) => {
-      localStorage.removeItem('collections');
+      localStorage.removeItem('dentistryCollections');
     };
   }
 
@@ -61,7 +61,7 @@ class CollectionsStep extends Component {
   }
 
   onFinish = data => {
-    localStorage.setItem('collections', JSON.stringify(data));
+    localStorage.setItem('dentistryCollections', JSON.stringify(data));
 
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`);
@@ -76,7 +76,7 @@ class CollectionsStep extends Component {
       <div className="collection-container">
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Collections"
         />
         <Divider />

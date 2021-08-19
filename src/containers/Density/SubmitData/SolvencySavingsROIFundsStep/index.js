@@ -18,7 +18,7 @@ class SolvencySavingsROIFundsStep extends Component {
       <>
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Solvency, Savings and ROI Funds"
         />
         <Divider />

@@ -58,14 +58,14 @@ class DoctorProductionStep extends Component {
 
   componentDidMount() {
     const { fetchDoctors, page } = this.props;
-    const formData = JSON.parse(localStorage.getItem('doctorProduction'));
+    const formData = JSON.parse(localStorage.getItem('dentistryDoctorProduction'));
 
     fetchDoctors({ page });
 
     this.formRef.current.setFieldsValue(formData);
 
     window.onbeforeunload = (e) => {
-      localStorage.removeItem('doctorProduction');
+      localStorage.removeItem('dentistryDoctorProduction');
     };
   }
 
@@ -102,7 +102,7 @@ class DoctorProductionStep extends Component {
   }
 
   onFinish = data => {
-    localStorage.setItem('doctorProduction', JSON.stringify(data));
+    localStorage.setItem('dentistryDoctorProduction', JSON.stringify(data));
 
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`);
@@ -117,7 +117,7 @@ class DoctorProductionStep extends Component {
       <div className="doctor-production-container">
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Doctor Production"
         />
 
@@ -163,7 +163,6 @@ class DoctorProductionStep extends Component {
                         label="Discounts"
                         name={[field.name, 'discount']}
                         fieldKey={[field.fieldKey, 'discount']}
-                        messageVariables={{ another: 'good' }}
                         rules={[
                           {
                             required: true,

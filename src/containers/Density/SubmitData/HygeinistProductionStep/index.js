@@ -59,14 +59,14 @@ class HygeinistProductionStep extends Component {
 
   componentDidMount() {
     const { fetchHygienists, page } = this.props;
-    const formData = JSON.parse(localStorage.getItem('hygienistProduction'));
+    const formData = JSON.parse(localStorage.getItem('dentistryHygienistProduction'));
 
     fetchHygienists({ page });
 
     this.formRef.current.setFieldsValue(formData);
 
     window.onbeforeunload = (e) => {
-      localStorage.removeItem('hygienistProduction');
+      localStorage.removeItem('dentistryHygienistProduction');
     };
   }
 
@@ -103,7 +103,7 @@ class HygeinistProductionStep extends Component {
   }
 
   onFinish = data => {
-    localStorage.setItem('hygienistProduction', JSON.stringify(data));
+    localStorage.setItem('dentistryHygienistProduction', JSON.stringify(data));
 
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`);
@@ -121,7 +121,7 @@ class HygeinistProductionStep extends Component {
       <div className="hygienist-production-container">
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Hygeinist Production"
         />
 

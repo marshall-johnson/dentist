@@ -24,10 +24,11 @@ class SubmitDataContainer extends Component {
 
   componentDidMount() {
     window.onbeforeunload = (e) => {
-      localStorage.removeItem('doctorProduction');
-      localStorage.removeItem('hygienistProduction');
-      localStorage.removeItem('patientActivity');
-      localStorage.removeItem('collections');
+      localStorage.removeItem('dentistryDoctorProduction');
+      localStorage.removeItem('dentistryHygienistProduction');
+      localStorage.removeItem('dentistryPatientActivity');
+      localStorage.removeItem('dentistryCollections');
+      localStorage.removeItem('orthoDoctorProduction');
     };
   }
 
