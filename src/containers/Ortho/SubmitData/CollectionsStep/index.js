@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -12,6 +14,11 @@ import {
 import AppConfig from '@/constants/AppConfig';
 
 class CollectionsStep extends Component {
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`);
+  }
+
   render() {
     return (
       <>
@@ -73,7 +80,7 @@ class CollectionsStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
@@ -91,4 +98,8 @@ class CollectionsStep extends Component {
   }
 }
 
-export default CollectionsStep;
+CollectionsStep.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(CollectionsStep);

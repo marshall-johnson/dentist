@@ -18,7 +18,7 @@ class SuppliesAndMarketingStep extends Component {
       <>
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Supplies & Marketing"
         />
         <Divider />

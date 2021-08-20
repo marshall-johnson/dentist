@@ -58,12 +58,12 @@ class PatientActivityStep extends Component {
   };
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('patientActivity'));
+    const formData = JSON.parse(localStorage.getItem('dentistryPatientActivity'));
 
     this.formRef.current.setFieldsValue(formData);
 
     window.onbeforeunload = (e) => {
-      localStorage.removeItem('patientActivity');
+      localStorage.removeItem('dentistryPatientActivity');
     };
   }
 
@@ -73,7 +73,7 @@ class PatientActivityStep extends Component {
   }
 
   onFinish = data => {
-    localStorage.setItem('patientActivity', JSON.stringify(data));
+    localStorage.setItem('dentistryPatientActivity', JSON.stringify(data));
 
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`);
@@ -88,7 +88,7 @@ class PatientActivityStep extends Component {
       <div className="patient-activity-container">
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Patient Activity"
         />
         <Divider />

@@ -17,7 +17,7 @@ class LaboratoryStep extends Component {
       <>
         <PageHeader
           className="site-page-header"
-          title="Density Submit Data"
+          title="Dentistry Submit Data"
           subTitle="Laboratory"
         />
         <Divider />
