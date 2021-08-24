@@ -63,7 +63,6 @@ class SubmitDataContainer extends Component {
     if (href) {
       return (
         <Button
-          size='large'
           href={href}
           type="primary"
         >
@@ -92,8 +91,6 @@ class SubmitDataContainer extends Component {
         <Row align="bottom">
           <Col span={12}>
             <Form
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 14 }}
               onFinish={this.onFinish}
             >
               <Form.Item
