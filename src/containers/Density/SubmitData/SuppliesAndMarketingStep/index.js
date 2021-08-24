@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,6 +15,11 @@ import {
 import AppConfig from '@/constants/AppConfig';
 
 class SuppliesAndMarketingStep extends Component {
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`);
+  }
+
   render() {
     return (
       <>
@@ -63,7 +70,7 @@ class SuppliesAndMarketingStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
@@ -81,4 +88,8 @@ class SuppliesAndMarketingStep extends Component {
   }
 }
 
-export default SuppliesAndMarketingStep;
+SuppliesAndMarketingStep.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(SuppliesAndMarketingStep);

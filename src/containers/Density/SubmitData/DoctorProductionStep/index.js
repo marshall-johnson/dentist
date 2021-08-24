@@ -126,7 +126,20 @@ class DoctorProductionStep extends Component {
         <Form
           ref={this.formRef}
           layout="horizontal"
-          labelCol={{ span: 8 }}
+          labelCol={{
+            xl: {
+              span: 10,
+            },
+            lg: {
+              span: 8,
+            },
+            md: {
+              span: 12,
+            },
+            sm: {
+              span: 8,
+            },
+          }}
           onFinish={this.onFinish}
           initialValues={initialValues}
           validateMessages={validateMessages}
@@ -136,7 +149,12 @@ class DoctorProductionStep extends Component {
               {(fields, { add, remove }) => (
                 <>
                   {fields.map((field) => (
-                    <Col span={12} key={field.key}>
+                    <Col
+                      key={field.key}
+                      xl={{ span: 12 }}
+                      lg={{ span: 24 }}
+                      md={{ span: 24 }}
+                    >
                       <Form.Item
                         label="Doctor Name"
                         rules={[{ required: true }]}
