@@ -13,15 +13,54 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 
+const validateMessages = {
+  // eslint-disable-next-line no-template-curly-in-string
+  required: '${label} is required!',
+};
 class LaboratoryStep extends Component {
+  formRef = React.createRef();
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      initialValues: {
+        restoriveLab: null,
+        alignersOrthoLab: null,
+        implantSupplies: null,
+        cerec: null,
+        total: null,
+      }
+    };
+  }
+
+  componentDidMount() {
+    const formData = JSON.parse(localStorage.getItem('dentistryLaboratory'));
+
+    this.formRef.current.setFieldsValue(formData);
+
+    window.onbeforeunload = (e) => {
+      localStorage.removeItem('dentistryLaboratory');
+    };
+  }
+
   onBack = () => {
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`);
   }
 
+  onFinish = data => {
+    localStorage.setItem('dentistryLaboratory', JSON.stringify(data));
+
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`);
+  }
+
   render() {
+    const { initialValues } = this.state;
+
     return (
-      <>
+      <div className="labortory-container">
         <PageHeader
           className="site-page-header"
           title="Dentistry Submit Data"
@@ -30,23 +69,78 @@ class LaboratoryStep extends Component {
         <Divider />
 
         <Form
+          ref={this.formRef}
           layout="vertical"
+          onFinish={this.onFinish}
+          initialValues={initialValues}
+          validateMessages={validateMessages}
         >
           <Row gutter={32}>
             <Col span={12}>
-              <Form.Item label="Restorive Lab">
+              <Form.Item
+                label="Restorive Lab"
+                name="restoriveLab"
+                fieldKey="restoriveLab"
+                rules={[
+                  {
+                    required: true,
+                  }
+                ]}
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Aligners / Ortho Lab">
+              <Form.Item
+                label="Aligners / Ortho Lab"
+                name="alignersOrthoLab"
+                fieldKey="alignersOrthoLab"
+                rules={[
+                  {
+                    required: true,
+                  }
+                ]}
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Implant Supplies">
+              <Form.Item
+                label="Implant Supplies"
+                name="implantSupplies"
+                fieldKey="implantSupplies"
+                rules={[
+                  {
+                    required: true,
+                  }
+                ]}
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Cerec">
+              <Form.Item
+                label="Cerec"
+                name="cerec"
+                fieldKey="cerec"
+                rules={[
+                  {
+                    required: true,
+                  }
+                ]}
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Total">
+              <Form.Item
+                label="Total"
+                name="total"
+                fieldKey="total"
+                rules={[
+                  {
+                    required: true,
+                  },
+                  {
+                    validator: (_, value) =>
+                      !isNaN(value) ?
+                        Promise.resolve() :
+                        Promise.reject(new Error('Total is not a valid number'))
+                  },
+                ]}
+              >
                 <Input />
               </Form.Item>
             </Col>
@@ -62,15 +156,15 @@ class LaboratoryStep extends Component {
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`}
                 type="primary"
+                htmlType="submit"
               >
                 Next
               </Button>
             </Col>
           </Row>
         </Form>
-      </>
+      </div>
     );
   }
 }

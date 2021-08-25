@@ -106,7 +106,11 @@ class RegisterClassStep extends Component {
           onFinish={onNextPage}
         >
           <Row gutter={48}>
-            <Col span={8}>
+            <Col
+              xl={8}
+              lg={12}
+              md={24}
+            >
               <Form.Item
                 label="Select Class"
                 name="classSelected"
@@ -125,7 +129,10 @@ class RegisterClassStep extends Component {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col
+              xl={8}
+              lg={12}
+            >
               <Form.Item
                 name="date"
                 className="calendar"
