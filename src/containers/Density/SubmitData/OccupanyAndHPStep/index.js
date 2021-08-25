@@ -14,15 +14,66 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 
+const validateMessages = {
+  // eslint-disable-next-line no-template-curly-in-string
+  required: '${label} is required!',
+};
+
 class OccupanyAndHPStep extends Component {
+  formRef = React.createRef();
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      initialValues: {
+        occupancy: {
+          mortgageOrRent: null,
+          utilities: null,
+          janitorial: null,
+          repairs: null,
+          facilitiesInsurance: null,
+          securitySystem: null,
+          propertyTax: null,
+          total: null,
+        },
+        humanAndPhysicalResourceDevelopment: {
+          equipType: null,
+          officeFurnitureAndRepairs: null,
+          staffContinuingEducation: null,
+          staffScpdTuitionOrTravel: null,
+        },
+      }
+    };
+  }
+
+  componentDidMount() {
+    const formData = JSON.parse(localStorage.getItem('dentistryOccupanyAndHP'));
+
+    this.formRef.current.setFieldsValue(formData);
+
+    window.onbeforeunload = (e) => {
+      localStorage.removeItem('dentistryOccupanyAndHP');
+    };
+  }
+
   onBack = () => {
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`);
   }
 
+  onFinish = data => {
+    localStorage.setItem('dentistryOccupanyAndHP', JSON.stringify(data));
+
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`);
+  }
+
   render() {
+    const { initialValues } = this.state;
+
     return (
-      <>
+      <div className="occupany-and-h-and-p-container">
         <PageHeader
           className="site-page-header"
           title="Dentistry Submit Data"
@@ -31,49 +82,173 @@ class OccupanyAndHPStep extends Component {
         <Divider />
 
         <Form
+          ref={this.formRef}
           layout="vertical"
+          onFinish={this.onFinish}
+          initialValues={initialValues}
+          validateMessages={validateMessages}
         >
           <Row gutter={32}>
             <Col span={12}>
               <Card title="Occupancy">
-                <Form.Item label="Mortgage / Rent">
+                <Form.Item
+                  label="Mortgage / Rent"
+                  name={['occupancy', 'mortgageOrRent']}
+                  fieldKey={['occupancy', 'mortgageOrRent']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Utilities">
+                <Form.Item
+                  label="Utilities"
+                  name={['occupancy', 'utilities']}
+                  fieldKey={['occupancy', 'utilities']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Janitorial">
+                <Form.Item
+                  label="Janitorial"
+                  name={['occupancy', 'janitorial']}
+                  fieldKey={['occupancy', 'janitorial']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Repairs / Maintenance / Leasehold Improv">
+                <Form.Item
+                  label="Repairs / Maintenance / Leasehold Improv"
+                  name={['occupancy', 'repairs']}
+                  fieldKey={['occupancy', 'repairs']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Facilities Insurance">
+                <Form.Item
+                  label="Facilities Insurance"
+                  name={['occupancy', 'facilitiesInsurance']}
+                  fieldKey={['occupancy', 'facilitiesInsurance']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Security System">
+                <Form.Item
+                  label="Security System"
+                  name={['occupancy', 'securitySystem']}
+                  fieldKey={['occupancy', 'securitySystem']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Property Tax">
+                <Form.Item
+                  label="Property Tax"
+                  name={['occupancy', 'propertyTax']}
+                  fieldKey={['occupancy', 'propertyTax']}
+                  rules={[
+                    {
+                      required: true,
+                    },
+                    {
+                      validator: (_, value) =>
+                        !isNaN(value) ?
+                          Promise.resolve() :
+                          Promise.reject(new Error('Property Tax is not a valid number'))
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Total">
+                <Form.Item
+                  label="Total"
+                  name={['occupancy', 'total']}
+                  fieldKey={['occupancy', 'total']}
+                  rules={[
+                    {
+                      required: true,
+                    },
+                    {
+                      validator: (_, value) =>
+                        !isNaN(value) ?
+                          Promise.resolve() :
+                          Promise.reject(new Error('Total is not a valid number'))
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
               </Card>
             </Col>
             <Col span={12}>
               <Card title="Human & Physical Resource Development">
-                <Form.Item label="Dental Equip Loan / Equip Maintenance">
+                <Form.Item
+                  label="Dental Equip Loan / Equip Maintenance"
+                  name={['humanAndPhysicalResourceDevelopment', 'equipType']}
+                  fieldKey={['humanAndPhysicalResourceDevelopment', 'equipType']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Office Furniture and Repairs">
+                <Form.Item
+                  label="Office Furniture and Repairs"
+                  name={['humanAndPhysicalResourceDevelopment', 'officeFurnitureAndRepairs']}
+                  fieldKey={['humanAndPhysicalResourceDevelopment', 'officeFurnitureAndRepairs']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Staff Continuing Education">
+                <Form.Item
+                  label="Staff Continuing Education"
+                  name={['humanAndPhysicalResourceDevelopment', 'staffContinuingEducation']}
+                  fieldKey={['humanAndPhysicalResourceDevelopment', 'staffContinuingEducation']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Staff SCPD Tuition / Travel">
+                <Form.Item
+                  label="Staff SCPD Tuition / Travel"
+                  name={['humanAndPhysicalResourceDevelopment', 'staffScpdTuitionOrTravel']}
+                  fieldKey={['humanAndPhysicalResourceDevelopment', 'staffScpdTuitionOrTravel']}
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
                   <Input />
                 </Form.Item>
               </Card>
@@ -90,15 +265,15 @@ class OccupanyAndHPStep extends Component {
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`}
                 type="primary"
+                htmlType="submit"
               >
                 Next
               </Button>
             </Col>
           </Row>
         </Form>
-      </>
+      </div>
     );
   }
 }
