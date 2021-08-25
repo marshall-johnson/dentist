@@ -32,6 +32,7 @@ class SubmitDataContainer extends Component {
       localStorage.removeItem('dentistryStaffCompensation');
       localStorage.removeItem('dentistryOccupanyAndHP');
       localStorage.removeItem('dentistrySuppliesAndMarketing');
+      localStorage.removeItem('dentistryLaboratory');
     };
   }
 

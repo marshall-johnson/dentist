@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -12,9 +14,14 @@ import {
 import AppConfig from '@/constants/AppConfig';
 
 class AdministrativeServicesStep extends Component {
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`);
+  }
+
   render() {
     return (
-      <>
+      <div className="administrative-services-container">
         <PageHeader
           className="site-page-header"
           title="Dentistry Submit Data"
@@ -102,7 +109,7 @@ class AdministrativeServicesStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
@@ -115,9 +122,13 @@ class AdministrativeServicesStep extends Component {
             </Col>
           </Row>
         </Form>
-      </>
+      </div>
     );
   }
 }
 
-export default AdministrativeServicesStep;
+AdministrativeServicesStep.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(AdministrativeServicesStep);

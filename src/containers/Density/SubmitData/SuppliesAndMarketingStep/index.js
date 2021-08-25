@@ -18,6 +18,8 @@ const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
   required: '${label} is required!',
 };
+// eslint-disable-next-line max-len
+const urlPatternRegex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/);
 
 class SuppliesAndMarketingStep extends Component {
   formRef = React.createRef();
@@ -142,6 +144,10 @@ class SuppliesAndMarketingStep extends Component {
                     {
                       required: true,
                     },
+                    {
+                      pattern: urlPatternRegex,
+                      message: 'Website is not valid!'
+                    }
                   ]}
                 >
                   <Input />
