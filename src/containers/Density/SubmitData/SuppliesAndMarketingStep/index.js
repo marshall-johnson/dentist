@@ -14,15 +14,57 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 
+const validateMessages = {
+  // eslint-disable-next-line no-template-curly-in-string
+  required: '${label} is required!',
+};
+
 class SuppliesAndMarketingStep extends Component {
+  formRef = React.createRef();
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      initialValues: {
+        supplies: null,
+        hygieneSupplies: null,
+        sharedSupplies: null,
+        hygieneProduct: null,
+        website: null,
+        marketing: null,
+        advertising: null,
+      }
+    };
+  }
+
+  componentDidMount() {
+    const formData = JSON.parse(localStorage.getItem('dentistrySuppliesAndMarketing'));
+
+    this.formRef.current.setFieldsValue(formData);
+
+    window.onbeforeunload = (e) => {
+      localStorage.removeItem('dentistrySuppliesAndMarketing');
+    };
+  }
+
   onBack = () => {
     const { history } = this.props;
     history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`);
   }
 
+  onFinish = data => {
+    localStorage.setItem('dentistrySuppliesAndMarketing', JSON.stringify(data));
+
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`);
+  }
+
   render() {
+    const { initialValues } = this.state;
+
     return (
-      <>
+      <div className="supplies-and-marketing-container">
         <PageHeader
           className="site-page-header"
           title="Dentistry Submit Data"
@@ -31,34 +73,101 @@ class SuppliesAndMarketingStep extends Component {
         <Divider />
 
         <Form
+          ref={this.formRef}
           layout="vertical"
+          onFinish={this.onFinish}
+          initialValues={initialValues}
+          validateMessages={validateMessages}
         >
           <Row gutter={32}>
             <Col span={12}>
               <Card title="Supplies / Raw Materials">
-                <Form.Item label="Dr. Supplies">
+                <Form.Item
+                  label="Dr. Supplies"
+                  name="supplies"
+                  fieldKey="supplies"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Hygiene Supplies">
+                <Form.Item
+                  label="Hygiene Supplies"
+                  name="hygieneSupplies"
+                  fieldKey="hygieneSupplies"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Shared Supplies">
+                <Form.Item
+                  label="Shared Supplies"
+                  name="sharedSupplies"
+                  fieldKey="sharedSupplies"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Hygiene Product">
+                <Form.Item
+                  label="Hygiene Product"
+                  name="hygieneProduct"
+                  fieldKey="hygieneProduct"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
               </Card>
             </Col>
             <Col span={12}>
               <Card title="Marketing">
-                <Form.Item label="Website">
+                <Form.Item
+                  label="Website"
+                  name="website"
+                  fieldKey="website"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label="Marketing">
-                <Input />
+                <Form.Item
+                  label="Marketing"
+                  name="marketing"
+                  fieldKey="marketing"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
                 </Form.Item>
-                <Form.Item label="Advertising">
+                <Form.Item
+                  label="Advertising"
+                  name="advertising"
+                  fieldKey="advertising"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
               </Card>
@@ -75,15 +184,15 @@ class SuppliesAndMarketingStep extends Component {
                 Back
               </Button>
               <Button
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`}
                 type="primary"
+                htmlType="submit"
               >
                 Next
               </Button>
             </Col>
           </Row>
         </Form>
-      </>
+      </div>
     );
   }
 }
