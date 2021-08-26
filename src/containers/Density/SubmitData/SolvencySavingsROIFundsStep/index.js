@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,9 +15,14 @@ import {
 import AppConfig from '@/constants/AppConfig';
 
 class SolvencySavingsROIFundsStep extends Component {
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`);
+  }
+
   render() {
     return (
-      <>
+      <div className="solvency-savings-roi-funds-container">
         <PageHeader
           className="site-page-header"
           title="Dentistry Submit Data"
@@ -77,7 +84,7 @@ class SolvencySavingsROIFundsStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
@@ -90,9 +97,13 @@ class SolvencySavingsROIFundsStep extends Component {
             </Col>
           </Row>
         </Form>
-      </>
+      </div>
     );
   }
 }
 
-export default SolvencySavingsROIFundsStep;
+SolvencySavingsROIFundsStep.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(SolvencySavingsROIFundsStep);
