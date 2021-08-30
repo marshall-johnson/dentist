@@ -27,22 +27,18 @@ class OccupanyAndHPStep extends Component {
 
     this.state = {
       initialValues: {
-        occupancy: {
-          mortgageOrRent: null,
-          utilities: null,
-          janitorial: null,
-          repairs: null,
-          facilitiesInsurance: null,
-          securitySystem: null,
-          propertyTax: null,
-          total: null,
-        },
-        humanAndPhysicalResourceDevelopment: {
-          equipType: null,
-          officeFurnitureAndRepairs: null,
-          staffContinuingEducation: null,
-          staffScpdTuitionOrTravel: null,
-        },
+        mortgageOrRent: null,
+        utilities: null,
+        janitorial: null,
+        repairs: null,
+        facilitiesInsurance: null,
+        securitySystem: null,
+        propertyTax: null,
+        total: null,
+        equipType: null,
+        officeFurnitureAndRepairs: null,
+        staffContinuingEducation: null,
+        staffScpdTuitionOrTravel: null,
       }
     };
   }
@@ -93,8 +89,8 @@ class OccupanyAndHPStep extends Component {
               <Card title="Occupancy">
                 <Form.Item
                   label="Mortgage / Rent"
-                  name={['occupancy', 'mortgageOrRent']}
-                  fieldKey={['occupancy', 'mortgageOrRent']}
+                  name='mortgageOrRent'
+                  fieldKey='mortgageOrRent'
                   rules={[
                     {
                       required: true,
@@ -105,8 +101,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Utilities"
-                  name={['occupancy', 'utilities']}
-                  fieldKey={['occupancy', 'utilities']}
+                  name='utilities'
+                  fieldKey='utilities'
                   rules={[
                     {
                       required: true,
@@ -117,8 +113,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Janitorial"
-                  name={['occupancy', 'janitorial']}
-                  fieldKey={['occupancy', 'janitorial']}
+                  name='janitorial'
+                  fieldKey='janitorial'
                   rules={[
                     {
                       required: true,
@@ -129,8 +125,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Repairs / Maintenance / Leasehold Improv"
-                  name={['occupancy', 'repairs']}
-                  fieldKey={['occupancy', 'repairs']}
+                  name='repairs'
+                  fieldKey='repairs'
                   rules={[
                     {
                       required: true,
@@ -141,8 +137,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Facilities Insurance"
-                  name={['occupancy', 'facilitiesInsurance']}
-                  fieldKey={['occupancy', 'facilitiesInsurance']}
+                  name='facilitiesInsurance'
+                  fieldKey='facilitiesInsurance'
                   rules={[
                     {
                       required: true,
@@ -153,8 +149,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Security System"
-                  name={['occupancy', 'securitySystem']}
-                  fieldKey={['occupancy', 'securitySystem']}
+                  name='securitySystem'
+                  fieldKey='securitySystem'
                   rules={[
                     {
                       required: true,
@@ -165,8 +161,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Property Tax"
-                  name={['occupancy', 'propertyTax']}
-                  fieldKey={['occupancy', 'propertyTax']}
+                  name='propertyTax'
+                  fieldKey='propertyTax'
                   rules={[
                     {
                       required: true,
@@ -183,8 +179,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Total"
-                  name={['occupancy', 'total']}
-                  fieldKey={['occupancy', 'total']}
+                  name='total'
+                  fieldKey='total'
                   rules={[
                     {
                       required: true,
@@ -205,8 +201,8 @@ class OccupanyAndHPStep extends Component {
               <Card title="Human & Physical Resource Development">
                 <Form.Item
                   label="Dental Equip Loan / Equip Maintenance"
-                  name={['humanAndPhysicalResourceDevelopment', 'equipType']}
-                  fieldKey={['humanAndPhysicalResourceDevelopment', 'equipType']}
+                  name='equipType'
+                  fieldKey='equipType'
                   rules={[
                     {
                       required: true,
@@ -217,8 +213,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Office Furniture and Repairs"
-                  name={['humanAndPhysicalResourceDevelopment', 'officeFurnitureAndRepairs']}
-                  fieldKey={['humanAndPhysicalResourceDevelopment', 'officeFurnitureAndRepairs']}
+                  name='officeFurnitureAndRepairs'
+                  fieldKey='officeFurnitureAndRepairs'
                   rules={[
                     {
                       required: true,
@@ -229,8 +225,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Staff Continuing Education"
-                  name={['humanAndPhysicalResourceDevelopment', 'staffContinuingEducation']}
-                  fieldKey={['humanAndPhysicalResourceDevelopment', 'staffContinuingEducation']}
+                  name='staffContinuingEducation'
+                  fieldKey='staffContinuingEducation'
                   rules={[
                     {
                       required: true,
@@ -241,8 +237,8 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Staff SCPD Tuition / Travel"
-                  name={['humanAndPhysicalResourceDevelopment', 'staffScpdTuitionOrTravel']}
-                  fieldKey={['humanAndPhysicalResourceDevelopment', 'staffScpdTuitionOrTravel']}
+                  name='staffScpdTuitionOrTravel'
+                  fieldKey='staffScpdTuitionOrTravel'
                   rules={[
                     {
                       required: true,

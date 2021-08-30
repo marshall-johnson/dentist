@@ -32,7 +32,7 @@ class StaffCompensationStep extends Component {
           employerMatching: null,
           futaSuta: null,
           medicalInsurance: null,
-          pensionOrProfitSharing: null,
+          pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
           workComp: null,
@@ -42,7 +42,7 @@ class StaffCompensationStep extends Component {
           employerMatching: null,
           futaSuta: null,
           medicalInsurance: null,
-          pensionOrProfitSharing: null,
+          pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
         },
@@ -51,7 +51,7 @@ class StaffCompensationStep extends Component {
           employerMatching: null,
           futaSuta: null,
           medicalInsurance: null,
-          pensionOrProfitSharing: null,
+          pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
         },
@@ -60,7 +60,7 @@ class StaffCompensationStep extends Component {
           employerMatching: null,
           futaSuta: null,
           medicalInsurance: null,
-          pensionOrProfitSharing: null,
+          pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
         }
@@ -156,8 +156,8 @@ class StaffCompensationStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
-                  name={['assistants', 'pensionOrProfitSharing']}
-                  fieldKey={['assistants', 'pensionOrProfitSharing']}
+                  name={['assistants', 'pensionProfitSharing']}
+                  fieldKey={['assistants', 'pensionProfitSharing']}
                   rules={[{ required: true }]}
                 >
                   <Input />
@@ -244,8 +244,8 @@ class StaffCompensationStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
-                  name={['administrative', 'pensionOrProfitSharing']}
-                  fieldKey={['administrative', 'pensionOrProfitSharing']}
+                  name={['administrative', 'pensionProfitSharing']}
+                  fieldKey={['administrative', 'pensionProfitSharing']}
                   rules={[{ required: true }]}
                 >
                   <Input />
@@ -324,8 +324,8 @@ class StaffCompensationStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
-                  name={['hygiene', 'pensionOrProfitSharing']}
-                  fieldKey={['hygiene', 'pensionOrProfitSharing']}
+                  name={['hygiene', 'pensionProfitSharing']}
+                  fieldKey={['hygiene', 'pensionProfitSharing']}
                   rules={[{ required: true }]}
                 >
                   <Input />
@@ -404,8 +404,8 @@ class StaffCompensationStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
-                  name={['hygieneAssistant', 'pensionOrProfitSharing']}
-                  fieldKey={['hygieneAssistant', 'pensionOrProfitSharing']}
+                  name={['hygieneAssistant', 'pensionProfitSharing']}
+                  fieldKey={['hygieneAssistant', 'pensionProfitSharing']}
                   rules={[{ required: true }]}
                 >
                   <Input />
