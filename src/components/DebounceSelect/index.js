@@ -31,8 +31,6 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 800, optionInit = [], 
 
   return (
     <Select
-      labelInValue
-      filterOption={false}
       onSearch={debounceFetcher}
       notFoundContent={fetching ? <Spin size="small" /> : null}
       {...props}

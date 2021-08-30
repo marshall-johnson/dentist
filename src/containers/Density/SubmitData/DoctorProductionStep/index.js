@@ -41,14 +41,14 @@ class DoctorProductionStep extends Component {
       initialValues: {
         doctorProduction: [
           {
-            name: null,
-            drProduction: null,
+            doctorId: null,
+            production: null,
             discount: null,
             netProduction: null,
-            drPatientHoursAvailable: null,
-            drPatientHoursScheduled: null,
-            drPatientHoursCancelled: null,
-            drPatientHoursRecoverd: null,
+            patientHoursAvailable: null,
+            patientHoursScheduled: null,
+            patientHoursCancelled: null,
+            patientHoursRecoverd: null,
             patientVisits: null,
           }
         ],
@@ -158,8 +158,8 @@ class DoctorProductionStep extends Component {
                       <Form.Item
                         label="Doctor Name"
                         rules={[{ required: true }]}
-                        name={[field.name, 'name']}
-                        fieldKey={[field.fieldKey, 'name']}
+                        name={[field.name, 'doctorId']}
+                        fieldKey={[field.fieldKey, 'doctorId']}
                       >
                         <DebounceSelect
                           showSearch
@@ -171,8 +171,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr. Production"
-                        name={[field.name, 'drProduction']}
-                        fieldKey={[field.fieldKey, 'drProduction']}
+                        name={[field.name, 'production']}
+                        fieldKey={[field.fieldKey, 'production']}
                         rules={[{ required: true }]}
                       >
                         <Input />
@@ -215,8 +215,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr Patient Hours Available"
-                        name={[field.name, 'drPatientHoursAvailable']}
-                        fieldKey={[field.fieldKey, 'drPatientHoursAvailable']}
+                        name={[field.name, 'patientHoursAvailable']}
+                        fieldKey={[field.fieldKey, 'patientHoursAvailable']}
                         rules={[
                           {
                             required: true,
@@ -233,8 +233,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr Patient Hours Scheduled"
-                        name={[field.name, 'drPatientHoursScheduled']}
-                        fieldKey={[field.fieldKey, 'drPatientHoursScheduled']}
+                        name={[field.name, 'patientHoursScheduled']}
+                        fieldKey={[field.fieldKey, 'patientHoursScheduled']}
                         rules={[
                           {
                             required: true,
@@ -251,8 +251,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr. Patient Hours Cancelled"
-                        name={[field.name, 'drPatientHoursCancelled']}
-                        fieldKey={[field.fieldKey, 'drPatientHoursCancelled']}
+                        name={[field.name, 'patientHoursCancelled']}
+                        fieldKey={[field.fieldKey, 'patientHoursCancelled']}
                         rules={[
                           {
                             required: true,
@@ -269,8 +269,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr. Patient Hours Recoverd"
-                        name={[field.name, 'drPatientHoursRecoverd']}
-                        fieldKey={[field.fieldKey, 'drPatientHoursRecoverd']}
+                        name={[field.name, 'patientHoursRecoverd']}
+                        fieldKey={[field.fieldKey, 'patientHoursRecoverd']}
                         rules={[
                           {
                             required: true,

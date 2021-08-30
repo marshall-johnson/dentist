@@ -41,7 +41,7 @@ class HygeinistProductionStep extends Component {
       initialValues: {
         hygenistProduction: [
           {
-            name: null,
+            hygienistId: null,
             production: null,
             discount: null,
             netProduction: null,
@@ -143,8 +143,8 @@ class HygeinistProductionStep extends Component {
                     <Col span={12} key={field.key}>
                       <Form.Item
                         label="Hygenist Name"
-                        name={[field.name, 'name']}
-                        fieldKey={[field.fieldKey, 'name']}
+                        name={[field.name, 'hygienistId']}
+                        fieldKey={[field.fieldKey, 'hygienistId']}
                         rules={[{ required: true, message: 'Hygenist is required' }]}
                       >
                         <DebounceSelect
