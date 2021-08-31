@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,9 +15,14 @@ import {
 import AppConfig from '@/constants/AppConfig';
 
 class OccupanyAndHPStep extends Component {
+  onBack = () => {
+    const { history } = this.props;
+    history.push(`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`);
+  }
+
   render() {
     return (
-      <>
+      <div className="occupany-and-h-and-p-container">
         <PageHeader
           className="site-page-header"
           title="Ortho Submit Data"
@@ -84,7 +91,7 @@ class OccupanyAndHPStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
@@ -97,9 +104,13 @@ class OccupanyAndHPStep extends Component {
             </Col>
           </Row>
         </Form>
-      </>
+      </div>
     );
   }
 }
 
-export default OccupanyAndHPStep;
+OccupanyAndHPStep.propTypes = {
+  history: PropTypes.object,
+};
+
+export default withRouter(OccupanyAndHPStep);
