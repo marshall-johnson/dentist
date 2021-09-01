@@ -28,7 +28,6 @@ class SubmitDataContainer extends Component {
       localStorage.removeItem('dentistryHygienistProduction');
       localStorage.removeItem('dentistryPatientActivity');
       localStorage.removeItem('dentistryCollections');
-      localStorage.removeItem('orthoDoctorProduction');
       localStorage.removeItem('dentistryStaffCompensation');
       localStorage.removeItem('dentistryOccupanyAndHP');
       localStorage.removeItem('dentistrySuppliesAndMarketing');
@@ -36,6 +35,9 @@ class SubmitDataContainer extends Component {
       localStorage.removeItem('dentistryAdministrativeServices');
       localStorage.removeItem('dentistryDoctorSalary');
       localStorage.removeItem('dentistrySolvencySavingsROIFunds');
+      localStorage.removeItem('orthoDoctorProduction');
+      localStorage.removeItem('orthoPatientActivity');
+      localStorage.removeItem('orthoStaffCompensation');
     };
   }
 
