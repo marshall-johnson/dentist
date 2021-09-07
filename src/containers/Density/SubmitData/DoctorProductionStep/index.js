@@ -349,7 +349,7 @@ class DoctorProductionStep extends Component {
             </Col>
           </Row>
         </Form>
-      </div >
+      </div>
     );
   }
 }

@@ -41,12 +41,12 @@ class DoctorProductionStep extends Component {
       initialValues: {
         doctorProduction: [
           {
-            name: null,
-            drProduction: null,
+            doctorId: null,
+            production: null,
             productionAdj: null,
             netProduction: null,
-            hoursAvailable: null,
-            hoursSchedule: null,
+            patientHoursAvailable: null,
+            patientHoursScheduled: null,
             startApptsAvailable: null,
             patientVisits: null,
             apptChanges: null,
@@ -140,8 +140,8 @@ class DoctorProductionStep extends Component {
                       <Form.Item
                         label="Doctor Name"
                         rules={[{ required: true }]}
-                        name={[field.name, 'name']}
-                        fieldKey={[field.fieldKey, 'name']}
+                        name={[field.name, 'doctorId']}
+                        fieldKey={[field.fieldKey, 'doctorId']}
                       >
                         <DebounceSelect
                           showSearch
@@ -153,8 +153,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr. Production"
-                        name={[field.name, 'drProduction']}
-                        fieldKey={[field.fieldKey, 'drProduction']}
+                        name={[field.name, 'production']}
+                        fieldKey={[field.fieldKey, 'production']}
                         rules={[{ required: true }]}
                       >
                         <Input />
@@ -191,8 +191,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr Patient Hours Available"
-                        name={[field.name, 'hoursAvailable']}
-                        fieldKey={[field.fieldKey, 'hoursAvailable']}
+                        name={[field.name, 'patientHoursAvailable']}
+                        fieldKey={[field.fieldKey, 'patientHoursAvailable']}
                         rules={[
                           {
                             required: true,
@@ -209,8 +209,8 @@ class DoctorProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Dr. Patient Hours Schedule w/ Pts"
-                        name={[field.name, 'hoursSchedule']}
-                        fieldKey={[field.fieldKey, 'hoursSchedule']}
+                        name={[field.name, 'patientHoursScheduled']}
+                        fieldKey={[field.fieldKey, 'patientHoursScheduled']}
                         rules={[
                           {
                             required: true,
