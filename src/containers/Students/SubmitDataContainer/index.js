@@ -41,6 +41,8 @@ class SubmitDataContainer extends Component {
       localStorage.removeItem('orthoOccupanyAndHP');
       localStorage.removeItem('orthoSuppliesAndMarketing');
       localStorage.removeItem('orthoDoctorSalary');
+      localStorage.removeItem('orthoLaboratory');
+      localStorage.removeItem('orthoAdministrativeServices');
     };
   }
 
