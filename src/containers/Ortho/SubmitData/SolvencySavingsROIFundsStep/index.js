@@ -255,7 +255,7 @@ class SolvencySavingsROIFundsStep extends Component {
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`}
+                onClick={this.onBack}
               >
                 Back
               </Button>
