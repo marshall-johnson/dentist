@@ -200,7 +200,7 @@ class HygeinistProductionStep extends Component {
                         <Input />
                       </Form.Item>
                       <Form.Item
-                        label="Hours Available"
+                        label="Hygiene Hours Available"
                         name={[field.name, 'hoursAvailable']}
                         fieldKey={[field.fieldKey, 'hoursAvailable']}
                         rules={[
@@ -218,7 +218,7 @@ class HygeinistProductionStep extends Component {
                         <Input />
                       </Form.Item>
                       <Form.Item
-                        label="Hours Scheduled"
+                        label="Hygiene Hours Scheduled"
                         name={[field.name, 'hoursScheduled']}
                         fieldKey={[field.fieldKey, 'hoursScheduled']}
                         rules={[
@@ -236,7 +236,7 @@ class HygeinistProductionStep extends Component {
                         <Input />
                       </Form.Item>
                       <Form.Item
-                        label="Hours Cancelled"
+                        label="Hygiene Hours Cancelled"
                         name={[field.name, 'hoursCancelled']}
                         fieldKey={[field.fieldKey, 'hoursCancelled']}
                         rules={[
@@ -254,7 +254,7 @@ class HygeinistProductionStep extends Component {
                         <Input />
                       </Form.Item>
                       <Form.Item
-                        label="Hours Recoverd"
+                        label="Hygiene Hours Recoverd"
                         name={[field.name, 'hoursRecoverd']}
                         fieldKey={[field.fieldKey, 'hoursRecoverd']}
                         rules={[

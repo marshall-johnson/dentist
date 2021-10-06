@@ -37,9 +37,9 @@ class SolvencySavingsROIFundsStep extends Component {
         total: null,
         pension: null,
         drCe: null,
-        longTermInvestments: null,
-        goodwillLoanPracticePayments: null,
-        scpdExpenses: null,
+        draw: null,
+        dividend: null,
+        distributions: null,
         profitabilityPayForTeam: null,
         otherShortTermDebt: null,
       }
@@ -196,9 +196,9 @@ class SolvencySavingsROIFundsStep extends Component {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label="Long-Term Investments"
-                  name="longTermInvestments"
-                  fieldKey="longTermInvestments"
+                  label="Draw"
+                  name="draw"
+                  fieldKey="draw"
                   rules={[
                     {
                       required: true,
@@ -208,9 +208,9 @@ class SolvencySavingsROIFundsStep extends Component {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label="Goodwill Loan Practice Payments"
-                  name="goodwillLoanPracticePayments"
-                  fieldKey="goodwillLoanPracticePayments"
+                  label="Dividend"
+                  name="dividend"
+                  fieldKey="dividend"
                   rules={[
                     {
                       required: true,
@@ -220,9 +220,9 @@ class SolvencySavingsROIFundsStep extends Component {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label="SCPD Expenses"
-                  name="scpdExpenses"
-                  fieldKey="scpdExpenses"
+                  label="Distributions"
+                  name="distributions"
+                  fieldKey="distributions"
                   rules={[
                     {
                       required: true,
