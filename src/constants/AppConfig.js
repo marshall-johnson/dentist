@@ -36,6 +36,7 @@ const AppConfig = {
     SUBMIT_DATA: '/submit-data',
     DENTISTRY: '/dentistry',
     ORTHO: '/ortho',
+    REGISTRATION: '/registration',
   }
 };
 
