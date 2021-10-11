@@ -11,6 +11,7 @@ import {
   setFlashError,
   setFlashSuccess,
 } from '@/actions/flashMessageActions';
+import AppConfig from '@/constants/AppConfig';
 
 export const createUser = ({ params, history }) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -22,7 +23,7 @@ export const createUser = ({ params, history }) => async (dispatch) => {
         dispatch(clearErrors('userItem'));
         dispatch(setFlashSuccess({ message }));
 
-        history.go(0);
+        history.push(AppConfig.ROUTES.REGISTRATION);
       } else {
         dispatch(setFlashError({ message }));
       }
