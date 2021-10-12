@@ -6,10 +6,12 @@ import ReportContainer from '@/containers/Reports';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
+import RegistrationContainer from '@/containers/RegistrationContainer';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
 import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
+import RegistrationCreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
 
 function Routes() {
   return (
@@ -52,6 +54,16 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.ORTHO}/:step`}
         component={OrthoSubmitDataContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.REGISTRATION}`}
+        component={RegistrationContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.REGISTRATION}/${AppConfig.REGISTRATIONS.CREATE_USER}`}
+        component={RegistrationCreateUserContainer}
       />
       <Route
         path='*'

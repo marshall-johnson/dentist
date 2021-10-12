@@ -27,6 +27,9 @@ const AppConfig = {
   SCHEDULE_CLASS_STEPS: {
     REGISTER_CLASS: 'register-class',
   },
+  REGISTRATIONS: {
+    CREATE_USER: 'create-user',
+  },
   ROUTES: {
     STUDENTS_SCHEDULE: '/students/schedule',
     STUDENTS_SUBMIT_DATA: '/students/submit-data',
@@ -36,6 +39,7 @@ const AppConfig = {
     SUBMIT_DATA: '/submit-data',
     DENTISTRY: '/dentistry',
     ORTHO: '/ortho',
+    REGISTRATION: '/registration',
   }
 };
 

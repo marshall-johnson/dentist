@@ -72,6 +72,9 @@ class AppContainer extends Component {
               <Menu.Item key="6" icon={<UserOutlined />}>
                 <Link to={`${AppConfig.ROUTES.COACHING}`}>Coaching</Link>
               </Menu.Item>
+              <Menu.Item key="7" icon={<UserOutlined />}>
+                <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>Registration</Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">
