@@ -11803,6 +11803,11 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
+survey-react@^1.8.71:
+  version "1.8.71"
+  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.8.71.tgz#e0eef29348f708344b2c053c7e0f60e5cbd456d7"
+  integrity sha512-Z2J9ihmwzby3NjsX18LKHnTtD1/dinKUWEOlPUKs9H65ZWSKTgQXf7tghHMBGjCaq9Bkia1cluBThUgFj3h6lQ==
+
 svg-parser@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/svg-parser/-/svg-parser-2.0.4.tgz#fdc2e29e13951736140b76cb122c8ee6630eb6b5"

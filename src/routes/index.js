@@ -8,10 +8,15 @@ import CoachingContainer from '@/containers/CoachingContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
 import RegistrationContainer from '@/containers/RegistrationContainer';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
+import EnergyContainer from '@/containers/EnergyConversion/EnergyContainer';
+import DirectionContainer from '@/containers/EnergyConversion/DirectionContainer';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
 import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
+import AttitudeAndSkillsContainer from '@/containers/EnergyConversion/AttitudeAndSkillsContainer';
 import RegistrationCreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
+import StructureAndSystemsContainer from '@/containers/EnergyConversion/StructureAndSystemsContainer';
+import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion/CommunicationAndCoordinationContainer';
 
 function Routes() {
   return (
@@ -64,6 +69,31 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.REGISTRATION}/${AppConfig.REGISTRATIONS.CREATE_USER}`}
         component={RegistrationCreateUserContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
+        component={EnergyContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}
+        component={DirectionContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}
+        component={StructureAndSystemsContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}
+        component={CommunicationAndCoordinationContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
+        component={AttitudeAndSkillsContainer}
       />
       <Route
         path='*'

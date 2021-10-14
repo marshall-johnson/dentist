@@ -8,6 +8,7 @@ import purchase from './purchase';
 import classRoom from './classRoom';
 import hygienist from './hygienist';
 import flashMessage from './flashMessage';
+import questionsSurvey from './questionsSurvey';
 import classRoomScheduled from './classRoomScheduled';
 import classRoomCompleted from './classRoomCompleted';
 
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   classRoom,
   hygienist,
   flashMessage,
+  questionsSurvey,
   classRoomScheduled,
   classRoomCompleted,
 });

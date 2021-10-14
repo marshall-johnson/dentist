@@ -50,7 +50,12 @@ class AppContainer extends Component {
     return (
       <div className="app-container">
         <Layout style={{ minHeight: '100vh' }}>
-          <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+          <Sider
+            width="310"
+            collapsible
+            collapsed={collapsed}
+            onCollapse={this.onCollapse}
+          >
             <div className="logo">
               <img src={logoImage} alt="logo" />
             </div>
@@ -75,6 +80,23 @@ class AppContainer extends Component {
               <Menu.Item key="7" icon={<UserOutlined />}>
                 <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>Registration</Link>
               </Menu.Item>
+              <SubMenu key="sub2" icon={<UserOutlined />} title="Energy Conversion">
+                <Menu.Item key="8">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}>Energy</Link>
+                </Menu.Item>
+                <Menu.Item key="9">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}>Direction</Link>
+                </Menu.Item>
+                <Menu.Item key="10">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}>Structure and Systems</Link>
+                </Menu.Item>
+                <Menu.Item key="11">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}>Communication and Coordination</Link>
+                </Menu.Item>
+                <Menu.Item key="12">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}>Attitude and Skills</Link>
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </Sider>
           <Layout className="site-layout">

@@ -27,6 +27,13 @@ const AppConfig = {
   SCHEDULE_CLASS_STEPS: {
     REGISTER_CLASS: 'register-class',
   },
+  ENERGY_CONVERSION: {
+    ENERGY: 'energy',
+    DIRECTION: 'direction',
+    STRUCTURE_AND_SYSTEMS: 'structure-and-systems',
+    COMMUNICATION_AND_COORDINATION: 'communication-and-coordination',
+    ATTITUDE_AND_SKILLS: 'attitude-and-skills',
+  },
   REGISTRATIONS: {
     CREATE_USER: 'create-user',
   },
@@ -40,6 +47,7 @@ const AppConfig = {
     DENTISTRY: '/dentistry',
     ORTHO: '/ortho',
     REGISTRATION: '/registration',
+    ENERGY_CONVERSION: '/energy-conversion',
   }
 };
 
