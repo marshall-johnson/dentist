@@ -37,6 +37,10 @@ const AppConfig = {
   REGISTRATIONS: {
     CREATE_USER: 'create-user',
   },
+  ENERGY_PROFILE: {
+    DATA_RESULT: 'data-result',
+    DATA_ANALYSIS: 'data-analysis',
+  },
   ROUTES: {
     STUDENTS_SCHEDULE: '/students/schedule',
     STUDENTS_SUBMIT_DATA: '/students/submit-data',
@@ -48,6 +52,7 @@ const AppConfig = {
     ORTHO: '/ortho',
     REGISTRATION: '/registration',
     ENERGY_CONVERSION: '/energy-conversion',
+    ENERGY_PROFILE: '/energy-profile',
   }
 };
 

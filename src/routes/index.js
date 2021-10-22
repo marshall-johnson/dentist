@@ -3,12 +3,15 @@ import { Switch, Route } from 'react-router-dom';
 
 import AppConfig from '@/constants/AppConfig';
 import ReportContainer from '@/containers/Reports';
+import EnergyProfile from '@/containers/EnergyProfile';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
 import RegistrationContainer from '@/containers/RegistrationContainer';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 import EnergyContainer from '@/containers/EnergyConversion/EnergyContainer';
+import EnergyProfileDataResult from '@/containers/EnergyProfile/DataResult';
+import EnergyProfileDataAnalysis from '@/containers/EnergyProfile/DataAnalysis';
 import DirectionContainer from '@/containers/EnergyConversion/DirectionContainer';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
@@ -95,6 +98,24 @@ function Routes() {
         path={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
         component={AttitudeAndSkillsContainer}
       />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_PROFILE}`}
+        component={EnergyProfile}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_PROFILE}/${AppConfig.ENERGY_PROFILE.DATA_RESULT}`}
+        component={EnergyProfileDataResult}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.ENERGY_PROFILE}/${AppConfig.ENERGY_PROFILE.DATA_ANALYSIS}`}
+        component={EnergyProfileDataAnalysis}
+      />
+
       <Route
         path='*'
         component={NotFoundContainer}

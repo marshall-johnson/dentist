@@ -97,6 +97,9 @@ class AppContainer extends Component {
                   <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}>Attitude and Skills</Link>
                 </Menu.Item>
               </SubMenu>
+              <Menu.Item key="13" icon={<PieChartOutlined />}>
+                <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>Energy Profile</Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">
