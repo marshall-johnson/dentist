@@ -6,6 +6,7 @@ import { Layout, Menu } from 'antd';
 import {
   PieChartOutlined,
   UserOutlined,
+  DollarOutlined,
 } from '@ant-design/icons';
 
 import Routes from '@/routes';
@@ -99,6 +100,9 @@ class AppContainer extends Component {
               </SubMenu>
               <Menu.Item key="13" icon={<PieChartOutlined />}>
                 <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>Energy Profile</Link>
+              </Menu.Item>
+              <Menu.Item key="14" icon={<DollarOutlined />}>
+                <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>Profit and Loss</Link>
               </Menu.Item>
             </Menu>
           </Sider>

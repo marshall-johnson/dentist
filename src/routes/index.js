@@ -9,6 +9,7 @@ import CoachingContainer from '@/containers/CoachingContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
 import RegistrationContainer from '@/containers/RegistrationContainer';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
+import ProfitAndLossContainer from '@/containers/ProfitAndLossContainer';
 import EnergyContainer from '@/containers/EnergyConversion/EnergyContainer';
 import EnergyProfileDataResult from '@/containers/EnergyProfile/DataResult';
 import EnergyProfileDataAnalysis from '@/containers/EnergyProfile/DataAnalysis';
@@ -114,6 +115,12 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.ENERGY_PROFILE}/${AppConfig.ENERGY_PROFILE.DATA_ANALYSIS}`}
         component={EnergyProfileDataAnalysis}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}
+        component={ProfitAndLossContainer}
       />
 
       <Route

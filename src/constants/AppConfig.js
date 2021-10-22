@@ -53,6 +53,7 @@ const AppConfig = {
     REGISTRATION: '/registration',
     ENERGY_CONVERSION: '/energy-conversion',
     ENERGY_PROFILE: '/energy-profile',
+    PROFIT_AND_LOSS: '/profit-and-loss',
   }
 };
 
