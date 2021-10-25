@@ -6,6 +6,7 @@ import ReportContainer from '@/containers/Reports';
 import EnergyProfile from '@/containers/EnergyProfile';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
+import ProfitScanContainer from '@/containers/ProfitScanContainer';
 import OrthoSubmitDataContainer from '@/containers/Ortho/SubmitData';
 import RegistrationContainer from '@/containers/RegistrationContainer';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
@@ -121,6 +122,12 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}
         component={ProfitAndLossContainer}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.PROFIT_SCAN}`}
+        component={ProfitScanContainer}
       />
 
       <Route

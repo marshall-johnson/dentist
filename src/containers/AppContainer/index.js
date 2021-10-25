@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import {
-  PieChartOutlined,
   UserOutlined,
-  DollarOutlined,
+  PieChartOutlined,
 } from '@ant-design/icons';
 
 import Routes from '@/routes';
@@ -52,7 +51,7 @@ class AppContainer extends Component {
       <div className="app-container">
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
-            width="310"
+            width="330"
             collapsible
             collapsed={collapsed}
             onCollapse={this.onCollapse}
@@ -78,32 +77,37 @@ class AppContainer extends Component {
               <Menu.Item key="6" icon={<UserOutlined />}>
                 <Link to={`${AppConfig.ROUTES.COACHING}`}>Coaching</Link>
               </Menu.Item>
-              <Menu.Item key="7" icon={<UserOutlined />}>
-                <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>Registration</Link>
-              </Menu.Item>
-              <SubMenu key="sub2" icon={<UserOutlined />} title="Energy Conversion">
-                <Menu.Item key="8">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}>Energy</Link>
+              <SubMenu key="sub2" icon={<UserOutlined />} title="Registration">
+                <Menu.Item key="7">
+                  <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>Registration</Link>
                 </Menu.Item>
-                <Menu.Item key="9">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}>Direction</Link>
+                <SubMenu key="sub-inside-1" title="Energy Conversion">
+                  <Menu.Item key="8">
+                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}>Energy</Link>
+                  </Menu.Item>
+                  <Menu.Item key="9">
+                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}>Direction</Link>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}>Structure and Systems</Link>
+                  </Menu.Item>
+                  <Menu.Item key="11">
+                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}>Communication and Coordination</Link>
+                  </Menu.Item>
+                  <Menu.Item key="12">
+                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}>Attitude and Skills</Link>
+                  </Menu.Item>
+                </SubMenu>
+                <Menu.Item key="13">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>Energy Profile</Link>
                 </Menu.Item>
-                <Menu.Item key="10">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}>Structure and Systems</Link>
+                <Menu.Item key="14">
+                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>Profit and Loss</Link>
                 </Menu.Item>
-                <Menu.Item key="11">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}>Communication and Coordination</Link>
-                </Menu.Item>
-                <Menu.Item key="12">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}>Attitude and Skills</Link>
+                <Menu.Item key="15">
+                  <Link to={`${AppConfig.ROUTES.PROFIT_SCAN}`}>Profit Scan</Link>
                 </Menu.Item>
               </SubMenu>
-              <Menu.Item key="13" icon={<PieChartOutlined />}>
-                <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>Energy Profile</Link>
-              </Menu.Item>
-              <Menu.Item key="14" icon={<DollarOutlined />}>
-                <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>Profit and Loss</Link>
-              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">

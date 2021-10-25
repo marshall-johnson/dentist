@@ -54,6 +54,7 @@ const AppConfig = {
     ENERGY_CONVERSION: '/energy-conversion',
     ENERGY_PROFILE: '/energy-profile',
     PROFIT_AND_LOSS: '/profit-and-loss',
+    PROFIT_SCAN: '/profit-scan',
   }
 };
 
