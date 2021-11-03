@@ -57,50 +57,50 @@ class AppContainer extends Component {
               <img src={logoImage} alt="logo" />
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <SubMenu key="sub2" icon={<UserOutlined />} title="Registration">
-                <Menu.Item key="7">
+              <SubMenu key="sub1" icon={<UserOutlined />} title="Registration">
+                <Menu.Item key="1">
                   <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>
                     Registration
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="8">
+                <Menu.Item key="2">
                   <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>PPP</Link>
                 </Menu.Item>
-                <Menu.Item key="9">
+                <Menu.Item key="3">
                   <Link to={`${AppConfig.ROUTES.CHART_AUDIT}`}>
                     Chart audit
                   </Link>
                 </Menu.Item>
                 <SubMenu key="sub-inside-1" title="Energy Conversion">
-                  <Menu.Item key="10">
+                  <Menu.Item key="4">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
                     >
                       Energy
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="11">
+                  <Menu.Item key="5">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}
                     >
                       Direction
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="12">
+                  <Menu.Item key="6">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}
                     >
                       Structure and Systems
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="13">
+                  <Menu.Item key="7">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}
                     >
                       Communication and Coordination
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="14">
+                  <Menu.Item key="8">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
                     >
@@ -108,40 +108,57 @@ class AppContainer extends Component {
                     </Link>
                   </Menu.Item>
                 </SubMenu>
-                <Menu.Item key="15">
+                <Menu.Item key="9">
                   <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>
                     Energy Profile
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="16">
+                <Menu.Item key="10">
                   <Link to={`${AppConfig.ROUTES.PROFIT_SCAN}`}>
                     Profit Scan
                   </Link>
                 </Menu.Item>
               </SubMenu>
-              <SubMenu key="sub1" icon={<UserOutlined />} title="Students">
-                <Menu.Item key="2">
+              <SubMenu key="sub2" icon={<UserOutlined />} title="Students">
+                <Menu.Item key="11">
                   <Link
                     to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}
                   >
                     Schedule
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="3">
+                <Menu.Item key="12">
                   <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>
                     Submit Data
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="13">
                   <Link to={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}>
                     Purchase Items
                   </Link>
                 </Menu.Item>
               </SubMenu>
-              <Menu.Item key="6" icon={<UserOutlined />}>
-                <Link to={`${AppConfig.ROUTES.COACHING}`}>Coaching</Link>
-              </Menu.Item>
-              <Menu.Item key="5" icon={<PieChartOutlined />}>
+              <SubMenu key="sub3" icon={<UserOutlined />} title="Coaching">
+                <Menu.Item key="14">
+                  <Link to={`${AppConfig.ROUTES.STUDENT_DATA}`}>
+                    Student Data
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="15">
+                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>PPP</Link>
+                </Menu.Item>
+                <Menu.Item key="16">
+                  <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE_REPORT}`}>
+                    Energy Profile Report
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="17">
+                  <Link to={`${AppConfig.ROUTES.CHART_AUDIT_REPORT}`}>
+                    Chart Audit Report
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+              <Menu.Item key="18" icon={<PieChartOutlined />}>
                 <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
               </Menu.Item>
             </Menu>
