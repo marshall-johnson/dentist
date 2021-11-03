@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import {
-  UserOutlined,
-  PieChartOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, PieChartOutlined } from '@ant-design/icons';
 
 import Routes from '@/routes';
 import FlashMessage from '@/components/FlashMessage';
@@ -40,7 +37,7 @@ class AppContainer extends Component {
     this.unlistenHistory();
   }
 
-  onCollapse = collapsed => {
+  onCollapse = (collapsed) => {
     this.setState({ collapsed });
   };
 
@@ -60,59 +57,98 @@ class AppContainer extends Component {
               <img src={logoImage} alt="logo" />
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <SubMenu key="sub1" icon={<UserOutlined />} title="Students">
-                <Menu.Item key="2">
-                  <Link to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}>Schedule</Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>Submit Data</Link>
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Link to={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}>Purchase Items</Link>
-                </Menu.Item>
-              </SubMenu>
-              <Menu.Item key="5" icon={<PieChartOutlined />}>
-                <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
-              </Menu.Item>
-              <Menu.Item key="6" icon={<UserOutlined />}>
-                <Link to={`${AppConfig.ROUTES.COACHING}`}>Coaching</Link>
-              </Menu.Item>
               <SubMenu key="sub2" icon={<UserOutlined />} title="Registration">
                 <Menu.Item key="7">
-                  <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>Registration</Link>
+                  <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>
+                    Registration
+                  </Link>
                 </Menu.Item>
                 <SubMenu key="sub-inside-1" title="Energy Conversion">
                   <Menu.Item key="8">
-                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}>Energy</Link>
+                    <Link
+                      to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
+                    >
+                      Energy
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="9">
-                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}>Direction</Link>
+                    <Link
+                      to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}
+                    >
+                      Direction
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="10">
-                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}>Structure and Systems</Link>
+                    <Link
+                      to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}
+                    >
+                      Structure and Systems
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="11">
-                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}>Communication and Coordination</Link>
+                    <Link
+                      to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}
+                    >
+                      Communication and Coordination
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="12">
-                    <Link to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}>Attitude and Skills</Link>
+                    <Link
+                      to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
+                    >
+                      Attitude and Skills
+                    </Link>
                   </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="13">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>Energy Profile</Link>
+                  <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>
+                    Energy Profile
+                  </Link>
                 </Menu.Item>
                 <Menu.Item key="14">
-                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>Profit and Loss</Link>
+                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>
+                    Profit and Loss
+                  </Link>
                 </Menu.Item>
                 <Menu.Item key="15">
-                  <Link to={`${AppConfig.ROUTES.PROFIT_SCAN}`}>Profit Scan</Link>
+                  <Link to={`${AppConfig.ROUTES.PROFIT_SCAN}`}>
+                    Profit Scan
+                  </Link>
                 </Menu.Item>
               </SubMenu>
+              <SubMenu key="sub1" icon={<UserOutlined />} title="Students">
+                <Menu.Item key="2">
+                  <Link
+                    to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}
+                  >
+                    Schedule
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>
+                    Submit Data
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                  <Link to={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}>
+                    Purchase Items
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+              <Menu.Item key="6" icon={<UserOutlined />}>
+                <Link to={`${AppConfig.ROUTES.COACHING}`}>Coaching</Link>
+              </Menu.Item>
+              <Menu.Item key="5" icon={<PieChartOutlined />}>
+                <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">
             <Content style={{ margin: '16px' }}>
-              <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+              <div
+                className="site-layout-background"
+                style={{ padding: 24, minHeight: 360 }}
+              >
                 <FlashMessage />
                 <Routes />
               </div>

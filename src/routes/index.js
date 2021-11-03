@@ -26,10 +26,7 @@ import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion
 function Routes() {
   return (
     <Switch>
-      <Route
-        exact
-        path='/'
-      />
+      <Route exact path="/" />
       <Route
         exact
         path={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/:step`}
@@ -130,10 +127,7 @@ function Routes() {
         component={ProfitScanContainer}
       />
 
-      <Route
-        path='*'
-        component={NotFoundContainer}
-      />
+      <Route path="*" component={NotFoundContainer} />
     </Switch>
   );
 }
