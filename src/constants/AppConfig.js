@@ -55,7 +55,9 @@ const AppConfig = {
     ENERGY_PROFILE: '/energy-profile',
     PROFIT_AND_LOSS: '/profit-and-loss',
     PROFIT_SCAN: '/profit-scan',
-  }
+    CHART_AUDIT: '/chart-audit',
+    CHART_AUDIT_REPORT: '/chart-audit-report',
+  },
 };
 
 export default AppConfig;

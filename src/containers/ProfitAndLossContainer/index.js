@@ -12,10 +12,7 @@ import {
   PageHeader,
   Typography,
 } from 'antd';
-import {
-  PlusOutlined,
-  MinusCircleOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -35,7 +32,7 @@ class ProfitAndLoss extends Component {
 
   onChangeRadio = ({ target: { value } }) => {
     this.setState({ backTaxes: value === 'yes' });
-  }
+  };
 
   render() {
     const { backTaxes } = this.state;
@@ -44,15 +41,12 @@ class ProfitAndLoss extends Component {
       <div className="profit-and-loss-container">
         <PageHeader
           className="site-page-header"
-          title="Profit and Loss Statement Information Sheet"
+          title="Profit Potential Profile"
         />
         <Divider />
         <Row>
           <Col span={12}>
-            <Form
-              layout="vertical"
-              validateMessages={validateMessages}
-            >
+            <Form layout="vertical" validateMessages={validateMessages}>
               <Form.Item
                 label="Doctor(s) Salary Amount (if not shown on or listed as separate item on P & L):"
                 name="salary"
@@ -62,27 +56,23 @@ class ProfitAndLoss extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(new Error('is not a valid number')),
                   },
                 ]}
               >
-                <Input
-                  prefix='$'
-                />
+                <Input prefix="$" />
               </Form.Item>
 
-              <Space
-                direction="vertical"
-                style={{ marginBottom: 10 }}
-              >
-                <Text>Practice Loan Payments (All loan payments made through the practice should be listed)</Text>
-                <Text
-                  italic
-                  type="secondary"
-                >
-                  Type refers to:  Equipment, Building, Practice Purchase, Cars, etc.
+              <Space direction="vertical" style={{ marginBottom: 10 }}>
+                <Text>
+                  Practice Loan Payments (All loan payments made through the
+                  practice should be listed)
+                </Text>
+                <Text italic type="secondary">
+                  Type refers to: Equipment, Building, Practice Purchase, Cars,
+                  etc.
                 </Text>
               </Space>
               <Form.List name="loans">
@@ -97,7 +87,7 @@ class ProfitAndLoss extends Component {
                           label="Loan Payment (Monthly):"
                           rules={[{ required: true }]}
                         >
-                          <Input prefix='$' />
+                          <Input prefix="$" />
                         </Form.Item>
                         <Form.Item
                           {...restField}
@@ -112,7 +102,12 @@ class ProfitAndLoss extends Component {
                       </Space>
                     ))}
                     <Form.Item>
-                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
                         Add Loan Payment
                       </Button>
                     </Form.Item>
@@ -129,15 +124,13 @@ class ProfitAndLoss extends Component {
                   },
                 ]}
               >
-                <Radio.Group
-                  onChange={this.onChangeRadio}
-                >
+                <Radio.Group onChange={this.onChangeRadio}>
                   <Radio value="yes">Yes</Radio>
                   <Radio value="no">No</Radio>
                 </Radio.Group>
               </Form.Item>
 
-              {backTaxes &&
+              {backTaxes && (
                 <Form.Item
                   label="How much?"
                   name="backTaxesAmount"
@@ -147,17 +140,15 @@ class ProfitAndLoss extends Component {
                     },
                     {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(new Error('is not a valid number')),
                     },
                   ]}
                 >
-                  <Input
-                    prefix='$'
-                  />
+                  <Input prefix="$" />
                 </Form.Item>
-              }
+              )}
 
               <Form.Item
                 label="Ave. Dentist(s) Clinical Hours in the Practice:"
@@ -168,15 +159,13 @@ class ProfitAndLoss extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(new Error('is not a valid number')),
                   },
                 ]}
               >
-                <Input
-                  suffix='Monthly'
-                />
+                <Input suffix="Monthly" />
               </Form.Item>
 
               <Form.Item
@@ -188,23 +177,25 @@ class ProfitAndLoss extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(new Error('is not a valid number')),
                   },
                 ]}
               >
-                <Input
-                  suffix='Monthly'
-                />
+                <Input suffix="Monthly" />
               </Form.Item>
 
               <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
+                  style={{ marginRight: 20 }}
                 >
                   Submit
+                </Button>
+                <Button type="primary" htmlType="submit">
+                  Upload 12 month P&L
                 </Button>
               </Form.Item>
             </Form>

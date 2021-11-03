@@ -18,7 +18,7 @@ class SubmitDataContainer extends Component {
     super(props);
 
     this.state = {
-      practiceType: null
+      practiceType: null,
     };
   }
 
@@ -76,37 +76,29 @@ class SubmitDataContainer extends Component {
 
     if (href) {
       return (
-        <Button
-          href={href}
-          type="primary"
-        >
+        <Button href={href} type="primary">
           Manually Enter Data
         </Button>
       );
     }
 
     return null;
-  }
+  };
 
   onChangePracticeType = (e) => {
     this.setState({ practiceType: e.target.value });
-  }
+  };
 
   render() {
     return (
       <div className="submit-data-container">
-        <PageHeader
-          className="site-page-header"
-          title="Submit Data Page"
-        />
+        <PageHeader className="site-page-header" title="Submit Data Page" />
 
         <Divider />
 
         <Row align="bottom">
           <Col span={12}>
-            <Form
-              onFinish={this.onFinish}
-            >
+            <Form onFinish={this.onFinish}>
               <Form.Item
                 rules={[
                   {
@@ -117,11 +109,8 @@ class SubmitDataContainer extends Component {
                 name="radio-group"
                 label="Select Practice Type:"
               >
-                <Radio.Group
-                  onChange={this.onChangePracticeType}
-                >
+                <Radio.Group onChange={this.onChangePracticeType}>
                   <Radio value="dentistry">Dentistry</Radio>
-                  <Radio value="ortho">Ortho</Radio>
                 </Radio.Group>
               </Form.Item>
 
@@ -157,9 +146,7 @@ class SubmitDataContainer extends Component {
               </Form.Item>
             </Form>
           </Col>
-          <Col span={12}>
-            {this.renderManuallyEnterData()}
-          </Col>
+          <Col span={12}>{this.renderManuallyEnterData()}</Col>
         </Row>
       </div>
     );
