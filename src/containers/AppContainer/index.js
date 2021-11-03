@@ -63,36 +63,44 @@ class AppContainer extends Component {
                     Registration
                   </Link>
                 </Menu.Item>
+                <Menu.Item key="8">
+                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>PPP</Link>
+                </Menu.Item>
+                <Menu.Item key="9">
+                  <Link to={`${AppConfig.ROUTES.CHART_AUDIT}`}>
+                    Chart audit
+                  </Link>
+                </Menu.Item>
                 <SubMenu key="sub-inside-1" title="Energy Conversion">
-                  <Menu.Item key="8">
+                  <Menu.Item key="10">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
                     >
                       Energy
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="9">
+                  <Menu.Item key="11">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}
                     >
                       Direction
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="10">
+                  <Menu.Item key="12">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}
                     >
                       Structure and Systems
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="11">
+                  <Menu.Item key="13">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}
                     >
                       Communication and Coordination
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="12">
+                  <Menu.Item key="14">
                     <Link
                       to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
                     >
@@ -100,17 +108,12 @@ class AppContainer extends Component {
                     </Link>
                   </Menu.Item>
                 </SubMenu>
-                <Menu.Item key="13">
+                <Menu.Item key="15">
                   <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>
                     Energy Profile
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="14">
-                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>
-                    Profit and Loss
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="15">
+                <Menu.Item key="16">
                   <Link to={`${AppConfig.ROUTES.PROFIT_SCAN}`}>
                     Profit Scan
                   </Link>
