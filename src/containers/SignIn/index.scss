@@ -1,0 +1,27 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .form-wrapper {
+    width: 320px;
+
+    .input-item {
+      display: flex;
+      flex-direction: column;
+
+      .ant-form-item-label {
+        text-align: left;
+      }
+    }
+
+    .submit-btn-wrapper {
+      .ant-form-item-control-input-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

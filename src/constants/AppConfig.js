@@ -42,6 +42,7 @@ const AppConfig = {
     DATA_ANALYSIS: 'data-analysis',
   },
   ROUTES: {
+    MAIN: '/',
     STUDENTS_SCHEDULE: '/students/schedule',
     STUDENTS_SUBMIT_DATA: '/students/submit-data',
     STUDENTS_PURCHASE_ITEMS: '/students/purchase-items',
@@ -57,6 +58,7 @@ const AppConfig = {
     PROFIT_SCAN: '/profit-scan',
     CHART_AUDIT: '/chart-audit',
     CHART_AUDIT_REPORT: '/chart-audit-report',
+    SIGN_IN: '/sign-in',
   },
 };
 
