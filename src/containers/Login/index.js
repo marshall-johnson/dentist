@@ -7,7 +7,14 @@ import './index.scss';
 class Login extends Component {
   onSignIn = () => {
     const { history } = this.props;
-    history.push(AppConfig.ROUTES.MAIN);
+    history.push({
+      pathname: AppConfig.ROUTES.MAIN,
+      state: {
+        user: {
+          name: 'test',
+        },
+      },
+    });
   };
 
   render() {

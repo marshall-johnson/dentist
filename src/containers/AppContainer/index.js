@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { UserOutlined, PieChartOutlined } from '@ant-design/icons';
 
@@ -22,6 +22,7 @@ class AppContainer extends Component {
 
     this.state = {
       collapsed: false,
+      user: props.location?.state?.user,
     };
   }
 
@@ -42,7 +43,8 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { collapsed } = this.state;
+    const { collapsed, user } = this.state;
+    if (!user) return <Redirect to="/login" />;
 
     return (
       <div className="app-container">
@@ -173,6 +175,7 @@ class AppContainer extends Component {
 AppContainer.propTypes = {
   history: PropTypes.object,
   dispatchClearErrors: PropTypes.func,
+  location: PropTypes.object,
 };
 
 export default withRouter(
