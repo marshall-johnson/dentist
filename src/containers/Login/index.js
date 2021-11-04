@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import AppConfig from '@/constants/AppConfig';
 import './index.scss';
 
-class SignIn extends Component {
+class Login extends Component {
   onSignIn = () => {
     const { history } = this.props;
     history.push(AppConfig.ROUTES.MAIN);
@@ -13,6 +13,10 @@ class SignIn extends Component {
   render() {
     return (
       <div className="container">
+        <h1 className="login-header">Login</h1>
+        <span className="introduction-header">
+          Sign in and start managing your users!
+        </span>
         <Form
           className="form-wrapper"
           name="basic"
@@ -22,7 +26,6 @@ class SignIn extends Component {
         >
           <Form.Item
             className="input-item"
-            label="Email"
             name="email"
             rules={[{ required: true, message: 'Please input your email!' }]}
           >
@@ -31,7 +34,6 @@ class SignIn extends Component {
 
           <Form.Item
             className="input-item"
-            label="Password"
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
@@ -39,7 +41,7 @@ class SignIn extends Component {
           </Form.Item>
           <Form.Item className="submit-btn-wrapper">
             <Button type="primary" htmlType="submit">
-              Sign in
+              Login
             </Button>
           </Form.Item>
         </Form>
@@ -48,8 +50,8 @@ class SignIn extends Component {
   }
 }
 
-SignIn.propTypes = {
+Login.propTypes = {
   history: PropTypes.object,
 };
 
-export default SignIn;
+export default Login;
