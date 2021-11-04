@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import AppConfig from '@/constants/AppConfig';
 import ReportContainer from '@/containers/Reports';
-import EnergyProfile from '@/containers/EnergyProfile';
+import EnergyProfileReport from '@/containers/EnergyProfileReport';
 import NotFoundContainer from '@/containers/NotFoundContainer';
 import CoachingContainer from '@/containers/CoachingContainer';
 import ProfitScanContainer from '@/containers/ProfitScanContainer';
@@ -12,8 +12,8 @@ import RegistrationContainer from '@/containers/RegistrationContainer';
 import DensitySubmitDataContainer from '@/containers/Density/SubmitData';
 import ProfitAndLossContainer from '@/containers/ProfitAndLossContainer';
 import EnergyContainer from '@/containers/EnergyConversion/EnergyContainer';
-import EnergyProfileDataResult from '@/containers/EnergyProfile/DataResult';
-import EnergyProfileDataAnalysis from '@/containers/EnergyProfile/DataAnalysis';
+import EnergyProfileDataResult from '@/containers/EnergyProfileReport/DataResult';
+import EnergyProfileDataAnalysis from '@/containers/EnergyProfileReport/DataAnalysis';
 import DirectionContainer from '@/containers/EnergyConversion/DirectionContainer';
 import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
@@ -99,8 +99,8 @@ function Routes() {
       />
       <Route
         exact
-        path={`${AppConfig.ROUTES.ENERGY_PROFILE}`}
-        component={EnergyProfile}
+        path={`${AppConfig.ROUTES.ENERGY_PROFILE_REPORT}`}
+        component={EnergyProfileReport}
       />
 
       <Route

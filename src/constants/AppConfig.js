@@ -53,7 +53,7 @@ const AppConfig = {
     ORTHO: '/ortho',
     REGISTRATION: '/registration',
     ENERGY_CONVERSION: '/energy-conversion',
-    ENERGY_PROFILE: '/energy-profile',
+    ENERGY_PROFILE_REPORT: '/energy-profile-report',
     PROFIT_AND_LOSS: '/profit-and-loss',
     PROFIT_SCAN: '/profit-scan',
     CHART_AUDIT: '/chart-audit',

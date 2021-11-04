@@ -108,57 +108,47 @@ class AppContainer extends Component {
                     </Link>
                   </Menu.Item>
                 </SubMenu>
-                <Menu.Item key="9">
-                  <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE}`}>
-                    Energy Profile
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="10">
-                  <Link to={`${AppConfig.ROUTES.PROFIT_SCAN}`}>
-                    Profit Scan
-                  </Link>
-                </Menu.Item>
               </SubMenu>
               <SubMenu key="sub2" icon={<UserOutlined />} title="Students">
-                <Menu.Item key="11">
+                <Menu.Item key="9">
                   <Link
                     to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}
                   >
                     Schedule
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="12">
+                <Menu.Item key="10">
                   <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>
                     Submit Data
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="13">
+                <Menu.Item key="11">
                   <Link to={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}>
                     Purchase Items
                   </Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="sub3" icon={<UserOutlined />} title="Coaching">
-                <Menu.Item key="14">
+                <Menu.Item key="12">
                   <Link to={`${AppConfig.ROUTES.STUDENT_DATA}`}>
                     Student Data
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="15">
+                <Menu.Item key="13">
                   <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>PPP</Link>
                 </Menu.Item>
-                <Menu.Item key="16">
+                <Menu.Item key="14">
                   <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE_REPORT}`}>
                     Energy Profile Report
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="17">
+                <Menu.Item key="15">
                   <Link to={`${AppConfig.ROUTES.CHART_AUDIT_REPORT}`}>
                     Chart Audit Report
                   </Link>
                 </Menu.Item>
               </SubMenu>
-              <Menu.Item key="18" icon={<PieChartOutlined />}>
+              <Menu.Item key="16" icon={<PieChartOutlined />}>
                 <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
               </Menu.Item>
             </Menu>
