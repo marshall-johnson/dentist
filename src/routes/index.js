@@ -22,6 +22,7 @@ import AttitudeAndSkillsContainer from '@/containers/EnergyConversion/AttitudeAn
 import RegistrationCreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
 import StructureAndSystemsContainer from '@/containers/EnergyConversion/StructureAndSystemsContainer';
 import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion/CommunicationAndCoordinationContainer';
+import ChartAudit from '@/containers/ChartAudit';
 
 function Routes() {
   return (
@@ -125,6 +126,12 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.PROFIT_SCAN}`}
         component={ProfitScanContainer}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.CHART_AUDIT}`}
+        component={ChartAudit}
       />
 
       <Route path="*" component={NotFoundContainer} />
