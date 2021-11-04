@@ -44,7 +44,7 @@ class AppContainer extends Component {
 
   render() {
     const { collapsed, user } = this.state;
-    // if (!user) return <Redirect to="/login" />;
+    if (!user) return <Redirect to="/login" />;
 
     return (
       <div className="app-container">
