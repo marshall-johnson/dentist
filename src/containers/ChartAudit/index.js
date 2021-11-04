@@ -1,6 +1,6 @@
-import { Table } from 'antd';
+import { Descriptions, Table } from 'antd';
 import React, { Component } from 'react';
-import { generateName, generateRandomNumber } from '@/utils/helpers';
+import { generateRandomNumber } from '@/utils/helpers';
 import './index.scss';
 
 class ChartAudit extends Component {
@@ -76,7 +76,7 @@ class ChartAudit extends Component {
 
     for (let i = 0; i < 100; i += 1) {
       this.dataSource.push({
-        patient: generateName(),
+        patient: 'Test',
         amount_diagnosed: `${generateRandomNumber()}$`,
         amount_treatment: `${generateRandomNumber()}$`,
         amount: `${generateRandomNumber()}$`,
@@ -101,11 +101,27 @@ class ChartAudit extends Component {
     const { loading } = this.state;
 
     return (
-      <Table
-        dataSource={this.dataSource}
-        columns={this.columns}
-        loading={loading}
-      />
+      <>
+        <div
+          style={{
+            marginBottom: 20,
+            width: 'auto',
+          }}
+        >
+          <Descriptions title="Doctor's Personal Information">
+            <Descriptions.Item span={12} label="First Name" />
+            <Descriptions.Item span={12} label="Last Name" />
+            <Descriptions.Item span={12} label="Degree">
+              DDS
+            </Descriptions.Item>
+          </Descriptions>
+        </div>
+        <Table
+          dataSource={this.dataSource}
+          columns={this.columns}
+          loading={loading}
+        />
+      </>
     );
   }
 }
