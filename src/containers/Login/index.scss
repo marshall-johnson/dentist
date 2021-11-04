@@ -1,0 +1,74 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #E5E5E5;
+
+  .login-header {
+    font-size: 64px;
+    line-height: 80px;
+    text-align: center;
+    color: #032140;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 39px;
+  }
+
+  .introduction-header {
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #032140;
+    margin-bottom: 36px;
+  }
+
+  .form-wrapper {
+    width: 320px;
+
+    .input-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 32px;
+
+      .ant-form-item-label {
+        text-align: left;
+      }
+
+      .ant-form-item-control-input {
+        height: 45px;
+        .ant-form-item-control-input-content {
+          height: 45px;
+        }
+        .ant-input-affix-wrapper {
+          height: 100%;
+        }
+      }
+
+      .ant-input {
+        height: 100%;
+      }
+
+      .ant-input-password-icon {
+        color: #032140;
+      }
+    }
+
+    .submit-btn-wrapper {
+      .ant-form-item-control-input-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .ant-btn-primary {
+        margin-top: 32px;
+        width: 100%;
+        height: 45px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        border: 0;
+      }
+    }
+  }
+}

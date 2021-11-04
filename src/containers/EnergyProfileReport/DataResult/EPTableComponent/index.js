@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table,
-  Typography
-} from 'antd';
+import { Table, Typography } from 'antd';
 import { roundNumber } from '@/utils/helpers';
 
 import './index.scss';
@@ -11,20 +8,20 @@ import './index.scss';
 const { Text, Title } = Typography;
 
 const columns = [
-  { title: '', dataIndex: 'name', },
-  { title: 'Q1', dataIndex: 'q1', },
-  { title: 'Q2', dataIndex: 'q2', },
-  { title: 'Q3', dataIndex: 'q3', },
-  { title: 'Q4', dataIndex: 'q4', },
-  { title: 'Q5', dataIndex: 'q5', },
-  { title: 'Q6', dataIndex: 'q6', },
-  { title: 'Q7', dataIndex: 'q7', },
-  { title: 'Q8', dataIndex: 'q8', },
-  { title: 'Q9', dataIndex: 'q9', },
-  { title: 'Q10', dataIndex: 'q10', },
+  { title: '', dataIndex: 'name' },
+  { title: 'Q1', dataIndex: 'q1' },
+  { title: 'Q2', dataIndex: 'q2' },
+  { title: 'Q3', dataIndex: 'q3' },
+  { title: 'Q4', dataIndex: 'q4' },
+  { title: 'Q5', dataIndex: 'q5' },
+  { title: 'Q6', dataIndex: 'q6' },
+  { title: 'Q7', dataIndex: 'q7' },
+  { title: 'Q8', dataIndex: 'q8' },
+  { title: 'Q9', dataIndex: 'q9' },
+  { title: 'Q10', dataIndex: 'q10' },
 ];
 
-const EPTableComponent = ({ title, dataSource }) =>
+const EPTableComponent = ({ title, dataSource }) => (
   <div className="energy-profile-result-table">
     <Title level={4}>{title}</Title>
 
@@ -34,7 +31,7 @@ const EPTableComponent = ({ title, dataSource }) =>
       columns={columns}
       dataSource={dataSource}
       pagination={false}
-      summary={pageData => {
+      summary={(pageData) => {
         let totlaScoreQ1 = 0;
         let totlaScoreQ2 = 0;
         let totlaScoreQ3 = 0;
@@ -65,41 +62,62 @@ const EPTableComponent = ({ title, dataSource }) =>
             <Table.Summary.Row>
               <Table.Summary.Cell>Avg.</Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ1 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ1 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ2 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ2 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ3 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ3 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ4 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ4 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ5 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ5 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ6 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ6 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ7 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ7 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ8 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ8 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ9 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ9 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
               <Table.Summary.Cell>
-                <Text type="danger">{roundNumber(totlaScoreQ10 / numberOfRow)}</Text>
+                <Text type="danger">
+                  {roundNumber(totlaScoreQ10 / numberOfRow)}
+                </Text>
               </Table.Summary.Cell>
             </Table.Summary.Row>
           </>
         );
       }}
     />
-  </div>;
+  </div>
+);
 
 EPTableComponent.propTypes = {
   title: PropTypes.string,
