@@ -1,6 +1,6 @@
 import { Descriptions, Table } from 'antd';
 import React, { Component } from 'react';
-import { generateRandomNumber } from '@/utils/helpers';
+import { generateRandomNumber, formatCurrency } from '@/utils/helpers';
 import './index.scss';
 
 class ChartAudit extends Component {
@@ -77,14 +77,14 @@ class ChartAudit extends Component {
     for (let i = 0; i < 100; i += 1) {
       this.dataSource.push({
         patient: 'Test',
-        amount_diagnosed: `${generateRandomNumber()}$`,
-        amount_treatment: `${generateRandomNumber()}$`,
-        amount: `${generateRandomNumber()}$`,
+        amount_diagnosed: formatCurrency(generateRandomNumber()),
+        amount_treatment: formatCurrency(generateRandomNumber()),
+        amount: formatCurrency(generateRandomNumber()),
         hygiene_appt: 'Yes',
         doctor_appt: 'No',
-        scheduled: '150$',
+        scheduled: formatCurrency(generateRandomNumber()),
         referral_source: generateRandomNumber(),
-        unscheduled_remaining: '200$',
+        unscheduled_remaining: formatCurrency(generateRandomNumber()),
       });
     }
   }

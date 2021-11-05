@@ -7,3 +7,9 @@ export const generateRandomNumber = () => {
   const randomNum = 1000 + Math.random() * 1000;
   return Math.round(randomNum / 100) * 100;
 };
+
+export const formatCurrency = (amount) => new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    currencyDisplay: 'narrowSymbol',
+  }).format(amount);
