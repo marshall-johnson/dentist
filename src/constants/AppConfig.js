@@ -48,6 +48,7 @@ const AppConfig = {
     STUDENTS_PURCHASE_ITEMS: '/students/purchase-items',
     REPORT: '/report',
     COACHING: '/coaching',
+    COACHING_PPP: '/coaching/ppp',
     SUBMIT_DATA: '/submit-data',
     DENTISTRY: '/dentistry',
     ORTHO: '/ortho',
