@@ -1,44 +1,58 @@
-import StaffCompenstation from './tab1/staffCompenstation';
+export const KEY = {
+  staffCompensation: 'staffCompensation',
+  adminServices: 'adminServices',
+  occupancy: 'occupancy',
+  resourceDev: 'resourceDev',
+  marketing: 'marketing',
+  laboratory: 'laboratory',
+  supplies: 'supplies',
+  doctorComp: 'doctorComp',
+  solvency: 'solvency',
+  roi: 'roi',
+};
 
-export const tabs = [
+export const tabsleft = [
   {
     name: 'STAFF COMPENSATION',
-    component: StaffCompenstation,
-  },
-  {
-    name: 'ADMIN SERVICES',
-    component: () => null,
+    key: KEY.staffCompensation,
   },
   {
     name: 'OCCUPANCY',
-    component: () => null,
+    key: KEY.occupancy,
   },
   {
     name: 'H&P RESOURCE DEV',
-    component: () => null,
-  },
-  {
-    name: 'MARKETING',
-    component: () => null,
+    key: KEY.resourceDev,
   },
   {
     name: 'LABORATORY',
-    component: () => null,
+    key: KEY.laboratory,
   },
   {
     name: 'Supplies',
-    component: () => null,
-  },
-  {
-    name: 'DOCTOR COMP',
-    component: () => null,
+    key: KEY.supplies,
   },
   {
     name: 'SOLVENCY',
-    component: () => null,
+    key: KEY.solvency,
+  },
+];
+
+export const tabsright = [
+  {
+    name: 'ADMIN SERVICES',
+    key: KEY.adminServices,
+  },
+  {
+    name: 'MARKETING',
+    key: KEY.marketing,
+  },
+  {
+    name: 'DOCTOR COMP',
+    key: KEY.doctorComp,
   },
   {
     name: 'ROI',
-    component: () => null,
+    key: KEY.roi,
   },
 ];
