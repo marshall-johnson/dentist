@@ -3,6 +3,7 @@ import './index.scss';
 import { Tabs } from 'antd';
 import { StickyContainer, Sticky } from 'react-sticky';
 import Tab1 from './tab1';
+import Tab2 from './tab2';
 
 const { TabPane } = Tabs;
 
@@ -27,7 +28,7 @@ class CoachingPPP extends Component {
             <Tab1 />
           </TabPane>
           <TabPane tab="Tab 2" key="2">
-            Content of Tab Pane 2
+            <Tab2 />
           </TabPane>
         </Tabs>
       </StickyContainer>

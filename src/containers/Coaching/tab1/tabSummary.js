@@ -29,8 +29,8 @@ class TabSummary extends Component {
             {data[tab.key]?.map((row, index) => (
               <Row gutter={24} key={tab.name + index.toString()}>
                 <Col span={24}>
-                  <Row className="mb-15">
-                    <Col span={10}>
+                  <Row style={{ marginBottom: 10 }}>
+                    <Col span={12}>
                       <Text>{row.label}</Text>
                     </Col>
                     <Col span={12} className="border-bottom">
