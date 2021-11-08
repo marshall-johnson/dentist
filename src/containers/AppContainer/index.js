@@ -135,7 +135,7 @@ class AppContainer extends Component {
                   </Link>
                 </Menu.Item>
                 <Menu.Item key="13">
-                  <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>PPP</Link>
+                  <Link to={`${AppConfig.ROUTES.COACHING_PPP}`}>PPP</Link>
                 </Menu.Item>
                 <Menu.Item key="14">
                   <Link to={`${AppConfig.ROUTES.ENERGY_PROFILE_REPORT}`}>
