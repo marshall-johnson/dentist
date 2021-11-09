@@ -10,60 +10,59 @@ class ChartAudit extends Component {
     {
       title: 'New Patient Initials',
       dataIndex: 'patient',
-      sorter: true,
-      key: '1',
+      sorter: (a, b) => a.patient.length - b.patient.length,
     },
     {
       title: 'Total $ Amount Diagnosed',
       dataIndex: 'amount_diagnosed',
-      sorter: true,
-      key: '2',
+      sorter: (a, b) =>
+        Number(a.amount_diagnosed.match(/\d/)) -
+        Number(b.amount_diagnosed.match(/\d/)),
     },
     {
       title: 'Total $ Treatment Completed',
       dataIndex: 'amount_treatment',
-      sorter: true,
-      key: '3',
+      sorter: (a, b) =>
+        Number(a.amount_treatment.match(/\d/)) -
+        Number(b.amount_treatment.match(/\d/)),
     },
     {
       title: 'If Case Completed, Total $ Amount',
       dataIndex: 'amount',
-      sorter: true,
-      key: '4',
+      sorter: (a, b) =>
+        Number(a.amount.match(/\d/)) - Number(b.amount.match(/\d/)),
     },
     {
       title: 'Has Hygiene Appt?',
       dataIndex: 'hygiene_appt',
-      sorter: true,
-      key: '5',
+      sorter: (a, b) => a.hygiene_appt.length - b.hygiene_appt.length,
     },
     {
       title: 'Has Doctor Appt?',
       dataIndex: 'doctor_appt',
-      sorter: true,
-      key: '6',
+      sorter: (a, b) => a.doctor_appt.length - b.doctor_appt.length,
     },
     {
       title: 'If Dr.Appt, $ Scheduled',
       dataIndex: 'scheduled',
-      sorter: true,
-      key: '7',
+      sorter: (a, b) =>
+        Number(a.scheduled.match(/\d/)) - Number(b.scheduled.match(/\d/)),
     },
     {
       title: 'Identify Referral Source',
       dataIndex: 'referral_source',
+      sorter: (a, b) => a.referral_source - b.referral_source,
       filters: [
         { text: 'Source A', value: 'a' },
         { text: 'Source B', value: 'b' },
       ],
-      sorter: true,
-      key: '8',
     },
     {
       title: 'Remaining Unscheduled $ Treatment',
       dataIndex: 'unscheduled_remaining',
-      sorter: true,
-      key: '9',
+      sorter: (a, b) =>
+        Number(a.unscheduled_remaining.match(/\d/)) -
+        Number(b.unscheduled_remaining.match(/\d/)),
     },
   ];
 
@@ -85,6 +84,7 @@ class ChartAudit extends Component {
         scheduled: formatCurrency(generateRandomNumber()),
         referral_source: generateRandomNumber(),
         unscheduled_remaining: formatCurrency(generateRandomNumber()),
+        key: `chart_audit_${i.toString()}`,
       });
     }
   }
@@ -108,7 +108,7 @@ class ChartAudit extends Component {
             width: 'auto',
           }}
         >
-          <Descriptions title="Doctor's Personal Information">
+          <Descriptions title="Doctor's Personal Information" column={12}>
             <Descriptions.Item span={12} label="First Name" />
             <Descriptions.Item span={12} label="Last Name" />
             <Descriptions.Item span={12} label="Degree">
