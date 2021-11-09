@@ -24,6 +24,7 @@ import StructureAndSystemsContainer from '@/containers/EnergyConversion/Structur
 import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion/CommunicationAndCoordinationContainer';
 import ChartAudit from '@/containers/ChartAudit';
 import CoachingPPP from '@/containers/Coaching/CoachingPPP';
+import ChartAuditReport from '@/containers/ChartAuditReport';
 
 function Routes() {
   return (
@@ -139,6 +140,12 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.COACHING_PPP}`}
         component={CoachingPPP}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.CHART_AUDIT_REPORT}`}
+        component={ChartAuditReport}
       />
 
       <Route path="*" component={NotFoundContainer} />
