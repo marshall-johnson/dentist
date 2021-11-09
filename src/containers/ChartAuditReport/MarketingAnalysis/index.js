@@ -8,31 +8,36 @@ class MarketingAnalysis extends Component {
     {
       title: 'Lead Source %',
       dataIndex: 'lead_source',
-      sorter: true,
+      sorter: (a, b) =>
+        Number(a.lead_source.match(/\d/)) - Number(b.lead_source.match(/\d/)),
       key: '1',
     },
     {
       title: 'Source',
       dataIndex: 'source',
-      sorter: true,
+      sorter: (a, b) => a.source.length - b.source.length,
       key: '2',
     },
     {
       title: 'Average $ Presented',
       dataIndex: 'average_presented',
-      sorter: true,
+      sorter: (a, b) =>
+        Number(a.average_presented.match(/\d/)) -
+        Number(b.average_presented.match(/\d/)),
       key: '3',
     },
     {
       title: 'Ave. $',
       dataIndex: 'ave',
-      sorter: true,
+      sorter: (a, b) => Number(a.ave.match(/\d/)) - Number(b.ave.match(/\d/)),
       key: '4',
     },
     {
       title: '% completed',
       dataIndex: 'percentage_completed',
-      sorter: true,
+      sorter: (a, b) =>
+        Number(a.percentage_completed.match(/\d/)) -
+        Number(b.percentage_completed.match(/\d/)),
       key: '5',
     },
   ];
@@ -87,7 +92,7 @@ class MarketingAnalysis extends Component {
       percentage_completed: '20%',
     },
     {
-      key: '6',
+      key: '7',
       lead_source: '22%',
       source: 'Walk-In',
       average_presented: formatCurrency(generateRandomNumber()),
@@ -95,7 +100,7 @@ class MarketingAnalysis extends Component {
       percentage_completed: '5%',
     },
     {
-      key: '7',
+      key: '8',
       lead_source: '10%',
       source: 'Unknown',
       average_presented: formatCurrency(generateRandomNumber()),
@@ -103,7 +108,7 @@ class MarketingAnalysis extends Component {
       percentage_completed: '35%',
     },
     {
-      key: '7',
+      key: '9',
       lead_source: '70%',
       source: 'Other',
       average_presented: formatCurrency(generateRandomNumber()),

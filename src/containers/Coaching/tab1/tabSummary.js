@@ -43,8 +43,11 @@ class TabSummary extends Component {
           </Panel>
         ))}
 
-        {totalData.map((data) => (
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+        {totalData.map((data, index) => (
+          <div
+            style={{ display: 'flex', flexDirection: 'row' }}
+            key={`tab_summary_data_${index.toString()}`}
+          >
             <Text style={{ marginRight: 20 }}>{data.label}</Text>
             <Text>{data.value}</Text>
           </div>
@@ -55,8 +58,8 @@ class TabSummary extends Component {
 }
 
 TabSummary.propTypes = {
-  tabData: PropTypes.object,
-  totalData: PropTypes.object,
+  tabData: PropTypes.array,
+  totalData: PropTypes.array,
 };
 
 export default TabSummary;
