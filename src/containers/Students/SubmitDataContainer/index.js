@@ -8,10 +8,12 @@ import {
   Button,
   Divider,
   PageHeader,
+  Calendar,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 import AppConfig from '@/constants/AppConfig';
+import moment from 'moment';
 
 class SubmitDataContainer extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class SubmitDataContainer extends Component {
 
     this.state = {
       practiceType: null,
+      dateSelected: moment(),
     };
   }
 
@@ -89,7 +92,16 @@ class SubmitDataContainer extends Component {
     this.setState({ practiceType: e.target.value });
   };
 
+  onCalendarSelect = (value) => {
+    this.setState({ dateSelected: value });
+  };
+
+  onPanelChange = (value, mode) => {
+    this.setState({ dateSelected: value });
+  };
+
   render() {
+    const { dateSelected } = this.state;
     return (
       <div className="submit-data-container">
         <PageHeader className="site-page-header" title="Submit Data Page" />
@@ -112,6 +124,19 @@ class SubmitDataContainer extends Component {
                 <Radio.Group onChange={this.onChangePracticeType}>
                   <Radio value="dentistry">Dentistry</Radio>
                 </Radio.Group>
+              </Form.Item>
+
+              <Form.Item
+                name="date"
+                className="calendar"
+                initialValue={dateSelected}
+              >
+                <Calendar
+                  fullscreen={false}
+                  value={dateSelected}
+                  onSelect={this.onCalendarSelect}
+                  onPanelChange={this.onPanelChange}
+                />
               </Form.Item>
 
               <Form.Item
