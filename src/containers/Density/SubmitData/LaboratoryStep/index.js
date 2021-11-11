@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -30,7 +22,7 @@ class LaboratoryStep extends Component {
         implantSupplies: null,
         cerec: null,
         total: null,
-      }
+      },
     };
   }
 
@@ -46,15 +38,19 @@ class LaboratoryStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistryLaboratory', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`,
+    );
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -81,11 +77,6 @@ class LaboratoryStep extends Component {
                 label="Restorive Lab"
                 name="restoriveLab"
                 fieldKey="restoriveLab"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -93,11 +84,6 @@ class LaboratoryStep extends Component {
                 label="Aligners / Ortho Lab"
                 name="alignersOrthoLab"
                 fieldKey="alignersOrthoLab"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -105,24 +91,10 @@ class LaboratoryStep extends Component {
                 label="Implant Supplies"
                 name="implantSupplies"
                 fieldKey="implantSupplies"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Cerec"
-                name="cerec"
-                fieldKey="cerec"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
-              >
+              <Form.Item label="Cerec" name="cerec" fieldKey="cerec">
                 <Input />
               </Form.Item>
               <Form.Item
@@ -131,13 +103,12 @@ class LaboratoryStep extends Component {
                 fieldKey="total"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Total is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Total is not a valid number'),
+                          ),
                   },
                 ]}
               >
@@ -155,10 +126,7 @@ class LaboratoryStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

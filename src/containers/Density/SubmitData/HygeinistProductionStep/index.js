@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {
-  forEach,
-} from 'lodash';
-import {
-  PlusOutlined
-} from '@ant-design/icons';
+import { forEach } from 'lodash';
+import { PlusOutlined } from '@ant-design/icons';
 import {
   Row,
   Col,
@@ -16,15 +12,14 @@ import {
   Button,
   Divider,
   PageHeader,
+  InputNumber,
 } from 'antd';
 import camelcaseKeys from 'camelcase-keys';
 
 import api from '@/api';
 import DebounceSelect from '@/components/DebounceSelect';
 import AppConfig from '@/constants/AppConfig';
-import {
-  fetchHygienists,
-} from '@/actions/hygienistActions';
+import { fetchHygienists } from '@/actions/hygienistActions';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -51,15 +46,17 @@ class HygeinistProductionStep extends Component {
             hoursRecoverd: null,
             patientVisits: null,
             productSales: null,
-          }
+          },
         ],
-      }
+      },
     };
   }
 
   componentDidMount() {
     const { fetchHygienists, page } = this.props;
-    const formData = JSON.parse(localStorage.getItem('dentistryHygienistProduction'));
+    const formData = JSON.parse(
+      localStorage.getItem('dentistryHygienistProduction'),
+    );
 
     fetchHygienists({ page });
 
@@ -70,28 +67,27 @@ class HygeinistProductionStep extends Component {
     };
   }
 
-  fetchHygienistList = (keyword) => api
-    .get('/api/v1/hygienists', { params: { search: keyword } })
-    .then(({ data: response }) => camelcaseKeys(response, { deep: true }))
-    .then(({ result }) => result.data.map((item) => ({
-      label: item.attributes.fullname,
-      value: item.id,
-    })))
-    .catch((error) => {
-      throw error;
-    })
+  fetchHygienistList = (keyword) =>
+    api
+      .get('/api/v1/hygienists', { params: { search: keyword } })
+      .then(({ data: response }) => camelcaseKeys(response, { deep: true }))
+      .then(({ result }) =>
+        result.data.map((item) => ({
+          label: item.attributes.fullname,
+          value: item.id,
+        })),
+      )
+      .catch((error) => {
+        throw error;
+      });
 
   optionInit = () => {
-    const {
-      items
-    } = this.props;
+    const { items } = this.props;
 
     const data = [];
 
-    forEach(items, item => {
-      const {
-        fullname,
-      } = item.attributes;
+    forEach(items, (item) => {
+      const { fullname } = item.attributes;
 
       data.push({
         label: fullname,
@@ -100,19 +96,63 @@ class HygeinistProductionStep extends Component {
     });
 
     return data;
-  }
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistryHygienistProduction', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`,
+    );
+  };
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`,
+    );
+  };
+
+  getValueOfKey = (key) =>
+    this.formRef.current.getFieldValue().hygenistProduction[key];
+
+  setProduction = (fieldKey, value) => {
+    const data = this.formRef.current.getFieldValue('hygenistProduction');
+
+    const updateData = data.map((doctor, index) => {
+      if (index === fieldKey) {
+        return {
+          ...doctor,
+          netProduction:
+            Number(value) - Number(this.getValueOfKey(fieldKey)?.discount || 0),
+        };
+      }
+
+      return doctor;
+    });
+
+    this.formRef.current.setFieldsValue({ hygenistProduction: updateData });
+  };
+
+  setDiscount = (fieldKey, value) => {
+    const data = this.formRef.current.getFieldValue('hygenistProduction');
+
+    const updateData = data.map((doctor, index) => {
+      if (index === fieldKey) {
+        return {
+          ...doctor,
+          netProduction:
+            Number(this.getValueOfKey(fieldKey)?.production || 0) -
+            Number(value),
+        };
+      }
+
+      return doctor;
+    });
+
+    this.formRef.current.setFieldsValue({ hygenistProduction: updateData });
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -140,12 +180,13 @@ class HygeinistProductionStep extends Component {
               {(fields, { add, remove }) => (
                 <>
                   {fields.map((field) => (
-                    <Col span={12} key={field.key}>
+                    <Col span={16} key={field.key}>
                       <Form.Item
                         label="Hygenist Name"
+                        tooltip="Please place all hygiene names on your master copy so that each
+hygienist’s statistics are placed in the same column every month."
                         name={[field.name, 'hygienistId']}
                         fieldKey={[field.fieldKey, 'hygienistId']}
-                        rules={[{ required: true, message: 'Hygenist is required' }]}
                       >
                         <DebounceSelect
                           showSearch
@@ -159,9 +200,16 @@ class HygeinistProductionStep extends Component {
                         label="Production"
                         name={[field.name, 'production']}
                         fieldKey={[field.fieldKey, 'production']}
-                        rules={[{ required: true, message: 'Production is required' }]}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) =>
+                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          }
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                          onChange={(value) =>
+                            this.setProduction(field.key, value)
+                          }
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Discounts"
@@ -169,17 +217,26 @@ class HygeinistProductionStep extends Component {
                         fieldKey={[field.fieldKey, 'discount']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('Discounts is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Discounts is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) =>
+                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          }
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                          onChange={(value) =>
+                            this.setDiscount(field.key, value)
+                          }
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Net Production"
@@ -187,31 +244,36 @@ class HygeinistProductionStep extends Component {
                         fieldKey={[field.fieldKey, 'netProduction']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('Net Production is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Net Production is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
-                        <Input />
+                        <Input prefix="$" disabled />
                       </Form.Item>
                       <Form.Item
                         label="Hygiene Hours Available"
+                        tooltip="Total hours available for patient care in the month. (Staff
+meeting times, administrative time, or lunch breaks are not included). Available hours
+should be determined at the END of each day."
                         name={[field.name, 'hoursAvailable']}
                         fieldKey={[field.fieldKey, 'hoursAvailable']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('Hours Available is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Hours Available is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
@@ -219,17 +281,20 @@ class HygeinistProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Hygiene Hours Scheduled"
+                        tooltip="Report the total hours scheduled with patients. Determine
+“Scheduled hours” at the END of each day."
                         name={[field.name, 'hoursScheduled']}
                         fieldKey={[field.fieldKey, 'hoursScheduled']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('Hours Scheduled is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Hours Scheduled is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
@@ -237,17 +302,20 @@ class HygeinistProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Hygiene Hours Cancelled"
+                        tooltip="Report the total hours scheduled with patients.
+Determine “Scheduled hours” at the END of the day"
                         name={[field.name, 'hoursCancelled']}
                         fieldKey={[field.fieldKey, 'hoursCancelled']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('Hours Cancelled is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Hours Cancelled is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
@@ -255,17 +323,20 @@ class HygeinistProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Hygiene Hours Recoverd"
+                        tooltip="Total number of cancelled hours that were refilled with
+other patients each day."
                         name={[field.name, 'hoursRecoverd']}
                         fieldKey={[field.fieldKey, 'hoursRecoverd']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('Hours Recoverd is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Hours Recoverd is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
@@ -277,13 +348,14 @@ class HygeinistProductionStep extends Component {
                         fieldKey={[field.fieldKey, 'patientVisits']}
                         rules={[
                           {
-                            required: true,
-                          },
-                          {
                             validator: (_, value) =>
-                              !isNaN(value) ?
-                                Promise.resolve() :
-                                Promise.reject(new Error('# of Patient Visits is not a valid number'))
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      '# of Patient Visits is not a valid number',
+                                    ),
+                                  ),
                           },
                         ]}
                       >
@@ -291,17 +363,16 @@ class HygeinistProductionStep extends Component {
                       </Form.Item>
                       <Form.Item
                         label="Product Sales"
+                        tooltip="Total dollar amount of products sold to patients by each
+hygienist."
                         name={[field.name, 'productSales']}
                         fieldKey={[field.fieldKey, 'productSales']}
-                        rules={[{ required: true, message: 'Product Sales is required' }]}
                       >
                         <Input />
                       </Form.Item>
 
-                      {field.key > 0 &&
-                        <Form.Item
-                          style={{ textAlign: 'right' }}
-                        >
+                      {field.key > 0 && (
+                        <Form.Item style={{ textAlign: 'right' }}>
                           <Button
                             onClick={() => remove(field.name)}
                             type="danger"
@@ -309,7 +380,7 @@ class HygeinistProductionStep extends Component {
                             Remove
                           </Button>
                         </Form.Item>
-                      }
+                      )}
                     </Col>
                   ))}
 
@@ -335,10 +406,7 @@ class HygeinistProductionStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>
@@ -348,7 +416,6 @@ class HygeinistProductionStep extends Component {
     );
   }
 }
-
 
 HygeinistProductionStep.propTypes = {
   fetchHygienists: PropTypes.func,

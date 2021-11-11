@@ -9,6 +9,7 @@ import {
   Button,
   Divider,
   PageHeader,
+  InputNumber,
 } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
@@ -41,7 +42,7 @@ class CollectionsStep extends Component {
         ninetyOneToMoreDays: null,
         total: null,
         unpaidBillsDueThisMonth: null,
-      }
+      },
     };
   }
 
@@ -57,20 +58,40 @@ class CollectionsStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistryCollections', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`,
+    );
+  };
+
+  getValueOfKey = (key) =>
+    this.formRef.current.getFieldValue().doctorProduction[key];
+
+  setTotalGross = (value) => {
+    this.formRef.current.setFieldsValue({
+      totalNet:
+        Number(value) - Number(this.formRef.current.getFieldValue('refunds')),
+    });
+  };
+
+  setTotalRefund = (value) => {
+    this.formRef.current.setFieldsValue({
+      totalNet:
+        Number(this.formRef.current.getFieldValue('totalGross')) -
+        Number(value),
+    });
+  };
 
   render() {
-    const {
-      initialValues,
-    } = this.state;
+    const { initialValues } = this.state;
 
     return (
       <div className="collection-container">
@@ -92,33 +113,47 @@ class CollectionsStep extends Component {
             <Col span={12}>
               <Form.Item
                 label="Total Gross Collection"
+                tooltip="Total dollars collected for the entire practice in the month."
                 name="totalGross"
                 fieldKey="totalGross"
-                rules={[{ required: true }]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  onChange={(value) => this.setTotalGross(value)}
+                />
               </Form.Item>
               <Form.Item
                 label="Refunds to Patients or Insurance Companies"
+                tooltip="Only refunds to patients or refunds to insurance companies are
+considered collection adjustments."
                 name="refunds"
                 fieldKey="refunds"
-                rules={[{ required: true }]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  onChange={(value) => this.setTotalRefund(value)}
+                />
               </Form.Item>
               <Form.Item
                 label="Total Net Collections"
+                tooltip="Total dollars gross collections minus the collection adjustments.
+There is a formula in this cell so the spreadsheet will automatically compute this."
                 name="totalNet"
                 fieldKey="totalNet"
-                rules={[{ required: true }]}
               >
-                <Input />
+                <Input prefix="$" disabled />
               </Form.Item>
               <Form.Item
                 label="Collections at Time of Service"
                 name="collectionsAtTos"
+                tooltip="Revenue collected from patients at their appointment"
                 fieldKey="collectionsAtTos"
-                rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
@@ -134,18 +169,17 @@ class CollectionsStep extends Component {
                 fieldKey="zeroToThirtyDays"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex0To30,
-                    message: 'must be between 0 and 30'
+                    message: 'must be between 0 and 30',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('0 to 30 Days is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('0 to 30 Days is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -156,18 +190,17 @@ class CollectionsStep extends Component {
                 fieldKey="thirtyOneToSixtyDays"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex31To60,
-                    message: 'must be between 31 and 60'
+                    message: 'must be between 31 and 60',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('31 to 60 Days is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('31 to 60 Days is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -178,18 +211,17 @@ class CollectionsStep extends Component {
                 fieldKey="sixtyOneToNinetyDays"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex61To90,
-                    message: 'must be between 61 and 90'
+                    message: 'must be between 61 and 90',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('61 to 90 Days is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('61 to 90 Days is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -200,18 +232,17 @@ class CollectionsStep extends Component {
                 fieldKey="ninetyOneToMoreDays"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex91ToMore,
-                    message: 'cannot be less than 91'
+                    message: 'cannot be less than 91',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('91+ Days is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('91+ Days is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -222,13 +253,12 @@ class CollectionsStep extends Component {
                 fieldKey="total"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Total is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Total is not a valid number'),
+                          ),
                   },
                 ]}
               >
@@ -240,13 +270,14 @@ class CollectionsStep extends Component {
                 fieldKey="unpaidBillsDueThisMonth"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Unpaid Bills Due This Month is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Unpaid Bills Due This Month is not a valid number',
+                            ),
+                          ),
                   },
                 ]}
               >
@@ -263,10 +294,7 @@ class CollectionsStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

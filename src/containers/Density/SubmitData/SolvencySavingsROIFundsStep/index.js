@@ -11,12 +11,11 @@ import {
   Button,
   Divider,
   PageHeader,
+  InputNumber,
 } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
-import {
-  dentistrySubmitData
-} from '@/actions/dentistryActions';
+import { dentistrySubmitData } from '@/actions/dentistryActions';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -42,12 +41,14 @@ class SolvencySavingsROIFundsStep extends Component {
         distributions: null,
         profitabilityPayForTeam: null,
         otherShortTermDebt: null,
-      }
+      },
     };
   }
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('dentistrySolvencySavingsROIFunds'));
+    const formData = JSON.parse(
+      localStorage.getItem('dentistrySolvencySavingsROIFunds'),
+    );
 
     this.formRef.current.setFieldsValue(formData);
 
@@ -58,38 +59,61 @@ class SolvencySavingsROIFundsStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`,
+    );
+  };
 
-  onFinish = data => {
-    localStorage.setItem('dentistrySolvencySavingsROIFunds', JSON.stringify(data));
+  onFinish = (data) => {
+    localStorage.setItem(
+      'dentistrySolvencySavingsROIFunds',
+      JSON.stringify(data),
+    );
 
-    const {
-      history,
-      dentistrySubmitData,
-    } = this.props;
+    const { history, dentistrySubmitData } = this.props;
 
-    const dentistryDoctorProduction = JSON.parse(localStorage.getItem('dentistryDoctorProduction'));
-    const dentistryHygienistProduction = JSON.parse(localStorage.getItem('dentistryHygienistProduction'));
+    const dentistryDoctorProduction = JSON.parse(
+      localStorage.getItem('dentistryDoctorProduction'),
+    );
+    const dentistryHygienistProduction = JSON.parse(
+      localStorage.getItem('dentistryHygienistProduction'),
+    );
 
     const params = {
       dentistry: {
-        doctorProduction: dentistryDoctorProduction ? dentistryDoctorProduction.doctorProduction : [],
-        hygienistProduction: dentistryHygienistProduction ? dentistryHygienistProduction.hygenistProduction : [],
-        patientActivity: JSON.parse(localStorage.getItem('dentistryPatientActivity')) || {},
-        collections: JSON.parse(localStorage.getItem('dentistryCollections')) || {},
-        staffCompensation: JSON.parse(localStorage.getItem('dentistryStaffCompensation')) || {},
-        occupancyAndHP: JSON.parse(localStorage.getItem('dentistryOccupanyAndHP')) || {},
-        suppliesAndMarketing: JSON.parse(localStorage.getItem('dentistrySuppliesAndMarketing')) || {},
-        laboratory: JSON.parse(localStorage.getItem('dentistryLaboratory')) || {},
-        administrativeServices: JSON.parse(localStorage.getItem('dentistryAdministrativeServices')) || {},
-        doctorSalary: JSON.parse(localStorage.getItem('dentistryDoctorSalary')) || {},
-        solvencySavingsROIFunds: JSON.parse(localStorage.getItem('dentistrySolvencySavingsROIFunds')) || {},
+        doctorProduction: dentistryDoctorProduction
+          ? dentistryDoctorProduction.doctorProduction
+          : [],
+        hygienistProduction: dentistryHygienistProduction
+          ? dentistryHygienistProduction.hygenistProduction
+          : [],
+        patientActivity:
+          JSON.parse(localStorage.getItem('dentistryPatientActivity')) || {},
+        collections:
+          JSON.parse(localStorage.getItem('dentistryCollections')) || {},
+        staffCompensation:
+          JSON.parse(localStorage.getItem('dentistryStaffCompensation')) || {},
+        occupancyAndHP:
+          JSON.parse(localStorage.getItem('dentistryOccupanyAndHP')) || {},
+        suppliesAndMarketing:
+          JSON.parse(localStorage.getItem('dentistrySuppliesAndMarketing')) ||
+          {},
+        laboratory:
+          JSON.parse(localStorage.getItem('dentistryLaboratory')) || {},
+        administrativeServices:
+          JSON.parse(localStorage.getItem('dentistryAdministrativeServices')) ||
+          {},
+        doctorSalary:
+          JSON.parse(localStorage.getItem('dentistryDoctorSalary')) || {},
+        solvencySavingsROIFunds:
+          JSON.parse(
+            localStorage.getItem('dentistrySolvencySavingsROIFunds'),
+          ) || {},
       },
     };
 
     dentistrySubmitData({ params, history });
-  }
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -115,37 +139,40 @@ class SolvencySavingsROIFundsStep extends Component {
               <Card title="Solvency / Savings">
                 <Form.Item
                   label="Deposits Made"
+                  tooltip="Total dollars deposited into the Power Account for
+the purpose of solvency."
                   name="deposit"
                   fieldKey="deposit"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Retiring Past Due Debt"
+                  tooltip="Total of checks written for
+paying expenses that had balances before the Schuster Program began. Included here are:
+Payments toward credit cards balances, used credit line draws, past due payables or past
+due business taxes."
                   name="retiringPastDueDebt"
                   fieldKey="retiringPastDueDebt"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Transferred out of Solvency Acct"
+                  tooltip="Total dollars transferred out of Solvency to
+pay the current month’s expenses."
                   name="transferredOutOfSolvencyAcct"
                   fieldKey="transferredOutOfSolvencyAcct"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -155,17 +182,21 @@ class SolvencySavingsROIFundsStep extends Component {
                   fieldKey="total"
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Total is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Total is not a valid number'),
+                            ),
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
               </Card>
             </Col>
@@ -175,59 +206,22 @@ class SolvencySavingsROIFundsStep extends Component {
                   label="Dr. Pension"
                   name="pension"
                   fieldKey="pension"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Dr. CE"
-                  name="drCe"
-                  fieldKey="drCe"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
+                <Form.Item label="Dr. CE" name="drCe" fieldKey="drCe">
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Draw"
-                  name="draw"
-                  fieldKey="draw"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
+                <Form.Item label="Draw" name="draw" fieldKey="draw">
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Dividend"
-                  name="dividend"
-                  fieldKey="dividend"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
+                <Form.Item label="Dividend" name="dividend" fieldKey="dividend">
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Distributions"
                   name="distributions"
                   fieldKey="distributions"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -235,11 +229,6 @@ class SolvencySavingsROIFundsStep extends Component {
                   label="Profitability Pay for Team"
                   name="profitabilityPayForTeam"
                   fieldKey="profitabilityPayForTeam"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -250,11 +239,6 @@ class SolvencySavingsROIFundsStep extends Component {
                 label="Other Short Term Debt"
                 name="otherShortTermDebt"
                 fieldKey="otherShortTermDebt"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -270,10 +254,7 @@ class SolvencySavingsROIFundsStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Submit
               </Button>
             </Col>
@@ -292,5 +273,5 @@ SolvencySavingsROIFundsStep.propTypes = {
 export default withRouter(
   connect(null, {
     dentistrySubmitData,
-  })(SolvencySavingsROIFundsStep)
+  })(SolvencySavingsROIFundsStep),
 );

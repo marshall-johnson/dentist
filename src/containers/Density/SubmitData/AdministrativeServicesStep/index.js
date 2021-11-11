@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
@@ -49,12 +41,14 @@ class AdministrativeServicesStep extends Component {
         telephone: null,
         uniforms: null,
         total: null,
-      }
+      },
     };
   }
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('dentistryAdministrativeServices'));
+    const formData = JSON.parse(
+      localStorage.getItem('dentistryAdministrativeServices'),
+    );
 
     this.formRef.current.setFieldsValue(formData);
 
@@ -65,15 +59,22 @@ class AdministrativeServicesStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`,
+    );
+  };
 
-  onFinish = data => {
-    localStorage.setItem('dentistryAdministrativeServices', JSON.stringify(data));
+  onFinish = (data) => {
+    localStorage.setItem(
+      'dentistryAdministrativeServices',
+      JSON.stringify(data),
+    );
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`,
+    );
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -100,11 +101,6 @@ class AdministrativeServicesStep extends Component {
                 label="Administrative Office Supplies"
                 name="administrativeOfficeSupplies"
                 fieldKey="administrativeOfficeSupplies"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -112,11 +108,6 @@ class AdministrativeServicesStep extends Component {
                 label="Bank & CC Services Charges"
                 name="bankCcServicesCharges"
                 fieldKey="bankCcServicesCharges"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -124,11 +115,6 @@ class AdministrativeServicesStep extends Component {
                 label="Business Equipment Purchases"
                 name="businessEquipmentPurchases"
                 fieldKey="businessEquipmentPurchases"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -136,11 +122,6 @@ class AdministrativeServicesStep extends Component {
                 label="Business Equipment Repair / Main"
                 name="businessEquipmentRepair"
                 fieldKey="businessEquipmentRepair"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -148,35 +129,16 @@ class AdministrativeServicesStep extends Component {
                 label="Collection Cost"
                 name="collectionCost"
                 fieldKey="collectionCost"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Dues"
-                name="dues"
-                fieldKey="dues"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
+              <Form.Item label="Dues" name="dues" fieldKey="dues">
                 <Input />
               </Form.Item>
               <Form.Item
                 label="Laundry / Towel Services"
                 name="laundryOrTowelServices"
                 fieldKey="laundryOrTowelServices"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -184,35 +146,16 @@ class AdministrativeServicesStep extends Component {
                 label="Prof fees / Legal / Acct"
                 name="prof"
                 fieldKey="prof"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Licenses"
-                name="licenses"
-                fieldKey="licenses"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
+              <Form.Item label="Licenses" name="licenses" fieldKey="licenses">
                 <Input />
               </Form.Item>
               <Form.Item
                 label="CRM Software"
                 name="crmSoftware"
                 fieldKey="crmSoftware"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -222,35 +165,16 @@ class AdministrativeServicesStep extends Component {
                 label="Malpractice Insurance"
                 name="malpracticeInsurance"
                 fieldKey="malpracticeInsurance"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Other"
-                name="other"
-                fieldKey="other"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
+              <Form.Item label="Other" name="other" fieldKey="other">
                 <Input />
               </Form.Item>
               <Form.Item
                 label="Overhead Insurance"
                 name="overheadInsurance"
                 fieldKey="overheadInsurance"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -258,16 +182,8 @@ class AdministrativeServicesStep extends Component {
                 label="Cell Phone"
                 name="cellPhone"
                 fieldKey="cellPhone"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
-                <PhoneInput
-                  country='us'
-                  inputStyle={{ width: '100%' }}
-                />
+                <PhoneInput country="us" inputStyle={{ width: '100%' }} />
               </Form.Item>
               <Form.Item
                 label="Payroll Services Fee"
@@ -275,13 +191,14 @@ class AdministrativeServicesStep extends Component {
                 fieldKey="payrollServicesFee"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Payroll Services Fee is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Payroll Services Fee is not a valid number',
+                            ),
+                          ),
                   },
                 ]}
               >
@@ -291,11 +208,6 @@ class AdministrativeServicesStep extends Component {
                 label="Postage and Freight"
                 name="postageAndFreight"
                 fieldKey="postageAndFreight"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -303,11 +215,6 @@ class AdministrativeServicesStep extends Component {
                 label="Subscriptions"
                 name="subscriptions"
                 fieldKey="subscriptions"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <Input />
               </Form.Item>
@@ -317,13 +224,14 @@ class AdministrativeServicesStep extends Component {
                 fieldKey="personalPropertyTaxes"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Personal Property Taxes is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Personal Property Taxes is not a valid number',
+                            ),
+                          ),
                   },
                 ]}
               >
@@ -333,27 +241,10 @@ class AdministrativeServicesStep extends Component {
                 label="Telephone"
                 name="telephone"
                 fieldKey="telephone"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
-                <PhoneInput
-                  country='us'
-                  inputStyle={{ width: '100%' }}
-                />
+                <PhoneInput country="us" inputStyle={{ width: '100%' }} />
               </Form.Item>
-              <Form.Item
-                label="Uniforms"
-                name="uniforms"
-                fieldKey="uniforms"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
+              <Form.Item label="Uniforms" name="uniforms" fieldKey="uniforms">
                 <Input />
               </Form.Item>
             </Col>
@@ -364,13 +255,12 @@ class AdministrativeServicesStep extends Component {
                 fieldKey="total"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Total is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Total is not a valid number'),
+                          ),
                   },
                 ]}
               >
@@ -388,10 +278,7 @@ class AdministrativeServicesStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

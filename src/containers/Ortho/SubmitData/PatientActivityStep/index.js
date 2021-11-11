@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Card,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -20,7 +11,9 @@ const validateMessages = {
 };
 
 // eslint-disable-next-line max-len
-const urlPatternRegex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/);
+const urlPatternRegex = new RegExp(
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
+);
 
 class PatientActivityStep extends Component {
   formRef = React.createRef();
@@ -64,9 +57,9 @@ class PatientActivityStep extends Component {
         rpcQuadrant: null,
         rpcTeeth: null,
         perioMaintenance: null,
-      }
+      },
     };
-  };
+  }
 
   componentDidMount() {
     const formData = JSON.parse(localStorage.getItem('orthoPatientActivity'));
@@ -80,20 +73,22 @@ class PatientActivityStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.COLLECTIONS}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.COLLECTIONS}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('orthoPatientActivity', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`,
+    );
+  };
 
   render() {
-    const {
-      initialValues,
-    } = this.state;
+    const { initialValues } = this.state;
 
     return (
       <div className="patient-activity-container">
@@ -238,7 +233,6 @@ class PatientActivityStep extends Component {
                 >
                   <Input />
                 </Form.Item>
-
               </Card>
             </Col>
             <Col span={8}>
@@ -303,7 +297,6 @@ class PatientActivityStep extends Component {
                 >
                   <Input />
                 </Form.Item>
-
               </Card>
             </Col>
           </Row>
@@ -319,10 +312,14 @@ class PatientActivityStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Active Patient Count is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Active Patient Count is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -381,10 +378,14 @@ class PatientActivityStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Patients of Record is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Patients of Record is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -396,7 +397,7 @@ class PatientActivityStep extends Component {
                 rules={[
                   {
                     required: true,
-                  }
+                  },
                 ]}
               >
                 <Input />
@@ -411,8 +412,8 @@ class PatientActivityStep extends Component {
                   },
                   {
                     pattern: urlPatternRegex,
-                    message: 'Website is not valid!'
-                  }
+                    message: 'Website is not valid!',
+                  },
                 ]}
               >
                 <Input />
@@ -424,7 +425,7 @@ class PatientActivityStep extends Component {
                 rules={[
                   {
                     required: true,
-                  }
+                  },
                 ]}
               >
                 <Input />
@@ -439,10 +440,12 @@ class PatientActivityStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Team Members is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Team Members is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -454,7 +457,7 @@ class PatientActivityStep extends Component {
                 rules={[
                   {
                     required: true,
-                  }
+                  },
                 ]}
               >
                 <Input />
@@ -477,10 +480,12 @@ class PatientActivityStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('RPC Quadrant is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('RPC Quadrant is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -495,10 +500,12 @@ class PatientActivityStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('RPC 1-3 teeth is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('RPC 1-3 teeth is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -513,10 +520,14 @@ class PatientActivityStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Perio Maintenance is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Perio Maintenance is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -533,10 +544,7 @@ class PatientActivityStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

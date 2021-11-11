@@ -9,6 +9,7 @@ import {
   Button,
   Divider,
   PageHeader,
+  InputNumber,
 } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
@@ -53,12 +54,14 @@ class PatientActivityStep extends Component {
         rpcQuadrant: null,
         rpcTeeth: null,
         perioMaintenance: null,
-      }
+      },
     };
-  };
+  }
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('dentistryPatientActivity'));
+    const formData = JSON.parse(
+      localStorage.getItem('dentistryPatientActivity'),
+    );
 
     this.formRef.current.setFieldsValue(formData);
 
@@ -69,20 +72,22 @@ class PatientActivityStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistryPatientActivity', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`,
+    );
+  };
 
   render() {
-    const {
-      initialValues,
-    } = this.state;
+    const { initialValues } = this.state;
 
     return (
       <div className="patient-activity-container">
@@ -105,17 +110,23 @@ class PatientActivityStep extends Component {
               <Form.Item
                 label="Active Patient Count"
                 name="activePatientCount"
+                tooltip="The practice probably has an active patient count
+from their Baseline Report. This number should be increased each month by the number
+of patients entering the practice as New Patients and reduced by the number that you are
+aware have left the practice. Emergency only patients are not considered a New Patient
+until they have been through your New Patient process."
                 fieldKey="activePatientCount"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Active Patient Count is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Active Patient Count is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -127,21 +138,24 @@ class PatientActivityStep extends Component {
               <Form.Item
                 label="New Patient (6 to 20)"
                 name="newPatient6To20"
+                tooltip="Total number of New Patients for the month, according to their age
+group. "
                 fieldKey="newPatient6To20"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex6To20,
-                    message: 'must be between 6 and 20'
+                    message: 'must be between 6 and 20',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('New Patient (6 to 20) is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'New Patient (6 to 20) is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -151,21 +165,23 @@ class PatientActivityStep extends Component {
               <Form.Item
                 label="New Patient (21 to 40)"
                 name="newPatient21To40"
+                tooltip="Total number of New Patients for the month, according to their age group. "
                 fieldKey="newPatient21To40"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex21To40,
-                    message: 'must be between 21 and 40'
+                    message: 'must be between 21 and 40',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('New Patient (21 to 40) is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'New Patient (21 to 40) is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -175,21 +191,23 @@ class PatientActivityStep extends Component {
               <Form.Item
                 label="New Patient (41+)"
                 name="newPatient41ToMore"
+                tooltip="Total number of New Patients for the month, according to their age group. "
                 fieldKey="newPatient41ToMore"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     pattern: regex41ToMore,
-                    message: 'cannot be less than 41'
+                    message: 'cannot be less than 41',
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('New Patient (41+) is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'New Patient (41+) is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -201,18 +219,26 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="# of Formal Review of Findings"
+                tooltip="Track formal and informal presentations separately. An informal presentation is done at
+the same appointment where the need was diagnosed. A formal presentation occurs when
+the patient is brought back for a separate appointment for a longer discussion.
+
+Assistants and Hygienists may be responsible for tracking the number of informal ROFs.
+The formal number of ROFs may be tracked by the Administrato
+                "
                 name="formalReviewOfFindings"
                 fieldKey="formalReviewOfFindings"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('# of Formal Review of Findings is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              '# of Formal Review of Findings is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -221,21 +247,27 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="$ Presented"
+                tooltip="– Track the total dollars presented for formal presentations and separately
+track the total dollars presented for informal presentations."
                 name="formalReviewPresented"
                 fieldKey="formalReviewPresented"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('$ Presented is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('$ Presented is not a valid number'),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -243,18 +275,21 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="# appointed"
+                tooltip="How many of the patients who had a formal or informal presentation
+scheduled their next appointment before leaving the office? "
                 name="formalReviewAppointed"
                 fieldKey="formalReviewAppointed"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('# of actual appointed is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              '# of actual appointed is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -263,21 +298,27 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="$ Accepted"
+                tooltip="Total dollars accepted by patients from formal presentations and
+separately from informal presentations. "
                 name="formalReviewAccepted"
                 fieldKey="formalReviewAccepted"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('$ Accepted is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('$ Accepted is not a valid number'),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -289,14 +330,15 @@ class PatientActivityStep extends Component {
                 fieldKey="informalReviewOfFindings"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('# of Informal Review of Findings is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              '# of Informal Review of Findings is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -309,17 +351,21 @@ class PatientActivityStep extends Component {
                 fieldKey="informalReviewPresented"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('$ Presented is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('$ Presented is not a valid number'),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -327,18 +373,19 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="# appointed"
+                tooltip="How many of the patients who had a formal or informal presentation
+scheduled their next appointment before leaving the office? "
                 name="informalReviewAppointed"
                 fieldKey="informalReviewAppointed"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('# appointed is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('# appointed is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -351,17 +398,21 @@ class PatientActivityStep extends Component {
                 fieldKey="informalReviewAccepted"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('$ Accepted is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('$ Accepted is not a valid number'),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -369,18 +420,21 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="Due in Recare This Month"
+                tooltip="Total number of patients due for a recare appointment with the
+Hygiene Dept Department this month?"
                 name="dueInRecareThisMonth"
                 fieldKey="dueInRecareThisMonth"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Due in Recare This Month is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Due in Recare This Month is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -389,18 +443,18 @@ class PatientActivityStep extends Component {
             <Col span={8}>
               <Form.Item
                 label="# Seen"
+                tooltip="Of the patients who were due, how many were seen in the month?"
                 name="seen"
                 fieldKey="seen"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('# Seen is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('# Seen is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
@@ -416,55 +470,37 @@ class PatientActivityStep extends Component {
               <Form.Item
                 label="Patients of Record"
                 name="patientsOfRecord"
+                tooltip="Total number of New Patients joining the practice
+this month who were sent to the practice by a patient of record."
                 fieldKey="patientsOfRecord"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Patients of Record is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Patients of Record is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
                 <Input />
               </Form.Item>
               <Form.Item
                 label="Other Doctors"
+                tooltip="Total number of New Patients joining the practice this
+month who were sent to the practice by another healthcare professional."
                 name="otherDoctors"
                 fieldKey="otherDoctors"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Website"
-                name="website"
-                fieldKey="website"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
-              >
+              <Form.Item label="Website" name="website" fieldKey="website">
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Signage"
-                name="signage"
-                fieldKey="signage"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
-              >
+              <Form.Item label="Signage" name="signage" fieldKey="signage">
                 <Input />
               </Form.Item>
               <Form.Item
@@ -473,28 +509,18 @@ class PatientActivityStep extends Component {
                 fieldKey="teamMembers"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Team Members is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Team Members is not a valid number'),
+                          ),
+                  },
                 ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Other"
-                name="other"
-                fieldKey="other"
-                rules={[
-                  {
-                    required: true,
-                  }
-                ]}
-              >
+              <Form.Item label="Other" name="other" fieldKey="other">
                 <Input />
               </Form.Item>
             </Col>
@@ -507,57 +533,80 @@ class PatientActivityStep extends Component {
               <h3 className="ant-form-text">Perio Production $</h3>
               <Form.Item
                 label="RPC Quadrant"
+                tooltip="Please track the dollar value for the 3 categories the office
+chose to track. These categories must remain constant from month to month. Also report
+total production adjustments for the month."
                 name="rpcQuadrant"
                 fieldKey="rpcQuadrant"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('RPC Quadrant is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('RPC Quadrant is not a valid number'),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="RPC 1-3 teeth"
                 name="rpcTeeth"
+                tooltip="Please track the dollar value for the 3 categories the office
+chose to track. These categories must remain constant from month to month. Also report
+total production adjustments for the month."
                 fieldKey="rpcTeeth"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('RPC 1-3 teeth is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('RPC 1-3 teeth is not a valid number'),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Perio Maintenance"
+                tooltip="Please track the dollar value for the 3 categories the office
+chose to track. These categories must remain constant from month to month. Also report
+total production adjustments for the month."
                 name="perioMaintenance"
                 fieldKey="perioMaintenance"
                 rules={[
                   {
-                    required: true,
-                  },
-                  {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Perio Maintenance is not a valid number'))
-                  }
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Perio Maintenance is not a valid number',
+                            ),
+                          ),
+                  },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -568,14 +617,10 @@ class PatientActivityStep extends Component {
                 type="primary"
                 style={{ marginRight: '8px' }}
                 onClick={this.onBack}
-
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Card,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -63,13 +54,15 @@ class StaffCompensationStep extends Component {
           pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
-        }
-      }
+        },
+      },
     };
   }
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('dentistryStaffCompensation'));
+    const formData = JSON.parse(
+      localStorage.getItem('dentistryStaffCompensation'),
+    );
 
     this.formRef.current.setFieldsValue(formData);
 
@@ -80,15 +73,19 @@ class StaffCompensationStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistryStaffCompensation', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`,
+    );
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -118,13 +115,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['assistants', 'grossSalary']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Gross Salary is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Gross Salary is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -134,7 +130,6 @@ class StaffCompensationStep extends Component {
                   label="Employer Matching SocSec, Medicare"
                   name={['assistants', 'employerMatching']}
                   fieldKey={['assistants', 'employerMatching']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -142,7 +137,6 @@ class StaffCompensationStep extends Component {
                   label="FUTA, SUTA"
                   name={['assistants', 'futaSuta']}
                   fieldKey={['assistants', 'futaSuta']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -150,7 +144,6 @@ class StaffCompensationStep extends Component {
                   label="Medical Insurance"
                   name={['assistants', 'medicalInsurance']}
                   fieldKey={['assistants', 'medicalInsurance']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -158,7 +151,6 @@ class StaffCompensationStep extends Component {
                   label="Pension / Profit Sharing"
                   name={['assistants', 'pensionProfitSharing']}
                   fieldKey={['assistants', 'pensionProfitSharing']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -168,13 +160,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['assistants', 'bonus']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Bonus is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Bonus is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -184,7 +175,6 @@ class StaffCompensationStep extends Component {
                   label="Other Benefit"
                   name={['assistants', 'otherBenefit']}
                   fieldKey={['assistants', 'otherBenefit']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -192,7 +182,6 @@ class StaffCompensationStep extends Component {
                   label="Work Comp - all"
                   name={['assistants', 'workComp']}
                   fieldKey={['assistants', 'workComp']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -206,13 +195,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['administrative', 'grossSalary']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Gross Salary is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Gross Salary is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -222,7 +210,6 @@ class StaffCompensationStep extends Component {
                   label="Employer Matching SocSec, Medicare"
                   name={['administrative', 'employerMatching']}
                   fieldKey={['administrative', 'employerMatching']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -230,7 +217,6 @@ class StaffCompensationStep extends Component {
                   label="FUTA, SUTA"
                   name={['administrative', 'futaSuta']}
                   fieldKey={['administrative', 'futaSuta']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -238,7 +224,6 @@ class StaffCompensationStep extends Component {
                   label="Medical Insurance"
                   name={['administrative', 'medicalInsurance']}
                   fieldKey={['administrative', 'medicalInsurance']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -246,7 +231,6 @@ class StaffCompensationStep extends Component {
                   label="Pension / Profit Sharing"
                   name={['administrative', 'pensionProfitSharing']}
                   fieldKey={['administrative', 'pensionProfitSharing']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -256,13 +240,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['administrative', 'bonus']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Bonus is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Bonus is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -272,7 +255,6 @@ class StaffCompensationStep extends Component {
                   label="Other Benefit"
                   name={['administrative', 'otherBenefit']}
                   fieldKey={['administrative', 'otherBenefit']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -286,13 +268,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygiene', 'grossSalary']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Gross Salary is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Gross Salary is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -302,7 +283,6 @@ class StaffCompensationStep extends Component {
                   label="Employer Matching SocSec, Medicare"
                   name={['hygiene', 'employerMatching']}
                   fieldKey={['hygiene', 'employerMatching']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -310,7 +290,6 @@ class StaffCompensationStep extends Component {
                   label="FUTA, SUTA"
                   name={['hygiene', 'futaSuta']}
                   fieldKey={['hygiene', 'futaSuta']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -318,7 +297,6 @@ class StaffCompensationStep extends Component {
                   label="Medical Insurance"
                   name={['hygiene', 'medicalInsurance']}
                   fieldKey={['hygiene', 'medicalInsurance']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -326,7 +304,6 @@ class StaffCompensationStep extends Component {
                   label="Pension / Profit Sharing"
                   name={['hygiene', 'pensionProfitSharing']}
                   fieldKey={['hygiene', 'pensionProfitSharing']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -336,13 +313,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygiene', 'bonus']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Bonus is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Bonus is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -352,7 +328,6 @@ class StaffCompensationStep extends Component {
                   label="Other Benefit"
                   name={['hygiene', 'otherBenefit']}
                   fieldKey={['hygiene', 'otherBenefit']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -366,13 +341,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygieneAssistant', 'grossSalary']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Gross Salary is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Gross Salary is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -382,7 +356,6 @@ class StaffCompensationStep extends Component {
                   label="Employer Matching SocSec, Medicare"
                   name={['hygieneAssistant', 'employerMatching']}
                   fieldKey={['hygieneAssistant', 'employerMatching']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -390,7 +363,6 @@ class StaffCompensationStep extends Component {
                   label="FUTA, SUTA"
                   name={['hygieneAssistant', 'futaSuta']}
                   fieldKey={['hygieneAssistant', 'futaSuta']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -398,7 +370,6 @@ class StaffCompensationStep extends Component {
                   label="Medical Insurance"
                   name={['hygieneAssistant', 'medicalInsurance']}
                   fieldKey={['hygieneAssistant', 'medicalInsurance']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -406,7 +377,6 @@ class StaffCompensationStep extends Component {
                   label="Pension / Profit Sharing"
                   name={['hygieneAssistant', 'pensionProfitSharing']}
                   fieldKey={['hygieneAssistant', 'pensionProfitSharing']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -416,13 +386,12 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygieneAssistant', 'bonus']}
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Bonus is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Bonus is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -432,7 +401,6 @@ class StaffCompensationStep extends Component {
                   label="Other Benefit"
                   name={['hygieneAssistant', 'otherBenefit']}
                   fieldKey={['hygieneAssistant', 'otherBenefit']}
-                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
@@ -449,10 +417,7 @@ class StaffCompensationStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

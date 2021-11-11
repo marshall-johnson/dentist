@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Card,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -39,7 +30,7 @@ class OccupanyAndHPStep extends Component {
         officeFurnitureAndRepairs: null,
         staffContinuingEducation: null,
         staffScpdTuitionOrTravel: null,
-      }
+      },
     };
   }
 
@@ -55,15 +46,19 @@ class OccupanyAndHPStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistryOccupanyAndHP', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`,
+    );
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -89,89 +84,58 @@ class OccupanyAndHPStep extends Component {
               <Card title="Occupancy">
                 <Form.Item
                   label="Mortgage / Rent"
-                  name='mortgageOrRent'
-                  fieldKey='mortgageOrRent'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="mortgageOrRent"
+                  fieldKey="mortgageOrRent"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Utilities"
-                  name='utilities'
-                  fieldKey='utilities'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="utilities"
+                  fieldKey="utilities"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Janitorial"
-                  name='janitorial'
-                  fieldKey='janitorial'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="janitorial"
+                  fieldKey="janitorial"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Repairs / Maintenance / Leasehold Improv"
-                  name='repairs'
-                  fieldKey='repairs'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="repairs"
+                  fieldKey="repairs"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Facilities Insurance"
-                  name='facilitiesInsurance'
-                  fieldKey='facilitiesInsurance'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="facilitiesInsurance"
+                  fieldKey="facilitiesInsurance"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Security System"
-                  name='securitySystem'
-                  fieldKey='securitySystem'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="securitySystem"
+                  fieldKey="securitySystem"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Property Tax"
-                  name='propertyTax'
-                  fieldKey='propertyTax'
+                  name="propertyTax"
+                  fieldKey="propertyTax"
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Property Tax is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Property Tax is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -179,17 +143,16 @@ class OccupanyAndHPStep extends Component {
                 </Form.Item>
                 <Form.Item
                   label="Total"
-                  name='total'
-                  fieldKey='total'
+                  name="total"
+                  fieldKey="total"
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       validator: (_, value) =>
-                        !isNaN(value) ?
-                          Promise.resolve() :
-                          Promise.reject(new Error('Total is not a valid number'))
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Total is not a valid number'),
+                            ),
                     },
                   ]}
                 >
@@ -201,49 +164,29 @@ class OccupanyAndHPStep extends Component {
               <Card title="Human & Physical Resource Development">
                 <Form.Item
                   label="Dental Equip Loan / Equip Maintenance"
-                  name='equipType'
-                  fieldKey='equipType'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="equipType"
+                  fieldKey="equipType"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Office Furniture and Repairs"
-                  name='officeFurnitureAndRepairs'
-                  fieldKey='officeFurnitureAndRepairs'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="officeFurnitureAndRepairs"
+                  fieldKey="officeFurnitureAndRepairs"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Staff Continuing Education"
-                  name='staffContinuingEducation'
-                  fieldKey='staffContinuingEducation'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="staffContinuingEducation"
+                  fieldKey="staffContinuingEducation"
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label="Staff SCPD Tuition / Travel"
-                  name='staffScpdTuitionOrTravel'
-                  fieldKey='staffScpdTuitionOrTravel'
-                  rules={[
-                    {
-                      required: true,
-                    }
-                  ]}
+                  name="staffScpdTuitionOrTravel"
+                  fieldKey="staffScpdTuitionOrTravel"
                 >
                   <Input />
                 </Form.Item>
@@ -260,10 +203,7 @@ class OccupanyAndHPStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>

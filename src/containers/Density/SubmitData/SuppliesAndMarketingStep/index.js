@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Card,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -19,7 +10,9 @@ const validateMessages = {
   required: '${label} is required!',
 };
 // eslint-disable-next-line max-len
-const urlPatternRegex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/);
+const urlPatternRegex = new RegExp(
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
+);
 
 class SuppliesAndMarketingStep extends Component {
   formRef = React.createRef();
@@ -36,12 +29,14 @@ class SuppliesAndMarketingStep extends Component {
         website: null,
         marketing: null,
         advertising: null,
-      }
+      },
     };
   }
 
   componentDidMount() {
-    const formData = JSON.parse(localStorage.getItem('dentistrySuppliesAndMarketing'));
+    const formData = JSON.parse(
+      localStorage.getItem('dentistrySuppliesAndMarketing'),
+    );
 
     this.formRef.current.setFieldsValue(formData);
 
@@ -52,15 +47,19 @@ class SuppliesAndMarketingStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.OCCUPANY_AND_H_P}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('dentistrySuppliesAndMarketing', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`,
+    );
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -88,11 +87,6 @@ class SuppliesAndMarketingStep extends Component {
                   label="Dr. Supplies"
                   name="supplies"
                   fieldKey="supplies"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -100,11 +94,6 @@ class SuppliesAndMarketingStep extends Component {
                   label="Hygiene Supplies"
                   name="hygieneSupplies"
                   fieldKey="hygieneSupplies"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -112,11 +101,6 @@ class SuppliesAndMarketingStep extends Component {
                   label="Shared Supplies"
                   name="sharedSupplies"
                   fieldKey="sharedSupplies"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -124,11 +108,6 @@ class SuppliesAndMarketingStep extends Component {
                   label="Hygiene Product"
                   name="hygieneProduct"
                   fieldKey="hygieneProduct"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -142,12 +121,9 @@ class SuppliesAndMarketingStep extends Component {
                   fieldKey="website"
                   rules={[
                     {
-                      required: true,
-                    },
-                    {
                       pattern: urlPatternRegex,
-                      message: 'Website is not valid!'
-                    }
+                      message: 'Website is not valid!',
+                    },
                   ]}
                 >
                   <Input />
@@ -156,11 +132,6 @@ class SuppliesAndMarketingStep extends Component {
                   label="Marketing"
                   name="marketing"
                   fieldKey="marketing"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -168,11 +139,6 @@ class SuppliesAndMarketingStep extends Component {
                   label="Advertising"
                   name="advertising"
                   fieldKey="advertising"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -189,10 +155,7 @@ class SuppliesAndMarketingStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>
