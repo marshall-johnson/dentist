@@ -38,8 +38,11 @@ class SignUp extends Component {
   }
 
   onSignUp = async (data) => {
-    const { signUp } = this.props;
+    const { signUp, history } = this.props;
     await signUp(data);
+      history.push({
+        pathname: AppConfig.ROUTES.LOGIN,
+      });
   };
 
   render() {
