@@ -13,6 +13,7 @@ import logoImage from '@/assets/images/logo.png';
 
 import '@/styles/index.scss';
 import './index.scss';
+import PrivateRoute from '@/routes/PrivateRoute';
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -160,7 +161,9 @@ class AppContainer extends Component {
                 style={{ padding: 24, minHeight: 360 }}
               >
                 <FlashMessage />
-                <Routes />
+                <PrivateRoute>
+                  <Routes />
+                </PrivateRoute>
               </div>
             </Content>
           </Layout>

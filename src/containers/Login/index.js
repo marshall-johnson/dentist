@@ -2,6 +2,7 @@ import { Button, Form, Input } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import AppConfig from '@/constants/AppConfig';
+import { Link } from 'react-router-dom';
 import './index.scss';
 
 class Login extends Component {
@@ -52,6 +53,7 @@ class Login extends Component {
             </Button>
           </Form.Item>
         </Form>
+        <span>Don&apos;t have an account ? <Link to="/sign-up">Sign up now</Link></span>
       </div>
     );
   }
