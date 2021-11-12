@@ -1,25 +1,54 @@
-import { Button, Form, Input } from 'antd';
+import { login } from '@/actions/authActions';
+import { Button, Form, Input, notification } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AppConfig from '@/constants/AppConfig';
 import { Link } from 'react-router-dom';
 import './index.scss';
 
 class Login extends Component {
-  onLogin = () => {
-    const { history } = this.props;
-    history.push({
-      pathname: AppConfig.ROUTES.MAIN,
+  componentDidMount() {
+    const { currentUser, history } = this.props;
+    if (currentUser) {
+      history.push({
+        pathname: AppConfig.ROUTES.MAIN,
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    const { errorMessage, currentUser, history } = this.props;
+    if (errorMessage) {
+      notification.error({
+        message: errorMessage,
+      });
+    }
+
+    if (currentUser) {
+      notification.success({
+        message: 'Login Success',
+      });
+      history.push({
+        pathname: AppConfig.ROUTES.MAIN,
+      });
+    }
+  }
+
+  onLogin = async (data) => {
+    const { login } = this.props;
+    await login({
+      email: data.email,
+      password: data.password,
     });
   };
 
   render() {
+    const { loading } = this.props;
+
     return (
       <div className="container">
         <h1 className="login-header">Login</h1>
-        <span className="introduction-header">
-          Sign in and start managing your users!
-        </span>
         <Form
           className="form-wrapper"
           name="user"
@@ -43,7 +72,7 @@ class Login extends Component {
             <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item className="submit-btn-wrapper">
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Login
             </Button>
           </Form.Item>
@@ -57,7 +86,18 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
+  currentUser: PropTypes.object,
+  loading: PropTypes.bool,
   history: PropTypes.object,
 };
 
-export default Login;
+const mapStateToProps = ({ auth }) => ({
+  errorMessage: auth.error,
+  loading: auth.loading,
+  currentUser: auth.currentUser,
+});
+export default connect(mapStateToProps, {
+  login,
+})(Login);

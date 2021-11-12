@@ -1,18 +1,19 @@
 // import api from '@/api';
-import { throwErrors } from '@/actions/errorActions';
-import { loginRequest, loginSuccess, loginFail, loggedOut } from '@/store/auth';
+import api from '@/api';
 import {
-  setUserToLocalStorage,
+  loggedOut,
+  loginFail,
+  loginRequest,
+  loginSuccess,
+  signUpFail,
+  signUpRequest,
+  signUpSuccess,
+} from '@/store/auth';
+import {
   removeUserFromLocalStorage,
+  setUserToLocalStorage,
 } from '@/utils/authUtils';
-
-const fakeUser = {
-  name: 'bentran',
-  email: 'me@example.com',
-  password: 'password123',
-  githubProfileUrl: 'https://github.com/tranquangvu',
-  token: 'secretUserAuthToken',
-};
+import snakecaseKeys from 'snakecase-keys';
 
 export const login =
   ({ email, password }) =>
@@ -20,27 +21,34 @@ export const login =
     dispatch(loginRequest());
 
     try {
-      // Simulate login request
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      if (email === fakeUser.email && password === fakeUser.password) {
-        setUserToLocalStorage(fakeUser);
-        dispatch(loginSuccess({ user: fakeUser }));
-      } else {
-        throw new Error();
-      }
-
-      // Uncomment the code below to invoke real login request
-      // const { data: user } = await api.post('/auth/login', {
-      //   email, password,
-      // });
-      // setUserToLocalStorage(user);
-      // dispatch(loginSuccess({ user }));
+      const response = await api.post('/users/sign_in', {
+        user: {
+          email,
+          password,
+        },
+      });
+      setUserToLocalStorage(response.data?.user);
+      dispatch(loginSuccess({ user: response.data?.user }));
     } catch (error) {
-      dispatch(loginFail());
-      dispatch(throwErrors(['Email or password is invalid']));
+      dispatch(loginFail({ error: error.response?.data?.error }));
       console.error(error);
     }
   };
+
+export const signUp = (data) => async (dispatch) => {
+  dispatch(signUpRequest());
+
+  try {
+    await api.post('/users', {
+      user: snakecaseKeys(data, { keepCase: true }),
+    });
+
+    dispatch(signUpSuccess());
+  } catch (error) {
+    dispatch(signUpFail({ error: error.response.data.error }));
+    console.error(error);
+  }
+};
 
 export const logout = () => async (dispatch) => {
   removeUserFromLocalStorage();

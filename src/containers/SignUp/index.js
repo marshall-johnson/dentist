@@ -1,31 +1,57 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, notification } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import AppConfig from '@/constants/AppConfig';
 import { Link } from 'react-router-dom';
+import AppConfig from '@/constants/AppConfig';
+import { connect } from 'react-redux';
+import { signUp } from '@/actions/authActions';
 import './index.scss';
 
 const { Option } = Select;
 
 class SignUp extends Component {
-  onSignUp = () => {
-    const { history } = this.props;
-    history.push({
-      pathname: AppConfig.ROUTES.MAIN,
-    });
+  componentDidMount() {
+    const { currentUser, history } = this.props;
+    if (currentUser) {
+      history.push({
+        pathname: AppConfig.ROUTES.MAIN,
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    const { errorMessage, currentUser, history } = this.props;
+    if (errorMessage) {
+      notification.error({
+        message: errorMessage,
+      });
+    }
+
+    if (currentUser) {
+      notification.success({
+        message: 'Sign Up Successfully',
+      });
+      history.push({
+        pathname: AppConfig.ROUTES.LOGIN,
+      });
+    }
+  }
+
+  onSignUp = async (data) => {
+    const { signUp } = this.props;
+    await signUp(data);
   };
 
   render() {
+    const { loading } = this.props;
+
     return (
       <div className="container">
         <h1 className="sign-up-header">Sign Up</h1>
-        <span className="introduction-header">
-          Sign up and start managing your users!
-        </span>
         <Form
           className="form-wrapper"
           name="user"
-          initialValues={{ remember: true }}
+          initialValues={{ accountType: 'client' }}
           autoComplete="off"
           onFinish={this.onSignUp}
         >
@@ -46,7 +72,7 @@ class SignUp extends Component {
           </Form.Item>
           <Form.Item
             className="input-item"
-            name="confirm"
+            name="passwordConfirmation"
             dependencies={['password']}
             hasFeedback
             rules={[
@@ -70,15 +96,15 @@ class SignUp extends Component {
           >
             <Input.Password placeholder="Confirm password" />
           </Form.Item>
-          <Form.Item className="input-item" name="">
-            <Select className="selector" defaultValue="lucy">
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="Yiminghe">yiminghe</Option>
+          <Form.Item className="input-item" name="accountType">
+            <Select className="selector">
+              <Option value="client">Client</Option>
+              <Option value="student">Student</Option>
+              <Option value="practice">Practice</Option>
             </Select>
           </Form.Item>
           <Form.Item className="submit-btn-wrapper">
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Sign Up
             </Button>
           </Form.Item>
@@ -92,7 +118,19 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
+  signUp: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
+  loading: PropTypes.bool,
+  currentUser: PropTypes.object,
   history: PropTypes.object,
 };
 
-export default SignUp;
+const mapStateToProps = ({ auth }) => ({
+  errorMessage: auth.error,
+  loading: auth.loading,
+  currentUser: auth.currentUser,
+});
+
+export default connect(mapStateToProps, {
+  signUp,
+})(SignUp);

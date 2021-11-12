@@ -7,6 +7,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { notification } from 'antd';
 
 import { getCurrentUser } from '@/selectors/authSelectors';
+import AppConfig from '@/constants/AppConfig';
 
 function PrivateRoute({
   component: Component,
@@ -22,7 +23,7 @@ function PrivateRoute({
           return (
             <Redirect
               to={{
-                pathname: '/login',
+                pathname: AppConfig.ROUTES.LOGIN,
                 state: { from: props.location },
               }}
             />
@@ -34,7 +35,7 @@ function PrivateRoute({
             message: 'Permission Denied',
             description: 'You are not authorized to perform this action',
           });
-          return <Redirect to={{ pathname: '/' }} />;
+          return <Redirect to={{ pathname: AppConfig.ROUTES.LOGIN }} />;
         }
 
         return <Component {...props} />;

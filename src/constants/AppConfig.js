@@ -49,6 +49,7 @@ const AppConfig = {
     REPORT: '/report',
     COACHING: '/coaching',
     COACHING_PPP: '/coaching/ppp',
+    STUDENT_DATA: '/coaching/student-data',
     SUBMIT_DATA: '/submit-data',
     DENTISTRY: '/dentistry',
     ORTHO: '/ortho',
@@ -59,7 +60,7 @@ const AppConfig = {
     PROFIT_SCAN: '/profit-scan',
     CHART_AUDIT: '/chart-audit',
     CHART_AUDIT_REPORT: '/chart-audit-report',
-    SIGN_IN: '/sign-in',
+    LOGIN: '/login',
   },
 };
 
