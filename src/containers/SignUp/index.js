@@ -20,14 +20,19 @@ class SignUp extends Component {
   }
 
   componentDidUpdate() {
-    const { errorMessage, currentUser, history } = this.props;
+    const { errorMessage } = this.props;
     if (errorMessage) {
       notification.error({
         message: errorMessage,
       });
     }
+  }
 
-    if (currentUser) {
+  onSignUp = async (data) => {
+    const { signUp, history } = this.props;
+    const isSuccess = await signUp(data);
+
+    if (isSuccess) {
       notification.success({
         message: 'Sign Up Successfully',
       });
@@ -35,14 +40,6 @@ class SignUp extends Component {
         pathname: AppConfig.ROUTES.LOGIN,
       });
     }
-  }
-
-  onSignUp = async (data) => {
-    const { signUp, history } = this.props;
-    await signUp(data);
-      history.push({
-        pathname: AppConfig.ROUTES.LOGIN,
-      });
   };
 
   render() {

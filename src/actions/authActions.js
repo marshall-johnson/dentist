@@ -44,9 +44,11 @@ export const signUp = (data) => async (dispatch) => {
     });
 
     dispatch(signUpSuccess());
+    return true;
   } catch (error) {
     dispatch(signUpFail({ error: error.response.data.error }));
     console.error(error);
+    return false;
   }
 };
 
