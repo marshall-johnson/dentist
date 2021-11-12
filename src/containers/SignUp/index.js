@@ -8,15 +8,10 @@ import './index.scss';
 const { Option } = Select;
 
 class SignUp extends Component {
-  onSignIn = () => {
+  onSignUp = () => {
     const { history } = this.props;
     history.push({
       pathname: AppConfig.ROUTES.MAIN,
-      state: {
-        user: {
-          name: 'test',
-        },
-      },
     });
   };
 
@@ -29,10 +24,10 @@ class SignUp extends Component {
         </span>
         <Form
           className="form-wrapper"
-          name="basic"
+          name="user"
           initialValues={{ remember: true }}
           autoComplete="off"
-          onFinish={this.onSignIn}
+          onFinish={this.onSignUp}
         >
           <Form.Item
             className="input-item"
@@ -76,10 +71,7 @@ class SignUp extends Component {
             <Input.Password placeholder="Confirm password" />
           </Form.Item>
           <Form.Item className="input-item" name="">
-            <Select
-              className="selector"
-              defaultValue="lucy"
-            >
+            <Select className="selector" defaultValue="lucy">
               <Option value="jack">Jack</Option>
               <Option value="lucy">Lucy</Option>
               <Option value="Yiminghe">yiminghe</Option>

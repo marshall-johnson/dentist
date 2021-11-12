@@ -6,15 +6,10 @@ import { Link } from 'react-router-dom';
 import './index.scss';
 
 class Login extends Component {
-  onSignIn = () => {
+  onLogin = () => {
     const { history } = this.props;
     history.push({
       pathname: AppConfig.ROUTES.MAIN,
-      state: {
-        user: {
-          name: 'test',
-        },
-      },
     });
   };
 
@@ -27,10 +22,10 @@ class Login extends Component {
         </span>
         <Form
           className="form-wrapper"
-          name="basic"
+          name="user"
           initialValues={{ remember: true }}
           autoComplete="off"
-          onFinish={this.onSignIn}
+          onFinish={this.onLogin}
         >
           <Form.Item
             className="input-item"
@@ -53,7 +48,9 @@ class Login extends Component {
             </Button>
           </Form.Item>
         </Form>
-        <span>Don&apos;t have an account ? <Link to="/sign-up">Sign up now</Link></span>
+        <span>
+          Don&apos;t have an account ? <Link to="/sign-up">Sign up now</Link>
+        </span>
       </div>
     );
   }
