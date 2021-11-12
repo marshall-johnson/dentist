@@ -1,41 +1,51 @@
 // import api from '@/api';
-import { throwErrors } from '@/actions/errorActions';
-import { loginRequest, loginSuccess, loginFail, loggedOut } from '@/store/auth';
+import api from '@/api';
 import {
-  setUserToLocalStorage,
+  loggedOut,
+  loginFail,
+  loginRequest,
+  loginSuccess,
+  signUpFail,
+  signUpRequest,
+  signUpSuccess,
+} from '@/store/auth';
+import {
   removeUserFromLocalStorage,
+  setUserToLocalStorage,
 } from '@/utils/authUtils';
+import snakecaseKeys from 'snakecase-keys';
 
-const fakeUser = {
-  name: 'bentran',
-  email: 'me@example.com',
-  password: 'password123',
-  githubProfileUrl: 'https://github.com/tranquangvu',
-  token: 'secretUserAuthToken',
-};
+export const login =
+  ({ email, password }) =>
+  async (dispatch) => {
+    dispatch(loginRequest());
 
-export const login = ({ email, password }) => async (dispatch) => {
-  dispatch(loginRequest());
+    try {
+      const response = await api.post('/users/sign_in', {
+        user: {
+          email,
+          password,
+        },
+      });
+      setUserToLocalStorage(response.data?.user);
+      dispatch(loginSuccess({ user: response.data?.user }));
+    } catch (error) {
+      dispatch(loginFail({ error: error.response?.data?.error }));
+      console.error(error);
+    }
+  };
+
+export const signUp = (data) => async (dispatch) => {
+  dispatch(signUpRequest());
 
   try {
-    // Simulate login request
-    await new Promise(resolve => setTimeout(resolve, 500));
-    if (email === fakeUser.email && password === fakeUser.password) {
-      setUserToLocalStorage(fakeUser);
-      dispatch(loginSuccess({ user: fakeUser }));
-    } else {
-      throw new Error();
-    }
+    await api.post('/users', {
+      user: snakecaseKeys(data, { keepCase: true }),
+    });
 
-    // Uncomment the code below to invoke real login request
-    // const { data: user } = await api.post('/auth/login', {
-    //   email, password,
-    // });
-    // setUserToLocalStorage(user);
-    // dispatch(loginSuccess({ user }));
+    dispatch(signUpSuccess());
   } catch (error) {
-    dispatch(loginFail());
-    dispatch(throwErrors(['Email or password is invalid']));
+    dispatch(signUpFail({ error: error.response.data.error }));
     console.error(error);
   }
 };

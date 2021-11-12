@@ -8,21 +8,36 @@ const slice = createSlice({
   initialState: {
     loading: false,
     currentUser: initialUser,
+    error: null,
   },
   reducers: {
     loginRequest(state) {
+      state.error = null;
       state.loading = true;
     },
     loginSuccess(state, { payload: { user } }) {
       state.currentUser = user;
       state.loading = false;
     },
-    loginFail(state) {
+    loginFail(state, { payload: { error } }) {
+      state.error = error;
       state.currentUser = null;
       state.loading = false;
     },
     loggedOut(state) {
       state.currentUser = null;
+    },
+    signUpRequest(state) {
+      state.error = null;
+      state.loading = true;
+    },
+    signUpSuccess(state) {
+      state.loading = false;
+    },
+    signUpFail(state, { payload: { error } }) {
+      state.error = error;
+      state.currentUser = null;
+      state.loading = false;
     },
   },
 });
@@ -32,6 +47,9 @@ export const {
   loginSuccess,
   loginFail,
   loggedOut,
+  signUpRequest,
+  signUpSuccess,
+  signUpFail,
 } = slice.actions;
 
 export default slice.reducer;

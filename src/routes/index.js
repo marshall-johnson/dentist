@@ -42,6 +42,11 @@ function Routes() {
       />
       <Route
         exact
+        path={`${AppConfig.ROUTES.STUDENT_DATA}`}
+        component={null}
+      />
+      <Route
+        exact
         path={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}
         component={StudentsPurchaseItemsContainer}
       />

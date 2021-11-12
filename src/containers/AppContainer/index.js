@@ -26,8 +26,11 @@ class AppContainer extends Component {
   }
 
   componentDidMount() {
-    const { history, dispatchClearErrors } = this.props;
+    const { history, dispatchClearErrors, currentUser } = this.props;
 
+    if (!currentUser) {
+      history.push('/login');
+    }
     this.unlistenHistory = history.listen(() => {
       dispatchClearErrors();
     });
@@ -173,10 +176,17 @@ class AppContainer extends Component {
 AppContainer.propTypes = {
   history: PropTypes.object,
   dispatchClearErrors: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
+function mapStateToProps({ auth }) {
+  return {
+    currentUser: auth.currentUser,
+  };
+}
+
 export default withRouter(
-  connect(null, {
+  connect(mapStateToProps, {
     dispatchClearErrors: clearErrors,
   })(AppContainer),
 );
