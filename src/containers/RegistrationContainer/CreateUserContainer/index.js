@@ -16,9 +16,7 @@ import {
 
 import PhoneInput from 'react-phone-input-2';
 
-import {
-  createUser,
-} from '@/actions/userActions';
+import { createUser } from '@/actions/user1Actions';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -47,8 +45,8 @@ class CreateUserContainer extends Component {
           spendingReportMonths: null,
           state: null,
           specialty: null,
-        }
-      }
+        },
+      },
     };
   }
 
@@ -59,17 +57,12 @@ class CreateUserContainer extends Component {
   };
 
   render() {
-
     const { initialValues } = this.state;
 
     return (
       <div className="registration-container">
-        <PageHeader
-          className="site-page-header"
-          title="Registation Page"
-        />
+        <PageHeader className="site-page-header" title="Registation Page" />
         <Divider />
-
 
         <Form
           layout="vertical"
@@ -177,10 +170,7 @@ class CreateUserContainer extends Component {
                     },
                   ]}
                 >
-                  <PhoneInput
-                    country='us'
-                    inputStyle={{ width: '100%' }}
-                  />
+                  <PhoneInput country="us" inputStyle={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item
@@ -192,10 +182,7 @@ class CreateUserContainer extends Component {
                     },
                   ]}
                 >
-                  <PhoneInput
-                    country='us'
-                    inputStyle={{ width: '100%' }}
-                  />
+                  <PhoneInput country="us" inputStyle={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item
@@ -207,9 +194,7 @@ class CreateUserContainer extends Component {
                     },
                   ]}
                 >
-                  <InputNumber
-                    style={{ width: '100%' }}
-                  />
+                  <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
 
@@ -249,10 +234,7 @@ class CreateUserContainer extends Component {
               </Col>
             </Row>
 
-            <Button
-              type="primary"
-              htmlType="submit"
-            >
+            <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
@@ -270,5 +252,5 @@ CreateUserContainer.propTypes = {
 export default withRouter(
   connect(null, {
     createUser,
-  })(CreateUserContainer)
+  })(CreateUserContainer),
 );
