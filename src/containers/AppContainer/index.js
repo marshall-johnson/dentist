@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
-import { UserOutlined, PieChartOutlined } from '@ant-design/icons';
+import { Button, Layout, Menu, notification } from 'antd';
+import {
+  UserOutlined,
+  PieChartOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 
 import Routes from '@/routes';
 import FlashMessage from '@/components/FlashMessage';
 import { clearErrors } from '@/actions/errorActions';
 import AppConfig from '@/constants/AppConfig';
 import logoImage from '@/assets/images/logo.png';
+import { logout } from '@/actions/authActions';
 
 import '@/styles/index.scss';
 import './index.scss';
@@ -42,6 +47,20 @@ class AppContainer extends Component {
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
+  };
+
+  onLogout = async () => {
+    const { logout, history } = this.props;
+    const isSuccess = await logout();
+
+    if (isSuccess) {
+      notification.success({
+        message: 'Logout Successfully',
+      });
+      history.push({
+        pathname: AppConfig.ROUTES.LOGIN,
+      });
+    }
   };
 
   render() {
@@ -154,6 +173,11 @@ class AppContainer extends Component {
               <Menu.Item key="16" icon={<PieChartOutlined />}>
                 <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
               </Menu.Item>
+              <SubMenu key="17" icon={<SettingOutlined />} title="Setting">
+                <Menu.Item key="18" onClick={this.onLogout}>
+                  Log out
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </Sider>
           <Layout className="site-layout">
@@ -177,6 +201,7 @@ AppContainer.propTypes = {
   history: PropTypes.object,
   dispatchClearErrors: PropTypes.func,
   currentUser: PropTypes.object,
+  logout: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ auth }) {
@@ -188,5 +213,6 @@ function mapStateToProps({ auth }) {
 export default withRouter(
   connect(mapStateToProps, {
     dispatchClearErrors: clearErrors,
+    logout,
   })(AppContainer),
 );

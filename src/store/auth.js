@@ -24,8 +24,18 @@ const slice = createSlice({
       state.currentUser = null;
       state.loading = false;
     },
-    loggedOut(state) {
+    loggedOutRequest(state) {
+      state.error = null;
+      state.loading = true;
+    },
+    loggedOutSuccess(state) {
+      state.loading = false;
       state.currentUser = null;
+    },
+    loggedOutFail(state, { payload: { error } }) {
+      state.error = error;
+      state.currentUser = null;
+      state.loading = false;
     },
     signUpRequest(state) {
       state.error = null;
@@ -46,7 +56,9 @@ export const {
   loginRequest,
   loginSuccess,
   loginFail,
-  loggedOut,
+  loggedOutRequest,
+  loggedOutSuccess,
+  loggedOutFail,
   signUpRequest,
   signUpSuccess,
   signUpFail,

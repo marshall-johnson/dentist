@@ -1,7 +1,9 @@
 // import api from '@/api';
 import api from '@/api';
 import {
-  loggedOut,
+  loggedOutFail,
+  loggedOutRequest,
+  loggedOutSuccess,
   loginFail,
   loginRequest,
   loginSuccess,
@@ -27,7 +29,10 @@ export const login =
           password,
         },
       });
-      setUserToLocalStorage(response.data?.user);
+      const user = response?.data?.user;
+      user.token = response.headers.authorization.replace('Bearer ', '');
+
+      setUserToLocalStorage(user);
       dispatch(loginSuccess({ user: response.data?.user }));
     } catch (error) {
       dispatch(loginFail({ error: error.response?.data?.error }));
@@ -53,6 +58,16 @@ export const signUp = (data) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  removeUserFromLocalStorage();
-  dispatch(loggedOut());
+  dispatch(loggedOutRequest());
+
+  try {
+    await api.delete('/users/sign_out');
+    removeUserFromLocalStorage();
+    dispatch(loggedOutSuccess());
+    return true;
+  } catch (error) {
+    dispatch(loggedOutFail({ error: error.response.data.error }));
+    console.error(error);
+    return false;
+  }
 };
