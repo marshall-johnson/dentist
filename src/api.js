@@ -4,6 +4,7 @@ import { getAuthTokenFromLocalStorage } from '@/utils/authUtils';
 
 const api = axios.create({
   baseURL: API_HOST,
+  headers: { 'Access-Control-Allow-Origin': '*' },
 });
 
 api.defaults.headers.post['Content-Type'] = 'application/json';
