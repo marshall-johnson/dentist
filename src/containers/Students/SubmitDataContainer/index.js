@@ -9,6 +9,7 @@ import {
   Divider,
   PageHeader,
   Calendar,
+  DatePicker,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -92,11 +93,7 @@ class SubmitDataContainer extends Component {
     this.setState({ practiceType: e.target.value });
   };
 
-  onCalendarSelect = (value) => {
-    this.setState({ dateSelected: value });
-  };
-
-  onPanelChange = (value, mode) => {
+  onDateSelect = (value) => {
     this.setState({ dateSelected: value });
   };
 
@@ -123,20 +120,13 @@ class SubmitDataContainer extends Component {
               >
                 <Radio.Group onChange={this.onChangePracticeType}>
                   <Radio value="dentistry">Dentistry</Radio>
-                </Radio.Group>
-              </Form.Item>
 
-              <Form.Item
-                name="date"
-                className="calendar"
-                initialValue={dateSelected}
-              >
-                <Calendar
-                  fullscreen={false}
-                  value={dateSelected}
-                  onSelect={this.onCalendarSelect}
-                  onPanelChange={this.onPanelChange}
-                />
+                  <DatePicker
+                    size="middle"
+                    picker="month"
+                    onSelect={this.onDateSelect}
+                  />
+                </Radio.Group>
               </Form.Item>
 
               <Form.Item

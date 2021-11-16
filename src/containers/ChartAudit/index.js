@@ -1,16 +1,48 @@
-import { Descriptions, Table } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  Button,
+  Descriptions,
+  Table,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+} from 'antd';
 import React, { Component } from 'react';
-import { generateRandomNumber, formatCurrency } from '@/utils/helpers';
 import './index.scss';
+import { formatCurrency } from '@/utils/helpers';
+
+const INITIAL_VALUE = 'initial';
+const { Option } = Select;
 
 class ChartAudit extends Component {
-  dataSource = [];
+  identifySource = [
+    { text: 'Source A', value: 'a' },
+    { text: 'Source B', value: 'b' },
+  ];
+
+  formRef = React.createRef();
 
   columns = [
     {
       title: 'New Patient Initials',
       dataIndex: 'patient',
       sorter: (a, b) => a.patient.length - b.patient.length,
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="patient"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <Input />
+            </Form.Item>
+          );
+        }
+
+        return value;
+      },
     },
     {
       title: 'Total $ Amount Diagnosed',
@@ -18,6 +50,26 @@ class ChartAudit extends Component {
       sorter: (a, b) =>
         Number(a.amount_diagnosed.match(/\d/)) -
         Number(b.amount_diagnosed.match(/\d/)),
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="amount_diagnosed"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <InputNumber
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+              />
+            </Form.Item>
+          );
+        }
+
+        return formatCurrency(value);
+      },
     },
     {
       title: 'Total $ Treatment Completed',
@@ -25,37 +77,155 @@ class ChartAudit extends Component {
       sorter: (a, b) =>
         Number(a.amount_treatment.match(/\d/)) -
         Number(b.amount_treatment.match(/\d/)),
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="amount_treatment"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <InputNumber
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+              />
+            </Form.Item>
+          );
+        }
+
+        return formatCurrency(value);
+      },
     },
     {
       title: 'If Case Completed, Total $ Amount',
       dataIndex: 'amount',
       sorter: (a, b) =>
         Number(a.amount.match(/\d/)) - Number(b.amount.match(/\d/)),
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="amount"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <InputNumber
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+              />
+            </Form.Item>
+          );
+        }
+
+        return formatCurrency(value);
+      },
     },
     {
       title: 'Has Hygiene Appt?',
       dataIndex: 'hygiene_appt',
       sorter: (a, b) => a.hygiene_appt.length - b.hygiene_appt.length,
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="hygiene_appt"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <Select>
+                {[true, false].map((value, index) => (
+                  <Option key={index.toString()} value={value}>
+                    {value ? 'Yes' : 'No'}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          );
+        }
+
+        return value ? 'Yes' : 'No';
+      },
     },
     {
       title: 'Has Doctor Appt?',
       dataIndex: 'doctor_appt',
       sorter: (a, b) => a.doctor_appt.length - b.doctor_appt.length,
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="doctor_appt"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <Select>
+                {[true, false].map((value, index) => (
+                  <Option key={index.toString()} value={value}>
+                    {value ? 'Yes' : 'No'}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          );
+        }
+
+        return value ? 'Yes' : 'No';
+      },
     },
     {
       title: 'If Dr.Appt, $ Scheduled',
       dataIndex: 'scheduled',
       sorter: (a, b) =>
         Number(a.scheduled.match(/\d/)) - Number(b.scheduled.match(/\d/)),
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="scheduled"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <InputNumber
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+              />
+            </Form.Item>
+          );
+        }
+
+        return formatCurrency(value);
+      },
     },
     {
       title: 'Identify Referral Source',
       dataIndex: 'referral_source',
       sorter: (a, b) => a.referral_source - b.referral_source,
-      filters: [
-        { text: 'Source A', value: 'a' },
-        { text: 'Source B', value: 'b' },
-      ],
+      filters: this.identifySource,
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="referral_source"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <Select>
+                {this.identifySource.map((data) => (
+                  <Option value={data.value}>{data.text}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+          );
+        }
+
+        return `Source ${value.toUpperCase()}`;
+      },
     },
     {
       title: 'Remaining Unscheduled $ Treatment',
@@ -63,6 +233,52 @@ class ChartAudit extends Component {
       sorter: (a, b) =>
         Number(a.unscheduled_remaining.match(/\d/)) -
         Number(b.unscheduled_remaining.match(/\d/)),
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="unscheduled_remaining"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <InputNumber
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+              />
+            </Form.Item>
+          );
+        }
+
+        return formatCurrency(value);
+      },
+    },
+    {
+      title: '',
+      dataIndex: 'action',
+      width: '50px',
+      render: (_, record) => (
+        <>
+          {record.key === INITIAL_VALUE && (
+            <Form.Item>
+              <Button
+                icon={<PlusOutlined />}
+                shape="circle"
+                htmlType="submit"
+              />
+            </Form.Item>
+          )}
+          {record.key !== INITIAL_VALUE && (
+            <Button
+              icon={<DeleteOutlined />}
+              shape="circle"
+              type="danger"
+              onClick={() => this.removeItem(record.id)}
+            />
+          )}
+        </>
+      ),
     },
   ];
 
@@ -71,22 +287,12 @@ class ChartAudit extends Component {
 
     this.state = {
       loading: true,
+      dataSource: [
+        {
+          key: INITIAL_VALUE,
+        },
+      ],
     };
-
-    for (let i = 0; i < 100; i += 1) {
-      this.dataSource.push({
-        patient: 'Test',
-        amount_diagnosed: formatCurrency(generateRandomNumber()),
-        amount_treatment: formatCurrency(generateRandomNumber()),
-        amount: formatCurrency(generateRandomNumber()),
-        hygiene_appt: 'Yes',
-        doctor_appt: 'No',
-        scheduled: formatCurrency(generateRandomNumber()),
-        referral_source: generateRandomNumber(),
-        unscheduled_remaining: formatCurrency(generateRandomNumber()),
-        key: `chart_audit_${i.toString()}`,
-      });
-    }
   }
 
   componentDidMount() {
@@ -97,8 +303,24 @@ class ChartAudit extends Component {
     }, 1000);
   }
 
+  addItem = (data) => {
+    this.setState((prevState) => ({
+      dataSource: [
+        ...prevState.dataSource,
+        { ...data, id: prevState.dataSource.length },
+      ],
+    }));
+    this.formRef.current.resetFields();
+  };
+
+  removeItem = (id) => {
+    this.setState((prevState) => ({
+      dataSource: prevState.dataSource.filter((value) => value.id !== id),
+    }));
+  };
+
   render() {
-    const { loading } = this.state;
+    const { loading, dataSource } = this.state;
 
     return (
       <>
@@ -116,11 +338,20 @@ class ChartAudit extends Component {
             </Descriptions.Item>
           </Descriptions>
         </div>
-        <Table
-          dataSource={this.dataSource}
-          columns={this.columns}
-          loading={loading}
-        />
+
+        <Form
+          ref={this.formRef}
+          className="form-wrapper"
+          name="data"
+          autoComplete="off"
+          onFinish={this.addItem}
+        >
+          <Table
+            dataSource={dataSource}
+            columns={this.columns}
+            loading={loading}
+          />
+        </Form>
       </>
     );
   }
