@@ -16,7 +16,7 @@ import {
 
 import PhoneInput from 'react-phone-input-2';
 
-import { createUser } from '@/actions/user1Actions';
+import { createStudent } from '@/actions/studentActions';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -25,7 +25,7 @@ const validateMessages = {
 
 const { Option } = Select;
 
-class CreateUserContainer extends Component {
+class CreateStudentContainer extends Component {
   formRef = React.createRef();
 
   constructor(props) {
@@ -33,7 +33,7 @@ class CreateUserContainer extends Component {
 
     this.state = {
       initialValues: {
-        user: {
+        student: {
           firstName: null,
           lastName: null,
           degree: null,
@@ -51,9 +51,9 @@ class CreateUserContainer extends Component {
   }
 
   onFinish = (values) => {
-    const { createUser, history } = this.props;
+    const { createStudent, history } = this.props;
 
-    createUser({ params: values, history });
+    createStudent({ params: values, history });
   };
 
   render() {
@@ -79,7 +79,7 @@ class CreateUserContainer extends Component {
               <Col span={8}>
                 <Form.Item
                   label="First Name"
-                  name={['user', 'firstName']}
+                  name={['student', 'firstName']}
                   rules={[
                     {
                       required: true,
@@ -93,7 +93,7 @@ class CreateUserContainer extends Component {
               <Col span={8}>
                 <Form.Item
                   label="Last Name"
-                  name={['user', 'lastName']}
+                  name={['student', 'lastName']}
                   rules={[
                     {
                       required: true,
@@ -107,7 +107,7 @@ class CreateUserContainer extends Component {
               <Col span={8}>
                 <Form.Item
                   label="Degree"
-                  name={['user', 'degree']}
+                  name={['student', 'degree']}
                   fieldKey="degree"
                   rules={[
                     {
@@ -122,7 +122,7 @@ class CreateUserContainer extends Component {
 
             <Form.Item
               label="Address"
-              name={['user', 'address']}
+              name={['student', 'address']}
               fieldKey="address"
               rules={[
                 {
@@ -137,7 +137,7 @@ class CreateUserContainer extends Component {
               <Col span={12}>
                 <Form.Item
                   label="City"
-                  name={['user', 'city']}
+                  name={['student', 'city']}
                   fieldKey="city"
                   rules={[
                     {
@@ -150,7 +150,7 @@ class CreateUserContainer extends Component {
 
                 <Form.Item
                   label="Zip"
-                  name={['user', 'zip']}
+                  name={['student', 'zip']}
                   fieldKey="zip"
                   rules={[
                     {
@@ -163,7 +163,7 @@ class CreateUserContainer extends Component {
 
                 <Form.Item
                   label="Business Phone"
-                  name={['user', 'businessPhone']}
+                  name={['student', 'businessPhone']}
                   rules={[
                     {
                       required: true,
@@ -175,7 +175,7 @@ class CreateUserContainer extends Component {
 
                 <Form.Item
                   label="Home Number"
-                  name={['user', 'phoneNumber']}
+                  name={['student', 'phoneNumber']}
                   rules={[
                     {
                       required: true,
@@ -187,7 +187,7 @@ class CreateUserContainer extends Component {
 
                 <Form.Item
                   label="Spending Report Months"
-                  name={['user', 'spendingReportMonths']}
+                  name={['student', 'spendingReportMonths']}
                   rules={[
                     {
                       required: true,
@@ -201,7 +201,7 @@ class CreateUserContainer extends Component {
               <Col span={12}>
                 <Form.Item
                   label="State"
-                  name={['user', 'state']}
+                  name={['student', 'state']}
                   fieldKey="state"
                   rules={[
                     {
@@ -214,7 +214,7 @@ class CreateUserContainer extends Component {
 
                 <Form.Item
                   label="Specialty"
-                  name={['user', 'specialty']}
+                  name={['student', 'specialty']}
                   rules={[
                     {
                       required: true,
@@ -244,13 +244,13 @@ class CreateUserContainer extends Component {
   }
 }
 
-CreateUserContainer.propTypes = {
+CreateStudentContainer.propTypes = {
   history: PropTypes.object,
-  createUser: PropTypes.func,
+  createStudent: PropTypes.func,
 };
 
 export default withRouter(
   connect(null, {
-    createUser,
-  })(CreateUserContainer),
+    createStudent,
+  })(CreateStudentContainer),
 );

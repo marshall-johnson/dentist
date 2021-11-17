@@ -19,7 +19,7 @@ import StudentsScheduleContainer from '@/containers/Students/ScheduleContainer';
 import StudentsSubmitDataContainer from '@/containers/Students/SubmitDataContainer';
 import StudentsPurchaseItemsContainer from '@/containers/Students/PurchaseItemsContainer';
 import AttitudeAndSkillsContainer from '@/containers/EnergyConversion/AttitudeAndSkillsContainer';
-import RegistrationCreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
+import RegistrationCreateStudentContainer from '@/containers/RegistrationContainer/CreateStudentContainer';
 import StructureAndSystemsContainer from '@/containers/EnergyConversion/StructureAndSystemsContainer';
 import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion/CommunicationAndCoordinationContainer';
 import ChartAudit from '@/containers/ChartAudit';
@@ -40,11 +40,7 @@ function Routes() {
         path={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}
         component={StudentsSubmitDataContainer}
       />
-      <Route
-        exact
-        path={`${AppConfig.ROUTES.STUDENT_DATA}`}
-        component={null}
-      />
+      <Route exact path={`${AppConfig.ROUTES.STUDENT_DATA}`} component={null} />
       <Route
         exact
         path={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}
@@ -77,8 +73,8 @@ function Routes() {
       />
       <Route
         exact
-        path={`${AppConfig.ROUTES.REGISTRATION}/${AppConfig.REGISTRATIONS.CREATE_USER}`}
-        component={RegistrationCreateUserContainer}
+        path={`${AppConfig.ROUTES.REGISTRATION}/${AppConfig.REGISTRATIONS.CREATE_STUDENT}`}
+        component={RegistrationCreateStudentContainer}
       />
       <Route
         exact

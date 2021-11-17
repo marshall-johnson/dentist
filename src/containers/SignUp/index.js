@@ -99,8 +99,6 @@ class SignUp extends Component {
           <Form.Item className="input-item" name="accountType">
             <Select className="selector">
               <Option value="client">Client</Option>
-              <Option value="student">Student</Option>
-              <Option value="practice">Practice</Option>
             </Select>
           </Form.Item>
           <Form.Item className="submit-btn-wrapper">
