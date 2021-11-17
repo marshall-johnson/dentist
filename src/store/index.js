@@ -11,6 +11,8 @@ import flashMessage from './flashMessage';
 import questionsSurvey from './questionsSurvey';
 import classRoomScheduled from './classRoomScheduled';
 import classRoomCompleted from './classRoomCompleted';
+import student from './student';
+import studentSurvey from './studentSurvey';
 
 const reducer = combineReducers({
   error,
@@ -24,6 +26,8 @@ const reducer = combineReducers({
   questionsSurvey,
   classRoomScheduled,
   classRoomCompleted,
+  student,
+  studentSurvey,
 });
 
 const store = configureStore({
