@@ -35,7 +35,7 @@ const AppConfig = {
     ATTITUDE_AND_SKILLS: 'attitude-and-skills',
   },
   REGISTRATIONS: {
-    CREATE_USER: 'create-user',
+    CREATE_STUDENT: 'create-user',
   },
   ENERGY_PROFILE: {
     DATA_RESULT: 'data-result',

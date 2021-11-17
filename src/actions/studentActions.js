@@ -5,13 +5,13 @@ import { throwErrors, clearErrors } from '@/actions/errorActions';
 import { setFlashError, setFlashSuccess } from '@/actions/flashMessageActions';
 import AppConfig from '@/constants/AppConfig';
 
-export const createUser =
+export const createStudent =
   ({ params, history }) =>
   async (dispatch) => {
     dispatch(setLoading(true));
 
     return api
-      .post('/api/v1/user1s', snakecaseKeys(params))
+      .post('/api/v1/students', snakecaseKeys(params))
       .then(({ data: { success, message } }) => {
         if (success) {
           dispatch(clearErrors('userItem'));
