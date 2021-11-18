@@ -1,4 +1,7 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { fetchStudents } from '@/actions/studentActions';
+import PropTypes from 'prop-types';
 import {
   Button,
   Descriptions,
@@ -296,6 +299,10 @@ class ChartAudit extends Component {
   }
 
   componentDidMount() {
+    const { fetchStudents } = this.props;
+
+    fetchStudents();
+
     setTimeout(() => {
       this.setState({
         loading: false,
@@ -321,6 +328,7 @@ class ChartAudit extends Component {
 
   render() {
     const { loading, dataSource } = this.state;
+    const { students } = this.props;
 
     return (
       <>
@@ -337,6 +345,27 @@ class ChartAudit extends Component {
               DDS
             </Descriptions.Item>
           </Descriptions>
+
+          <span>Students:</span>
+          <Select
+            style={{ width: 200, marginLeft: 10 }}
+            onChange={async (id) => {
+              this.setState({
+                loading: true,
+              });
+              setTimeout(() => {
+                this.setState({
+                  loading: false,
+                });
+              }, 1000);
+            }}
+          >
+            {students.map((student, index) => (
+              <Option value={student.id} key={index.toString()}>
+                {`${student.first_name} ${student.last_name}`}
+              </Option>
+            ))}
+          </Select>
         </div>
 
         <Form
@@ -357,6 +386,16 @@ class ChartAudit extends Component {
   }
 }
 
-ChartAudit.propTypes = {};
+ChartAudit.propTypes = {
+  students: PropTypes.array,
+  fetchStudents: PropTypes.func,
+};
 
-export default ChartAudit;
+const mapStateToProps = ({ student, error }) => ({
+  students: student.items,
+  loading: student.loading,
+});
+
+export default connect(mapStateToProps, {
+  fetchStudents,
+})(ChartAudit);
