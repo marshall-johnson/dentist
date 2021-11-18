@@ -13,6 +13,7 @@ import classRoomScheduled from './classRoomScheduled';
 import classRoomCompleted from './classRoomCompleted';
 import student from './student';
 import studentSurvey from './studentSurvey';
+import profitPotential from './profitPotential';
 
 const reducer = combineReducers({
   error,
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   classRoomCompleted,
   student,
   studentSurvey,
+  profitPotential,
 });
 
 const store = configureStore({
