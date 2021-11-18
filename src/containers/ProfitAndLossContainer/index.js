@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Row,
   Col,
@@ -12,12 +13,16 @@ import {
   PageHeader,
   Typography,
   Upload,
+  InputNumber,
 } from 'antd';
 import {
   PlusOutlined,
   MinusCircleOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import { omit } from 'lodash';
+import { connect } from 'react-redux';
+import { createProfitPotential } from '@/actions/profitPotentialAction';
 
 const { Text } = Typography;
 
@@ -35,6 +40,17 @@ class ProfitAndLoss extends Component {
     };
   }
 
+  onSubmit = (data) => {
+    const { createProfitPotential } = this.props;
+    const { file } = data.document;
+
+    const formData = new FormData();
+    formData.append('data', JSON.sstringify(omit(data, 'document')));
+    formData.append('document', file.originFileObj);
+
+    createProfitPotential(formData);
+  };
+
   onChangeRadio = ({ target: { value } }) => {
     this.setState({ backTaxes: value === 'yes' });
   };
@@ -51,7 +67,11 @@ class ProfitAndLoss extends Component {
         <Divider />
         <Row>
           <Col span={12}>
-            <Form layout="vertical" validateMessages={validateMessages}>
+            <Form
+              layout="vertical"
+              validateMessages={validateMessages}
+              onFinish={this.onSubmit}
+            >
               <Form.Item
                 label="Doctor(s) Salary Amount (if not shown on or listed as separate item on P & L):"
                 name="salary"
@@ -67,7 +87,12 @@ class ProfitAndLoss extends Component {
                   },
                 ]}
               >
-                <Input prefix="$" />
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
 
               <Space direction="vertical" style={{ marginBottom: 10 }}>
@@ -92,7 +117,12 @@ class ProfitAndLoss extends Component {
                           label="Loan Payment (Monthly):"
                           rules={[{ required: true }]}
                         >
-                          <Input prefix="$" />
+                          <InputNumber
+                            formatter={(value) =>
+                              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                            }
+                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                          />
                         </Form.Item>
                         <Form.Item
                           {...restField}
@@ -138,7 +168,7 @@ class ProfitAndLoss extends Component {
               {backTaxes && (
                 <Form.Item
                   label="How much?"
-                  name="backTaxesAmount"
+                  name="back_taxes_amount"
                   rules={[
                     {
                       required: true,
@@ -151,13 +181,18 @@ class ProfitAndLoss extends Component {
                     },
                   ]}
                 >
-                  <Input prefix="$" />
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
               )}
 
               <Form.Item
                 label="Ave. Dentist(s) Clinical Hours in the Practice:"
-                name="aveDentistClinicalHoursPractice"
+                name="ave_dentist_clinical_hours_practice"
                 rules={[
                   {
                     required: true,
@@ -170,12 +205,12 @@ class ProfitAndLoss extends Component {
                   },
                 ]}
               >
-                <Input suffix="Monthly" />
+                <Input suffix="Monthly" type="number" />
               </Form.Item>
 
               <Form.Item
                 label="Ave. Number of Patient Visits (Doctor(s)):"
-                name="aveNumberOfPatientVisits"
+                name="ave_number_patient_visits"
                 rules={[
                   {
                     required: true,
@@ -188,9 +223,9 @@ class ProfitAndLoss extends Component {
                   },
                 ]}
               >
-                <Input suffix="Monthly" />
+                <Input suffix="Monthly" type="number" />
               </Form.Item>
-              <Form.Item name="file">
+              <Form.Item name="document" rules={[{ required: true }]}>
                 <Upload accept=".csv,.pdf" maxCount={1}>
                   <Button icon={<UploadOutlined />}>Upload 12 month P&L</Button>
                 </Upload>
@@ -213,4 +248,12 @@ class ProfitAndLoss extends Component {
   }
 }
 
-export default ProfitAndLoss;
+ProfitAndLoss.propTypes = {
+  createProfitPotential: PropTypes.func,
+};
+
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, {
+  createProfitPotential,
+})(ProfitAndLoss);
