@@ -11,8 +11,13 @@ import {
   Divider,
   PageHeader,
   Typography,
+  Upload,
 } from 'antd';
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import {
+  PlusOutlined,
+  MinusCircleOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -185,6 +190,11 @@ class ProfitAndLoss extends Component {
               >
                 <Input suffix="Monthly" />
               </Form.Item>
+              <Form.Item name="file">
+                <Upload accept=".csv,.pdf" maxCount={1}>
+                  <Button icon={<UploadOutlined />}>Upload 12 month P&L</Button>
+                </Upload>
+              </Form.Item>
 
               <Form.Item>
                 <Button
@@ -193,9 +203,6 @@ class ProfitAndLoss extends Component {
                   style={{ marginRight: 20 }}
                 >
                   Submit
-                </Button>
-                <Button type="primary" htmlType="submit">
-                  Upload 12 month P&L
                 </Button>
               </Form.Item>
             </Form>
