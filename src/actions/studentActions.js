@@ -1,10 +1,9 @@
 import api from '@/api';
 import snakecaseKeys from 'snakecase-keys';
-import { setLoading } from '@/store/purchase';
 import { throwErrors, clearErrors } from '@/actions/errorActions';
 import { setFlashError, setFlashSuccess } from '@/actions/flashMessageActions';
 import AppConfig from '@/constants/AppConfig';
-import { studentsFetched } from '@/store/student';
+import { studentsFetched, setLoading } from '@/store/student';
 
 export const createStudent =
   ({ params, history }) =>

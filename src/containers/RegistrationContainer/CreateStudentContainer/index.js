@@ -12,6 +12,7 @@ import {
   Divider,
   PageHeader,
   InputNumber,
+  Radio,
 } from 'antd';
 
 import PhoneInput from 'react-phone-input-2';
@@ -45,6 +46,7 @@ class CreateStudentContainer extends Component {
           spendingReportMonths: null,
           state: null,
           specialty: null,
+          newPractice: null,
         },
       },
     };
@@ -58,6 +60,7 @@ class CreateStudentContainer extends Component {
 
   render() {
     const { initialValues } = this.state;
+    const { loading } = this.props;
 
     return (
       <div className="registration-container">
@@ -196,6 +199,21 @@ class CreateStudentContainer extends Component {
                 >
                   <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
+
+                <Form.Item
+                  name={['student', 'newPractice']}
+                  fieldKey="newPractice"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Radio.Group>
+                    <Radio value>New Practice</Radio>
+                    <Radio value={false}>Existing Practice</Radio>
+                  </Radio.Group>
+                </Form.Item>
               </Col>
 
               <Col span={12}>
@@ -234,7 +252,7 @@ class CreateStudentContainer extends Component {
               </Col>
             </Row>
 
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               Submit
             </Button>
           </Form.Item>
@@ -246,11 +264,16 @@ class CreateStudentContainer extends Component {
 
 CreateStudentContainer.propTypes = {
   history: PropTypes.object,
+  loading: PropTypes.bool,
   createStudent: PropTypes.func,
 };
 
+const mapStateToProps = ({ student }) => ({
+  loading: student.loading,
+});
+
 export default withRouter(
-  connect(null, {
+  connect(mapStateToProps, {
     createStudent,
   })(CreateStudentContainer),
 );
