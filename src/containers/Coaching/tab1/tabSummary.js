@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Collapse, Form, Input } from 'antd';
+import { Row, Col, Typography, Collapse, Form, Input, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 import { CaretRightOutlined, PlusCircleFilled } from '@ant-design/icons';
+import { formatCurrency } from '@/utils/helpers';
 import configColumn from '../CoachingPPP/configColumn';
 
 const { Panel } = Collapse;
@@ -40,7 +41,12 @@ class TabSummary extends Component {
                           name={[tab.key, row.key]}
                           rules={row?.rules}
                         >
-                          <Input />
+                          <InputNumber
+                            formatter={(value) =>
+                              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                            }
+                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                          />
                         </Form.Item>
                       </Col>
                     </Row>
@@ -72,7 +78,7 @@ class TabSummary extends Component {
                       color: '#349DFF',
                     }}
                   >
-                    {total[tab.key] || 0}
+                    {formatCurrency(total[tab.key] || 0)}
                   </Text>
                 </Col>
               </Row>
