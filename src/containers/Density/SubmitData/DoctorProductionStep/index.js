@@ -66,6 +66,20 @@ class DoctorProductionStep extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = data?.map((record) => camelcaseKeys(record));
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue({
+          doctorProduction: formatData,
+        });
+      }
+    }
+  }
+
   fetchDoctorList = (keyword) =>
     api
       .get('/api/v1/doctors', { params: { search: keyword } })
@@ -100,9 +114,16 @@ class DoctorProductionStep extends Component {
   onFinish = (data) => {
     localStorage.setItem('dentistryDoctorProduction', JSON.stringify(data));
 
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
+
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}${location.search}`,
     );
   };
 
@@ -148,6 +169,7 @@ class DoctorProductionStep extends Component {
 
   render() {
     const { initialValues } = this.state;
+    const { updateData, history } = this.props;
 
     return (
       <div className="doctor-production-container">
@@ -406,12 +428,34 @@ hygiene checks. "
               )}
             </Form.List>
           </Row>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() => updateData(this.formRef.current.getFieldValue())}
+            >
+              Update
+            </Button>
+          </div>
+
           <Row>
             <Col>
               <Button
                 type="primary"
                 style={{ marginRight: '8px' }}
-                href={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}
+                onClick={() => {
+                  history.goBack();
+                }}
               >
                 Back
               </Button>
@@ -427,10 +471,19 @@ hygiene checks. "
 }
 
 DoctorProductionStep.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
   fetchDoctors: PropTypes.func,
   items: PropTypes.array,
   page: PropTypes.number,
   history: PropTypes.object,
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 const mapStateToProps = ({ doctor, error }) => ({

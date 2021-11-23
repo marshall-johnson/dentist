@@ -34,7 +34,7 @@ class HygeinistProductionStep extends Component {
 
     this.state = {
       initialValues: {
-        hygenistProduction: [
+        hygienistProduction: [
           {
             hygienistId: null,
             production: null,
@@ -53,18 +53,40 @@ class HygeinistProductionStep extends Component {
   }
 
   componentDidMount() {
-    const { fetchHygienists, page } = this.props;
+    const { fetchHygienists, page, data } = this.props;
+    const formatData = data?.map((record) => camelcaseKeys(record));
+
     const formData = JSON.parse(
       localStorage.getItem('dentistryHygienistProduction'),
     );
 
     fetchHygienists({ page });
 
-    this.formRef.current.setFieldsValue(formData);
+    if (formatData) {
+      this.formRef.current.setFieldsValue({
+        hygienistProduction: formatData,
+      });
+    } else {
+      this.formRef.current.setFieldsValue(formData);
+    }
 
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistryHygienistProduction');
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = data?.map((record) => camelcaseKeys(record));
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue({
+          hygienistProduction: formatData,
+        });
+      }
+    }
   }
 
   fetchHygienistList = (keyword) =>
@@ -101,24 +123,36 @@ class HygeinistProductionStep extends Component {
   onFinish = (data) => {
     localStorage.setItem('dentistryHygienistProduction', JSON.stringify(data));
 
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}${location.search}`,
     );
   };
 
   onBack = () => {
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}${location.search}`,
     );
   };
 
   getValueOfKey = (key) =>
-    this.formRef.current.getFieldValue().hygenistProduction[key];
+    this.formRef.current.getFieldValue().hygienistProduction[key];
 
   setProduction = (fieldKey, value) => {
-    const data = this.formRef.current.getFieldValue('hygenistProduction');
+    const data = this.formRef.current.getFieldValue('hygienistProduction');
 
     const updateData = data.map((doctor, index) => {
       if (index === fieldKey) {
@@ -132,11 +166,11 @@ class HygeinistProductionStep extends Component {
       return doctor;
     });
 
-    this.formRef.current.setFieldsValue({ hygenistProduction: updateData });
+    this.formRef.current.setFieldsValue({ hygienistProduction: updateData });
   };
 
   setDiscount = (fieldKey, value) => {
-    const data = this.formRef.current.getFieldValue('hygenistProduction');
+    const data = this.formRef.current.getFieldValue('hygienistProduction');
 
     const updateData = data.map((doctor, index) => {
       if (index === fieldKey) {
@@ -151,11 +185,12 @@ class HygeinistProductionStep extends Component {
       return doctor;
     });
 
-    this.formRef.current.setFieldsValue({ hygenistProduction: updateData });
+    this.formRef.current.setFieldsValue({ hygienistProduction: updateData });
   };
 
   render() {
     const { initialValues } = this.state;
+    const { updateData } = this.props;
 
     return (
       <div className="hygienist-production-container">
@@ -176,7 +211,7 @@ class HygeinistProductionStep extends Component {
           validateMessages={validateMessages}
         >
           <Row gutter={[32, 16]}>
-            <Form.List name="hygenistProduction">
+            <Form.List name="hygienistProduction">
               {(fields, { add, remove }) => (
                 <>
                   {fields.map((field) => (
@@ -397,6 +432,26 @@ hygienist."
               )}
             </Form.List>
           </Row>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() => updateData(this.formRef.current.getFieldValue())}
+            >
+              Update
+            </Button>
+          </div>
+
           <Row>
             <Col>
               <Button
@@ -418,10 +473,19 @@ hygienist."
 }
 
 HygeinistProductionStep.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
   fetchHygienists: PropTypes.func,
   items: PropTypes.array,
   page: PropTypes.number,
   history: PropTypes.object,
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 const mapStateToProps = ({ hygienist, error }) => ({

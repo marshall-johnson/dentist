@@ -152,8 +152,8 @@ class AppContainer extends Component {
               </SubMenu>
               <SubMenu key="sub3" icon={<UserOutlined />} title="Coaching">
                 <Menu.Item key="12">
-                  <Link to={`${AppConfig.ROUTES.STUDENT_DATA}`}>
-                    Student Data
+                  <Link to={`${AppConfig.ROUTES.REVIEW_SUBMITED}`}>
+                    Review submitted
                   </Link>
                 </Menu.Item>
                 <Menu.Item key="13">
