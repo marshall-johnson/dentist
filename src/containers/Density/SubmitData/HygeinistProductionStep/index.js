@@ -190,7 +190,7 @@ class HygeinistProductionStep extends Component {
 
   render() {
     const { initialValues } = this.state;
-    const { updateData } = this.props;
+    const { updateData, data } = this.props;
 
     return (
       <div className="hygienist-production-container">
@@ -433,24 +433,26 @@ hygienist."
             </Form.List>
           </Row>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button
+          {data && (
+            <div
               style={{
-                marginRight: '8px',
-                marginBottom: '20px',
-                background: '#13AF22',
-                color: 'white',
+                display: 'flex',
+                justifyContent: 'flex-end',
               }}
-              onClick={() => updateData(this.formRef.current.getFieldValue())}
             >
-              Update
-            </Button>
-          </div>
+              <Button
+                style={{
+                  marginRight: '8px',
+                  marginBottom: '20px',
+                  background: '#13AF22',
+                  color: 'white',
+                }}
+                onClick={() => updateData(this.formRef.current.getFieldValue())}
+              >
+                Update
+              </Button>
+            </div>
+          )}
 
           <Row>
             <Col>

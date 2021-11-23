@@ -86,7 +86,7 @@ class LaboratoryStep extends Component {
 
   render() {
     const { initialValues } = this.state;
-    const { updateData } = this.props;
+    const { updateData, data } = this.props;
 
     return (
       <div className="labortory-container">
@@ -150,28 +150,30 @@ class LaboratoryStep extends Component {
             </Col>
           </Row>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button
+          {data && (
+            <div
               style={{
-                marginRight: '8px',
-                marginBottom: '20px',
-                background: '#13AF22',
-                color: 'white',
+                display: 'flex',
+                justifyContent: 'flex-end',
               }}
-              onClick={() =>
-                updateData({
-                  laboratory: this.formRef.current.getFieldValue(),
-                })
-              }
             >
-              Update
-            </Button>
-          </div>
+              <Button
+                style={{
+                  marginRight: '8px',
+                  marginBottom: '20px',
+                  background: '#13AF22',
+                  color: 'white',
+                }}
+                onClick={() =>
+                  updateData({
+                    laboratory: this.formRef.current.getFieldValue(),
+                  })
+                }
+              >
+                Update
+              </Button>
+            </div>
+          )}
 
           <Row style={{ marginTop: 16 }}>
             <Col>

@@ -287,29 +287,31 @@ pay the current month’s expenses."
             </Col>
           </Row>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button
+          {data && (
+            <div
               style={{
-                marginRight: '8px',
-                marginBottom: '20px',
-                background: '#13AF22',
-                color: 'white',
+                display: 'flex',
+                justifyContent: 'flex-end',
               }}
-              onClick={() =>
-                updateData({
-                  solvency_savings_roi_funds:
-                    this.formRef.current.getFieldValue(),
-                })
-              }
             >
-              Update
-            </Button>
-          </div>
+              <Button
+                style={{
+                  marginRight: '8px',
+                  marginBottom: '20px',
+                  background: '#13AF22',
+                  color: 'white',
+                }}
+                onClick={() =>
+                  updateData({
+                    solvency_savings_roi_funds:
+                      this.formRef.current.getFieldValue(),
+                  })
+                }
+              >
+                Update
+              </Button>
+            </div>
+          )}
 
           <Row style={{ marginTop: 16 }}>
             <Col>
