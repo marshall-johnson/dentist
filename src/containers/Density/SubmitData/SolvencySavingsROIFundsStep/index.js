@@ -13,6 +13,8 @@ import {
   PageHeader,
   InputNumber,
 } from 'antd';
+import camelcaseKeys from 'camelcase-keys';
+import queryString from 'query-string';
 
 import AppConfig from '@/constants/AppConfig';
 import { dentistrySubmitData } from '@/actions/dentistryActions';
@@ -50,17 +52,42 @@ class SolvencySavingsROIFundsStep extends Component {
       localStorage.getItem('dentistrySolvencySavingsROIFunds'),
     );
 
-    this.formRef.current.setFieldsValue(formData);
+    const { data } = this.props;
+    const formatData = camelcaseKeys(data);
+
+    if (formatData) {
+      this.formRef.current.setFieldsValue(formatData);
+    } else {
+      this.formRef.current.setFieldsValue(formData);
+    }
 
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistrySolvencySavingsROIFunds');
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = camelcaseKeys(data);
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue(formatData);
+      }
+    }
+  }
+
   onBack = () => {
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}${location.search}`,
     );
   };
 
@@ -70,7 +97,16 @@ class SolvencySavingsROIFundsStep extends Component {
       JSON.stringify(data),
     );
 
-    const { history, dentistrySubmitData } = this.props;
+    const {
+      match: {
+        params: { studentId },
+      },
+      history,
+      dentistrySubmitData,
+      location,
+    } = this.props;
+
+    const query = queryString.parse(location.search);
 
     const dentistryDoctorProduction = JSON.parse(
       localStorage.getItem('dentistryDoctorProduction'),
@@ -81,8 +117,8 @@ class SolvencySavingsROIFundsStep extends Component {
 
     const params = {
       dentistry: {
-        month: JSON.parse(localStorage.getItem('studentsSubmitDataDate')).month,
-        year: JSON.parse(localStorage.getItem('studentsSubmitDataDate')).year,
+        month: query.month,
+        year: query.year,
         doctorProduction: dentistryDoctorProduction
           ? dentistryDoctorProduction.doctorProduction
           : [],
@@ -114,7 +150,7 @@ class SolvencySavingsROIFundsStep extends Component {
       },
     };
 
-    dentistrySubmitData(localStorage.getItem('studentsSubmitDataStudentId'), {
+    dentistrySubmitData(studentId, {
       params,
       history,
     });
@@ -122,6 +158,7 @@ class SolvencySavingsROIFundsStep extends Component {
 
   render() {
     const { initialValues } = this.state;
+    const { updateData, data } = this.props;
 
     return (
       <div className="solvency-savings-roi-funds-container">
@@ -250,6 +287,30 @@ pay the current month’s expenses."
             </Col>
           </Row>
 
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() =>
+                updateData({
+                  solvency_savings_roi_funds:
+                    this.formRef.current.getFieldValue(),
+                })
+              }
+            >
+              Update
+            </Button>
+          </div>
+
           <Row style={{ marginTop: 16 }}>
             <Col>
               <Button
@@ -259,9 +320,11 @@ pay the current month’s expenses."
               >
                 Back
               </Button>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
+              {!data && (
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              )}
             </Col>
           </Row>
         </Form>
@@ -273,6 +336,15 @@ pay the current month’s expenses."
 SolvencySavingsROIFundsStep.propTypes = {
   history: PropTypes.object,
   dentistrySubmitData: PropTypes.func,
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 export default withRouter(

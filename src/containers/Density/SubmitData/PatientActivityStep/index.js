@@ -13,6 +13,7 @@ import {
 } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
+import camelcaseKeys from 'camelcase-keys';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -63,6 +64,15 @@ class PatientActivityStep extends Component {
       localStorage.getItem('dentistryPatientActivity'),
     );
 
+    const { data } = this.props;
+    const formatData = camelcaseKeys(data);
+
+    if (formatData) {
+      this.formRef.current.setFieldsValue(formatData);
+    } else {
+      this.formRef.current.setFieldsValue(formData);
+    }
+
     this.formRef.current.setFieldsValue(formData);
 
     window.onbeforeunload = (e) => {
@@ -70,24 +80,49 @@ class PatientActivityStep extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = camelcaseKeys(data);
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue(formatData);
+      }
+    }
+  }
+
   onBack = () => {
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.COLLECTIONS}${location.search}`,
     );
   };
 
   onFinish = (data) => {
     localStorage.setItem('dentistryPatientActivity', JSON.stringify(data));
 
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.STAFF_COMPENSATION}${location.search}`,
     );
   };
 
   render() {
     const { initialValues } = this.state;
+    const { updateData } = this.props;
 
     return (
       <div className="patient-activity-container">
@@ -611,6 +646,29 @@ total production adjustments for the month."
             </Col>
           </Row>
 
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() =>
+                updateData({
+                  patient_activity: this.formRef.current.getFieldValue(),
+                })
+              }
+            >
+              Update
+            </Button>
+          </div>
+
           <Row>
             <Col>
               <Button
@@ -632,7 +690,16 @@ total production adjustments for the month."
 }
 
 PatientActivityStep.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
   history: PropTypes.object,
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 export default withRouter(PatientActivityStep);

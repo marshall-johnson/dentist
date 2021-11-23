@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
+import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -29,31 +30,63 @@ class LaboratoryStep extends Component {
   componentDidMount() {
     const formData = JSON.parse(localStorage.getItem('dentistryLaboratory'));
 
-    this.formRef.current.setFieldsValue(formData);
+    const { data } = this.props;
+    const formatData = camelcaseKeys(data);
+
+    if (formatData) {
+      this.formRef.current.setFieldsValue(formatData);
+    } else {
+      this.formRef.current.setFieldsValue(formData);
+    }
 
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistryLaboratory');
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = camelcaseKeys(data);
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue(formatData);
+      }
+    }
+  }
+
   onBack = () => {
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SUPPLIES_MARKETING}${location.search}`,
     );
   };
 
   onFinish = (data) => {
     localStorage.setItem('dentistryLaboratory', JSON.stringify(data));
 
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}${location.search}`,
     );
   };
 
   render() {
     const { initialValues } = this.state;
+    const { updateData } = this.props;
 
     return (
       <div className="labortory-container">
@@ -117,6 +150,29 @@ class LaboratoryStep extends Component {
             </Col>
           </Row>
 
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() =>
+                updateData({
+                  laboratory: this.formRef.current.getFieldValue(),
+                })
+              }
+            >
+              Update
+            </Button>
+          </div>
+
           <Row style={{ marginTop: 16 }}>
             <Col>
               <Button
@@ -138,7 +194,16 @@ class LaboratoryStep extends Component {
 }
 
 LaboratoryStep.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
   history: PropTypes.object,
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 export default withRouter(LaboratoryStep);

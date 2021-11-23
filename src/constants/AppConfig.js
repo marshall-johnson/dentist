@@ -49,7 +49,7 @@ const AppConfig = {
     REPORT: '/report',
     COACHING: '/coaching',
     COACHING_PPP: '/coaching/ppp',
-    STUDENT_DATA: '/coaching/student-data',
+    REVIEW_SUBMITED: '/coaching/review-submited',
     SUBMIT_DATA: '/submit-data',
     DENTISTRY: '/dentistry',
     ORTHO: '/ortho',

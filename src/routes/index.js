@@ -25,6 +25,7 @@ import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion
 import ChartAudit from '@/containers/ChartAudit';
 import CoachingPPP from '@/containers/Coaching/CoachingPPP';
 import ChartAuditReport from '@/containers/ChartAuditReport';
+import ReviewSubmittedContainer from '@/containers/Students/ReviewSubmittedContainer';
 
 function Routes() {
   return (
@@ -40,7 +41,11 @@ function Routes() {
         path={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}
         component={StudentsSubmitDataContainer}
       />
-      <Route exact path={`${AppConfig.ROUTES.STUDENT_DATA}`} component={null} />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.REVIEW_SUBMITED}`}
+        component={ReviewSubmittedContainer}
+      />
       <Route
         exact
         path={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}
@@ -58,12 +63,12 @@ function Routes() {
       />
       <Route
         exact
-        path={`${AppConfig.ROUTES.DENTISTRY}/:step`}
+        path={`/:studentId${AppConfig.ROUTES.DENTISTRY}/:step`}
         component={DensitySubmitDataContainer}
       />
       <Route
         exact
-        path={`${AppConfig.ROUTES.ORTHO}/:step`}
+        path={`/:studentId${AppConfig.ROUTES.ORTHO}/:step`}
         component={OrthoSubmitDataContainer}
       />
       <Route

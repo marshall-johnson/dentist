@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -50,17 +51,42 @@ class AdministrativeServicesStep extends Component {
       localStorage.getItem('dentistryAdministrativeServices'),
     );
 
-    this.formRef.current.setFieldsValue(formData);
+    const { data } = this.props;
+    const formatData = camelcaseKeys(data);
+
+    if (formatData) {
+      this.formRef.current.setFieldsValue(formatData);
+    } else {
+      this.formRef.current.setFieldsValue(formData);
+    }
 
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistryAdministrativeServices');
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = camelcaseKeys(data);
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue(formatData);
+      }
+    }
+  }
+
   onBack = () => {
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.LABORTORY}${location.search}`,
     );
   };
 
@@ -70,14 +96,21 @@ class AdministrativeServicesStep extends Component {
       JSON.stringify(data),
     );
 
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_SALARY}${location.search}`,
     );
   };
 
   render() {
     const { initialValues } = this.state;
+    const { updateData } = this.props;
 
     return (
       <div className="administrative-services-container">
@@ -269,6 +302,29 @@ class AdministrativeServicesStep extends Component {
             </Col>
           </Row>
 
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() =>
+                updateData({
+                  administrative_services: this.formRef.current.getFieldValue(),
+                })
+              }
+            >
+              Update
+            </Button>
+          </div>
+
           <Row>
             <Col>
               <Button
@@ -290,7 +346,16 @@ class AdministrativeServicesStep extends Component {
 }
 
 AdministrativeServicesStep.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
   history: PropTypes.object,
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 export default withRouter(AdministrativeServicesStep);

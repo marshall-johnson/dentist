@@ -13,6 +13,7 @@ import {
 } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
+import camelcaseKeys from 'camelcase-keys';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -48,27 +49,57 @@ class CollectionsStep extends Component {
 
   componentDidMount() {
     const formData = JSON.parse(localStorage.getItem('dentistryCollections'));
+    const { data } = this.props;
+    const formatData = camelcaseKeys(data);
 
-    this.formRef.current.setFieldsValue(formData);
+    if (formatData) {
+      this.formRef.current.setFieldsValue(formatData);
+    } else {
+      this.formRef.current.setFieldsValue(formData);
+    }
 
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistryCollections');
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (prevProps.data !== data) {
+      const formatData = camelcaseKeys(data);
+
+      if (formatData) {
+        this.formRef.current.setFieldsValue(formatData);
+      }
+    }
+  }
+
   onBack = () => {
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.HYGEINIST_PRODUCTION}${location.search}`,
     );
   };
 
   onFinish = (data) => {
     localStorage.setItem('dentistryCollections', JSON.stringify(data));
 
-    const { history } = this.props;
+    const {
+      history,
+      match: {
+        params: { studentId },
+      },
+      location,
+    } = this.props;
     history.push(
-      `${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}`,
+      `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.PATIENT_ACTIVITY}${location.search}`,
     );
   };
 
@@ -92,6 +123,7 @@ class CollectionsStep extends Component {
 
   render() {
     const { initialValues } = this.state;
+    const { updateData } = this.props;
 
     return (
       <div className="collection-container">
@@ -285,6 +317,30 @@ There is a formula in this cell so the spreadsheet will automatically compute th
               </Form.Item>
             </Col>
           </Row>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              style={{
+                marginRight: '8px',
+                marginBottom: '20px',
+                background: '#13AF22',
+                color: 'white',
+              }}
+              onClick={() =>
+                updateData({
+                  collections: this.formRef.current.getFieldValue(),
+                })
+              }
+            >
+              Update
+            </Button>
+          </div>
+
           <Row>
             <Col>
               <Button
@@ -306,7 +362,16 @@ There is a formula in this cell so the spreadsheet will automatically compute th
 }
 
 CollectionsStep.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
   history: PropTypes.object,
+  data: PropTypes.array,
+  updateData: PropTypes.func,
 };
 
 export default withRouter(CollectionsStep);
