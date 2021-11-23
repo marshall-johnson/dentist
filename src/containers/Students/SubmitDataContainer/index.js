@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Row,
   Col,
@@ -8,13 +9,16 @@ import {
   Button,
   Divider,
   PageHeader,
-  Calendar,
   DatePicker,
+  Select,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { fetchStudents } from '@/actions/studentActions';
 
 import AppConfig from '@/constants/AppConfig';
-import moment from 'moment';
+import { connect } from 'react-redux';
+
+const { Option } = Select;
 
 class SubmitDataContainer extends Component {
   constructor(props) {
@@ -22,11 +26,18 @@ class SubmitDataContainer extends Component {
 
     this.state = {
       practiceType: null,
-      dateSelected: moment(),
+      studentId: null,
+      dateMonth: null,
     };
   }
 
   componentDidMount() {
+    const { fetchStudents } = this.props;
+    fetchStudents();
+
+    localStorage.removeItem('studentsSubmitDataDate');
+    localStorage.removeItem('studentsSubmitDataStudentId');
+
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistryDoctorProduction');
       localStorage.removeItem('dentistryHygienistProduction');
@@ -67,7 +78,7 @@ class SubmitDataContainer extends Component {
   };
 
   renderManuallyEnterData = () => {
-    const { practiceType } = this.state;
+    const { practiceType, studentId, dateMonth } = this.state;
     let href = null;
 
     if (practiceType === 'dentistry') {
@@ -80,7 +91,7 @@ class SubmitDataContainer extends Component {
 
     if (href) {
       return (
-        <Button href={href} type="primary">
+        <Button href={href} type="primary" disabled={!(studentId && dateMonth)}>
           Manually Enter Data
         </Button>
       );
@@ -94,11 +105,22 @@ class SubmitDataContainer extends Component {
   };
 
   onDateSelect = (value) => {
-    this.setState({ dateSelected: value });
+    this.setState({
+      dateMonth: value,
+    });
+    if (value) {
+      localStorage.setItem(
+        'studentsSubmitDataDate',
+        JSON.stringify({
+          month: value.month(),
+          year: value.year(),
+        }),
+      );
+    }
   };
 
   render() {
-    const { dateSelected } = this.state;
+    const { students, loadingFetchStudent } = this.props;
     return (
       <div className="submit-data-container">
         <PageHeader className="site-page-header" title="Submit Data Page" />
@@ -120,15 +142,44 @@ class SubmitDataContainer extends Component {
               >
                 <Radio.Group onChange={this.onChangePracticeType}>
                   <Radio value="dentistry">Dentistry</Radio>
-
-                  <DatePicker
-                    size="middle"
-                    picker="month"
-                    onSelect={this.onDateSelect}
-                  />
                 </Radio.Group>
               </Form.Item>
-
+              <Row style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ width: 100 }}>Month/Year:</div>
+                <DatePicker
+                  size="middle"
+                  picker="month"
+                  onChange={this.onDateSelect}
+                />
+              </Row>
+              <Row
+                style={{
+                  marginBottom: 30,
+                  marginTop: 20,
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <div style={{ width: 100 }}>Students: </div>
+                <Select
+                  loading={loadingFetchStudent}
+                  style={{
+                    width: 200,
+                  }}
+                  onChange={(id) => {
+                    this.setState({
+                      studentId: id,
+                    });
+                    localStorage.setItem('studentsSubmitDataStudentId', id);
+                  }}
+                >
+                  {students.map((student, index) => (
+                    <Option value={student.id} key={index.toString()}>
+                      {`${student.first_name} ${student.last_name}`}
+                    </Option>
+                  ))}
+                </Select>
+              </Row>
               <Form.Item
                 name="upload"
                 valuePropName="fileList"
@@ -168,4 +219,17 @@ class SubmitDataContainer extends Component {
   }
 }
 
-export default SubmitDataContainer;
+SubmitDataContainer.propTypes = {
+  students: PropTypes.array,
+  loadingFetchStudent: PropTypes.bool,
+  fetchStudents: PropTypes.func,
+};
+
+const mapStateToProps = ({ student }) => ({
+  students: student.items,
+  loadingFetchStudent: student.loading,
+});
+
+export default connect(mapStateToProps, {
+  fetchStudents,
+})(SubmitDataContainer);

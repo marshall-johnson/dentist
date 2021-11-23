@@ -81,6 +81,8 @@ class SolvencySavingsROIFundsStep extends Component {
 
     const params = {
       dentistry: {
+        month: JSON.parse(localStorage.getItem('studentsSubmitDataDate')).month,
+        year: JSON.parse(localStorage.getItem('studentsSubmitDataDate')).year,
         doctorProduction: dentistryDoctorProduction
           ? dentistryDoctorProduction.doctorProduction
           : [],
@@ -112,7 +114,10 @@ class SolvencySavingsROIFundsStep extends Component {
       },
     };
 
-    dentistrySubmitData({ params, history });
+    dentistrySubmitData(localStorage.getItem('studentsSubmitDataStudentId'), {
+      params,
+      history,
+    });
   };
 
   render() {
