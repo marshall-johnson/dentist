@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './index.scss';
 import { Button, Form } from 'antd';
+import { formatCurrency } from '@/utils/helpers';
 import { tabsleft, tabsright } from './config';
 import TabSummary from '../tab1/tabSummary';
 
@@ -59,7 +60,9 @@ class Tab1 extends Component {
             <TabSummary
               total={total}
               tabData={tabsleft}
-              totalData={[{ label: 'Total', value: totalTabLeft }]}
+              totalData={[
+                { label: 'Total', value: formatCurrency(totalTabLeft) },
+              ]}
             />
           </div>
           <div style={{ width: '100%' }}>
@@ -67,8 +70,8 @@ class Tab1 extends Component {
               total={total}
               tabData={tabsright}
               totalData={[
-                { label: 'IRA', value: 0 },
-                { label: 'Total', value: totalTabRight },
+                { label: 'IRA', value: formatCurrency(0) },
+                { label: 'Total', value: formatCurrency(totalTabRight) },
               ]}
             />
           </div>
