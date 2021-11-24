@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Alert,
-} from 'antd';
-
+import { notification } from 'antd';
 
 class FlashMessage extends Component {
   render() {
@@ -14,14 +11,41 @@ class FlashMessage extends Component {
       return null;
     }
 
-    return (
-      <Alert
-        showIcon
-        closable
-        type={type}
-        message={message}
-      />
-    );
+    switch (type) {
+      case 'success':
+        notification.success({
+          message,
+          duration: 3,
+        });
+        break;
+      case 'info':
+        notification.info({
+          message,
+          duration: 3,
+        });
+        break;
+      case 'warning':
+        notification.warning({
+          message,
+          duration: 3,
+        });
+        break;
+
+      case 'error':
+        notification.error({
+          message,
+          duration: 3,
+        });
+        break;
+      default:
+        notification.open({
+          message,
+          duration: 3,
+        });
+        break;
+    }
+
+    return null;
   }
 }
 

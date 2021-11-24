@@ -123,7 +123,7 @@ class SolvencySavingsROIFundsStep extends Component {
           ? dentistryDoctorProduction.doctorProduction
           : [],
         hygienistProduction: dentistryHygienistProduction
-          ? dentistryHygienistProduction.hygenistProduction
+          ? dentistryHygienistProduction.hygienistProduction
           : [],
         patientActivity:
           JSON.parse(localStorage.getItem('dentistryPatientActivity')) || {},
