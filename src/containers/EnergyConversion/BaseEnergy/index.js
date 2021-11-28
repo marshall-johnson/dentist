@@ -14,6 +14,7 @@ import {
 
 import '../index.scss';
 import { LoadingOutlined } from '@ant-design/icons';
+import { TYPE_ENERGY_SURVEYS } from '@/constants';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -109,32 +110,45 @@ class BaseContainer extends Component {
           title={title}
           style={{ marginBottom: 10 }}
         />
-        <span>Students:</span>
-        <Select
-          style={{ width: 200, marginLeft: 10 }}
-          onChange={async (id) => {
-            this.setState({
-              selectedStudentId: id,
-              loading: true,
-            });
-            try {
-              await fetchStudentSurveys(id, questionType);
-            } finally {
-              setTimeout(() => {
-                this.setState({
-                  fetchedResult: true,
-                  loading: false,
-                });
-              }, 1000);
-            }
-          }}
-        >
-          {students.map((student, index) => (
-            <Option value={student.id} key={index.toString()}>
-              {`${student.first_name} ${student.last_name}`}
-            </Option>
-          ))}
-        </Select>
+        <Row style={{ alignItems: 'center' }}>
+          <span style={{ width: 70 }}>Students:</span>
+          <Select
+            style={{ width: 200, marginLeft: 10 }}
+            onChange={async (id) => {
+              this.setState({
+                selectedStudentId: id,
+                loading: true,
+              });
+              try {
+                await fetchStudentSurveys(id, questionType);
+              } finally {
+                setTimeout(() => {
+                  this.setState({
+                    fetchedResult: true,
+                    loading: false,
+                  });
+                }, 1000);
+              }
+            }}
+          >
+            {students.map((student, index) => (
+              <Option value={student.id} key={index.toString()}>
+                {`${student.first_name} ${student.last_name}`}
+              </Option>
+            ))}
+          </Select>
+        </Row>
+
+        <Row style={{ marginTop: 20, alignItems: 'center' }}>
+          <span style={{ width: 70 }}>Type:</span>
+          <Select style={{ width: 200, marginLeft: 10 }}>
+            {TYPE_ENERGY_SURVEYS.map((data, index) => (
+              <Option value={data.value} key={index.toString()}>
+                {data.label}
+              </Option>
+            ))}
+          </Select>
+        </Row>
         <Divider />
         {loading && (
           <Spin

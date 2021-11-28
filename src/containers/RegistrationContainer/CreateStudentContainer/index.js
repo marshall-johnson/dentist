@@ -18,6 +18,7 @@ import {
 import PhoneInput from 'react-phone-input-2';
 
 import { createStudent } from '@/actions/studentActions';
+import { STUDENT_DEGREES } from '@/constants';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -118,7 +119,13 @@ class CreateStudentContainer extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <Select>
+                    {STUDENT_DEGREES.map((data, index) => (
+                      <Option key={index.toString()} value={data.value}>
+                        {data.label}
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Col>
             </Row>
