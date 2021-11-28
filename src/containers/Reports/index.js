@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import ReactToPrint from 'react-to-print';
-import {
-  Row,
-  Col,
-  Table,
-  Button,
-  Divider,
-  Typography,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
 
 import FilterForm from '@/containers/Reports/Filter';
 import './index.scss';
@@ -188,7 +180,8 @@ class ReportingContainer extends Component {
         dataIndex: 'collectionsPercent',
         key: 'collectionsPercent',
         sorter: (a, b) => a.collectionsPercent - b.collectionsPercent,
-        sortOrder: sortedInfo.columnKey === 'collectionsPercent' && sortedInfo.order,
+        sortOrder:
+          sortedInfo.columnKey === 'collectionsPercent' && sortedInfo.order,
         ellipsis: true,
       },
       {
@@ -204,7 +197,8 @@ class ReportingContainer extends Component {
         dataIndex: 'innterimVariance',
         key: 'innterimVariance',
         sorter: (a, b) => a.innterimVariance - b.innterimVariance,
-        sortOrder: sortedInfo.columnKey === 'innterimVariance' && sortedInfo.order,
+        sortOrder:
+          sortedInfo.columnKey === 'innterimVariance' && sortedInfo.order,
         ellipsis: true,
       },
       {
@@ -227,10 +221,7 @@ class ReportingContainer extends Component {
 
     return (
       <div className="reporting-container">
-        <PageHeader
-          className="site-page-header"
-          title="Reporting"
-        />
+        <PageHeader className="site-page-header" title="Reporting" />
         <Divider />
 
         <FilterForm />
@@ -253,11 +244,13 @@ class ReportingContainer extends Component {
         <div
           className="search-result-list"
           // eslint-disable-next-line no-return-assign
-          ref={el => (this.componentRef = el)}
+          ref={(el) => (this.componentRef = el)}
         >
           <div style={{ textAlign: 'center' }}>
             <div className="mb-10">
-              <Title level={3}>PROFFITABILITY MANAGEMENT CONTROLLER REPORT</Title>
+              <Title level={3}>
+                PROFITABILITY MANAGEMENT CONTROLLER REPORT
+              </Title>
             </div>
             <div>
               <Text className="border-bottom">Nov 1, 2020</Text>
@@ -294,10 +287,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>UNPAID BILLS</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>34113.64</Text>
                   </Col>
                 </Row>
@@ -305,10 +295,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Production</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>0</Text>
                   </Col>
                 </Row>
@@ -316,19 +303,12 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Collections</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>45372.81</Text>
                   </Col>
                 </Row>
                 <Row className="mb-15">
-                  <Col
-                    offset={10}
-                    span={1}
-                    className="border-bottom"
-                  >
+                  <Col offset={10} span={1} className="border-bottom">
                     <Text>0</Text>
                   </Col>
                   <Text>% of Production</Text>
@@ -337,10 +317,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Actual R/L</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>47225.52</Text>
                   </Col>
                 </Row>
@@ -348,10 +325,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Actual B/L</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>47225.52</Text>
                   </Col>
                 </Row>
@@ -359,10 +333,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Debt Payments</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>1545</Text>
                   </Col>
                 </Row>
@@ -373,10 +344,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>TOTAL SHORT TERM DEBT:</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>75.19</Text>
                   </Col>
                 </Row>
@@ -384,10 +352,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Avg. Prod/Mo:</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>0</Text>
                   </Col>
                 </Row>
@@ -395,10 +360,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Avg Coll/Mo</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>45372.81</Text>
                   </Col>
                 </Row>
@@ -407,10 +369,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Budgeted R/L</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>0</Text>
                   </Col>
                 </Row>
@@ -418,10 +377,7 @@ class ReportingContainer extends Component {
                   <Col span={8}>
                     <Text>Budgeted B/L</Text>
                   </Col>
-                  <Col
-                    span={12}
-                    className="border-bottom"
-                  >
+                  <Col span={12} className="border-bottom">
                     <Text>0</Text>
                   </Col>
                 </Row>
