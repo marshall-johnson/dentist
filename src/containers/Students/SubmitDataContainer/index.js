@@ -20,7 +20,14 @@ import { connect } from 'react-redux';
 
 const { Option } = Select;
 
+const validateMessages = {
+  // eslint-disable-next-line no-template-curly-in-string
+  required: '${label} is required!',
+};
+
 class SubmitDataContainer extends Component {
+  formRef = React.createRef();
+
   constructor(props) {
     super(props);
 
@@ -78,11 +85,11 @@ class SubmitDataContainer extends Component {
     const { practiceType, studentId, dateMonth } = this.state;
     let href = null;
 
-    if (practiceType === 'dentistry') {
+    if (practiceType === 'dentistry' && dateMonth && studentId) {
       href = `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth?.year}&month=${dateMonth?.month}`;
     }
 
-    if (practiceType === 'ortho') {
+    if (practiceType === 'ortho' && dateMonth && studentId) {
       href = `/${studentId}${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth?.year}&month=${dateMonth?.month}`;
     }
 
@@ -90,7 +97,10 @@ class SubmitDataContainer extends Component {
       <Button
         href={href}
         type="primary"
-        disabled={!(studentId && dateMonth && href)}
+        htmlType="submit"
+        onClick={() => {
+          this.formRef.current.submit();
+        }}
       >
         Manually Enter Data
       </Button>
@@ -126,7 +136,11 @@ class SubmitDataContainer extends Component {
 
         <Row align="bottom">
           <Col span={12}>
-            <Form onFinish={this.onFinish}>
+            <Form
+              onFinish={this.onFinish}
+              ref={this.formRef}
+              validateMessages={validateMessages}
+            >
               <Form.Item
                 rules={[
                   {
@@ -141,23 +155,34 @@ class SubmitDataContainer extends Component {
                   <Radio value="dentistry">Dentistry</Radio>
                 </Radio.Group>
               </Form.Item>
-              <Row style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ width: 100 }}>Month/Year:</div>
+
+              <Form.Item
+                label="Month/Year:"
+                name="month_year"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please pick a Month/Year!',
+                  },
+                ]}
+              >
                 <DatePicker
                   size="middle"
                   picker="month"
                   onChange={this.onDateSelect}
                 />
-              </Row>
-              <Row
-                style={{
-                  marginBottom: 30,
-                  marginTop: 20,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
+              </Form.Item>
+
+              <Form.Item
+                label="Students"
+                name="student"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please pick a Student!',
+                  },
+                ]}
               >
-                <div style={{ width: 100 }}>Students: </div>
                 <Select
                   loading={loadingFetchStudent}
                   style={{
@@ -176,17 +201,12 @@ class SubmitDataContainer extends Component {
                     </Option>
                   ))}
                 </Select>
-              </Row>
+              </Form.Item>
+
               <Form.Item
                 name="upload"
                 valuePropName="fileList"
                 getValueFromEvent={this.normFile}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please upload an item!',
-                  },
-                ]}
                 wrapperCol={{
                   span: 12,
                   offset: 6,
