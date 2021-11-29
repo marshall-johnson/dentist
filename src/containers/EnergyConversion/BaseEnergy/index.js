@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Form, Divider, PageHeader, Select, Space, Spin } from 'antd';
+import { Row, Form, Divider, PageHeader, Select, Spin } from 'antd';
 import 'survey-react/survey.css';
 import * as Survey from 'survey-react';
 import { fetchQuestions } from '@/actions/questionsSurveyActions';
@@ -32,6 +32,7 @@ class BaseContainer extends Component {
     this.state = {
       fetchedResult: false,
       selectedStudentId: null,
+      selectedType: null,
       successSendData: true,
       loading: false,
     };
@@ -44,31 +45,34 @@ class BaseContainer extends Component {
     fetchQuestions({ questionType });
   }
 
+  async onFetchSurvey(selectedStudentId, selectedType) {
+    const { fetchStudentSurveys, questionType } = this.props;
+
+    this.setState({
+      loading: true,
+    });
+
+    if (!!selectedStudentId && !!selectedType) {
+      try {
+        await fetchStudentSurveys(selectedStudentId, { questionType });
+      } finally {
+        setTimeout(() => {
+          this.setState({
+            fetchedResult: true,
+            loading: false,
+          });
+        }, 1000);
+      }
+    } else {
+      this.setState({
+        loading: false,
+      });
+    }
+  }
+
   onFinish = (data) => {
     console.log('🚀 ~ file: index.js ~ line 62 ~ data', data);
   };
-
-  sendDataToServer = async (sender) => {
-    const { submitStudentSurvey } = this.props;
-    const { selectedStudentId } = this.state;
-    const success = await submitStudentSurvey(
-      selectedStudentId,
-      this.formatSenderData(sender.data),
-    );
-
-    this.setState({
-      successSendData: success,
-    });
-  };
-
-  formatSenderData = (data) =>
-    Object.keys(data).map((key) => {
-      const id = key.split('_')[1];
-      return {
-        questions_survey_id: id,
-        result: data[key],
-      };
-    });
 
   questions = () => {
     const { items } = this.props;
@@ -93,15 +97,37 @@ class BaseContainer extends Component {
     };
   };
 
+  formatSenderData = (data) =>
+    Object.keys(data).map((key) => {
+      const id = key.split('_')[1];
+      return {
+        questions_survey_id: id,
+        result: data[key],
+      };
+    });
+
+  sendDataToServer = async (sender) => {
+    const { submitStudentSurvey } = this.props;
+    const { selectedStudentId } = this.state;
+    const success = await submitStudentSurvey(
+      selectedStudentId,
+      this.formatSenderData(sender.data),
+    );
+
+    this.setState({
+      successSendData: success,
+    });
+  };
+
   render() {
+    const { students, studentSurveyItems, title } = this.props;
     const {
-      students,
-      fetchStudentSurveys,
-      studentSurveyItems,
-      questionType,
-      title,
-    } = this.props;
-    const { fetchedResult, successSendData, loading } = this.state;
+      fetchedResult,
+      successSendData,
+      loading,
+      selectedType,
+      selectedStudentId,
+    } = this.state;
 
     return (
       <div className="base-energy-container">
@@ -110,45 +136,48 @@ class BaseContainer extends Component {
           title={title}
           style={{ marginBottom: 10 }}
         />
-        <Row style={{ alignItems: 'center' }}>
-          <span style={{ width: 70 }}>Students:</span>
-          <Select
-            style={{ width: 200, marginLeft: 10 }}
-            onChange={async (id) => {
-              this.setState({
-                selectedStudentId: id,
-                loading: true,
-              });
-              try {
-                await fetchStudentSurveys(id, questionType);
-              } finally {
-                setTimeout(() => {
-                  this.setState({
-                    fetchedResult: true,
-                    loading: false,
-                  });
-                }, 1000);
-              }
-            }}
-          >
-            {students.map((student, index) => (
-              <Option value={student.id} key={index.toString()}>
-                {`${student.first_name} ${student.last_name}`}
-              </Option>
-            ))}
-          </Select>
+        <Row style={{ alignItems: 'center', flexDirection: 'row' }}>
+          <div style={{ marginRight: 30 }}>
+            <span>Students:</span>
+            <Select
+              style={{ width: 200, marginLeft: 10 }}
+              onChange={async (id) => {
+                this.setState({
+                  selectedStudentId: id,
+                });
+
+                await this.onFetchSurvey(id, selectedType);
+              }}
+            >
+              {students.map((student, index) => (
+                <Option value={student.id} key={index.toString()}>
+                  {`${student.first_name} ${student.last_name}`}
+                </Option>
+              ))}
+            </Select>
+          </div>
+
+          <div>
+            <span>Type:</span>
+            <Select
+              style={{ width: 200, marginLeft: 10 }}
+              onChange={async (type) => {
+                this.setState({
+                  selectedType: type,
+                });
+
+                await this.onFetchSurvey(selectedStudentId, type);
+              }}
+            >
+              {TYPE_ENERGY_SURVEYS.map((data, index) => (
+                <Option value={data.value} key={index.toString()}>
+                  {data.label}
+                </Option>
+              ))}
+            </Select>
+          </div>
         </Row>
 
-        <Row style={{ marginTop: 20, alignItems: 'center' }}>
-          <span style={{ width: 70 }}>Type:</span>
-          <Select style={{ width: 200, marginLeft: 10 }}>
-            {TYPE_ENERGY_SURVEYS.map((data, index) => (
-              <Option value={data.value} key={index.toString()}>
-                {data.label}
-              </Option>
-            ))}
-          </Select>
-        </Row>
         <Divider />
         {loading && (
           <Spin

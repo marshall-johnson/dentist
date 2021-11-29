@@ -53,22 +53,22 @@ class ReviewSubmittedContainer extends Component {
     let href = null;
 
     if (practiceType === 'dentistry') {
-      href = `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth.year}&month=${dateMonth.month}`;
+      href = `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth.year}&month=${dateMonth?.month}`;
     }
 
     if (practiceType === 'ortho') {
-      href = `/${studentId}${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth.year}&month=${dateMonth.month}`;
+      href = `/${studentId}${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth.year}&month=${dateMonth?.month}`;
     }
 
-    if (href) {
-      return (
-        <Button href={href} type="primary" disabled={!(studentId && dateMonth)}>
-          Show
-        </Button>
-      );
-    }
-
-    return null;
+    return (
+      <Button
+        href={href}
+        type="primary"
+        disabled={!(studentId && dateMonth && href)}
+      >
+        Show
+      </Button>
+    );
   };
 
   onChangePracticeType = (e) => {
@@ -76,12 +76,18 @@ class ReviewSubmittedContainer extends Component {
   };
 
   onDateSelect = (value) => {
-    this.setState({
-      dateMonth: {
-        month: value.month() + 1,
-        year: value.year(),
-      },
-    });
+    if (value) {
+      this.setState({
+        dateMonth: {
+          month: value.month() + 1,
+          year: value.year(),
+        },
+      });
+    } else {
+      this.setState({
+        dateMonth: null,
+      });
+    }
   };
 
   render() {
