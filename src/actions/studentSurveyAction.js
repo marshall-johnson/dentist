@@ -23,26 +23,30 @@ export const submitStudentSurvey = (id, results) => async (dispatch) => {
     });
 };
 
-export const fetchStudentSurveys = (id, questionType) => async (dispatch) => {
-  dispatch(setLoading(true));
+export const fetchStudentSurveys =
+  (id, { questionType, userType }) =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
 
-  return api
-    .get(`/api/v1/students/${id}/surveys?question_type=${questionType}`)
-    .then(({ data: { records } }) => {
-      dispatch(
-        studentSurveysFetched({
-          records,
-        }),
-      );
-    })
-    .catch((error) => {
-      dispatch(setLoading(false));
-      if (error.response) {
-        dispatch(throwErrors(error.response));
-      }
-      throw error;
-    })
-    .finally(() => {
-      dispatch(setLoading(false));
-    });
-};
+    return api
+      .get(
+        `/api/v1/students/${id}/surveys?question_type=${questionType}&userType=${userType}`,
+      )
+      .then(({ data: { records } }) => {
+        dispatch(
+          studentSurveysFetched({
+            records,
+          }),
+        );
+      })
+      .catch((error) => {
+        dispatch(setLoading(false));
+        if (error.response) {
+          dispatch(throwErrors(error.response));
+        }
+        throw error;
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
