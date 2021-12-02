@@ -11,13 +11,20 @@ export const STUDENT_DEGREES = [
   },
 ];
 
+export const UserAccountType = {
+  STUDENT_ADMIN: 'student_admin',
+  STUDENT_STAFF: 'student_staff',
+  STUDENT_DOCTOR: 'student_doctor',
+  ADMIN: 'client',
+};
+
 export const TYPE_ENERGY_SURVEYS = [
   {
-    value: 'staff',
+    value: UserAccountType.STUDENT_STAFF,
     label: 'Staff',
   },
   {
-    value: 'doctor',
+    value: UserAccountType.STUDENT_DOCTOR,
     label: 'Doctor',
   },
 ];

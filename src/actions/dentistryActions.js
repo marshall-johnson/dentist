@@ -12,7 +12,7 @@ export const dentistrySubmitData =
     dispatch(setLoading(true));
 
     return api
-      .post(`/api/v1/students/${id}/dentistries`, snakecaseKeys(params))
+      .post(`/api/v1/users/${id}/dentistries`, snakecaseKeys(params))
       .then(({ data: { success, message } }) => {
         if (success) {
           dispatch(clearErrors('dentistrySubmitData'));
@@ -43,7 +43,7 @@ export const updateDentistryData = (id, params) => async (dispatch) => {
   dispatch(setLoading(true));
 
   return api
-    .put(`/api/v1/students/${id}/dentistries`, snakecaseKeys(params))
+    .put(`/api/v1/users/${id}/dentistries`, snakecaseKeys(params))
     .then(({ data: { success, message } }) => {
       if (success) {
         dispatch(clearErrors('updateDentistryData'));
@@ -73,7 +73,7 @@ export const showDentistryData = (id, params) => async (dispatch) => {
 
   return api
     .get(
-      `/api/v1/students/${id}/dentistries?year=${params.year}&month=${params.month}`,
+      `/api/v1/users/${id}/dentistries?year=${params.year}&month=${params.month}`,
     )
     .then(({ data: { data } }) => {
       if (Object.keys(data).every((key) => data[key] !== null)) {
