@@ -14,7 +14,7 @@ import {
 
 import '../index.scss';
 import { LoadingOutlined } from '@ant-design/icons';
-import { TYPE_ENERGY_SURVEYS } from '@/constants';
+import { TYPE_ENERGY_SURVEYS, UserAccountType } from '@/constants';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -39,9 +39,18 @@ class BaseContainer extends Component {
   }
 
   componentDidMount() {
-    const { fetchQuestions, fetchStudents, questionType } = this.props;
+    const { fetchQuestions, fetchStudents, questionType, currentUser } =
+      this.props;
 
-    fetchStudents();
+    if (
+      [UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
+        currentUser?.account_type,
+      )
+    ) {
+      fetchStudents();
+    } else {
+      this.onFetchSurvey(currentUser.id);
+    }
     fetchQuestions({ questionType });
   }
 
@@ -52,7 +61,7 @@ class BaseContainer extends Component {
       loading: true,
     });
 
-    if (!!selectedStudentId && !!selectedType) {
+    if (selectedStudentId) {
       try {
         await fetchStudentSurveys(selectedStudentId, { questionType });
       } finally {
@@ -120,7 +129,7 @@ class BaseContainer extends Component {
   };
 
   render() {
-    const { students, studentSurveyItems, title } = this.props;
+    const { students, studentSurveyItems, title, currentUser } = this.props;
     const {
       fetchedResult,
       successSendData,
@@ -136,47 +145,51 @@ class BaseContainer extends Component {
           title={title}
           style={{ marginBottom: 10 }}
         />
-        <Row style={{ alignItems: 'center', flexDirection: 'row' }}>
-          <div style={{ marginRight: 30 }}>
-            <span>Students:</span>
-            <Select
-              style={{ width: 200, marginLeft: 10 }}
-              onChange={async (id) => {
-                this.setState({
-                  selectedStudentId: id,
-                });
+        {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
+          currentUser?.account_type,
+        ) && (
+          <Row style={{ alignItems: 'center', flexDirection: 'row' }}>
+            <div style={{ marginRight: 30 }}>
+              <span>Students:</span>
+              <Select
+                style={{ width: 200, marginLeft: 10 }}
+                onChange={async (id) => {
+                  this.setState({
+                    selectedStudentId: id,
+                  });
 
-                await this.onFetchSurvey(id, selectedType);
-              }}
-            >
-              {students.map((student, index) => (
-                <Option value={student.id} key={index.toString()}>
-                  {`${student.first_name} ${student.last_name}`}
-                </Option>
-              ))}
-            </Select>
-          </div>
+                  await this.onFetchSurvey(id, selectedType);
+                }}
+              >
+                {students.map((student, index) => (
+                  <Option value={student.id} key={index.toString()}>
+                    {`${student.first_name} ${student.last_name}`}
+                  </Option>
+                ))}
+              </Select>
+            </div>
 
-          <div>
-            <span>Type:</span>
-            <Select
-              style={{ width: 200, marginLeft: 10 }}
-              onChange={async (type) => {
-                this.setState({
-                  selectedType: type,
-                });
+            <div>
+              <span>Type:</span>
+              <Select
+                style={{ width: 200, marginLeft: 10 }}
+                onChange={async (type) => {
+                  this.setState({
+                    selectedType: type,
+                  });
 
-                await this.onFetchSurvey(selectedStudentId, type);
-              }}
-            >
-              {TYPE_ENERGY_SURVEYS.map((data, index) => (
-                <Option value={data.value} key={index.toString()}>
-                  {data.label}
-                </Option>
-              ))}
-            </Select>
-          </div>
-        </Row>
+                  await this.onFetchSurvey(selectedStudentId, type);
+                }}
+              >
+                {TYPE_ENERGY_SURVEYS.map((data, index) => (
+                  <Option value={data.value} key={index.toString()}>
+                    {data.label}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </Row>
+        )}
 
         <Divider />
         {loading && (
@@ -251,6 +264,7 @@ BaseContainer.propTypes = {
   fetchStudents: PropTypes.func,
   fetchStudentSurveys: PropTypes.func,
   submitStudentSurvey: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = ({
@@ -258,11 +272,13 @@ const mapStateToProps = ({
   student,
   studentSurvey,
   error,
+  auth,
 }) => ({
   items: questionsSurvey.items,
   studentSurveyItems: studentSurvey.items,
   students: student.items,
   loading: student.loading,
+  currentUser: auth.currentUser,
 });
 
 export default connect(mapStateToProps, {
