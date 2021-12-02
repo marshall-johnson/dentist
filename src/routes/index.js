@@ -26,6 +26,7 @@ import ChartAudit from '@/containers/ChartAudit';
 import CoachingPPP from '@/containers/Coaching/CoachingPPP';
 import ChartAuditReport from '@/containers/ChartAuditReport';
 import ReviewSubmittedContainer from '@/containers/Students/ReviewSubmittedContainer';
+import CreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
 
 function Routes() {
   return (
@@ -80,6 +81,11 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.REGISTRATION}/${AppConfig.REGISTRATIONS.CREATE_STUDENT}`}
         component={RegistrationCreateStudentContainer}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.REGISTRATION}/${AppConfig.REGISTRATIONS.CREATE_USER}`}
+        component={CreateUserContainer}
       />
       <Route
         exact

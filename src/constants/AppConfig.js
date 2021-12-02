@@ -36,6 +36,7 @@ const AppConfig = {
   },
   REGISTRATIONS: {
     CREATE_STUDENT: 'create-student',
+    CREATE_USER: 'create-user',
   },
   ENERGY_PROFILE: {
     DATA_RESULT: 'data-result',

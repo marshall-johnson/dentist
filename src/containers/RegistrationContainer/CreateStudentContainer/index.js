@@ -18,7 +18,7 @@ import {
 import PhoneInput from 'react-phone-input-2';
 
 import { createStudent } from '@/actions/studentActions';
-import { STUDENT_DEGREES } from '@/constants';
+import { STUDENT_DEGREES, UserAccountType } from '@/constants';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -56,7 +56,15 @@ class CreateStudentContainer extends Component {
   onFinish = (values) => {
     const { createStudent, history } = this.props;
 
-    createStudent({ params: values, history });
+    createStudent({
+      params: {
+        student: {
+          ...values.student,
+          account_type: UserAccountType.STUDENT_ADMIN,
+        },
+      },
+      history,
+    });
   };
 
   render() {
@@ -129,6 +137,32 @@ class CreateStudentContainer extends Component {
                 </Form.Item>
               </Col>
             </Row>
+
+            <Form.Item
+              label="Email"
+              name={['student', 'email']}
+              fieldKey="email"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name={['student', 'password']}
+              fieldKey="password"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
             <Form.Item
               label="Address"

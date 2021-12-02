@@ -6,7 +6,7 @@ export const submitStudentSurvey = (id, results) => async (dispatch) => {
   dispatch(setLoading(true));
 
   return api
-    .post(`/api/v1/students/${id}/surveys`, { data: { results } })
+    .post(`/api/v1/users/${id}/surveys`, { data: { results } })
     .then(({ data: { success } }) => {
       if (success) return true;
       return false;
@@ -30,7 +30,7 @@ export const fetchStudentSurveys =
 
     return api
       .get(
-        `/api/v1/students/${id}/surveys?question_type=${questionType}&userType=${userType}`,
+        `/api/v1/users/${id}/surveys?question_type=${questionType}&userType=${userType}`,
       )
       .then(({ data: { records } }) => {
         dispatch(
