@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Button, Layout, Menu, notification } from 'antd';
+import { Layout, Menu, notification } from 'antd';
 import {
   UserOutlined,
   PieChartOutlined,
   SettingOutlined,
+  DatabaseOutlined,
 } from '@ant-design/icons';
 
 import Routes from '@/routes';
@@ -155,6 +156,21 @@ class AppContainer extends Component {
                   </SubMenu>
                 )}
               </SubMenu>
+              {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN] && (
+                <SubMenu
+                  key="management"
+                  icon={<DatabaseOutlined />}
+                  title="Management"
+                >
+                  <Menu.Item key="mangement-student">
+                    <Link
+                      to={`${AppConfig.ROUTES.MANGEMENT}/${AppConfig.MANGEMENT.STUDENT}`}
+                    >
+                      Student
+                    </Link>
+                  </Menu.Item>
+                </SubMenu>
+              )}
               {[
                 UserAccountType.ADMIN,
                 UserAccountType.STUDENT_ADMIN,

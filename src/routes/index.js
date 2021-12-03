@@ -27,6 +27,8 @@ import CoachingPPP from '@/containers/Coaching/CoachingPPP';
 import ChartAuditReport from '@/containers/ChartAuditReport';
 import ReviewSubmittedContainer from '@/containers/Students/ReviewSubmittedContainer';
 import CreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
+import MangementStudent from '@/containers/Management/StudentContainer';
+import DetailStudentContainer from '@/containers/Management/DetailStudent';
 
 function Routes() {
   return (
@@ -158,6 +160,18 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.CHART_AUDIT_REPORT}`}
         component={ChartAuditReport}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.MANGEMENT}/${AppConfig.MANGEMENT.STUDENT}`}
+        component={MangementStudent}
+      />
+
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.MANGEMENT}/${AppConfig.MANGEMENT.STUDENT}/:studentId`}
+        component={DetailStudentContainer}
       />
 
       <Route path="*" component={NotFoundContainer} />

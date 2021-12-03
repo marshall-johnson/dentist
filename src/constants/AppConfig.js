@@ -42,9 +42,13 @@ const AppConfig = {
     DATA_RESULT: 'data-result',
     DATA_ANALYSIS: 'data-analysis',
   },
+  MANGEMENT: {
+    STUDENT: 'student',
+  },
   ROUTES: {
     MAIN: '/',
     STUDENTS_SCHEDULE: '/students/schedule',
+    MANGEMENT: '/mangement',
     STUDENTS_SUBMIT_DATA: '/students/submit-data',
     STUDENTS_PURCHASE_ITEMS: '/students/purchase-items',
     REPORT: '/report',

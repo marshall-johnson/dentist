@@ -5,6 +5,7 @@ const slice = createSlice({
   name: 'student',
   initialState: {
     items: [],
+    item: {},
     loading: false,
   },
   reducers: {
@@ -14,9 +15,18 @@ const slice = createSlice({
     studentsFetched(state, { payload: { records } }) {
       state.items = records;
     },
+
+    studentFetched(state, { payload: { record } }) {
+      state.item = record;
+    },
+
+    deletedStudent(state, { payload: { id } }) {
+      state.items = state.items.filter((data) => data.id !== id);
+    },
   },
 });
 
-export const { setLoading, studentsFetched } = slice.actions;
+export const { setLoading, studentsFetched, studentFetched, deletedStudent } =
+  slice.actions;
 
 export default slice.reducer;

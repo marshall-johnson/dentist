@@ -3,7 +3,12 @@ import snakecaseKeys from 'snakecase-keys';
 import { throwErrors, clearErrors } from '@/actions/errorActions';
 import { setFlashError, setFlashSuccess } from '@/actions/flashMessageActions';
 import AppConfig from '@/constants/AppConfig';
-import { studentsFetched, setLoading } from '@/store/student';
+import {
+  studentsFetched,
+  studentFetched,
+  setLoading,
+  deletedStudent,
+} from '@/store/student';
 
 export const createStudent =
   ({ params, history }) =>
@@ -35,6 +40,92 @@ export const createStudent =
         dispatch(setLoading(false));
       });
   };
+
+export const updateStudent =
+  (id, { params }) =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
+
+    return api
+      .put(`/api/v1/students/${id}`, snakecaseKeys(params))
+      .then(({ data: { success, message } }) => {
+        if (success) {
+          dispatch(clearErrors('updateUserItem'));
+          dispatch(setFlashSuccess({ message }));
+
+          return true;
+        } 
+          dispatch(setFlashError({ message }));
+          return false;
+        
+      })
+      .catch((error) => {
+        dispatch(setLoading(false));
+        if (error.response) {
+          dispatch(
+            throwErrors('updateUserItem', { 'Submitted data': ['is invalid'] }),
+          );
+        }
+        throw error;
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+
+export const deleteStudent = (id) => async (dispatch) => {
+  dispatch(setLoading(true));
+
+  return api
+    .delete(`/api/v1/students/${id}`)
+    .then(({ data: { success, message } }) => {
+      if (success) {
+        dispatch(deletedStudent({ id }));
+        dispatch(clearErrors('deleteUserItem'));
+        dispatch(setFlashSuccess({ message }));
+      } else {
+        dispatch(setFlashError({ message }));
+      }
+    })
+    .catch((error) => {
+      dispatch(setLoading(false));
+      if (error.response) {
+        dispatch(
+          throwErrors('deleteUserItem', {
+            [`Delete student with id ${id}`]: ['is not success'],
+          }),
+        );
+      }
+      throw error;
+    })
+    .finally(() => {
+      dispatch(setLoading(false));
+    });
+};
+
+export const fetchStudent = (id) => async (dispatch) => {
+  dispatch(setLoading(true));
+
+  return api
+    .get(`/api/v1/students/${id}`)
+    .then(({ data: { record } }) => {
+      dispatch(
+        studentFetched({
+          record,
+        }),
+      );
+    })
+    .catch((error) => {
+      dispatch(setLoading(false));
+      if (error.response) {
+        dispatch(throwErrors(error.response));
+      }
+      throw error;
+    })
+    .finally(() => {
+      dispatch(setLoading(false));
+    });
+};
 
 export const fetchStudents = () => async (dispatch) => {
   dispatch(setLoading(true));
