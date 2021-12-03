@@ -6,14 +6,16 @@ const slice = createSlice({
   initialState: {
     items: [],
     item: {},
+    meta: {},
     loading: false,
   },
   reducers: {
     setLoading(state, { payload }) {
       state.loading = payload;
     },
-    studentsFetched(state, { payload: { records } }) {
+    studentsFetched(state, { payload: { records, meta } }) {
       state.items = records;
+      state.meta = meta;
     },
 
     studentFetched(state, { payload: { record } }) {

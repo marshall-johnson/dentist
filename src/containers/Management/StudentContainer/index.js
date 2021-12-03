@@ -2,7 +2,7 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { fetchStudents, deleteStudent } from '@/actions/studentActions';
 import PropTypes from 'prop-types';
-import { Button, Table, Form, PageHeader, Divider } from 'antd';
+import { Button, Table, Form, PageHeader, Divider, Pagination } from 'antd';
 import React, { Component } from 'react';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 import './index.scss';
@@ -80,20 +80,32 @@ class ManagementStudent extends Component {
     },
   ];
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchParams: {
+        size: 5,
+        number: 1,
+      },
+    };
+  }
+
   componentDidMount() {
     const { fetchStudents } = this.props;
+    const { searchParams } = this.state;
 
-    fetchStudents();
+    fetchStudents(searchParams);
   }
 
   render() {
-    const { students, loading } = this.props;
+    const { students, loading, meta, fetchStudents } = this.props;
+    const { searchParams } = this.state;
 
     return (
       <div className="profit-and-loss-container">
         <PageHeader className="site-page-header" title="Management Student" />
         <Divider />
-
         <Form
           ref={this.formRef}
           className="form-wrapper"
@@ -101,11 +113,33 @@ class ManagementStudent extends Component {
           autoComplete="off"
         >
           <Table
+            pagination={false}
             dataSource={students || []}
             columns={this.columns}
             loading={loading}
           />
         </Form>
+        <Pagination
+          defaultCurrent={searchParams?.number || 1}
+          total={meta?.total_record || 0}
+          style={{ marginTop: 50 }}
+          defaultPageSize={5}
+          pageSizeOptions={[5, 10, 15, 20]}
+          showSizeChanger
+          onChange={(page, pageSize) => {
+            this.setState({
+              searchParams: {
+                number: page,
+                size: pageSize,
+              },
+            });
+            fetchStudents({
+              number: page,
+              size: pageSize,
+            });
+          }}
+        />
+        ,
       </div>
     );
   }
@@ -116,12 +150,14 @@ ManagementStudent.propTypes = {
   fetchStudents: PropTypes.func,
   deleteStudent: PropTypes.func,
   history: PropTypes.object,
+  meta: PropTypes.object,
   loading: PropTypes.bool,
 };
 
 const mapStateToProps = ({ student }) => ({
   students: student.items,
   loading: student.loading,
+  meta: student.meta,
 });
 
 export default connect(mapStateToProps, {
