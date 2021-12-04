@@ -10,61 +10,67 @@ import {
   deletedStudent,
 } from '@/store/student';
 
-export const createStudent = ({ params, history }) => async (dispatch) => {
-  dispatch(setLoading(true));
+export const createStudent =
+  ({ params, history }) =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
 
-  return api
-    .post('/api/v1/students', snakecaseKeys(params))
-    .then(({ data: { success, message } }) => {
-      if (success) {
-        dispatch(clearErrors('userItem'));
-        dispatch(setFlashSuccess({ message }));
+    return api
+      .post('/api/v1/students', snakecaseKeys(params))
+      .then(({ data: { success, message } }) => {
+        if (success) {
+          dispatch(clearErrors('userItem'));
+          dispatch(setFlashSuccess({ message }));
 
-        history.push(AppConfig.ROUTES.REGISTRATION);
-      } else {
+          history.push(AppConfig.ROUTES.REGISTRATION);
+        } else {
+          dispatch(setFlashError({ message }));
+        }
+      })
+      .catch((error) => {
+        dispatch(setLoading(false));
+        if (error.response) {
+          dispatch(
+            throwErrors('userItem', { 'Submitted data': ['is invalid'] }),
+          );
+        }
+        throw error;
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+
+export const updateStudent =
+  (id, { params }) =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
+
+    return api
+      .put(`/api/v1/students/${id}`, snakecaseKeys(params))
+      .then(({ data: { success, message } }) => {
+        if (success) {
+          dispatch(clearErrors('updateUserItem'));
+          dispatch(setFlashSuccess({ message }));
+
+          return true;
+        }
         dispatch(setFlashError({ message }));
-      }
-    })
-    .catch((error) => {
-      dispatch(setLoading(false));
-      if (error.response) {
-        dispatch(throwErrors('userItem', { 'Submitted data': ['is invalid'] }));
-      }
-      throw error;
-    })
-    .finally(() => {
-      dispatch(setLoading(false));
-    });
-};
-
-export const updateStudent = (id, { params }) => async (dispatch) => {
-  dispatch(setLoading(true));
-
-  return api
-    .put(`/api/v1/students/${id}`, snakecaseKeys(params))
-    .then(({ data: { success, message } }) => {
-      if (success) {
-        dispatch(clearErrors('updateUserItem'));
-        dispatch(setFlashSuccess({ message }));
-
-        return true;
-      }
-      dispatch(setFlashError({ message }));
-      return false;
-    })
-    .catch((error) => {
-      dispatch(setLoading(false));
-      if (error.response) {
-        dispatch(
-          throwErrors('updateUserItem', { 'Submitted data': ['is invalid'] }),
-        );
-      }
-      throw error;
-    })
-    .finally(() => {
-      dispatch(setLoading(false));
-    });
-};
+        return false;
+      })
+      .catch((error) => {
+        dispatch(setLoading(false));
+        if (error.response) {
+          dispatch(
+            throwErrors('updateUserItem', { 'Submitted data': ['is invalid'] }),
+          );
+        }
+        throw error;
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
 
 export const deleteStudent = (id) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -120,27 +126,33 @@ export const fetchStudent = (id) => async (dispatch) => {
     });
 };
 
-export const fetchStudents = (params = {}) => async (dispatch) => {
-  dispatch(setLoading(true));
+export const fetchStudents =
+  (params = {}) =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
 
-  return api
-    .get(`/api/v1/students?size=${params?.size}&number=${params?.number}`)
-    .then(({ data: { records, meta } }) => {
-      dispatch(
-        studentsFetched({
-          records,
-          meta,
-        }),
-      );
-    })
-    .catch((error) => {
-      dispatch(setLoading(false));
-      if (error.response) {
-        dispatch(throwErrors(error.response));
-      }
-      throw error;
-    })
-    .finally(() => {
-      dispatch(setLoading(false));
-    });
-};
+    return api
+      .get(
+        `/api/v1/students?size=${params?.size || 100}&number=${
+          params?.number || 1
+        }`,
+      )
+      .then(({ data: { records, meta } }) => {
+        dispatch(
+          studentsFetched({
+            records,
+            meta,
+          }),
+        );
+      })
+      .catch((error) => {
+        dispatch(setLoading(false));
+        if (error.response) {
+          dispatch(throwErrors(error.response));
+        }
+        throw error;
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
