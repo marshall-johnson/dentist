@@ -19,7 +19,7 @@ import {
 import PhoneInput from 'react-phone-input-2';
 
 import { fetchStudent, updateStudent } from '@/actions/studentActions';
-import { STUDENT_DEGREES } from '@/constants';
+import { STUDENT_DEGREES, UserAccountType } from '@/constants';
 import { camelCase } from 'lodash';
 
 const validateMessages = {
@@ -109,6 +109,7 @@ class DetailStudentContainer extends Component {
         params: { studentId },
       },
       history,
+      student,
     } = this.props;
 
     return (
@@ -173,7 +174,7 @@ class DetailStudentContainer extends Component {
               </Col>
 
               <Col span={8}>
-                {this.getFieldValue('degree') && (
+                {!!this.getFieldValue('degree') && (
                   <Form.Item
                     label="Degree"
                     name={['student', 'degree']}
@@ -209,7 +210,7 @@ class DetailStudentContainer extends Component {
               <Input />
             </Form.Item>
 
-            {this.getFieldValue('address') && (
+            {!!this.getFieldValue('address') && (
               <Form.Item
                 label="Address"
                 name={['student', 'address']}
@@ -226,7 +227,7 @@ class DetailStudentContainer extends Component {
 
             <Row gutter={24}>
               <Col span={12}>
-                {this.getFieldValue('city') && (
+                {!!this.getFieldValue('city') && (
                   <Form.Item
                     label="City"
                     name={['student', 'city']}
@@ -241,7 +242,7 @@ class DetailStudentContainer extends Component {
                   </Form.Item>
                 )}
 
-                {this.getFieldValue('zip') && (
+                {!!this.getFieldValue('zip') && (
                   <Form.Item
                     label="Zip"
                     name={['student', 'zip']}
@@ -256,7 +257,7 @@ class DetailStudentContainer extends Component {
                   </Form.Item>
                 )}
 
-                {this.getFieldValue('businessPhone') && (
+                {!!this.getFieldValue('businessPhone') && (
                   <Form.Item
                     label="Business Phone"
                     name={['student', 'businessPhone']}
@@ -270,7 +271,7 @@ class DetailStudentContainer extends Component {
                   </Form.Item>
                 )}
 
-                {this.getFieldValue('phoneNumber') && (
+                {!!this.getFieldValue('phoneNumber') && (
                   <Form.Item
                     label="Home Number"
                     name={['student', 'phoneNumber']}
@@ -284,7 +285,7 @@ class DetailStudentContainer extends Component {
                   </Form.Item>
                 )}
 
-                {this.getFieldValue('spendingReportMonths') && (
+                {!!this.getFieldValue('spendingReportMonths') && (
                   <Form.Item
                     label="Spending Report Months"
                     name={['student', 'spendingReportMonths']}
@@ -298,22 +299,23 @@ class DetailStudentContainer extends Component {
                   </Form.Item>
                 )}
 
-                {this.getFieldValue('newPractice') && (
-                  <Form.Item
-                    name={['student', 'newPractice']}
-                    fieldKey="newPractice"
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Radio.Group>
-                      <Radio value>New Practice</Radio>
-                      <Radio value={false}>Existing Practice</Radio>
-                    </Radio.Group>
-                  </Form.Item>
-                )}
+                {!!this.getFieldValue('newPractice') &&
+                  student?.account_type === UserAccountType.STUDENT_ADMIN && (
+                    <Form.Item
+                      name={['student', 'newPractice']}
+                      fieldKey="newPractice"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Radio.Group>
+                        <Radio value>New Practice</Radio>
+                        <Radio value={false}>Existing Practice</Radio>
+                      </Radio.Group>
+                    </Form.Item>
+                  )}
               </Col>
 
               <Col span={12}>
