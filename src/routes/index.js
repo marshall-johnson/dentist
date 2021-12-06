@@ -27,7 +27,7 @@ import CoachingPPP from '@/containers/Coaching/CoachingPPP';
 import ChartAuditReport from '@/containers/ChartAuditReport';
 import ReviewSubmittedContainer from '@/containers/Students/ReviewSubmittedContainer';
 import CreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
-import MangementStudent from '@/containers/Management/StudentContainer';
+import StudentManagement from '@/containers/Management/StudentContainer';
 import DetailStudentContainer from '@/containers/Management/DetailStudent';
 
 function Routes() {
@@ -165,7 +165,7 @@ function Routes() {
       <Route
         exact
         path={`${AppConfig.ROUTES.MANGEMENT}/${AppConfig.MANGEMENT.STUDENT}`}
-        component={MangementStudent}
+        component={StudentManagement}
       />
 
       <Route

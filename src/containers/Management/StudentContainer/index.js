@@ -8,7 +8,7 @@ import { capitalizeFirstLetter } from '@/utils/helpers';
 import './index.scss';
 import AppConfig from '@/constants/AppConfig';
 
-class ManagementStudent extends Component {
+class StudentManagement extends Component {
   formRef = React.createRef();
 
   columns = [
@@ -104,7 +104,7 @@ class ManagementStudent extends Component {
 
     return (
       <div className="profit-and-loss-container">
-        <PageHeader className="site-page-header" title="Management Student" />
+        <PageHeader className="site-page-header" title="Student Management" />
         <Divider />
         <Form
           ref={this.formRef}
@@ -145,7 +145,7 @@ class ManagementStudent extends Component {
   }
 }
 
-ManagementStudent.propTypes = {
+StudentManagement.propTypes = {
   students: PropTypes.array,
   fetchStudents: PropTypes.func,
   deleteStudent: PropTypes.func,
@@ -163,4 +163,4 @@ const mapStateToProps = ({ student }) => ({
 export default connect(mapStateToProps, {
   fetchStudents,
   deleteStudent,
-})(ManagementStudent);
+})(StudentManagement);
