@@ -17,6 +17,7 @@ import { fetchStudents } from '@/actions/studentActions';
 
 import AppConfig from '@/constants/AppConfig';
 import { connect } from 'react-redux';
+import { UserAccountType } from '@/constants';
 
 const { Option } = Select;
 
@@ -39,8 +40,15 @@ class SubmitDataContainer extends Component {
   }
 
   componentDidMount() {
-    const { fetchStudents } = this.props;
-    fetchStudents();
+    const { fetchStudents, currentUser } = this.props;
+
+    if (
+      [UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
+        currentUser?.account_type,
+      )
+    ) {
+      fetchStudents();
+    }
 
     window.onbeforeunload = (e) => {
       localStorage.removeItem('dentistryDoctorProduction');
@@ -83,14 +91,25 @@ class SubmitDataContainer extends Component {
 
   renderManuallyEnterData = () => {
     const { practiceType, studentId, dateMonth } = this.state;
+    const { currentUser } = this.props;
     let href = null;
 
-    if (practiceType === 'dentistry' && dateMonth && studentId) {
-      href = `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth?.year}&month=${dateMonth?.month}`;
+    const isStudent = [
+      UserAccountType.STUDENT_STAFF,
+      UserAccountType.STUDENT_DOCTOR,
+    ].includes(currentUser?.account_type);
+    console.log(isStudent);
+
+    if (practiceType === 'dentistry' && dateMonth && (studentId || isStudent)) {
+      href = `/${studentId || currentUser.id}${AppConfig.ROUTES.DENTISTRY}/${
+        AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION
+      }?year=${dateMonth?.year}&month=${dateMonth?.month}`;
     }
 
-    if (practiceType === 'ortho' && dateMonth && studentId) {
-      href = `/${studentId}${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION}?year=${dateMonth?.year}&month=${dateMonth?.month}`;
+    if (practiceType === 'ortho' && dateMonth && (studentId || isStudent)) {
+      href = `/${studentId || currentUser.id}${AppConfig.ROUTES.ORTHO}/${
+        AppConfig.ORTHO_SUBMIT_DATA_STEPS.DOCTOR_PRODUCTION
+      }?year=${dateMonth?.year}&month=${dateMonth?.month}`;
     }
 
     return (
@@ -127,7 +146,7 @@ class SubmitDataContainer extends Component {
   };
 
   render() {
-    const { students, loadingFetchStudent } = this.props;
+    const { students, loadingFetchStudent, currentUser } = this.props;
     return (
       <div className="submit-data-container">
         <PageHeader className="site-page-header" title="Submit Data Page" />
@@ -173,35 +192,39 @@ class SubmitDataContainer extends Component {
                 />
               </Form.Item>
 
-              <Form.Item
-                label="Students"
-                name="student"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please pick a Student!',
-                  },
-                ]}
-              >
-                <Select
-                  loading={loadingFetchStudent}
-                  style={{
-                    width: 200,
-                  }}
-                  onChange={(id) => {
-                    this.setState({
-                      studentId: id,
-                    });
-                    localStorage.setItem('studentsSubmitDataStudentId', id);
-                  }}
+              {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
+                currentUser?.account_type,
+              ) && (
+                <Form.Item
+                  label="Students"
+                  name="student"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please pick a Student!',
+                    },
+                  ]}
                 >
-                  {students.map((student, index) => (
-                    <Option value={student.id} key={index.toString()}>
-                      {`${student.first_name} ${student.last_name}`}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
+                  <Select
+                    loading={loadingFetchStudent}
+                    style={{
+                      width: 200,
+                    }}
+                    onChange={(id) => {
+                      this.setState({
+                        studentId: id,
+                      });
+                      localStorage.setItem('studentsSubmitDataStudentId', id);
+                    }}
+                  >
+                    {students.map((student, index) => (
+                      <Option value={student.id} key={index.toString()}>
+                        {`${student.first_name} ${student.last_name}`}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              )}
 
               <Form.Item
                 name="upload"
@@ -240,11 +263,13 @@ SubmitDataContainer.propTypes = {
   students: PropTypes.array,
   loadingFetchStudent: PropTypes.bool,
   fetchStudents: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
-const mapStateToProps = ({ student }) => ({
+const mapStateToProps = ({ student, auth }) => ({
   students: student.items,
   loadingFetchStudent: student.loading,
+  currentUser: auth.currentUser,
 });
 
 export default connect(mapStateToProps, {
