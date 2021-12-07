@@ -15,7 +15,8 @@ export const UserAccountType = {
   STUDENT_ADMIN: 'student_admin',
   STUDENT_STAFF: 'student_staff',
   STUDENT_DOCTOR: 'student_doctor',
-  ADMIN: 'client',
+  ADMIN: 'admin',
+  COACH: 'coach',
 };
 
 export const TYPE_ENERGY_SURVEYS = [

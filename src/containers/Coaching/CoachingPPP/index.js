@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './index.scss';
 import { Tabs } from 'antd';
 import { StickyContainer, Sticky } from 'react-sticky';
-import Tab1 from './tab1';
-import Tab2 from './tab2';
+import FormTab from './form';
+import Report from './report';
 
 const { TabPane } = Tabs;
 
@@ -24,11 +24,11 @@ class CoachingPPP extends Component {
     return (
       <StickyContainer>
         <Tabs defaultActiveKey="1" renderTabBar={renderTabBar}>
-          <TabPane tab="Tab 1" key="1">
-            <Tab1 />
+          <TabPane tab="Form" key="1">
+            <FormTab />
           </TabPane>
-          <TabPane tab="Tab 2" key="2">
-            <Tab2 />
+          <TabPane tab="Report" key="2">
+            <Report />
           </TabPane>
         </Tabs>
       </StickyContainer>

@@ -51,7 +51,7 @@ class SignUp extends Component {
         <Form
           className="form-wrapper"
           name="user"
-          initialValues={{ accountType: 'client' }}
+          initialValues={{ accountType: 'admin' }}
           autoComplete="off"
           onFinish={this.onSignUp}
         >
@@ -98,7 +98,20 @@ class SignUp extends Component {
           </Form.Item>
           <Form.Item className="input-item" name="accountType">
             <Select className="selector">
-              <Option value="client">Client</Option>
+              {[
+                {
+                  value: 'admin',
+                  label: 'Admin',
+                },
+                {
+                  value: 'coach',
+                  label: 'Coach',
+                },
+              ].map((value, index) => (
+                <Option value={value.value} key={index.toString()}>
+                  {value.label}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item className="submit-btn-wrapper">

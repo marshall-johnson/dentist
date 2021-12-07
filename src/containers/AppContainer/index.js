@@ -82,81 +82,96 @@ class AppContainer extends Component {
               <img src={logoImage} alt="logo" />
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <SubMenu key="sub1" icon={<UserOutlined />} title="Registration">
-                {[
-                  UserAccountType.ADMIN,
-                  UserAccountType.STUDENT_ADMIN,
-                ].includes(currentUser?.account_type) && (
-                  <Menu.Item key="1">
-                    <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>
-                      Registration
-                    </Link>
-                  </Menu.Item>
-                )}
-                {[
-                  UserAccountType.ADMIN,
-                  UserAccountType.STUDENT_ADMIN,
-                ].includes(currentUser?.account_type) && (
-                  <Menu.Item key="2">
-                    <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>PPP</Link>
-                  </Menu.Item>
-                )}
-                {[
-                  UserAccountType.ADMIN,
-                  UserAccountType.STUDENT_ADMIN,
-                ].includes(currentUser?.account_type) && (
-                  <Menu.Item key="3">
-                    <Link to={`${AppConfig.ROUTES.CHART_AUDIT}`}>
-                      Chart audit
-                    </Link>
-                  </Menu.Item>
-                )}
-                {[
-                  UserAccountType.ADMIN,
-                  UserAccountType.STUDENT_ADMIN,
-                  UserAccountType.STUDENT_STAFF,
-                  UserAccountType.STUDENT_DOCTOR,
-                ].includes(currentUser?.account_type) && (
-                  <SubMenu key="sub-inside-1" title="Energy Conversion">
-                    <Menu.Item key="4">
-                      <Link
-                        to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
-                      >
-                        Energy
+              {[
+                UserAccountType.ADMIN,
+                UserAccountType.STUDENT_ADMIN,
+                UserAccountType.STUDENT_STAFF,
+                UserAccountType.STUDENT_DOCTOR,
+              ].includes(currentUser?.account_type) && (
+                <SubMenu
+                  key="sub1"
+                  icon={<UserOutlined />}
+                  title="Registration"
+                >
+                  {[
+                    UserAccountType.ADMIN,
+                    UserAccountType.STUDENT_ADMIN,
+                  ].includes(currentUser?.account_type) && (
+                    <Menu.Item key="1">
+                      <Link to={`${AppConfig.ROUTES.REGISTRATION}`}>
+                        Registration
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="5">
-                      <Link
-                        to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}
-                      >
-                        Direction
+                  )}
+                  {[
+                    UserAccountType.ADMIN,
+                    UserAccountType.STUDENT_ADMIN,
+                  ].includes(currentUser?.account_type) && (
+                    <Menu.Item key="2">
+                      <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>
+                        PPP
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="6">
-                      <Link
-                        to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}
-                      >
-                        Structure and Systems
+                  )}
+                  {[
+                    UserAccountType.ADMIN,
+                    UserAccountType.STUDENT_ADMIN,
+                  ].includes(currentUser?.account_type) && (
+                    <Menu.Item key="3">
+                      <Link to={`${AppConfig.ROUTES.CHART_AUDIT}`}>
+                        Chart audit
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="7">
-                      <Link
-                        to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}
-                      >
-                        Communication and Coordination
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="8">
-                      <Link
-                        to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
-                      >
-                        Attitude and Skills
-                      </Link>
-                    </Menu.Item>
-                  </SubMenu>
-                )}
-              </SubMenu>
-              {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN] && (
+                  )}
+                  {[
+                    UserAccountType.ADMIN,
+                    UserAccountType.STUDENT_ADMIN,
+                    UserAccountType.STUDENT_STAFF,
+                    UserAccountType.STUDENT_DOCTOR,
+                  ].includes(currentUser?.account_type) && (
+                    <SubMenu key="sub-inside-1" title="Energy Conversion">
+                      <Menu.Item key="4">
+                        <Link
+                          to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
+                        >
+                          Energy
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="5">
+                        <Link
+                          to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.DIRECTION}`}
+                        >
+                          Direction
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="6">
+                        <Link
+                          to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.STRUCTURE_AND_SYSTEMS}`}
+                        >
+                          Structure and Systems
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="7">
+                        <Link
+                          to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.COMMUNICATION_AND_COORDINATION}`}
+                        >
+                          Communication and Coordination
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="8">
+                        <Link
+                          to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ATTITUDE_AND_SKILLS}`}
+                        >
+                          Attitude and Skills
+                        </Link>
+                      </Menu.Item>
+                    </SubMenu>
+                  )}
+                </SubMenu>
+              )}
+              {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
+                currentUser?.account_type,
+              ) && (
                 <SubMenu
                   key="management"
                   icon={<DatabaseOutlined />}
@@ -197,7 +212,9 @@ class AppContainer extends Component {
                   </Menu.Item>
                 </SubMenu>
               )}
-              {[UserAccountType.ADMIN].includes(currentUser?.account_type) && (
+              {[UserAccountType.ADMIN, UserAccountType.COACH].includes(
+                currentUser?.account_type,
+              ) && (
                 <SubMenu key="sub3" icon={<UserOutlined />} title="Coaching">
                   <Menu.Item key="12">
                     <Link to={`${AppConfig.ROUTES.REVIEW_SUBMITED}`}>
@@ -224,6 +241,7 @@ class AppContainer extends Component {
                 UserAccountType.STUDENT_ADMIN,
                 UserAccountType.STUDENT_STAFF,
                 UserAccountType.STUDENT_DOCTOR,
+                UserAccountType.COACH,
               ].includes(currentUser?.account_type) && (
                 <Menu.Item key="16" icon={<PieChartOutlined />}>
                   <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>

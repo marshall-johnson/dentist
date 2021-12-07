@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { Select, Table } from 'antd';
+import PropTypes from 'prop-types';
+import { fetchStudents } from '@/actions/studentActions';
 import './index.scss';
-import { Table } from 'antd';
+import { connect } from 'react-redux';
+
+const { Option } = Select;
 
 const columns = [
   {
@@ -295,14 +300,56 @@ const data = [
   },
 ];
 
-class Tab2 extends Component {
+class Report extends Component {
+  componentDidMount() {
+    const { fetchStudents } = this.props;
+    fetchStudents();
+  }
+
   render() {
+    const { students, loadingFetchStudent } = this.props;
+
     return (
-      <Table bordered pagination={false} columns={columns} dataSource={data} />
+      <>
+        <div style={{ width: 100 }}>Students </div>
+        <Select
+          loading={loadingFetchStudent}
+          style={{
+            width: 200,
+          }}
+          onChange={(id) => {
+            console.log(id);
+          }}
+        >
+          {students.map((student, index) => (
+            <Option value={student.id} key={index.toString()}>
+              {`${student.first_name} ${student.last_name}`}
+            </Option>
+          ))}
+        </Select>
+        <Table
+          style={{ marginTop: 40 }}
+          bordered
+          pagination={false}
+          columns={columns}
+          dataSource={data}
+        />
+      </>
     );
   }
 }
 
-Tab2.propTypes = {};
+Report.propTypes = {
+  students: PropTypes.array,
+  loadingFetchStudent: PropTypes.bool,
+  fetchStudents: PropTypes.func,
+};
 
-export default Tab2;
+const mapStateToProps = ({ student }) => ({
+  students: student.items,
+  loadingFetchStudent: student.loading,
+});
+
+export default connect(mapStateToProps, {
+  fetchStudents,
+})(Report);
