@@ -44,12 +44,6 @@ class EnergyProfile extends Component {
 
           <Space align="bottom" style={{ marginTop: 40 }}>
             <Button
-              href={`${AppConfig.ROUTES.ENERGY_PROFILE}/${AppConfig.ENERGY_PROFILE.DATA_RESULT}`}
-              type="primary"
-            >
-              Sort Data
-            </Button>
-            <Button
               href={`${AppConfig.ROUTES.ENERGY_PROFILE}/${AppConfig.ENERGY_PROFILE.DATA_ANALYSIS}`}
               type="primary"
             >
