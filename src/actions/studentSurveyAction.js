@@ -24,13 +24,15 @@ export const submitStudentSurvey = (id, results) => async (dispatch) => {
 };
 
 export const fetchStudentSurveys =
-  (id, { questionType, userType }) =>
+  (id, { questionType, userType } = {}) =>
   async (dispatch) => {
     dispatch(setLoading(true));
 
     return api
       .get(
-        `/api/v1/users/${id}/surveys?question_type=${questionType}&userType=${userType}`,
+        questionType
+          ? `/api/v1/users/${id}/surveys?question_type=${questionType}&userType=${userType}`
+          : `/api/v1/users/${id}/surveys`,
       )
       .then(({ data: { records } }) => {
         dispatch(

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { fetchStudentSurveys } from '@/actions/studentSurveyAction';
+import { connect } from 'react-redux';
+import queryString from 'query-string';
 import moment from 'moment';
-import {
-  Row,
-  Col,
-  Tag,
-  Table,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Tag, Table, Divider, PageHeader } from 'antd';
 import {
   BarChart,
   Bar,
@@ -16,76 +13,11 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 import ScoreTable from './ScoreTable';
 import LowestScores from './LowestScores';
 import HighestScores from './HighestScores';
-
-const energyData = [
-  { key: '1', questionNo: 1, score: 8.0 },
-  { key: '2', questionNo: 2, score: 6.0 },
-  { key: '3', questionNo: 3, score: 5.5 },
-  { key: '4', questionNo: 4, score: 7.0 },
-  { key: '5', questionNo: 5, score: 5.5 },
-  { key: '6', questionNo: 6, score: 8.0 },
-  { key: '7', questionNo: 7, score: 8.0 },
-  { key: '8', questionNo: 8, score: 6.0 },
-  { key: '9', questionNo: 9, score: 5.5 },
-  { key: '10', questionNo: 10, score: 8.0 },
-];
-
-const directionData = [
-  { key: '1', questionNo: 1, score: 5.5 },
-  { key: '2', questionNo: 2, score: 4.5 },
-  { key: '3', questionNo: 3, score: 3.5 },
-  { key: '4', questionNo: 4, score: 2.5 },
-  { key: '5', questionNo: 5, score: 3.5 },
-  { key: '6', questionNo: 6, score: 5.5 },
-  { key: '7', questionNo: 7, score: 5.5 },
-  { key: '8', questionNo: 8, score: 3.5 },
-  { key: '9', questionNo: 9, score: 4.5 },
-  { key: '10', questionNo: 10, score: 5.0 },
-];
-
-const StructureAndSystemsData = [
-  { key: '1', questionNo: 1, score: 9.0 },
-  { key: '2', questionNo: 2, score: 8.0 },
-  { key: '3', questionNo: 3, score: 7.0 },
-  { key: '4', questionNo: 4, score: 5.0 },
-  { key: '5', questionNo: 5, score: 4.0 },
-  { key: '6', questionNo: 6, score: 5.0 },
-  { key: '7', questionNo: 7, score: 7.0 },
-  { key: '8', questionNo: 8, score: 8.0 },
-  { key: '9', questionNo: 9, score: 8.0 },
-  { key: '10', questionNo: 10, score: 8.0 },
-];
-
-const commAndCoordData = [
-  { key: '1', questionNo: 1, score: 6.0 },
-  { key: '2', questionNo: 2, score: 6.0 },
-  { key: '3', questionNo: 3, score: 6.5 },
-  { key: '4', questionNo: 4, score: 6.5 },
-  { key: '5', questionNo: 5, score: 6.5 },
-  { key: '6', questionNo: 6, score: 7.0 },
-  { key: '7', questionNo: 7, score: 8.0 },
-  { key: '8', questionNo: 8, score: 6.0 },
-  { key: '9', questionNo: 9, score: 7.5 },
-  { key: '10', questionNo: 10, score: 7.0 },
-];
-
-const AttitudeAndSkillsData = [
-  { key: '1', questionNo: 1, score: 8.5 },
-  { key: '2', questionNo: 2, score: 8.5 },
-  { key: '3', questionNo: 3, score: 7.5 },
-  { key: '4', questionNo: 4, score: 6.0 },
-  { key: '5', questionNo: 5, score: 6.5 },
-  { key: '6', questionNo: 6, score: 6.5 },
-  { key: '7', questionNo: 7, score: 7.5 },
-  { key: '8', questionNo: 8, score: 7.5 },
-  { key: '9', questionNo: 9, score: 8.5 },
-  { key: '10', questionNo: 10, score: 8.5 },
-];
 
 const columns = [
   { title: '', dataIndex: 'name' },
@@ -97,9 +29,33 @@ const columns = [
 ];
 
 const dataAvg = [
-  { key: '1', name: 'Practice', energyScore: 6.8, directionScore: 4.4, sasScore: 6.9, cacScore: 6.7, aasScore: 7.6 },
-  { key: '2', name: 'Doctor', energyScore: 7.2, directionScore: 4.6, sasScore: 7.4, cacScore: 6.5, aasScore: 7.8 },
-  { key: '3', name: 'Two', energyScore: 6.3, directionScore: 4.1, sasScore: 6.4, cacScore: 6.9, aasScore: 7.3 },
+  {
+    key: '1',
+    name: 'Practice',
+    energyScore: 6.8,
+    directionScore: 4.4,
+    sasScore: 6.9,
+    cacScore: 6.7,
+    aasScore: 7.6,
+  },
+  {
+    key: '2',
+    name: 'Doctor',
+    energyScore: 7.2,
+    directionScore: 4.6,
+    sasScore: 7.4,
+    cacScore: 6.5,
+    aasScore: 7.8,
+  },
+  {
+    key: '3',
+    name: 'Two',
+    energyScore: 6.3,
+    directionScore: 4.1,
+    sasScore: 6.4,
+    cacScore: 6.9,
+    aasScore: 7.3,
+  },
 ];
 
 const data = [
@@ -136,7 +92,54 @@ const data = [
 ];
 
 class DataAnalysis extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formatResult: {},
+    };
+  }
+
+  componentDidMount() {
+    const { location, fetchStudentSurveys } = this.props;
+
+    const params = queryString.parse(location.search);
+
+    fetchStudentSurveys(params.studentId);
+  }
+
+  componentDidUpdate(prevPros) {
+    const { result } = this.props;
+
+    if (result.length === 0) return;
+
+    if (prevPros.result !== result) {
+      this.formatResult(result);
+    }
+  }
+
+  formatResult(result) {
+    const data = {};
+    result.forEach((value) => {
+      if (!data[value?.type]) {
+        data[value?.type] = [];
+      }
+
+      const questionNo = data[value?.type].length + 1;
+      data[value?.type].push({
+        key: questionNo,
+        questionNo,
+        score: value?.result || 0,
+      });
+    });
+
+    this.setState({
+      formatResult: data,
+    });
+  }
+
   render() {
+    const { formatResult } = this.state;
     return (
       <div className="energy-profile-container">
         <PageHeader
@@ -149,37 +152,34 @@ class DataAnalysis extends Component {
 
         <Row gutter={[32, 16]}>
           <Col span={8}>
-            <ScoreTable
-              title="Energy"
-              dataSource={energyData}
-            />
+            <ScoreTable title="Energy" dataSource={formatResult?.energy} />
           </Col>
 
           <Col span={8}>
             <ScoreTable
               title="Direction"
-              dataSource={directionData}
+              dataSource={formatResult?.direction}
             />
           </Col>
 
           <Col span={8}>
             <ScoreTable
               title="Structure and Systems"
-              dataSource={StructureAndSystemsData}
+              dataSource={formatResult?.structure_and_systems}
             />
           </Col>
 
           <Col span={8}>
             <ScoreTable
               title="Communication and Coordination"
-              dataSource={commAndCoordData}
+              dataSource={formatResult?.communication_and_coordination}
             />
           </Col>
 
           <Col span={8}>
             <ScoreTable
               title="Attitude and Skills"
-              dataSource={AttitudeAndSkillsData}
+              dataSource={formatResult?.attitude_and_skills}
             />
           </Col>
         </Row>
@@ -195,10 +195,7 @@ class DataAnalysis extends Component {
             style={{ marginBottom: '30px' }}
           />
           <div style={{ height: '400px' }}>
-            <ResponsiveContainer
-              width="80%"
-              height="100%"
-            >
+            <ResponsiveContainer width="80%" height="100%">
               <BarChart
                 data={data}
                 margin={{
@@ -237,4 +234,22 @@ class DataAnalysis extends Component {
   }
 }
 
-export default DataAnalysis;
+DataAnalysis.propTypes = {
+  location: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      step: PropTypes.string.isRequired,
+      studentId: PropTypes.string,
+    }),
+  }),
+  fetchStudentSurveys: PropTypes.func,
+  result: PropTypes.array,
+};
+
+const mapStateToProps = ({ studentSurvey }) => ({
+  result: studentSurvey.items,
+});
+
+export default connect(mapStateToProps, {
+  fetchStudentSurveys,
+})(DataAnalysis);
