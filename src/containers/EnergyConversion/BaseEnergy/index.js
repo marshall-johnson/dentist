@@ -150,7 +150,7 @@ class BaseContainer extends Component {
         ) && (
           <Row style={{ alignItems: 'center', flexDirection: 'row' }}>
             <div style={{ marginRight: 30 }}>
-              <span>Students:</span>
+              <span>Student:</span>
               <Select
                 style={{ width: 200, marginLeft: 10 }}
                 onChange={async (id) => {

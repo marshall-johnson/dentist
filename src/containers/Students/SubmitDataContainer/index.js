@@ -196,7 +196,7 @@ class SubmitDataContainer extends Component {
                 currentUser?.account_type,
               ) && (
                 <Form.Item
-                  label="Students"
+                  label="Student"
                   name="student"
                   rules={[
                     {

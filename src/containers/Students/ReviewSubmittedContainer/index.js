@@ -131,7 +131,7 @@ class ReviewSubmittedContainer extends Component {
                   alignItems: 'center',
                 }}
               >
-                <div style={{ width: 100 }}>Students: </div>
+                <div style={{ width: 100 }}>Student:</div>
                 <Select
                   loading={loadingFetchStudent}
                   style={{

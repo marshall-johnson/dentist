@@ -23,7 +23,7 @@ class ChartAuditReport extends Component {
 
     return (
       <>
-        <div style={{ width: 100 }}>Students </div>
+        <div style={{ width: 100 }}>Student: </div>
         <Select
           loading={loadingFetchStudent}
           style={{

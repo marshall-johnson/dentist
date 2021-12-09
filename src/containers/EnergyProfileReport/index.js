@@ -51,7 +51,7 @@ class EnergyProfile extends Component {
           <Col span={12}>
             <Form ref={this.formRef} validateMessages={validateMessages}>
               <Form.Item
-                label="Students"
+                label="Student"
                 name="student"
                 rules={[
                   {

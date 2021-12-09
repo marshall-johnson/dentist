@@ -346,7 +346,7 @@ class ChartAudit extends Component {
             </Descriptions.Item>
           </Descriptions>
 
-          <span>Students:</span>
+          <span>Student:</span>
           <Select
             style={{ width: 200, marginLeft: 10 }}
             onChange={async (id) => {
