@@ -32,8 +32,6 @@ class RegistrationContainer extends Component {
               Create User
             </Button>
           )}
-
-          <Button type="primary">Finish Registration</Button>
         </Space>
       </div>
     );
