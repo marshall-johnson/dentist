@@ -15,6 +15,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { SurveyType } from '@/constants';
 import ScoreTable from './ScoreTable';
 import LowestScores from './LowestScores';
 import HighestScores from './HighestScores';
@@ -28,75 +29,14 @@ const columns = [
   { title: 'Attitude and Skills', dataIndex: 'aasScore' },
 ];
 
-const dataAvg = [
-  {
-    key: '1',
-    name: 'Practice',
-    energyScore: 6.8,
-    directionScore: 4.4,
-    sasScore: 6.9,
-    cacScore: 6.7,
-    aasScore: 7.6,
-  },
-  {
-    key: '2',
-    name: 'Doctor',
-    energyScore: 7.2,
-    directionScore: 4.6,
-    sasScore: 7.4,
-    cacScore: 6.5,
-    aasScore: 7.8,
-  },
-  {
-    key: '3',
-    name: 'Two',
-    energyScore: 6.3,
-    directionScore: 4.1,
-    sasScore: 6.4,
-    cacScore: 6.9,
-    aasScore: 7.3,
-  },
-];
-
-const data = [
-  {
-    name: 'Energy',
-    practice: 6.8,
-    doctor: 7.2,
-    two: 6.3,
-  },
-  {
-    name: 'Direction',
-    practice: 4.4,
-    doctor: 4.6,
-    two: 4.1,
-  },
-  {
-    name: 'Structure and Systems',
-    practice: 6.9,
-    doctor: 7.4,
-    two: 6.4,
-  },
-  {
-    name: 'Comm. and Coord.',
-    practice: 6.7,
-    doctor: 6.5,
-    two: 6.9,
-  },
-  {
-    name: 'Attitude and Skills',
-    practice: 7.6,
-    doctor: 7.8,
-    two: 7.3,
-  },
-];
-
 class DataAnalysis extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       formatResult: {},
+      dataAvg: [],
+      data: [],
     };
   }
 
@@ -114,32 +54,151 @@ class DataAnalysis extends Component {
     if (result.length === 0) return;
 
     if (prevPros.result !== result) {
-      this.formatResult(result);
+      this.formatData(result);
     }
   }
 
-  formatResult(result) {
-    const data = {};
-    result.forEach((value) => {
-      if (!data[value?.type]) {
-        data[value?.type] = [];
-      }
-
-      const questionNo = data[value?.type].length + 1;
-      data[value?.type].push({
-        key: questionNo,
-        questionNo,
-        score: value?.result || 0,
-      });
-    });
+  formatData(result) {
+    const doctorResult = this.formatAverageData(
+      this.formatResult(
+        result.filter((value) => value.survey_type === SurveyType.DOCTOR),
+      ),
+    );
+    const practiceResult = this.formatAverageData(
+      this.formatResult(
+        result.filter((value) => value.survey_type === SurveyType.PRACTICE),
+      ),
+    );
 
     this.setState({
-      formatResult: data,
+      formatResult: this.formatAverageData(this.formatResult(result)),
+      data: [
+        {
+          name: 'Energy',
+          practice: this.calculateAverge(practiceResult?.energy),
+          doctor: this.calculateAverge(doctorResult?.energy),
+          two: 6.3,
+        },
+        {
+          name: 'Direction',
+          practice: this.calculateAverge(practiceResult?.direction),
+          doctor: this.calculateAverge(doctorResult?.direction),
+          two: 4.1,
+        },
+        {
+          name: 'Structure and Systems',
+          practice: this.calculateAverge(practiceResult?.structure_and_systems),
+          doctor: this.calculateAverge(doctorResult?.structure_and_systems),
+          two: 6.4,
+        },
+        {
+          name: 'Comm. and Coord.',
+          practice: this.calculateAverge(
+            practiceResult?.communication_and_coordination,
+          ),
+          doctor: this.calculateAverge(
+            doctorResult?.communication_and_coordination,
+          ),
+          two: 6.9,
+        },
+        {
+          name: 'Attitude and Skills',
+          practice: this.calculateAverge(practiceResult?.attitude_and_skills),
+          doctor: this.calculateAverge(doctorResult?.attitude_and_skills),
+          two: 7.3,
+        },
+      ],
+      dataAvg: [
+        {
+          key: '1',
+          name: 'Practice',
+          energyScore: this.calculateAverge(practiceResult?.energy),
+          directionScore: this.calculateAverge(practiceResult?.direction),
+          sasScore: this.calculateAverge(practiceResult?.structure_and_systems),
+          cacScore: this.calculateAverge(
+            practiceResult?.communication_and_coordination,
+          ),
+          aasScore: this.calculateAverge(practiceResult?.attitude_and_skills),
+        },
+        {
+          key: '2',
+          name: 'Doctor',
+          energyScore: this.calculateAverge(doctorResult?.energy),
+          directionScore: this.calculateAverge(doctorResult?.direction),
+          sasScore: this.calculateAverge(doctorResult?.structure_and_systems),
+          cacScore: this.calculateAverge(
+            doctorResult?.communication_and_coordination,
+          ),
+          aasScore: this.calculateAverge(doctorResult?.attitude_and_skills),
+        },
+        {
+          key: '3',
+          name: 'Two',
+          energyScore: 6.3,
+          directionScore: 4.1,
+          sasScore: 6.4,
+          cacScore: 6.9,
+          aasScore: 7.3,
+        },
+      ],
     });
   }
 
+  /* eslint-disable */
+  formatResult(result) {
+    const data = {};
+    result.forEach((value) => {
+      if (!data[value?.question_type]) {
+        data[value?.question_type] = {};
+      }
+
+      if (!data[value?.question_type][value?.questions_survey_id]) {
+        data[value?.question_type][value?.questions_survey_id] = {
+          key: value?.questions_survey_id,
+          questionNo: value?.questions_survey_id,
+          score: [value?.result],
+        };
+      } else {
+        data[value?.question_type][value?.questions_survey_id].score.push(
+          value?.result,
+        );
+      }
+    });
+
+    return data;
+  }
+
+  /* eslint-disable */
+  formatAverageData(data) {
+    const averageData = {};
+    Object.keys(data)?.forEach((type) => {
+      const dataType = data[type];
+      averageData[type] = Object.keys(dataType)?.map((key) => {
+        const sum = dataType[key].score.reduce((a, b) => a + b, 0);
+        const avg = sum / dataType[key].score.length || 0;
+
+        return {
+          ...dataType[key],
+          score: avg,
+        };
+      });
+    });
+
+    return averageData;
+  }
+
+  /* eslint-disable */
+  calculateAverge(data) {
+    if (data) {
+      const total = data.reduce((a, b) => a + b?.score, 0);
+      return (total / data.length)?.toFixed(2) || 0;
+    }
+
+    return 0;
+  }
+
   render() {
-    const { formatResult } = this.state;
+    const { formatResult, dataAvg, data } = this.state;
     return (
       <div className="energy-profile-container">
         <PageHeader

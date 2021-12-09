@@ -2,15 +2,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Form, Divider, PageHeader, Select, Spin } from 'antd';
+import {
+  Row,
+  Form,
+  Divider,
+  PageHeader,
+  Select,
+  Spin,
+  notification,
+} from 'antd';
 import 'survey-react/survey.css';
 import * as Survey from 'survey-react';
 import { fetchQuestions } from '@/actions/questionsSurveyActions';
 import { fetchStudents } from '@/actions/studentActions';
-import {
-  fetchStudentSurveys,
-  submitStudentSurvey,
-} from '@/actions/studentSurveyAction';
+import { submitStudentSurvey } from '@/actions/studentSurveyAction';
 
 import '../index.scss';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -30,17 +35,20 @@ class BaseContainer extends Component {
     super(props);
 
     this.state = {
-      fetchedResult: false,
       selectedStudentId: null,
       selectedType: null,
-      successSendData: true,
+      completed: false,
       loading: false,
     };
   }
 
   componentDidMount() {
-    const { fetchQuestions, fetchStudents, questionType, currentUser } =
-      this.props;
+    const {
+      fetchQuestions,
+      fetchStudents,
+      questionType,
+      currentUser,
+    } = this.props;
 
     if (
       [UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
@@ -48,35 +56,8 @@ class BaseContainer extends Component {
       )
     ) {
       fetchStudents();
-    } else {
-      this.onFetchSurvey(currentUser.id);
     }
     fetchQuestions({ questionType });
-  }
-
-  async onFetchSurvey(selectedStudentId, selectedType) {
-    const { fetchStudentSurveys, questionType } = this.props;
-
-    this.setState({
-      loading: true,
-    });
-
-    if (selectedStudentId) {
-      try {
-        await fetchStudentSurveys(selectedStudentId, { questionType });
-      } finally {
-        setTimeout(() => {
-          this.setState({
-            fetchedResult: true,
-            loading: false,
-          });
-        }, 1000);
-      }
-    } else {
-      this.setState({
-        loading: false,
-      });
-    }
   }
 
   onFinish = (data) => {
@@ -95,8 +76,7 @@ class BaseContainer extends Component {
     }));
 
     return {
-      completedHtml:
-        '<h3>Thank you for your feedback.</h3> <h5>Your thoughts and ideas will help us to create a great product!</h5>',
+      completedHtml: '<h3>Thank you for your feedback.</h3>',
       pages: [
         {
           name: 'page1',
@@ -115,28 +95,39 @@ class BaseContainer extends Component {
       };
     });
 
-  sendDataToServer = async (sender) => {
+  sendDataToServer = async (sender, options) => {
+    if (
+      !this.formRef.current.getFieldValue('student') ||
+      !this.formRef.current.getFieldValue('type')
+    ) {
+      this.formRef.current.submit();
+      options.allowComplete = false;
+      return;
+    }
+
     const { submitStudentSurvey } = this.props;
-    const { selectedStudentId } = this.state;
-    const success = await submitStudentSurvey(
+    const { selectedStudentId, selectedType } = this.state;
+    const result = await submitStudentSurvey(
       selectedStudentId,
+      selectedType,
       this.formatSenderData(sender.data),
     );
 
-    this.setState({
-      successSendData: success,
-    });
+    if (!result) {
+      options.allowComplete = false;
+      notification.error({
+        message: 'Something went wrong. Please try again!',
+      });
+    } else {
+      this.setState({
+        completed: true,
+      });
+    }
   };
 
   render() {
-    const { students, studentSurveyItems, title, currentUser } = this.props;
-    const {
-      fetchedResult,
-      successSendData,
-      loading,
-      selectedType,
-      selectedStudentId,
-    } = this.state;
+    const { students, title } = this.props;
+    const { loading, completed } = this.state;
 
     return (
       <div className="base-energy-container">
@@ -145,110 +136,107 @@ class BaseContainer extends Component {
           title={title}
           style={{ marginBottom: 10 }}
         />
-        {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
-          currentUser?.account_type,
-        ) && (
+        <Form ref={this.formRef} validateMessages={validateMessages}>
           <Row style={{ alignItems: 'center', flexDirection: 'row' }}>
             <div style={{ marginRight: 30 }}>
-              <span>Student:</span>
-              <Select
-                style={{ width: 200, marginLeft: 10 }}
-                onChange={async (id) => {
-                  this.setState({
-                    selectedStudentId: id,
-                  });
-
-                  await this.onFetchSurvey(id, selectedType);
-                }}
+              <Form.Item
+                label="Student"
+                name="student"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please pick a Student!',
+                  },
+                ]}
               >
-                {students.map((student, index) => (
-                  <Option value={student.id} key={index.toString()}>
-                    {`${student.first_name} ${student.last_name}`}
-                  </Option>
-                ))}
-              </Select>
+                <Select
+                  style={{ width: 200, marginLeft: 10 }}
+                  onSelect={async (id) => {
+                    this.setState({
+                      selectedStudentId: id,
+                    });
+
+                    this.setState({
+                      loading: true,
+                    });
+
+                    setTimeout(() => {
+                      this.setState({
+                        loading: false,
+                      });
+                    }, 500);
+                  }}
+                >
+                  {students.map((student, index) => (
+                    <Option value={student.id} key={index.toString()}>
+                      {`${student.first_name} ${student.last_name}`}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
             </div>
 
             <div>
-              <span>Type:</span>
-              <Select
-                style={{ width: 200, marginLeft: 10 }}
-                onChange={async (type) => {
-                  this.setState({
-                    selectedType: type,
-                  });
-
-                  await this.onFetchSurvey(selectedStudentId, type);
-                }}
+              <Form.Item
+                label="Type"
+                name="type"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please pick a Type!',
+                  },
+                ]}
               >
-                {TYPE_ENERGY_SURVEYS.map((data, index) => (
-                  <Option value={data.value} key={index.toString()}>
-                    {data.label}
-                  </Option>
-                ))}
-              </Select>
+                <Select
+                  style={{ width: 200, marginLeft: 10 }}
+                  onSelect={async (type) => {
+                    this.setState({
+                      selectedType: type,
+                    });
+
+                    if (completed) {
+                      this.setState({
+                        loading: true,
+                      });
+
+                      setTimeout(() => {
+                        this.setState({
+                          loading: false,
+                          completed: false,
+                        });
+                      }, 500);
+                    }
+                  }}
+                >
+                  {TYPE_ENERGY_SURVEYS.map((data, index) => (
+                    <Option value={data.value} key={index.toString()}>
+                      {data.label}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
             </div>
           </Row>
-        )}
 
-        <Divider />
-        {loading && (
-          <Spin
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: 50,
-            }}
-            indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />}
-          />
-        )}
-        {!successSendData &&
-          !loading(
-            <div className="sv_main sv_default_css">
-              <form>
-                <div className="sv_custom_header" />
-                <div className="sv_container">
-                  <div className="sv_body sv_completed_page">
-                    <h3>Something went wrong at the moment !</h3>
-                    <h5>Please select student and retry again</h5>
-                  </div>
-                </div>
-              </form>
-            </div>,
-          )}
-        {successSendData &&
-          !loading &&
-          fetchedResult &&
-          (studentSurveyItems.length > 0 ? (
-            <div className="sv_main sv_default_css">
-              <form>
-                <div className="sv_custom_header" />
-                <div className="sv_container">
-                  <div className="sv_body sv_completed_page">
-                    <h3>Thank you for your feedback.</h3>
-                    <h5>
-                      Your thoughts and ideas will help us to create a great
-                      product!
-                    </h5>
-                  </div>
-                </div>
-              </form>
-            </div>
+          <Divider />
+          {loading ? (
+            <Spin
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 50,
+              }}
+              indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />}
+            />
           ) : (
-            <Form
-              ref={this.formRef}
-              layout="vertical"
-              onFinish={this.onFinish}
-              validateMessages={validateMessages}
-            >
-              <Row gutter={[24, 24]}>
-                <Survey.Survey
-                  json={this.questions()}
-                  onComplete={this.sendDataToServer}
-                />
-              </Row>
-            </Form>
-          ))}
+            <Row gutter={[24, 24]}>
+              <Survey.Survey
+                json={this.questions()}
+                onCompleting={this.sendDataToServer}
+              />
+            </Row>
+          )}
+        </Form>
       </div>
     );
   }
@@ -259,10 +247,8 @@ BaseContainer.propTypes = {
   students: PropTypes.array,
   questionType: PropTypes.string,
   title: PropTypes.string,
-  studentSurveyItems: PropTypes.array,
   fetchQuestions: PropTypes.func,
   fetchStudents: PropTypes.func,
-  fetchStudentSurveys: PropTypes.func,
   submitStudentSurvey: PropTypes.func,
   currentUser: PropTypes.object,
 };
@@ -271,7 +257,6 @@ const mapStateToProps = ({
   questionsSurvey,
   student,
   studentSurvey,
-  error,
   auth,
 }) => ({
   items: questionsSurvey.items,
@@ -284,6 +269,5 @@ const mapStateToProps = ({
 export default connect(mapStateToProps, {
   fetchQuestions,
   fetchStudents,
-  fetchStudentSurveys,
   submitStudentSurvey,
 })(BaseContainer);

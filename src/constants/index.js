@@ -19,13 +19,18 @@ export const UserAccountType = {
   COACH: 'coach',
 };
 
+export const SurveyType = {
+  PRACTICE: 'practice',
+  DOCTOR: 'doctor',
+};
+
 export const TYPE_ENERGY_SURVEYS = [
   {
-    value: UserAccountType.STUDENT_STAFF,
-    label: 'Staff',
+    value: SurveyType.PRACTICE,
+    label: 'Practice',
   },
   {
-    value: UserAccountType.STUDENT_DOCTOR,
+    value: SurveyType.DOCTOR,
     label: 'Doctor',
   },
 ];

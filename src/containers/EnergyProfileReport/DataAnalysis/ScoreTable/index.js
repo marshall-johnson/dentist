@@ -43,7 +43,7 @@ const ScoreTable = ({ title, dataSource }) =>
         return (
           <>
             <Table.Summary.Row>
-              <Table.Summary.Cell>Practice</Table.Summary.Cell>
+              <Table.Summary.Cell>Totals</Table.Summary.Cell>
               <Table.Summary.Cell>
                 <Text type="danger">{roundNumber(avgScore / numberOfRow)}</Text>
               </Table.Summary.Cell>
