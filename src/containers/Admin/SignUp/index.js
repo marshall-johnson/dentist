@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, notification } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,9 +8,7 @@ import { signUp } from '@/actions/authActions';
 import './index.scss';
 import { UserAccountType } from '@/constants';
 
-const { Option } = Select;
-
-class SignUp extends Component {
+class AdminSignUp extends Component {
   componentDidMount() {
     const { currentUser, history } = this.props;
     if (currentUser) {
@@ -31,7 +29,10 @@ class SignUp extends Component {
 
   onSignUp = async (data) => {
     const { signUp, history } = this.props;
-    const isSuccess = await signUp(data);
+    const isSuccess = await signUp({
+      ...data,
+      accountType: UserAccountType.ADMIN,
+    });
 
     if (isSuccess) {
       notification.success({
@@ -52,7 +53,7 @@ class SignUp extends Component {
         <Form
           className="form-wrapper"
           name="user"
-          initialValues={{ accountType: UserAccountType.STUDENT_ADMIN }}
+          initialValues={{ accountType: 'admin' }}
           autoComplete="off"
           onFinish={this.onSignUp}
         >
@@ -97,24 +98,6 @@ class SignUp extends Component {
           >
             <Input.Password placeholder="Confirm password" />
           </Form.Item>
-          <Form.Item className="input-item" name="accountType">
-            <Select className="selector">
-              {[
-                {
-                  value: UserAccountType.STUDENT_ADMIN,
-                  label: 'Student Admin',
-                },
-                {
-                  value: UserAccountType.COACH,
-                  label: 'Coach',
-                },
-              ].map((value, index) => (
-                <Option value={value.value} key={index.toString()}>
-                  {value.label}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
           <Form.Item className="submit-btn-wrapper">
             <Button loading={loading} type="primary" htmlType="submit">
               Sign Up
@@ -129,7 +112,7 @@ class SignUp extends Component {
   }
 }
 
-SignUp.propTypes = {
+AdminSignUp.propTypes = {
   signUp: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
   loading: PropTypes.bool,
@@ -145,4 +128,4 @@ const mapStateToProps = ({ auth }) => ({
 
 export default connect(mapStateToProps, {
   signUp,
-})(SignUp);
+})(AdminSignUp);

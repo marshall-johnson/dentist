@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppContainer from '@/containers/AppContainer';
 import LoginContainer from '@/containers/Login';
 import SignUpContainer from '@/containers/SignUp';
+import AdminSignUpContainer from '@/containers/Admin/SignUp';
 import reportWebVitals from '@/reportWebVitals';
 import store from '@/store';
 
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/login" component={LoginContainer} />
         <Route path="/sign-up" component={SignUpContainer} />
+        <Route path="/admin/sign-up" component={AdminSignUpContainer} />
         <Route path="/" component={AppContainer} />
       </Switch>
     </Router>
