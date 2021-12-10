@@ -156,15 +156,18 @@ class BaseContainer extends Component {
                       selectedStudentId: id,
                     });
 
-                    this.setState({
-                      loading: true,
-                    });
-
-                    setTimeout(() => {
+                    if (completed) {
                       this.setState({
-                        loading: false,
+                        loading: true,
                       });
-                    }, 500);
+
+                      setTimeout(() => {
+                        this.setState({
+                          loading: false,
+                          completed: false,
+                        });
+                      }, 500);
+                    }
                   }}
                 >
                   {students.map((student, index) => (
