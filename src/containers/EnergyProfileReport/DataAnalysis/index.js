@@ -77,19 +77,16 @@ class DataAnalysis extends Component {
           name: 'Energy',
           practice: this.calculateAverge(practiceResult?.energy),
           doctor: this.calculateAverge(doctorResult?.energy),
-          two: 6.3,
         },
         {
           name: 'Direction',
           practice: this.calculateAverge(practiceResult?.direction),
           doctor: this.calculateAverge(doctorResult?.direction),
-          two: 4.1,
         },
         {
           name: 'Structure and Systems',
           practice: this.calculateAverge(practiceResult?.structure_and_systems),
           doctor: this.calculateAverge(doctorResult?.structure_and_systems),
-          two: 6.4,
         },
         {
           name: 'Comm. and Coord.',
@@ -99,13 +96,11 @@ class DataAnalysis extends Component {
           doctor: this.calculateAverge(
             doctorResult?.communication_and_coordination,
           ),
-          two: 6.9,
         },
         {
           name: 'Attitude and Skills',
           practice: this.calculateAverge(practiceResult?.attitude_and_skills),
           doctor: this.calculateAverge(doctorResult?.attitude_and_skills),
-          two: 7.3,
         },
       ],
       dataAvg: [
@@ -130,15 +125,6 @@ class DataAnalysis extends Component {
             doctorResult?.communication_and_coordination,
           ),
           aasScore: this.calculateAverge(doctorResult?.attitude_and_skills),
-        },
-        {
-          key: '3',
-          name: 'Two',
-          energyScore: 6.3,
-          directionScore: 4.1,
-          sasScore: 6.4,
-          cacScore: 6.9,
-          aasScore: 7.3,
         },
       ],
     });
@@ -271,7 +257,6 @@ class DataAnalysis extends Component {
                 <Legend />
                 <Bar dataKey="practice" fill="#9999ff" />
                 <Bar dataKey="doctor" fill="#ff6600" />
-                <Bar dataKey="two" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
           </div>
