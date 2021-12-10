@@ -212,7 +212,7 @@ class AppContainer extends Component {
                   </Menu.Item>
                 </SubMenu>
               )}
-              {[UserAccountType.ADMIN, UserAccountType.COACH].includes(
+              {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN, UserAccountType.COACH].includes(
                 currentUser?.account_type,
               ) && (
                 <SubMenu key="sub3" icon={<UserOutlined />} title="Coaching">
