@@ -7,6 +7,7 @@ import 'react-phone-input-2/lib/style.css';
 import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -41,7 +42,7 @@ class AdministrativeServicesStep extends Component {
         personalPropertyTaxes: null,
         telephone: null,
         uniforms: null,
-        total: null,
+        total: 0,
       },
     };
   }
@@ -76,6 +77,19 @@ class AdministrativeServicesStep extends Component {
       }
     }
   }
+
+  handleTotal = (_, value) => {
+    const total = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (currentKey !== 'total') {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+
+      return previousValue;
+    }, 0);
+    this.formRef.current.setFieldsValue({
+      total,
+    });
+  };
 
   onBack = () => {
     const {
@@ -127,6 +141,7 @@ class AdministrativeServicesStep extends Component {
           onFinish={this.onFinish}
           initialValues={initialValues}
           validateMessages={validateMessages}
+          onValuesChange={this.handleTotal}
         >
           <Row gutter={48}>
             <Col span={12}>
@@ -216,7 +231,7 @@ class AdministrativeServicesStep extends Component {
                 name="cellPhone"
                 fieldKey="cellPhone"
               >
-                <PhoneInput country="us" inputStyle={{ width: '100%' }} />
+                <Input />
               </Form.Item>
               <Form.Item
                 label="Payroll Services Fee"
@@ -275,7 +290,7 @@ class AdministrativeServicesStep extends Component {
                 name="telephone"
                 fieldKey="telephone"
               >
-                <PhoneInput country="us" inputStyle={{ width: '100%' }} />
+                <Input />
               </Form.Item>
               <Form.Item label="Uniforms" name="uniforms" fieldKey="uniforms">
                 <Input />
@@ -297,7 +312,7 @@ class AdministrativeServicesStep extends Component {
                   },
                 ]}
               >
-                <Input />
+                <Input disabled />
               </Form.Item>
             </Col>
           </Row>
@@ -318,8 +333,7 @@ class AdministrativeServicesStep extends Component {
                 }}
                 onClick={() =>
                   updateData({
-                    administrative_services:
-                      this.formRef.current.getFieldValue(),
+                    administrative_services: this.formRef.current.getFieldValue(),
                   })
                 }
               >

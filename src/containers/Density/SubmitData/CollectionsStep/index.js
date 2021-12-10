@@ -20,11 +20,6 @@ const validateMessages = {
   required: '${label} is required!',
 };
 
-const regex0To30 = new RegExp(/^([0-9]|[12]\d|3[0])$/);
-const regex31To60 = new RegExp(/^(3[1-9]|[45][0-9]|6[0])$/);
-const regex61To90 = new RegExp(/^(6[1-9]|[78][0-9]|9[0])$/);
-const regex91ToMore = new RegExp(/^(9[1-9]|\d{3,})$/);
-
 class CollectionsStep extends Component {
   formRef = React.createRef();
 
@@ -201,10 +196,6 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 fieldKey="zeroToThirtyDays"
                 rules={[
                   {
-                    pattern: regex0To30,
-                    message: 'must be between 0 and 30',
-                  },
-                  {
                     validator: (_, value) =>
                       !isNaN(value)
                         ? Promise.resolve()
@@ -221,10 +212,6 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 name="thirtyOneToSixtyDays"
                 fieldKey="thirtyOneToSixtyDays"
                 rules={[
-                  {
-                    pattern: regex31To60,
-                    message: 'must be between 31 and 60',
-                  },
                   {
                     validator: (_, value) =>
                       !isNaN(value)
@@ -243,10 +230,6 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 fieldKey="sixtyOneToNinetyDays"
                 rules={[
                   {
-                    pattern: regex61To90,
-                    message: 'must be between 61 and 90',
-                  },
-                  {
                     validator: (_, value) =>
                       !isNaN(value)
                         ? Promise.resolve()
@@ -263,10 +246,6 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 name="ninetyOneToMoreDays"
                 fieldKey="ninetyOneToMoreDays"
                 rules={[
-                  {
-                    pattern: regex91ToMore,
-                    message: 'cannot be less than 91',
-                  },
                   {
                     validator: (_, value) =>
                       !isNaN(value)

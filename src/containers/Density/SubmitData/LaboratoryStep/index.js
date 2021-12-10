@@ -5,6 +5,7 @@ import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
 import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -22,7 +23,7 @@ class LaboratoryStep extends Component {
         alignersOrthoLab: null,
         implantSupplies: null,
         cerec: null,
-        total: null,
+        total: 0,
       },
     };
   }
@@ -55,6 +56,19 @@ class LaboratoryStep extends Component {
       }
     }
   }
+
+  handleTotal = (_, value) => {
+    const total = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (currentKey !== 'total') {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+
+      return previousValue;
+    }, 0);
+    this.formRef.current.setFieldsValue({
+      total,
+    });
+  };
 
   onBack = () => {
     const {
@@ -99,6 +113,7 @@ class LaboratoryStep extends Component {
 
         <Form
           ref={this.formRef}
+          onValuesChange={this.handleTotal}
           layout="vertical"
           onFinish={this.onFinish}
           initialValues={initialValues}
@@ -145,7 +160,7 @@ class LaboratoryStep extends Component {
                   },
                 ]}
               >
-                <Input />
+                <Input disabled />
               </Form.Item>
             </Col>
           </Row>

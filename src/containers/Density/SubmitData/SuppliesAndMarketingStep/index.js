@@ -10,10 +10,6 @@ const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
   required: '${label} is required!',
 };
-// eslint-disable-next-line max-len
-const urlPatternRegex = new RegExp(
-  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
-);
 
 class SuppliesAndMarketingStep extends Component {
   formRef = React.createRef();
@@ -148,17 +144,7 @@ class SuppliesAndMarketingStep extends Component {
             </Col>
             <Col span={12}>
               <Card title="Marketing">
-                <Form.Item
-                  label="Website"
-                  name="website"
-                  fieldKey="website"
-                  rules={[
-                    {
-                      pattern: urlPatternRegex,
-                      message: 'Website is not valid!',
-                    },
-                  ]}
-                >
+                <Form.Item label="Website" name="website" fieldKey="website">
                   <Input />
                 </Form.Item>
                 <Form.Item
@@ -195,8 +181,7 @@ class SuppliesAndMarketingStep extends Component {
                 }}
                 onClick={() =>
                   updateData({
-                    supplies_and_marketing:
-                      this.formRef.current.getFieldValue(),
+                    supplies_and_marketing: this.formRef.current.getFieldValue(),
                   })
                 }
               >

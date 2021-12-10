@@ -1,6 +1,5 @@
 // import api from '@/api';
 import api from '@/api';
-import AppConfig from '@/constants/AppConfig';
 import {
   loggedOutFail,
   loggedOutRequest,
@@ -16,7 +15,6 @@ import {
   removeUserFromLocalStorage,
   setUserToLocalStorage,
 } from '@/utils/authUtils';
-import { notification } from 'antd';
 import snakecaseKeys from 'snakecase-keys';
 
 export const login = ({ email, password }) => async (dispatch) => {

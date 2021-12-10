@@ -20,10 +20,6 @@ const validateMessages = {
   required: '${label} is required!',
 };
 
-const regex6To20 = new RegExp(/^([6-9]|1\d|2[0])$/);
-const regex21To40 = new RegExp(/^(2[1-9]|[3][0-9]|4[0])$/);
-const regex41ToMore = new RegExp(/^(4[1-9]|[5-9][0-9]|\d{3,})$/);
-
 class PatientActivityStep extends Component {
   formRef = React.createRef();
 
@@ -178,10 +174,6 @@ group. "
                 fieldKey="newPatient6To20"
                 rules={[
                   {
-                    pattern: regex6To20,
-                    message: 'must be between 6 and 20',
-                  },
-                  {
                     validator: (_, value) =>
                       !isNaN(value)
                         ? Promise.resolve()
@@ -204,10 +196,6 @@ group. "
                 fieldKey="newPatient21To40"
                 rules={[
                   {
-                    pattern: regex21To40,
-                    message: 'must be between 21 and 40',
-                  },
-                  {
                     validator: (_, value) =>
                       !isNaN(value)
                         ? Promise.resolve()
@@ -229,10 +217,6 @@ group. "
                 tooltip="Total number of New Patients for the month, according to their age group. "
                 fieldKey="newPatient41ToMore"
                 rules={[
-                  {
-                    pattern: regex41ToMore,
-                    message: 'cannot be less than 41',
-                  },
                   {
                     validator: (_, value) =>
                       !isNaN(value)

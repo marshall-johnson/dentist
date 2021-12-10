@@ -5,6 +5,7 @@ import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
 import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -26,7 +27,7 @@ class OccupanyAndHPStep extends Component {
         facilitiesInsurance: null,
         securitySystem: null,
         propertyTax: null,
-        total: null,
+        total: 0,
         equipType: null,
         officeFurnitureAndRepairs: null,
         staffContinuingEducation: null,
@@ -63,6 +64,19 @@ class OccupanyAndHPStep extends Component {
       }
     }
   }
+
+  handleTotal = (_, value) => {
+    const total = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (currentKey !== 'total') {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+
+      return previousValue;
+    }, 0);
+    this.formRef.current.setFieldsValue({
+      total,
+    });
+  };
 
   onBack = () => {
     const {
@@ -110,6 +124,7 @@ class OccupanyAndHPStep extends Component {
           layout="vertical"
           onFinish={this.onFinish}
           initialValues={initialValues}
+          onValuesChange={this.handleTotal}
           validateMessages={validateMessages}
         >
           <Row gutter={32}>
@@ -189,7 +204,7 @@ class OccupanyAndHPStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
               </Card>
             </Col>
