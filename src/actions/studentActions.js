@@ -129,7 +129,7 @@ export const fetchStudents = (params = {}) => async (dispatch) => {
     .get(
       `/api/v1/students?size=${params?.size || 100}&number=${
         params?.number || 1
-      }`,
+      }&filter=${params?.filter}`,
     )
     .then(({ data: { records, meta } }) => {
       dispatch(

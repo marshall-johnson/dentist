@@ -47,7 +47,9 @@ class SubmitDataContainer extends Component {
         currentUser?.account_type,
       )
     ) {
-      fetchStudents();
+      fetchStudents({
+        filter: UserAccountType.STUDENT_STAFF,
+      });
     }
 
     window.onbeforeunload = (e) => {

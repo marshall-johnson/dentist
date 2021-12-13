@@ -14,7 +14,7 @@ import {
 } from 'antd';
 
 import { createStudent } from '@/actions/studentActions';
-import { STUDENT_ACCOUNT_TYPES, TYPE_ENERGY_SURVEYS } from '@/constants';
+import { STUDENT_ACCOUNT_TYPES } from '@/constants';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
