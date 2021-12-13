@@ -290,6 +290,7 @@ class ChartAudit extends Component {
 
     this.state = {
       loading: true,
+      studentInfo: {},
       dataSource: [
         {
           key: INITIAL_VALUE,
@@ -327,7 +328,7 @@ class ChartAudit extends Component {
   };
 
   render() {
-    const { loading, dataSource } = this.state;
+    const { loading, dataSource, studentInfo } = this.state;
     const { students } = this.props;
 
     return (
@@ -339,10 +340,14 @@ class ChartAudit extends Component {
           }}
         >
           <Descriptions title="Doctor's Personal Information" column={12}>
-            <Descriptions.Item span={12} label="First Name" />
-            <Descriptions.Item span={12} label="Last Name" />
+            <Descriptions.Item span={12} label="First Name">
+              {studentInfo?.first_name}
+            </Descriptions.Item>
+            <Descriptions.Item span={12} label="Last Name">
+              {studentInfo?.last_name}
+            </Descriptions.Item>
             <Descriptions.Item span={12} label="Degree">
-              DDS
+              {studentInfo?.degree?.toUpperCase()}
             </Descriptions.Item>
           </Descriptions>
 
@@ -352,6 +357,7 @@ class ChartAudit extends Component {
             onChange={async (id) => {
               this.setState({
                 loading: true,
+                studentInfo: students.find((student) => student.id === id),
               });
               setTimeout(() => {
                 this.setState({

@@ -45,7 +45,7 @@ class ProfitAndLoss extends Component {
     const { file } = data.document;
 
     const formData = new FormData();
-    formData.append('data', JSON.sstringify(omit(data, 'document')));
+    formData.append('data', JSON.stringify(omit(data, 'document')));
     formData.append('document', file.originFileObj);
 
     createProfitPotential(formData);
@@ -150,15 +150,7 @@ class ProfitAndLoss extends Component {
                 )}
               </Form.List>
 
-              <Form.Item
-                name="radio-group"
-                label="Are there back taxes?"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
+              <Form.Item label="Are there back taxes?">
                 <Radio.Group onChange={this.onChangeRadio}>
                   <Radio value="yes">Yes</Radio>
                   <Radio value="no">No</Radio>
