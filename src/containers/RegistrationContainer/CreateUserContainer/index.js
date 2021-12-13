@@ -14,7 +14,7 @@ import {
 } from 'antd';
 
 import { createStudent } from '@/actions/studentActions';
-import { TYPE_ENERGY_SURVEYS } from '@/constants';
+import { STUDENT_ACCOUNT_TYPES, TYPE_ENERGY_SURVEYS } from '@/constants';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -138,7 +138,7 @@ class CreateStudentContainer extends Component {
                 ]}
               >
                 <Select>
-                  {TYPE_ENERGY_SURVEYS.map((data, index) => (
+                  {STUDENT_ACCOUNT_TYPES.map((data, index) => (
                     <Option value={data.value} key={index.toString()}>
                       {data.label}
                     </Option>

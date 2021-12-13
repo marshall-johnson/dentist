@@ -34,3 +34,14 @@ export const TYPE_ENERGY_SURVEYS = [
     label: 'Doctor',
   },
 ];
+
+export const STUDENT_ACCOUNT_TYPES = [
+  {
+    value: UserAccountType.STUDENT_STAFF,
+    label: 'Staff',
+  },
+  {
+    value: UserAccountType.STUDENT_DOCTOR,
+    label: 'Doctor',
+  },
+];
