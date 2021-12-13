@@ -1,19 +1,19 @@
 import api from '@/api';
 import { setLoading } from '@/store/profitPotential';
-import { throwErrors, clearErrors } from '@/actions/errorActions';
-import { setFlashError, setFlashSuccess } from '@/actions/flashMessageActions';
+import { throwErrors } from '@/actions/errorActions';
 
-export const createProfitPotential = (formData) => async (dispatch) => {
+export const createProfitPotential = (formData, callback) => async (
+  dispatch,
+) => {
   dispatch(setLoading(true));
 
   return api
     .post('/api/v1/profit_potentials', formData)
     .then(({ data: { success, message } }) => {
       if (success) {
-        dispatch(clearErrors('profitPotential'));
-        dispatch(setFlashSuccess({ message }));
+        callback && callback(true, message);
       } else {
-        dispatch(setFlashError({ message }));
+        callback && callback(false, message);
       }
     })
     .catch((error) => {

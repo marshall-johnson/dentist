@@ -14,6 +14,7 @@ import {
   Typography,
   Upload,
   InputNumber,
+  notification,
 } from 'antd';
 import {
   PlusOutlined,
@@ -32,6 +33,8 @@ const validateMessages = {
 };
 
 class ProfitAndLoss extends Component {
+  formRef = React.createRef();
+
   constructor(props) {
     super(props);
 
@@ -48,7 +51,22 @@ class ProfitAndLoss extends Component {
     formData.append('data', JSON.stringify(omit(data, 'document')));
     formData.append('document', file.originFileObj);
 
-    createProfitPotential(formData);
+    createProfitPotential(formData, (success, message) => {
+      this.formRef.current.resetFields();
+      this.setState({
+        backTaxes: false,
+      });
+
+      if (success) {
+        notification.success({
+          message,
+        });
+      } else {
+        notification.error({
+          message,
+        });
+      }
+    });
   };
 
   onChangeRadio = ({ target: { value } }) => {
@@ -68,6 +86,7 @@ class ProfitAndLoss extends Component {
         <Row>
           <Col span={12}>
             <Form
+              ref={this.formRef}
               layout="vertical"
               validateMessages={validateMessages}
               onFinish={this.onSubmit}
@@ -151,7 +170,10 @@ class ProfitAndLoss extends Component {
               </Form.List>
 
               <Form.Item label="Are there back taxes?">
-                <Radio.Group onChange={this.onChangeRadio}>
+                <Radio.Group
+                  onChange={this.onChangeRadio}
+                  value={backTaxes ? 'yes' : 'no'}
+                >
                   <Radio value="yes">Yes</Radio>
                   <Radio value="no">No</Radio>
                 </Radio.Group>
