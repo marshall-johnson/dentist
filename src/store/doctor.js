@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { parseInt } from 'lodash';
 
 const slice = createSlice({
   name: 'doctor',
@@ -15,15 +16,15 @@ const slice = createSlice({
     },
     doctorsFetched(state, { payload: { items, totalCount, page } }) {
       state.page = page;
-      state.items = items;
+      state.items = items.map((data) => ({
+        ...data,
+        id: parseInt(data.id),
+      }));
       state.totalCount = totalCount;
-    }
+    },
   },
 });
 
-export const {
-  setLoading,
-  doctorsFetched,
-} = slice.actions;
+export const { setLoading, doctorsFetched } = slice.actions;
 
 export default slice.reducer;

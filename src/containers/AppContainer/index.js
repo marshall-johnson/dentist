@@ -29,6 +29,7 @@ class AppContainer extends Component {
 
     this.state = {
       collapsed: false,
+      openKeys: null,
     };
   }
 
@@ -66,7 +67,7 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { collapsed } = this.state;
+    const { collapsed, openKeys } = this.state;
     const { currentUser } = this.props;
 
     return (
@@ -81,7 +82,12 @@ class AppContainer extends Component {
             <div className="logo">
               <img src={logoImage} alt="logo" />
             </div>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+            <Menu
+              theme="dark"
+              defaultSelectedKeys={['1']}
+              openKeys={[openKeys]}
+              mode="inline"
+            >
               {[
                 UserAccountType.ADMIN,
                 UserAccountType.STUDENT_ADMIN,
@@ -89,9 +95,14 @@ class AppContainer extends Component {
                 UserAccountType.STUDENT_DOCTOR,
               ].includes(currentUser?.account_type) && (
                 <SubMenu
-                  key="sub1"
+                  key="registration"
                   icon={<UserOutlined />}
                   title="Registration"
+                  onTitleClick={() => {
+                    this.setState({
+                      openKeys: 'registration',
+                    });
+                  }}
                 >
                   {[
                     UserAccountType.ADMIN,
@@ -176,6 +187,11 @@ class AppContainer extends Component {
                   key="management"
                   icon={<DatabaseOutlined />}
                   title="Management"
+                  onTitleClick={() => {
+                    this.setState({
+                      openKeys: 'management',
+                    });
+                  }}
                 >
                   <Menu.Item key="mangement-student">
                     <Link
@@ -192,7 +208,16 @@ class AppContainer extends Component {
                 UserAccountType.STUDENT_STAFF,
                 UserAccountType.STUDENT_DOCTOR,
               ].includes(currentUser?.account_type) && (
-                <SubMenu key="sub2" icon={<UserOutlined />} title="Students">
+                <SubMenu
+                  key="student"
+                  icon={<UserOutlined />}
+                  title="Students"
+                  onTitleClick={() => {
+                    this.setState({
+                      openKeys: 'student',
+                    });
+                  }}
+                >
                   <Menu.Item key="9">
                     <Link
                       to={`${AppConfig.ROUTES.STUDENTS_SCHEDULE}/${AppConfig.SCHEDULE_CLASS_STEPS.REGISTER_CLASS}`}
@@ -212,10 +237,21 @@ class AppContainer extends Component {
                   </Menu.Item>
                 </SubMenu>
               )}
-              {[UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN, UserAccountType.COACH].includes(
-                currentUser?.account_type,
-              ) && (
-                <SubMenu key="sub3" icon={<UserOutlined />} title="Coaching">
+              {[
+                UserAccountType.ADMIN,
+                UserAccountType.STUDENT_ADMIN,
+                UserAccountType.COACH,
+              ].includes(currentUser?.account_type) && (
+                <SubMenu
+                  key="coaching"
+                  icon={<UserOutlined />}
+                  title="Coaching"
+                  onTitleClick={() => {
+                    this.setState({
+                      openKeys: 'coaching',
+                    });
+                  }}
+                >
                   <Menu.Item key="12">
                     <Link to={`${AppConfig.ROUTES.REVIEW_SUBMITED}`}>
                       Review submitted
@@ -247,7 +283,16 @@ class AppContainer extends Component {
                   <Link to={`${AppConfig.ROUTES.REPORT}`}>Reporting</Link>
                 </Menu.Item>
               )}
-              <SubMenu key="17" icon={<SettingOutlined />} title="Setting">
+              <SubMenu
+                key="setting"
+                icon={<SettingOutlined />}
+                title="Setting"
+                onTitleClick={() => {
+                  this.setState({
+                    openKeys: 'setting',
+                  });
+                }}
+              >
                 <Menu.Item key="18" onClick={this.onLogout}>
                   Log out
                 </Menu.Item>

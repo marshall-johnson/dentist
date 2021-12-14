@@ -15,6 +15,7 @@ import { fetchStudents } from '@/actions/studentActions';
 
 import AppConfig from '@/constants/AppConfig';
 import { connect } from 'react-redux';
+import { UserAccountType } from '@/constants';
 
 const { Option } = Select;
 
@@ -31,7 +32,9 @@ class ReviewSubmittedContainer extends Component {
 
   componentDidMount() {
     const { fetchStudents } = this.props;
-    fetchStudents();
+    fetchStudents({
+      filter: UserAccountType.STUDENT_STAFF,
+    });
   }
 
   normFile = (e) => {
