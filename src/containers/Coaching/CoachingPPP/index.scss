@@ -11,3 +11,72 @@
   border: 0px;
   border-radius: 2px;
 }
+
+.ant-table-row-level-0[data-row-key="fixed"] {
+  background: #FACC04;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="variable"] {
+  background: #F68081;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="overhead"] {
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="dr_salary"] {
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="redline"] {
+  background: #F799CC;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="solvency"] {
+  background: #99CCFF;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="roi"] {
+  background: #99CC00;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="add_profit"] {
+  background: black;
+  color: white;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
+.ant-table-row-level-0[data-row-key="yr_one_roi"] {
+  background: #FEFE03;
+
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+}

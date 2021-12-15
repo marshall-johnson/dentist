@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select, Table } from 'antd';
+import { Descriptions, Select, Table } from 'antd';
 import PropTypes from 'prop-types';
 import { fetchStudents } from '@/actions/studentActions';
 import './index.scss';
@@ -7,300 +7,258 @@ import { connect } from 'react-redux';
 
 const { Option } = Select;
 
-const columns = [
-  {
-    dataIndex: 'col1',
-  },
-  {
-    dataIndex: 'col2',
-  },
-  {
-    dataIndex: 'col3',
-  },
-  {
-    dataIndex: 'col4',
-  },
-  {
-    dataIndex: 'col5',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    col1: 'TOTAL PRODUCTION FOR SPENDING REPORT',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '2',
-    col1: 'PRODUCTION LAST CALENDAR YEAR',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '3',
-    col1: 'PRODUCTION 2 YEARS AGO',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '4',
-    col1: 'TOTAL COLLECTIONS FOR SPENDING REPORT',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '5',
-    col1: 'TOTAL COLLECTIONS FOR SPENDING REPORT',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '6',
-    col1: 'COLLECTIONS 2 YEARS AGO',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '7',
-    col1: null,
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '8',
-    col1: 'AVG # NEW PATIENTS LAST 3 "TYPICAL" MONTHS',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '9',
-    col1: 'AVG # OF DOCTOR PATIENT VISITS/MONTH',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '10',
-    col1: 'AVG # OF CLINICAL HOURS WORKED/MONTH',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '11',
-    col1: null,
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '12',
-    col1: 'TOTAL PRACTICE DEBT PAYMENT/MONTH',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '13',
-    col1: 'TOTAL PERSONAL DEBT PAYMENT/MONTH',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '14',
-    col1: null,
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '15',
-    col1: null,
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '16',
-    col1: 'STAFF SALARIES',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '17',
-    col1: 'OCCUPANCY',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '18',
-    col1: 'OCCUPANCY',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '19',
-    col1: 'H&P RESOURCES',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '20',
-    col1: 'LABORATORY',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '21',
-    col1: 'SUPPLIES',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '22',
-    col1: 'SERVICES',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '23',
-    col1: 'MARKETING',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: '0%',
-    col5: 0,
-  },
-  {
-    key: '24',
-    col1: 'TOTAL OVERHEAD',
-    col2: 1,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '25',
-    col1: 'DR SALARY',
-    col2: 0,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '26',
-    col1: 'TOTAL EXPENSES',
-    col2: 1,
-    col3: 'CURRENT YEAR',
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '27',
-    col1: null,
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '28',
-    col1: 'ACTUAL SOLVENCY DEPOSITS',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '29',
-    col1: 'ACTUAL ROI EXPENSES',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: 0,
-  },
-  {
-    key: '30',
-    col1: null,
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: null,
-  },
-  {
-    key: '31',
-    col1: 'PROJECTED GROWTH RATE',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: '10.00%',
-  },
-  {
-    key: '32',
-    col1: 'ASSUMED FINAL OVERHEAD IN PERCENTAGE',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: '52.00%',
-  },
-  {
-    key: '33',
-    col1: 'ESTIMATED FIRST IRR',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: '10.00%',
-  },
-  {
-    key: '34',
-    col1: 'ESTIMATED SECOND IRR',
-    col2: null,
-    col3: null,
-    col4: null,
-    col5: '7.00%',
-  },
-];
-
 class Report extends Component {
+  dataSource = [
+    {
+      key: 'title',
+      field: '',
+      percentage_col: '%COL',
+      target: 'TARGET',
+      practice_amount: 'AMOUNT',
+      cpd_amount: 'AMOUNT',
+      variance_amount: 'AMOUNT',
+      variance: 'VARIANCE',
+    },
+    {
+      key: 'fixed',
+      field: 'FIXED',
+      percentage_col: '',
+      target: '',
+      practice_amount: '',
+      cpd_amount: '',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'staff',
+      field: 'Staff',
+      percentage_col: '',
+      target: '20%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'occupancy',
+      field: 'Occupancy',
+      percentage_col: '',
+      target: '6%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'resource',
+      field: 'H&P Resources',
+      percentage_col: '',
+      target: '5%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'variable',
+      field: 'VARIABLE',
+      percentage_col: '',
+      target: '',
+      practice_amount: '',
+      cpd_amount: '',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'laboratory',
+      field: 'Laboratory',
+      percentage_col: '',
+      target: '10%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'supplies',
+      field: 'Supplies',
+      percentage_col: '',
+      target: '4%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'admin',
+      field: 'Admin',
+      percentage_col: '',
+      target: '6%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'marketing',
+      field: 'Marketing',
+      percentage_col: '0.00%',
+      target: '1%',
+      practice_amount: '0',
+      cpd_amount: '0',
+      variance_amount: '0',
+      variance: '0',
+    },
+    {
+      key: 'empty_1',
+      field: '',
+      percentage_col: '',
+      target: '',
+      practice_amount: '',
+      cpd_amount: '',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'overhead',
+      field: 'OVERHEAD',
+      percentage_col: '',
+      target: '52%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'empty_2',
+      field: '',
+      percentage_col: '',
+      target: '',
+      practice_amount: '',
+      cpd_amount: '',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'dr_salary',
+      field: 'Dr.Salary',
+      percentage_col: '',
+      target: '24%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'redline',
+      field: 'Dr.REDLINE',
+      percentage_col: '',
+      target: '76%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'solvency',
+      field: 'Solvency',
+      percentage_col: '',
+      target: '10%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'roi',
+      field: 'ROI',
+      percentage_col: '',
+      target: '10%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'add_profit',
+      field: 'Add.Profit',
+      percentage_col: '',
+      target: '4%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'empty_3',
+      field: '',
+      percentage_col: '',
+      target: '',
+      practice_amount: '',
+      cpd_amount: '',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'total',
+      field: 'TOTAL',
+      percentage_col: '',
+      target: '100%',
+      practice_amount: '',
+      cpd_amount: '0',
+      variance_amount: '',
+      variance: '',
+    },
+    {
+      key: 'yr_one_roi',
+      field: 'YR.1 ROI',
+      percentage_col: '',
+      target: '',
+      practice_amount: '',
+      cpd_amount: '',
+      variance_amount: '',
+      variance: '',
+    },
+  ];
+
+  columns = [
+    {
+      title: '',
+      dataIndex: 'field',
+      key: 'field',
+    },
+    {
+      title: 'PRACTICE',
+      dataIndex: 'percentage_col',
+      key: 'percentage_col',
+    },
+    {
+      title: 'CPD',
+      dataIndex: 'target',
+      key: 'target',
+    },
+    {
+      title: 'PRACTICE',
+      dataIndex: 'practice_amount',
+      key: 'practice_amount',
+    },
+    {
+      title: 'CPD',
+      dataIndex: 'cpd_amount',
+      key: 'cpd_amount',
+    },
+    {
+      title: 'VARIANCE',
+      dataIndex: 'variance_amount',
+      key: 'variance_amount',
+    },
+    {
+      title: 'ADJUSTED',
+      dataIndex: 'variance',
+      key: 'variance',
+    },
+  ];
+
   componentDidMount() {
     const { fetchStudents } = this.props;
     fetchStudents();
@@ -316,6 +274,7 @@ class Report extends Component {
           loading={loadingFetchStudent}
           style={{
             width: 200,
+            marginBottom: 40,
           }}
           onChange={(id) => {
             console.log(id);
@@ -327,13 +286,111 @@ class Report extends Component {
             </Option>
           ))}
         </Select>
+
+        <Descriptions>
+          <Descriptions.Item label="Doctor Name">0.00</Descriptions.Item>
+          <Descriptions.Item label="Date">08/06/21</Descriptions.Item>
+          <Descriptions.Item label="Model Collections" />
+          <Descriptions.Item label="Model ExpenseReduction" />
+          <Descriptions.Item label="Collections">0</Descriptions.Item>
+          <Descriptions.Item label="Production">0</Descriptions.Item>
+          <Descriptions.Item label="Yr 1 Collections" />
+          <Descriptions.Item label="Yr 1 Expense Reduction">
+            0
+          </Descriptions.Item>
+          <Descriptions.Item label="Collections/Hr" />
+          <Descriptions.Item label="Prod/Pt" />
+        </Descriptions>
         <Table
           style={{ marginTop: 40 }}
-          bordered
+          dataSource={this.dataSource}
+          columns={this.columns}
           pagination={false}
-          columns={columns}
-          dataSource={data}
         />
+
+        <Descriptions style={{ marginTop: 40 }} column={12}>
+          <Descriptions.Item
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+            span={6}
+            label="Average Monthly Expenses with MP"
+          >
+            1,600
+          </Descriptions.Item>
+          <Descriptions.Item
+            span={6}
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+            label="Average Monthly Income with MP"
+          />
+          <Descriptions.Item
+            span={6}
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+            label="Average Monthly Expenses Currently"
+          >
+            0
+          </Descriptions.Item>
+          <Descriptions.Item
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+            span={6}
+            label="Average Monthly Income Currently"
+          />
+          <Descriptions.Item span={3} label="" />
+          <Descriptions.Item
+            span={3}
+            style={{
+              background: '#F68081',
+            }}
+            label="Increase"
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+          >
+            1,600
+          </Descriptions.Item>
+          <Descriptions.Item span={3} label="" />
+          <Descriptions.Item
+            span={3}
+            style={{
+              background: '#FEFE03',
+            }}
+            label="Increase"
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+          />
+
+          <Descriptions.Item span={3} label="" />
+          <Descriptions.Item
+            span={3}
+            style={{
+              background: '#F68081',
+            }}
+            label="% of Expenses"
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+          >
+            100%
+          </Descriptions.Item>
+          <Descriptions.Item span={3} label="" />
+          <Descriptions.Item
+            span={3}
+            style={{
+              background: '#FEFE03',
+            }}
+            label="ROI Percentage"
+            labelStyle={{
+              fontWeight: 'bold',
+            }}
+          />
+        </Descriptions>
       </>
     );
   }
