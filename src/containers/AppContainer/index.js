@@ -29,7 +29,7 @@ class AppContainer extends Component {
 
     this.state = {
       collapsed: false,
-      openKeys: null,
+      openKeys: [],
     };
   }
 
@@ -85,7 +85,7 @@ class AppContainer extends Component {
             <Menu
               theme="dark"
               defaultSelectedKeys={['1']}
-              openKeys={[openKeys]}
+              openKeys={openKeys}
               mode="inline"
             >
               {[
@@ -99,9 +99,16 @@ class AppContainer extends Component {
                   icon={<UserOutlined />}
                   title="Registration"
                   onTitleClick={() => {
-                    this.setState({
-                      openKeys: 'registration',
-                    });
+                    console.log(openKeys);
+                    if (openKeys[0] !== 'registration') {
+                      this.setState({
+                        openKeys: ['registration'],
+                      });
+                    } else {
+                      this.setState({
+                        openKeys: [],
+                      });
+                    }
                   }}
                 >
                   {[
@@ -140,7 +147,23 @@ class AppContainer extends Component {
                     UserAccountType.STUDENT_STAFF,
                     UserAccountType.STUDENT_DOCTOR,
                   ].includes(currentUser?.account_type) && (
-                    <SubMenu key="sub-inside-1" title="Energy Conversion">
+                    <SubMenu
+                      key="energy-conversion"
+                      title="Energy Conversion"
+                      onTitleClick={() => {
+                        if (
+                          openKeys[1] !== 'energy-conversion'
+                        ) {
+                          this.setState({
+                            openKeys: ['registration', 'energy-conversion'],
+                          });
+                        } else {
+                          this.setState({
+                            openKeys: ['registration'],
+                          });
+                        }
+                      }}
+                    >
                       <Menu.Item key="4">
                         <Link
                           to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
@@ -188,9 +211,15 @@ class AppContainer extends Component {
                   icon={<DatabaseOutlined />}
                   title="Management"
                   onTitleClick={() => {
-                    this.setState({
-                      openKeys: 'management',
-                    });
+                    if (openKeys[0] !== 'management') {
+                      this.setState({
+                        openKeys: ['management'],
+                      });
+                    } else {
+                      this.setState({
+                        openKeys: [],
+                      });
+                    }
                   }}
                 >
                   <Menu.Item key="mangement-student">
@@ -213,9 +242,15 @@ class AppContainer extends Component {
                   icon={<UserOutlined />}
                   title="Students"
                   onTitleClick={() => {
-                    this.setState({
-                      openKeys: 'student',
-                    });
+                    if (openKeys[0] !== 'student') {
+                      this.setState({
+                        openKeys: ['student'],
+                      });
+                    } else {
+                      this.setState({
+                        openKeys: [],
+                      });
+                    }
                   }}
                 >
                   <Menu.Item key="9">
@@ -247,9 +282,15 @@ class AppContainer extends Component {
                   icon={<UserOutlined />}
                   title="Coaching"
                   onTitleClick={() => {
-                    this.setState({
-                      openKeys: 'coaching',
-                    });
+                    if (openKeys[0] !== 'coaching') {
+                      this.setState({
+                        openKeys: ['coaching'],
+                      });
+                    } else {
+                      this.setState({
+                        openKeys: [],
+                      });
+                    }
                   }}
                 >
                   <Menu.Item key="12">
@@ -288,9 +329,15 @@ class AppContainer extends Component {
                 icon={<SettingOutlined />}
                 title="Setting"
                 onTitleClick={() => {
-                  this.setState({
-                    openKeys: 'setting',
-                  });
+                  if (openKeys[0] !== 'setting') {
+                    this.setState({
+                      openKeys: ['setting'],
+                    });
+                  } else {
+                    this.setState({
+                      openKeys: [],
+                    });
+                  }
                 }}
               >
                 <Menu.Item key="18" onClick={this.onLogout}>
