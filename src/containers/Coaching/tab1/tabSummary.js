@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Collapse, Form, Input, InputNumber } from 'antd';
+import { Row, Col, Typography, Collapse, Form, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 import { CaretRightOutlined, PlusCircleFilled } from '@ant-design/icons';
 import { formatCurrency } from '@/utils/helpers';

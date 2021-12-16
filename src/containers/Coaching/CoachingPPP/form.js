@@ -1,138 +1,206 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './index.scss';
-import { Button, Form, Select } from 'antd';
-import { formatCurrency } from '@/utils/helpers';
-import { fetchStudents } from '@/actions/studentActions';
+import { Button, notification } from 'antd';
 import { connect } from 'react-redux';
-import { tabsleft, tabsright } from './config';
-import TabSummary from '../tab1/tabSummary';
-
-const { Option } = Select;
+import { createCoachPppReport } from '@/actions/coachPppReportActions';
+import EnterClientPage from './FormSteps/EnterClientPage';
+import TotalInputPage from './FormSteps/TotalInputPage';
+import SummaryPage from './FormSteps/SummaryPage';
+import DetailDataPage from './FormSteps/DetailDataPage';
+import { KEY } from './config';
 
 class FormTab extends Component {
+  clientRef = React.createRef();
+
+  totalRef = React.createRef();
+
+  detailRef = React.createRef();
+
+  summaryRef = React.createRef();
+
   constructor(props) {
     super(props);
 
     this.state = {
+      currentStep: 0,
+      data: {},
       total: {},
-      totalTabLeft: 0,
-      totalTabRight: 0,
     };
   }
 
-  componentDidMount() {
-    const { fetchStudents } = this.props;
-    fetchStudents();
-  }
-
-  handleTotal = (_, value) => {
-    const total = {};
-    Object.keys(value).forEach((field) => {
-      const fieldObject = value[field];
-      total[field] = Object.keys(fieldObject).reduce(
-        (previous, value) => previous + (Number(fieldObject[value]) || 0),
-        0,
-      );
-    });
-
+  setTotal = (total) => {
     this.setState({
       total,
-      totalTabLeft: tabsleft.reduce(
-        (previous, tab) => previous + (total[tab.key] || 0),
-        0,
-      ),
-      totalTabRight: tabsright.reduce(
-        (previous, tab) => previous + (total[tab.key] || 0),
-        0,
-      ),
+    });
+  };
+
+  goNext = () => {
+    const { currentStep, data } = this.state;
+    const nextTrigger = () => {
+      this.setState({
+        currentStep: currentStep + 1,
+      });
+    };
+
+    if (currentStep === 0) {
+      this.clientRef.current
+        .validateFields()
+        .then(() => {
+          this.setState({
+            data: {
+              student: this.clientRef.current.getFieldValue().student,
+            },
+          });
+          nextTrigger();
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (currentStep === 1) {
+      this.totalRef.current
+        .validateFields()
+        .then(() => {
+          this.setState({
+            data: {
+              ...data,
+              report: {
+                ...(data?.report || {}),
+                ...this.totalRef.current.getFieldValue(),
+              },
+            },
+          });
+          nextTrigger();
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (currentStep === 2) {
+      this.detailRef.current
+        .validateFields()
+        .then(() => {
+          const formData = this.detailRef.current.getFieldValue();
+          const detailData = {};
+
+          Object.keys(KEY).forEach((key) => {
+            if (formData[key]) {
+              Object.keys(formData[key]).forEach((nestedKey) => {
+                detailData[nestedKey] = formData[key][nestedKey];
+              });
+            }
+          });
+
+          this.setState({
+            data: {
+              ...data,
+              report: {
+                ...data?.report,
+                ...detailData,
+              },
+            },
+          });
+          nextTrigger();
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  onSubmit = () => {
+    const { createCoachPppReport } = this.props;
+    const { data } = this.state;
+
+    createCoachPppReport(
+      {
+        ...data,
+        report: {
+          ...data.report,
+          ...this.summaryRef.current.getFieldValue(),
+        },
+      },
+      (success, message) => {
+        if (success) {
+          notification.success({
+            message,
+          });
+        } else {
+          notification.error({
+            message,
+          });
+        }
+      },
+    );
+  };
+
+  goBack = () => {
+    const { currentStep } = this.state;
+    this.setState({
+      currentStep: currentStep - 1,
     });
   };
 
   render() {
-    const { total, totalTabLeft, totalTabRight } = this.state;
-    const { students, loadingFetchStudent } = this.props;
+    const { currentStep, data, total } = this.state;
 
     return (
       <>
-        <div style={{ width: 100 }}>Student: </div>
-        <Select
-          loading={loadingFetchStudent}
-          style={{
-            width: 200,
-          }}
-          onChange={(id) => {
-            console.log(id);
-          }}
-        >
-          {students.map((student, index) => (
-            <Option value={student.id} key={index.toString()}>
-              {`${student.first_name} ${student.last_name}`}
-            </Option>
-          ))}
-        </Select>
-
-        <Form
-          style={{ marginTop: 40 }}
-          className="form-wrapper"
-          name="data"
-          onValuesChange={this.handleTotal}
-          autoComplete="off"
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <div style={{ width: '100%', marginRight: '50px' }}>
-              <TabSummary
-                total={total}
-                tabData={tabsleft}
-                totalData={[
-                  { label: 'Total', value: formatCurrency(totalTabLeft) },
-                ]}
-              />
-            </div>
-            <div style={{ width: '100%' }}>
-              <TabSummary
-                total={total}
-                tabData={tabsright}
-                totalData={[
-                  { label: 'IRA', value: formatCurrency(0) },
-                  { label: 'Total', value: formatCurrency(totalTabRight) },
-                ]}
-              />
-            </div>
+        <div style={{ marginTop: 50, marginBottom: 30 }}>
+          <div style={{ display: currentStep !== 0 && 'none' }}>
+            <EnterClientPage formRef={this.clientRef} />
           </div>
+          <div style={{ display: currentStep !== 1 && 'none' }}>
+            <TotalInputPage formRef={this.totalRef} />
+          </div>
+          <div style={{ display: currentStep !== 2 && 'none' }}>
+            <DetailDataPage formRef={this.detailRef} setTotal={this.setTotal} />
+          </div>
+          <div style={{ display: currentStep !== 3 && 'none' }}>
+            <SummaryPage
+              formRef={this.summaryRef}
+              report={data?.report}
+              total={total}
+            />
+          </div>
+        </div>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginRight: 20, marginTop: 50 }}
-            >
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+        {currentStep !== 0 && (
+          <Button
+            type="secondary"
+            onClick={this.goBack}
+            style={{ marginRight: 20 }}
+          >
+            Back
+          </Button>
+        )}
+        {currentStep !== 3 && (
+          <Button
+            type="primary"
+            onClick={this.goNext}
+            htmlType="submit"
+            style={{ marginRight: 20 }}
+          >
+            Next
+          </Button>
+        )}
+        {currentStep === 3 && (
+          <Button
+            type="primary"
+            style={{ marginRight: 20, marginTop: 50 }}
+            onClick={this.onSubmit}
+          >
+            Submit
+          </Button>
+        )}
       </>
     );
   }
 }
 
 FormTab.propTypes = {
-  students: PropTypes.array,
-  loadingFetchStudent: PropTypes.bool,
-  fetchStudents: PropTypes.func,
+  createCoachPppReport: PropTypes.func,
 };
 
-const mapStateToProps = ({ student }) => ({
-  students: student.items,
-  loadingFetchStudent: student.loading,
-});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps, {
-  fetchStudents,
+  createCoachPppReport,
 })(FormTab);
