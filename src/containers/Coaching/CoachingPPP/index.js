@@ -25,25 +25,36 @@ class CoachingPPP extends Component {
 
     this.state = {
       data: null,
+      activeKey: 'form',
     };
   }
 
   setData = (data) => {
     this.setState({
       data,
+      activeKey: 'report',
     });
   };
 
   render() {
-    const { data } = this.state;
+    const { data, activeKey } = this.state;
 
     return (
       <StickyContainer>
-        <Tabs defaultActiveKey="1" renderTabBar={renderTabBar}>
-          <TabPane tab="Form" key="1">
+        <Tabs
+          defaultActiveKey="form"
+          activeKey={activeKey}
+          renderTabBar={renderTabBar}
+          onChange={(activeKey) => {
+            this.setState({
+              activeKey,
+            });
+          }}
+        >
+          <TabPane tab="Form" key="form">
             <FormTab setData={this.setData} />
           </TabPane>
-          <TabPane tab="Report" key="2" disabled={!data}>
+          <TabPane tab="Report" key="report" disabled={!data}>
             <Report data={data} />
           </TabPane>
         </Tabs>

@@ -18,6 +18,7 @@ class Report extends Component {
       title: 'PRACTICE',
       dataIndex: 'percentage_col',
       key: 'percentage_col',
+      render: (value) => (value ? <span>{value}%</span> : '-'),
     },
     {
       title: 'CPD',
@@ -96,86 +97,153 @@ class Report extends Component {
       {
         key: 'staff',
         field: 'Staff',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+          total?.staffCompensation
+        ).toFixed(2),
         target: '20%',
         practice_amount: formatCurrency(total?.staffCompensation || 0),
         cpd_amount: formatCurrency((this.collections * 20) / 100),
         variance_amount: formatCurrency(
           (total?.staffCompensation || 0) - (this.collections * 20) / 100,
         ),
-        variance: '',
+        variance: (() => {
+          if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.staffCompensation || 0) - (this.collections * 20) / 100,
+          );
+        })(),
       },
       {
         key: 'occupancy',
         field: 'Occupancy',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report / total?.occupancy
+        ).toFixed(2),
         target: '6%',
         practice_amount: formatCurrency(total?.occupancy || 0),
         cpd_amount: formatCurrency((this.collections * 6) / 100),
         variance_amount: formatCurrency(
           (total?.occupancy || 0) - (this.collections * 6) / 100,
         ),
-        variance: '',
+        variance: (() => {
+          if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.occupancy || 0) - (this.collections * 6) / 100,
+          );
+        })(),
       },
       {
         key: 'resource',
         field: 'H&P Resources',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+          total?.resourceDev
+        ).toFixed(2),
         target: '5%',
         practice_amount: formatCurrency(total?.resourceDev || 0),
         cpd_amount: formatCurrency((this.collections * 5) / 100),
         variance_amount: formatCurrency(
           (total?.resourceDev || 0) - (this.collections * 5) / 100,
         ),
-        variance: '',
+        variance: (() => {
+          if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.resourceDev || 0) - (this.collections * 5) / 100,
+          );
+        })(),
       },
       {
         key: 'laboratory',
         field: 'Laboratory',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+          total?.laboratory
+        ).toFixed(2),
         target: '10%',
         practice_amount: formatCurrency(total?.laboratory || 0),
         cpd_amount: formatCurrency((this.collections * 10) / 100),
         variance_amount: formatCurrency(
           (total?.laboratory || 0) - (this.collections * 10) / 100,
         ),
-        variance: '',
+        variance: (() => {
+          if ((this.collections * 10) / 100 > total?.laboratory || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.laboratory || 0) - (this.collections * 10) / 100,
+          );
+        })(),
       },
       {
         key: 'supplies',
         field: 'Supplies',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report / total?.supplies
+        ).toFixed(2),
         target: '4%',
         practice_amount: formatCurrency(total?.supplies || 0),
         cpd_amount: formatCurrency((this.collections * 4) / 100),
         variance_amount: formatCurrency(
           (total?.supplies || 0) - (this.collections * 4) / 100,
         ),
-        variance: '',
+        variance: (() => {
+          if ((this.collections * 4) / 100 > total?.supplies || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.supplies || 0) - (this.collections * 4) / 100,
+          );
+        })(),
       },
       {
         key: 'admin',
         field: 'Admin',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+          total?.adminServices
+        ).toFixed(2),
         target: '6%',
         practice_amount: formatCurrency(total?.adminServices || 0),
         cpd_amount: formatCurrency((this.collections * 6) / 100),
         variance_amount: formatCurrency(
           (total?.adminServices || 0) - (this.collections * 6) / 100,
         ),
-        variance: '',
+        variance: (() => {
+          if ((this.collections * 6) / 100 > total?.adminServices || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.adminServices || 0) - (this.collections * 6) / 100,
+          );
+        })(),
       },
       {
         key: 'marketing',
         field: 'Marketing',
-        percentage_col: '0.00%',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report / total?.marketing
+        ).toFixed(2),
         target: '1%',
         practice_amount: formatCurrency(total?.marketing || 0),
         cpd_amount: formatCurrency((this.collections * 1) / 100),
         variance_amount: formatCurrency(
           (total?.marketing || 0) - (this.collections * 1) / 100,
         ),
-        variance: '0',
+        variance: (() => {
+          if ((this.collections * 1) / 100 > total?.marketing || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.marketing || 0) - (this.collections * 1) / 100,
+          );
+        })(),
       },
       {
         key: 'empty_1',
@@ -190,7 +258,21 @@ class Report extends Component {
       {
         key: 'overhead',
         field: 'OVERHEAD',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+            total?.staffCompensation +
+          data?.report?.total_collections_for_spending_report /
+            total?.occupancy +
+          data?.report?.total_collections_for_spending_report /
+            total?.resourceDev +
+          data?.report?.total_collections_for_spending_report /
+            total?.laboratory +
+          data?.report?.total_collections_for_spending_report /
+            total?.supplies +
+          data?.report?.total_collections_for_spending_report /
+            total?.adminServices +
+          data?.report?.total_collections_for_spending_report / total?.marketing
+        ).toFixed(2),
         target: '52%',
         practice_amount: formatCurrency(
           total?.staffCompensation ||
@@ -228,7 +310,58 @@ class Report extends Component {
               (this.collections * 6) / 100 +
               (this.collections * 1) / 100),
         ),
-        variance: '',
+        variance: (() => {
+          let a = 0;
+          if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
+            a = 0;
+          } else {
+            a = (total?.staffCompensation || 0) - (this.collections * 20) / 100;
+          }
+
+          let b = 0;
+          if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
+            b = 0;
+          } else {
+            b = (total?.occupancy || 0) - (this.collections * 6) / 100;
+          }
+
+          let c = 0;
+          if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
+            c = 0;
+          } else {
+            c = (total?.resourceDev || 0) - (this.collections * 5) / 100;
+          }
+
+          let d = 0;
+          if ((this.collections * 10) / 100 > total?.laboratory || 0) {
+            d = 0;
+          } else {
+            d = (total?.laboratory || 0) - (this.collections * 10) / 100;
+          }
+
+          let e = 0;
+          if ((this.collections * 4) / 100 > total?.supplies || 0) {
+            e = 0;
+          } else {
+            e = (total?.supplies || 0) - (this.collections * 4) / 100;
+          }
+
+          let f = 0;
+          if ((this.collections * 6) / 100 > total?.adminServices || 0) {
+            f = 0;
+          } else {
+            f = (total?.adminServices || 0) - (this.collections * 6) / 100;
+          }
+
+          let g = 0;
+          if ((this.collections * 1) / 100 > total?.marketing || 0) {
+            g = 0;
+          } else {
+            g = (total?.marketing || 0) - (this.collections * 1) / 100;
+          }
+
+          return formatCurrency(a + b + c + d + e + f + g);
+        })(),
       },
       {
         key: 'empty_2',
@@ -243,52 +376,335 @@ class Report extends Component {
       {
         key: 'dr_salary',
         field: 'Dr.Salary',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+          total?.doctorComp
+        ).toFixed(2),
         target: '24%',
-        practice_amount: '',
-        cpd_amount: '0',
-        variance_amount: '',
-        variance: '',
+        practice_amount: formatCurrency(total?.doctorComp || 0),
+        cpd_amount: formatCurrency((this.collections * 24) / 100),
+        variance_amount: formatCurrency(
+          (total?.doctorComp || 0) - (this.collections * 24) / 100,
+        ),
+        variance: (() => {
+          if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.doctorComp || 0) - (this.collections * 24) / 100,
+          );
+        })(),
       },
       {
         key: 'redline',
         field: 'REDLINE',
-        percentage_col: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report /
+            total?.staffCompensation +
+          data?.report?.total_collections_for_spending_report /
+            total?.occupancy +
+          data?.report?.total_collections_for_spending_report /
+            total?.resourceDev +
+          data?.report?.total_collections_for_spending_report /
+            total?.laboratory +
+          data?.report?.total_collections_for_spending_report /
+            total?.supplies +
+          data?.report?.total_collections_for_spending_report /
+            total?.adminServices +
+          data?.report?.total_collections_for_spending_report /
+            total?.marketing +
+          data?.report?.total_collections_for_spending_report /
+            total?.doctorComp
+        ).toFixed(2),
         target: '76%',
-        practice_amount: '',
-        cpd_amount: '0',
-        variance_amount: '',
-        variance: '',
+        practice_amount: formatCurrency(
+          total?.staffCompensation ||
+            0 + total?.occupancy ||
+            0 + total?.resourceDev ||
+            0 + total?.laboratory ||
+            0 + total?.supplies ||
+            0 + total?.adminServices ||
+            0 + total?.marketing ||
+            0 + total?.doctorComp ||
+            0,
+        ),
+        cpd_amount: formatCurrency(
+          (this.collections * 20) / 100 +
+            (this.collections * 6) / 100 +
+            (this.collections * 5) / 100 +
+            (this.collections * 10) / 100 +
+            (this.collections * 4) / 100 +
+            (this.collections * 6) / 100 +
+            (this.collections * 1) / 100 +
+            (this.collections * 24) / 100,
+        ),
+        variance_amount: formatCurrency(
+          (total?.staffCompensation ||
+            0 + total?.occupancy ||
+            0 + total?.resourceDev ||
+            0 + total?.laboratory ||
+            0 + total?.supplies ||
+            0 + total?.adminServices ||
+            0 + total?.marketing ||
+            0) -
+            ((this.collections * 20) / 100 +
+              (this.collections * 6) / 100 +
+              (this.collections * 5) / 100 +
+              (this.collections * 10) / 100 +
+              (this.collections * 4) / 100 +
+              (this.collections * 6) / 100 +
+              (this.collections * 1) / 100) +
+            ((total?.doctorComp || 0) - (this.collections * 24) / 100),
+        ),
+        variance: (() => {
+          let a = 0;
+          if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
+            a = 0;
+          } else {
+            a = (total?.staffCompensation || 0) - (this.collections * 20) / 100;
+          }
+
+          let b = 0;
+          if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
+            b = 0;
+          } else {
+            b = (total?.occupancy || 0) - (this.collections * 6) / 100;
+          }
+
+          let c = 0;
+          if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
+            c = 0;
+          } else {
+            c = (total?.resourceDev || 0) - (this.collections * 5) / 100;
+          }
+
+          let d = 0;
+          if ((this.collections * 10) / 100 > total?.laboratory || 0) {
+            d = 0;
+          } else {
+            d = (total?.laboratory || 0) - (this.collections * 10) / 100;
+          }
+
+          let e = 0;
+          if ((this.collections * 4) / 100 > total?.supplies || 0) {
+            e = 0;
+          } else {
+            e = (total?.supplies || 0) - (this.collections * 4) / 100;
+          }
+
+          let f = 0;
+          if ((this.collections * 6) / 100 > total?.adminServices || 0) {
+            f = 0;
+          } else {
+            f = (total?.adminServices || 0) - (this.collections * 6) / 100;
+          }
+
+          let g = 0;
+          if ((this.collections * 1) / 100 > total?.marketing || 0) {
+            g = 0;
+          } else {
+            g = (total?.marketing || 0) - (this.collections * 1) / 100;
+          }
+
+          let h = 0;
+          if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
+            h = 0;
+          } else {
+            h = (total?.doctorComp || 0) - (this.collections * 24) / 100;
+          }
+
+          return formatCurrency(a + b + c + d + e + f + g + h);
+        })(),
       },
       {
         key: 'solvency',
         field: 'Solvency',
-        percentage_col: '',
-        target: '10%',
-        practice_amount: '',
-        cpd_amount: '0',
-        variance_amount: '',
-        variance: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report / total?.solvency
+        ).toFixed(2),
+        target: '24%',
+        practice_amount: formatCurrency(total?.solvency || 0),
+        cpd_amount: formatCurrency((this.collections * 24) / 100),
+        variance_amount: formatCurrency(
+          (total?.solvency || 0) - (this.collections * 24) / 100,
+        ),
+        variance: (() => {
+          if ((this.collections * 24) / 100 > total?.solvency || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.solvency || 0) - (this.collections * 24) / 100,
+          );
+        })(),
       },
       {
         key: 'roi',
         field: 'ROI',
-        percentage_col: '',
-        target: '10%',
-        practice_amount: '',
-        cpd_amount: '0',
-        variance_amount: '',
-        variance: '',
+        percentage_col: (
+          data?.report?.total_collections_for_spending_report / total?.roi
+        ).toFixed(2),
+        target: '24%',
+        practice_amount: formatCurrency(total?.roi || 0),
+        cpd_amount: formatCurrency((this.collections * 10) / 100),
+        variance_amount: formatCurrency(
+          (total?.roi || 0) - (this.collections * 10) / 100,
+        ),
+        variance: (() => {
+          if ((this.collections * 10) / 100 > total?.roi || 0) {
+            return 0;
+          }
+          return formatCurrency(
+            (total?.roi || 0) - (this.collections * 10) / 100,
+          );
+        })(),
       },
       {
         key: 'add_profit',
         field: 'Add.Profit',
-        percentage_col: '',
-        target: '4%',
-        practice_amount: '',
-        cpd_amount: '0',
-        variance_amount: '',
-        variance: '',
+        percentage_col: (
+          1 -
+          (data?.report?.total_collections_for_spending_report /
+            total?.staffCompensation +
+            data?.report?.total_collections_for_spending_report /
+              total?.occupancy +
+            data?.report?.total_collections_for_spending_report /
+              total?.resourceDev +
+            data?.report?.total_collections_for_spending_report /
+              total?.laboratory +
+            data?.report?.total_collections_for_spending_report /
+              total?.supplies +
+            data?.report?.total_collections_for_spending_report /
+              total?.adminServices +
+            data?.report?.total_collections_for_spending_report /
+              total?.marketing +
+            data?.report?.total_collections_for_spending_report /
+              total?.doctorComp) -
+          data?.report?.total_collections_for_spending_report /
+            total?.solvency -
+          data?.report?.total_collections_for_spending_report / total?.roi
+        ).toFixed(2),
+        target: '76%',
+        practice_amount: formatCurrency(
+          1 -
+            (total?.staffCompensation ||
+              0 + total?.occupancy ||
+              0 + total?.resourceDev ||
+              0 + total?.laboratory ||
+              0 + total?.supplies ||
+              0 + total?.adminServices ||
+              0 + total?.marketing ||
+              0 + total?.doctorComp ||
+              0) -
+            (total?.solvency || 0) -
+            (total?.roi || 0),
+        ),
+        cpd_amount: formatCurrency(
+          1 -
+            ((this.collections * 20) / 100 +
+              (this.collections * 6) / 100 +
+              (this.collections * 5) / 100 +
+              (this.collections * 10) / 100 +
+              (this.collections * 4) / 100 +
+              (this.collections * 6) / 100 +
+              (this.collections * 1) / 100 +
+              (this.collections * 24) / 100) -
+            (this.collections * 10) / 100 -
+            (this.collections * 10) / 100,
+        ),
+        variance_amount: formatCurrency(
+          1 -
+            ((total?.staffCompensation ||
+              0 + total?.occupancy ||
+              0 + total?.resourceDev ||
+              0 + total?.laboratory ||
+              0 + total?.supplies ||
+              0 + total?.adminServices ||
+              0 + total?.marketing ||
+              0) -
+              ((this.collections * 20) / 100 +
+                (this.collections * 6) / 100 +
+                (this.collections * 5) / 100 +
+                (this.collections * 10) / 100 +
+                (this.collections * 4) / 100 +
+                (this.collections * 6) / 100 +
+                (this.collections * 1) / 100) +
+              ((total?.doctorComp || 0) - (this.collections * 24) / 100) -
+              ((total?.solvency || 0) - (this.collections * 24) / 100)) -
+            ((total?.roi || 0) - (this.collections * 10) / 100),
+        ),
+        variance: (() => {
+          let a = 0;
+          if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
+            a = 0;
+          } else {
+            a = (total?.staffCompensation || 0) - (this.collections * 20) / 100;
+          }
+
+          let b = 0;
+          if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
+            b = 0;
+          } else {
+            b = (total?.occupancy || 0) - (this.collections * 6) / 100;
+          }
+
+          let c = 0;
+          if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
+            c = 0;
+          } else {
+            c = (total?.resourceDev || 0) - (this.collections * 5) / 100;
+          }
+
+          let d = 0;
+          if ((this.collections * 10) / 100 > total?.laboratory || 0) {
+            d = 0;
+          } else {
+            d = (total?.laboratory || 0) - (this.collections * 10) / 100;
+          }
+
+          let e = 0;
+          if ((this.collections * 4) / 100 > total?.supplies || 0) {
+            e = 0;
+          } else {
+            e = (total?.supplies || 0) - (this.collections * 4) / 100;
+          }
+
+          let f = 0;
+          if ((this.collections * 6) / 100 > total?.adminServices || 0) {
+            f = 0;
+          } else {
+            f = (total?.adminServices || 0) - (this.collections * 6) / 100;
+          }
+
+          let g = 0;
+          if ((this.collections * 1) / 100 > total?.marketing || 0) {
+            g = 0;
+          } else {
+            g = (total?.marketing || 0) - (this.collections * 1) / 100;
+          }
+
+          let h = 0;
+          if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
+            h = 0;
+          } else {
+            h = (total?.doctorComp || 0) - (this.collections * 24) / 100;
+          }
+
+          let y = 0;
+          if ((this.collections * 10) / 100 > total?.roi || 0) {
+            y = 0;
+          } else {
+            y = (total?.roi || 0) - (this.collections * 10) / 100;
+          }
+
+          let l = 0;
+          if ((this.collections * 24) / 100 > total?.solvency || 0) {
+            l = 0;
+          } else {
+            l = (total?.solvency || 0) - (this.collections * 24) / 100;
+          }
+
+          return formatCurrency(1 - (a + b + c + d + e + f + g + h) - y - l);
+        })(),
       },
       {
         key: 'empty_3',
@@ -303,7 +719,7 @@ class Report extends Component {
       {
         key: 'total',
         field: 'TOTAL',
-        percentage_col: '',
+        percentage_col: '100%',
         target: '100%',
         practice_amount: '',
         cpd_amount: '0',
