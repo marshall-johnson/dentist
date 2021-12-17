@@ -48,68 +48,68 @@ class SummaryPage extends Component {
     };
   }
 
+  componentDidMount() {
+    const { total } = this.props;
+    this.updateDataSource(total);
+  }
+
   componentDidUpdate(prevProps) {
     const { total } = this.props;
 
     if (total !== prevProps.total) {
-      const dataSource = [
-        {
-          field: 'STAFF SALARIES',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.staffCompensation]),
-          amount: total[KEY.staffCompensation] || 0,
-        },
-        {
-          field: 'OCCUPANCY',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.occupancy]),
-          amount: total[KEY.occupancy] || 0,
-        },
-        {
-          field: 'H&P RESOURCES',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.resourceDev]),
-          amount: total[KEY.resourceDev] || 0,
-        },
-        {
-          field: 'LABORATORY',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.laboratory]),
-          amount: total[KEY.laboratory] || 0,
-        },
-        {
-          field: 'SUPPLIES',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.supplies]),
-          amount: total[KEY.supplies] || 0,
-        },
-        {
-          field: 'SERVICES',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.adminServices]),
-          amount: total[KEY.adminServices] || 0,
-        },
-        {
-          field: 'MARKETING',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.marketing]),
-          amount: total[KEY.marketing] || 0,
-        },
-        {
-          field: 'TOTAL OVERHEAD',
-          year: moment().year(),
-          percentage: this.calculatePercentage(
-            total[KEY.staffCompensation] ||
-              0 + total[KEY.occupancy] ||
-              0 + total[KEY.resourceDev] ||
-              0 + total[KEY.laboratory] ||
-              0 + total[KEY.supplies] ||
-              0 + total[KEY.adminServices] ||
-              0 + total[KEY.marketing] ||
-              0,
-          ),
-          amount:
-            total[KEY.staffCompensation] ||
+      this.updateDataSource(total);
+    }
+  }
+
+  updateDataSource = (total) => {
+    const dataSource = [
+      {
+        field: 'STAFF SALARIES',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.staffCompensation]),
+        amount: total[KEY.staffCompensation] || 0,
+      },
+      {
+        field: 'OCCUPANCY',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.occupancy]),
+        amount: total[KEY.occupancy] || 0,
+      },
+      {
+        field: 'H&P RESOURCES',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.resourceDev]),
+        amount: total[KEY.resourceDev] || 0,
+      },
+      {
+        field: 'LABORATORY',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.laboratory]),
+        amount: total[KEY.laboratory] || 0,
+      },
+      {
+        field: 'SUPPLIES',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.supplies]),
+        amount: total[KEY.supplies] || 0,
+      },
+      {
+        field: 'SERVICES',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.adminServices]),
+        amount: total[KEY.adminServices] || 0,
+      },
+      {
+        field: 'MARKETING',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.marketing]),
+        amount: total[KEY.marketing] || 0,
+      },
+      {
+        field: 'TOTAL OVERHEAD',
+        year: moment().year(),
+        percentage: this.calculatePercentage(
+          total[KEY.staffCompensation] ||
             0 + total[KEY.occupancy] ||
             0 + total[KEY.resourceDev] ||
             0 + total[KEY.laboratory] ||
@@ -117,29 +117,28 @@ class SummaryPage extends Component {
             0 + total[KEY.adminServices] ||
             0 + total[KEY.marketing] ||
             0,
-        },
-        {
-          field: 'DR SALARY',
-          year: moment().year(),
-          percentage: this.calculatePercentage(total[KEY.doctorComp]),
-          amount: total[KEY.doctorComp] || 0,
-        },
-        {
-          field: 'TOTAL EXPENSES',
-          year: moment().year(),
-          percentage: this.calculatePercentage(
-            total[KEY.staffCompensation] ||
-              0 + total[KEY.occupancy] ||
-              0 + total[KEY.resourceDev] ||
-              0 + total[KEY.laboratory] ||
-              0 + total[KEY.supplies] ||
-              0 + total[KEY.adminServices] ||
-              0 + total[KEY.marketing] ||
-              0 + total[KEY.doctorComp] ||
-              0,
-          ),
-          amount:
-            total[KEY.staffCompensation] ||
+        ),
+        amount:
+          total[KEY.staffCompensation] ||
+          0 + total[KEY.occupancy] ||
+          0 + total[KEY.resourceDev] ||
+          0 + total[KEY.laboratory] ||
+          0 + total[KEY.supplies] ||
+          0 + total[KEY.adminServices] ||
+          0 + total[KEY.marketing] ||
+          0,
+      },
+      {
+        field: 'DR SALARY',
+        year: moment().year(),
+        percentage: this.calculatePercentage(total[KEY.doctorComp]),
+        amount: total[KEY.doctorComp] || 0,
+      },
+      {
+        field: 'TOTAL EXPENSES',
+        year: moment().year(),
+        percentage: this.calculatePercentage(
+          total[KEY.staffCompensation] ||
             0 + total[KEY.occupancy] ||
             0 + total[KEY.resourceDev] ||
             0 + total[KEY.laboratory] ||
@@ -148,27 +147,37 @@ class SummaryPage extends Component {
             0 + total[KEY.marketing] ||
             0 + total[KEY.doctorComp] ||
             0,
-        },
-        {
-          field: 'ACTUAL SOLVENCY DEPOSITS',
-          year: '',
-          percentage: NaN,
-          amount: total[KEY.solvency] || 0,
-        },
-        {
-          field: 'ACTUAL ROI EXPENSES',
-          year: '',
-          percentage: NaN,
-          amount: total[KEY.roi] || 0,
-        },
-      ];
+        ),
+        amount:
+          total[KEY.staffCompensation] ||
+          0 + total[KEY.occupancy] ||
+          0 + total[KEY.resourceDev] ||
+          0 + total[KEY.laboratory] ||
+          0 + total[KEY.supplies] ||
+          0 + total[KEY.adminServices] ||
+          0 + total[KEY.marketing] ||
+          0 + total[KEY.doctorComp] ||
+          0,
+      },
+      {
+        field: 'ACTUAL SOLVENCY DEPOSITS',
+        year: '',
+        percentage: NaN,
+        amount: total[KEY.solvency] || 0,
+      },
+      {
+        field: 'ACTUAL ROI EXPENSES',
+        year: '',
+        percentage: NaN,
+        amount: total[KEY.roi] || 0,
+      },
+    ];
 
-      // eslint-disable-next-line
-      this.setState({
-        dataSource,
-      });
-    }
-  }
+    // eslint-disable-next-line
+    this.setState({
+      dataSource,
+    });
+  };
 
   calculatePercentage(total) {
     const { report } = this.props;

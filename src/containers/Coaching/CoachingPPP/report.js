@@ -1,226 +1,13 @@
 import React, { Component } from 'react';
-import { Descriptions, Select, Table } from 'antd';
+import { Descriptions, Table } from 'antd';
 import PropTypes from 'prop-types';
 import { fetchStudents } from '@/actions/studentActions';
 import './index.scss';
 import { connect } from 'react-redux';
-
-const { Option } = Select;
+import { formatCurrency } from '@/utils/helpers';
+import moment from 'moment';
 
 class Report extends Component {
-  dataSource = [
-    {
-      key: 'title',
-      field: '',
-      percentage_col: '%COL',
-      target: 'TARGET',
-      practice_amount: 'AMOUNT',
-      cpd_amount: 'AMOUNT',
-      variance_amount: 'AMOUNT',
-      variance: 'VARIANCE',
-    },
-    {
-      key: 'fixed',
-      field: 'FIXED',
-      percentage_col: '',
-      target: '',
-      practice_amount: '',
-      cpd_amount: '',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'staff',
-      field: 'Staff',
-      percentage_col: '',
-      target: '20%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'occupancy',
-      field: 'Occupancy',
-      percentage_col: '',
-      target: '6%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'resource',
-      field: 'H&P Resources',
-      percentage_col: '',
-      target: '5%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'variable',
-      field: 'VARIABLE',
-      percentage_col: '',
-      target: '',
-      practice_amount: '',
-      cpd_amount: '',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'laboratory',
-      field: 'Laboratory',
-      percentage_col: '',
-      target: '10%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'supplies',
-      field: 'Supplies',
-      percentage_col: '',
-      target: '4%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'admin',
-      field: 'Admin',
-      percentage_col: '',
-      target: '6%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'marketing',
-      field: 'Marketing',
-      percentage_col: '0.00%',
-      target: '1%',
-      practice_amount: '0',
-      cpd_amount: '0',
-      variance_amount: '0',
-      variance: '0',
-    },
-    {
-      key: 'empty_1',
-      field: '',
-      percentage_col: '',
-      target: '',
-      practice_amount: '',
-      cpd_amount: '',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'overhead',
-      field: 'OVERHEAD',
-      percentage_col: '',
-      target: '52%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'empty_2',
-      field: '',
-      percentage_col: '',
-      target: '',
-      practice_amount: '',
-      cpd_amount: '',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'dr_salary',
-      field: 'Dr.Salary',
-      percentage_col: '',
-      target: '24%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'redline',
-      field: 'Dr.REDLINE',
-      percentage_col: '',
-      target: '76%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'solvency',
-      field: 'Solvency',
-      percentage_col: '',
-      target: '10%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'roi',
-      field: 'ROI',
-      percentage_col: '',
-      target: '10%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'add_profit',
-      field: 'Add.Profit',
-      percentage_col: '',
-      target: '4%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'empty_3',
-      field: '',
-      percentage_col: '',
-      target: '',
-      practice_amount: '',
-      cpd_amount: '',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'total',
-      field: 'TOTAL',
-      percentage_col: '',
-      target: '100%',
-      practice_amount: '',
-      cpd_amount: '0',
-      variance_amount: '',
-      variance: '',
-    },
-    {
-      key: 'yr_one_roi',
-      field: 'YR.1 ROI',
-      percentage_col: '',
-      target: '',
-      practice_amount: '',
-      cpd_amount: '',
-      variance_amount: '',
-      variance: '',
-    },
-  ];
-
   columns = [
     {
       title: '',
@@ -241,6 +28,7 @@ class Report extends Component {
       title: 'PRACTICE',
       dataIndex: 'practice_amount',
       key: 'practice_amount',
+      render: (value) => (Number(value) ? <span>${value}</span> : value),
     },
     {
       title: 'CPD',
@@ -259,51 +47,326 @@ class Report extends Component {
     },
   ];
 
-  componentDidMount() {
-    const { fetchStudents } = this.props;
-    fetchStudents();
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: [],
+    };
   }
 
+  componentDidMount() {
+    const { fetchStudents, data } = this.props;
+    fetchStudents();
+    this.updateDataSource(data);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (data !== prevProps.data) {
+      this.updateDataSource(data);
+    }
+  }
+
+  get collections() {
+    const { data } = this.props;
+
+    return (
+      (data?.total?.staffCompensation +
+        data?.total?.occupancy +
+        data?.total?.staffCompensation) /
+      0.31
+    );
+  }
+
+  updateDataSource = (data) => {
+    const total = data?.total || {};
+
+    const dataSource = [
+      {
+        key: 'title',
+        field: '',
+        percentage_col: '%COL',
+        target: 'TARGET',
+        practice_amount: 'AMOUNT',
+        cpd_amount: 'AMOUNT',
+        variance_amount: 'AMOUNT',
+        variance: 'VARIANCE',
+      },
+      {
+        key: 'staff',
+        field: 'Staff',
+        percentage_col: '',
+        target: '20%',
+        practice_amount: formatCurrency(total?.staffCompensation || 0),
+        cpd_amount: formatCurrency((this.collections * 20) / 100),
+        variance_amount: formatCurrency(
+          (total?.staffCompensation || 0) - (this.collections * 20) / 100,
+        ),
+        variance: '',
+      },
+      {
+        key: 'occupancy',
+        field: 'Occupancy',
+        percentage_col: '',
+        target: '6%',
+        practice_amount: formatCurrency(total?.occupancy || 0),
+        cpd_amount: formatCurrency((this.collections * 6) / 100),
+        variance_amount: formatCurrency(
+          (total?.occupancy || 0) - (this.collections * 6) / 100,
+        ),
+        variance: '',
+      },
+      {
+        key: 'resource',
+        field: 'H&P Resources',
+        percentage_col: '',
+        target: '5%',
+        practice_amount: formatCurrency(total?.resourceDev || 0),
+        cpd_amount: formatCurrency((this.collections * 5) / 100),
+        variance_amount: formatCurrency(
+          (total?.resourceDev || 0) - (this.collections * 5) / 100,
+        ),
+        variance: '',
+      },
+      {
+        key: 'laboratory',
+        field: 'Laboratory',
+        percentage_col: '',
+        target: '10%',
+        practice_amount: formatCurrency(total?.laboratory || 0),
+        cpd_amount: formatCurrency((this.collections * 10) / 100),
+        variance_amount: formatCurrency(
+          (total?.laboratory || 0) - (this.collections * 10) / 100,
+        ),
+        variance: '',
+      },
+      {
+        key: 'supplies',
+        field: 'Supplies',
+        percentage_col: '',
+        target: '4%',
+        practice_amount: formatCurrency(total?.supplies || 0),
+        cpd_amount: formatCurrency((this.collections * 4) / 100),
+        variance_amount: formatCurrency(
+          (total?.supplies || 0) - (this.collections * 4) / 100,
+        ),
+        variance: '',
+      },
+      {
+        key: 'admin',
+        field: 'Admin',
+        percentage_col: '',
+        target: '6%',
+        practice_amount: formatCurrency(total?.adminServices || 0),
+        cpd_amount: formatCurrency((this.collections * 6) / 100),
+        variance_amount: formatCurrency(
+          (total?.adminServices || 0) - (this.collections * 6) / 100,
+        ),
+        variance: '',
+      },
+      {
+        key: 'marketing',
+        field: 'Marketing',
+        percentage_col: '0.00%',
+        target: '1%',
+        practice_amount: formatCurrency(total?.marketing || 0),
+        cpd_amount: formatCurrency((this.collections * 1) / 100),
+        variance_amount: formatCurrency(
+          (total?.marketing || 0) - (this.collections * 1) / 100,
+        ),
+        variance: '0',
+      },
+      {
+        key: 'empty_1',
+        field: '',
+        percentage_col: '',
+        target: '',
+        practice_amount: '',
+        cpd_amount: '',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'overhead',
+        field: 'OVERHEAD',
+        percentage_col: '',
+        target: '52%',
+        practice_amount: formatCurrency(
+          total?.staffCompensation ||
+            0 + total?.occupancy ||
+            0 + total?.resourceDev ||
+            0 + total?.laboratory ||
+            0 + total?.supplies ||
+            0 + total?.adminServices ||
+            0 + total?.marketing ||
+            0,
+        ),
+        cpd_amount: formatCurrency(
+          (this.collections * 20) / 100 +
+            (this.collections * 6) / 100 +
+            (this.collections * 5) / 100 +
+            (this.collections * 10) / 100 +
+            (this.collections * 4) / 100 +
+            (this.collections * 6) / 100 +
+            (this.collections * 1) / 100,
+        ),
+        variance_amount: formatCurrency(
+          (total?.staffCompensation ||
+            0 + total?.occupancy ||
+            0 + total?.resourceDev ||
+            0 + total?.laboratory ||
+            0 + total?.supplies ||
+            0 + total?.adminServices ||
+            0 + total?.marketing ||
+            0) -
+            ((this.collections * 20) / 100 +
+              (this.collections * 6) / 100 +
+              (this.collections * 5) / 100 +
+              (this.collections * 10) / 100 +
+              (this.collections * 4) / 100 +
+              (this.collections * 6) / 100 +
+              (this.collections * 1) / 100),
+        ),
+        variance: '',
+      },
+      {
+        key: 'empty_2',
+        field: '',
+        percentage_col: '',
+        target: '',
+        practice_amount: '',
+        cpd_amount: '',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'dr_salary',
+        field: 'Dr.Salary',
+        percentage_col: '',
+        target: '24%',
+        practice_amount: '',
+        cpd_amount: '0',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'redline',
+        field: 'REDLINE',
+        percentage_col: '',
+        target: '76%',
+        practice_amount: '',
+        cpd_amount: '0',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'solvency',
+        field: 'Solvency',
+        percentage_col: '',
+        target: '10%',
+        practice_amount: '',
+        cpd_amount: '0',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'roi',
+        field: 'ROI',
+        percentage_col: '',
+        target: '10%',
+        practice_amount: '',
+        cpd_amount: '0',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'add_profit',
+        field: 'Add.Profit',
+        percentage_col: '',
+        target: '4%',
+        practice_amount: '',
+        cpd_amount: '0',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'empty_3',
+        field: '',
+        percentage_col: '',
+        target: '',
+        practice_amount: '',
+        cpd_amount: '',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'total',
+        field: 'TOTAL',
+        percentage_col: '',
+        target: '100%',
+        practice_amount: '',
+        cpd_amount: '0',
+        variance_amount: '',
+        variance: '',
+      },
+      {
+        key: 'yr_one_roi',
+        field: 'YR.1 ROI',
+        percentage_col: '',
+        target: '',
+        practice_amount: '',
+        cpd_amount: '',
+        variance_amount: '',
+        variance: '$116,910',
+      },
+    ];
+
+    // eslint-disable-next-line
+    this.setState({
+      dataSource,
+    });
+  };
+
   render() {
-    const { students, loadingFetchStudent } = this.props;
+    const { data } = this.props;
+    const { dataSource } = this.state;
 
     return (
       <>
-        <div style={{ width: 100 }}>Student: </div>
-        <Select
-          loading={loadingFetchStudent}
-          style={{
-            width: 200,
-            marginBottom: 40,
-          }}
-          onChange={(id) => {
-            console.log(id);
-          }}
-        >
-          {students.map((student, index) => (
-            <Option value={student.id} key={index.toString()}>
-              {`${student.first_name} ${student.last_name}`}
-            </Option>
-          ))}
-        </Select>
-
         <Descriptions>
-          <Descriptions.Item label="Doctor Name">0.00</Descriptions.Item>
-          <Descriptions.Item label="Date">08/06/21</Descriptions.Item>
-          <Descriptions.Item label="Model Collections" />
-          <Descriptions.Item label="Model ExpenseReduction" />
-          <Descriptions.Item label="Collections">0</Descriptions.Item>
+          <Descriptions.Item label="Doctor Name">{`${data?.student?.last_name} ${data?.student?.first_name}`}</Descriptions.Item>
+          <Descriptions.Item label="Doctor Degree">
+            {data?.student?.degree?.toUpperCase()}
+          </Descriptions.Item>
+          <Descriptions.Item label="Date">
+            {moment().format('MM/DD/YYYY')}
+          </Descriptions.Item>
+          <Descriptions.Item label="Collections">
+            {formatCurrency(
+              (data?.report?.total_collections_for_spending_report /
+                data?.student?.spending_report_months) *
+                12,
+            )}
+          </Descriptions.Item>
           <Descriptions.Item label="Production">0</Descriptions.Item>
+          <Descriptions.Item label="" />
+          <Descriptions.Item label="Model Collections">
+            {formatCurrency(this.collections)}
+          </Descriptions.Item>
+          <Descriptions.Item label="Model ExpenseReduction" />
+          <Descriptions.Item label="" />
+          <Descriptions.Item label="Collections/Hr" />
+          <Descriptions.Item label="Prod/Pt" />
+          <Descriptions.Item label="" />
           <Descriptions.Item label="Yr 1 Collections" />
           <Descriptions.Item label="Yr 1 Expense Reduction">
             0
           </Descriptions.Item>
-          <Descriptions.Item label="Collections/Hr" />
-          <Descriptions.Item label="Prod/Pt" />
         </Descriptions>
         <Table
           style={{ marginTop: 40 }}
-          dataSource={this.dataSource}
+          dataSource={dataSource}
           columns={this.columns}
           pagination={false}
         />
@@ -397,9 +460,8 @@ class Report extends Component {
 }
 
 Report.propTypes = {
-  students: PropTypes.array,
-  loadingFetchStudent: PropTypes.bool,
   fetchStudents: PropTypes.func,
+  data: PropTypes.object,
 };
 
 const mapStateToProps = ({ student }) => ({

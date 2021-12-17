@@ -20,15 +20,31 @@ const renderTabBar = (props, DefaultTabBar) => (
 );
 
 class CoachingPPP extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      data: null,
+    };
+  }
+
+  setData = (data) => {
+    this.setState({
+      data,
+    });
+  };
+
   render() {
+    const { data } = this.state;
+
     return (
       <StickyContainer>
         <Tabs defaultActiveKey="1" renderTabBar={renderTabBar}>
           <TabPane tab="Form" key="1">
-            <FormTab />
+            <FormTab setData={this.setData} />
           </TabPane>
-          <TabPane tab="Report" key="2">
-            <Report />
+          <TabPane tab="Report" key="2" disabled={!data}>
+            <Report data={data} />
           </TabPane>
         </Tabs>
       </StickyContainer>

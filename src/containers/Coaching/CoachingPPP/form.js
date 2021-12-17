@@ -7,8 +7,8 @@ import { createCoachPppReport } from '@/actions/coachPppReportActions';
 import EnterClientPage from './FormSteps/EnterClientPage';
 import TotalInputPage from './FormSteps/TotalInputPage';
 import SummaryPage from './FormSteps/SummaryPage';
-import DetailDataPage from './FormSteps/DetailDataPage';
 import { KEY } from './config';
+import DetailDataPage from './FormSteps/DetailDataPage';
 
 class FormTab extends Component {
   clientRef = React.createRef();
@@ -106,29 +106,29 @@ class FormTab extends Component {
   };
 
   onSubmit = () => {
-    const { createCoachPppReport } = this.props;
-    const { data } = this.state;
+    const { createCoachPppReport, setData } = this.props;
+    const { data, total } = this.state;
 
-    createCoachPppReport(
-      {
-        ...data,
-        report: {
-          ...data.report,
-          ...this.summaryRef.current.getFieldValue(),
-        },
+    const formatData = {
+      ...data,
+      total,
+      report: {
+        ...data.report,
+        ...this.summaryRef.current.getFieldValue(),
       },
-      (success, message) => {
-        if (success) {
-          notification.success({
-            message,
-          });
-        } else {
-          notification.error({
-            message,
-          });
-        }
-      },
-    );
+    };
+    createCoachPppReport(formatData, (success, message) => {
+      if (success) {
+        setData(formatData);
+        notification.success({
+          message,
+        });
+      } else {
+        notification.error({
+          message,
+        });
+      }
+    });
   };
 
   goBack = () => {
@@ -197,6 +197,7 @@ class FormTab extends Component {
 
 FormTab.propTypes = {
   createCoachPppReport: PropTypes.func,
+  setData: PropTypes.func,
 };
 
 const mapStateToProps = () => ({});
