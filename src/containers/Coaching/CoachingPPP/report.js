@@ -73,10 +73,87 @@ class Report extends Component {
     const { data } = this.props;
 
     return (
-      (data?.total?.staffCompensation +
-        data?.total?.occupancy +
-        data?.total?.staffCompensation) /
-      0.31
+      (data?.report?.total_collections_for_spending_report /
+        data?.student?.spending_report_months) *
+      12
+    );
+  }
+
+  get modelCollections() {
+    const { data } = this.props;
+
+    return (
+      (data?.total?.staffCompensation ||
+        0 + data?.total?.occupancy ||
+        0 + data?.total?.staffCompensation ||
+        0) / 0.31
+    );
+  }
+
+  get production() {
+    const { data } = this.props;
+
+    return (
+      ((Number(data?.report?.total_production_for_spending_report) || 0) /
+        data?.student?.spending_report_months) *
+      12
+    );
+  }
+
+  get collectionsHr() {
+    const { data } = this.props;
+
+    return (
+      data?.report?.total_collections_for_spending_report /
+      (Number(data?.report?.avg_of_clinical_hours_worked_month) *
+        data?.student?.spending_report_months)
+    );
+  }
+
+  get year1Collections() {
+    const { data } = this.props;
+
+    return (
+      (this.collectionsHr + 100) *
+      Number(data?.report?.avg_of_clinical_hours_worked_month) *
+      12
+    );
+  }
+
+  get modelExpenseReduction() {
+    const { data } = this.props;
+    const total = data?.total;
+
+    return (
+      this.collections *
+      (((data?.report?.total_collections_for_spending_report /
+        total?.laboratory) *
+        100 +
+        (data?.report?.total_collections_for_spending_report /
+          total?.supplies) *
+          100 +
+        (data?.report?.total_collections_for_spending_report /
+          total?.adminServices) *
+          100 +
+        (data?.report?.total_collections_for_spending_report /
+          total?.marketing) *
+          100 -
+        (10 + 4 + 6 + 1)) /
+        100)
+    );
+  }
+
+  get year1ExpenseReduction() {
+    return this.modelExpenseReduction * 0.7;
+  }
+
+  get prodPt() {
+    const { data } = this.props;
+
+    return (
+      Number(data?.report?.total_production_for_spending_report) /
+      (Number(data?.report?.avg_of_doctor_patient_visits_month) *
+        data?.student?.spending_report_months)
     );
   }
 
@@ -99,7 +176,8 @@ class Report extends Component {
         field: 'Staff',
         percentage_col: (
           data?.report?.total_collections_for_spending_report /
-          total?.staffCompensation
+          total?.staffCompensation /
+          100
         ).toFixed(2),
         target: '20%',
         practice_amount: formatCurrency(total?.staffCompensation || 0),
@@ -109,7 +187,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.staffCompensation || 0) - (this.collections * 20) / 100,
@@ -120,7 +198,9 @@ class Report extends Component {
         key: 'occupancy',
         field: 'Occupancy',
         percentage_col: (
-          data?.report?.total_collections_for_spending_report / total?.occupancy
+          data?.report?.total_collections_for_spending_report /
+          total?.occupancy /
+          100
         ).toFixed(2),
         target: '6%',
         practice_amount: formatCurrency(total?.occupancy || 0),
@@ -130,7 +210,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.occupancy || 0) - (this.collections * 6) / 100,
@@ -142,7 +222,8 @@ class Report extends Component {
         field: 'H&P Resources',
         percentage_col: (
           data?.report?.total_collections_for_spending_report /
-          total?.resourceDev
+          total?.resourceDev /
+          100
         ).toFixed(2),
         target: '5%',
         practice_amount: formatCurrency(total?.resourceDev || 0),
@@ -152,7 +233,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.resourceDev || 0) - (this.collections * 5) / 100,
@@ -164,7 +245,8 @@ class Report extends Component {
         field: 'Laboratory',
         percentage_col: (
           data?.report?.total_collections_for_spending_report /
-          total?.laboratory
+          total?.laboratory /
+          100
         ).toFixed(2),
         target: '10%',
         practice_amount: formatCurrency(total?.laboratory || 0),
@@ -174,7 +256,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 10) / 100 > total?.laboratory || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.laboratory || 0) - (this.collections * 10) / 100,
@@ -185,7 +267,9 @@ class Report extends Component {
         key: 'supplies',
         field: 'Supplies',
         percentage_col: (
-          data?.report?.total_collections_for_spending_report / total?.supplies
+          data?.report?.total_collections_for_spending_report /
+          total?.supplies /
+          100
         ).toFixed(2),
         target: '4%',
         practice_amount: formatCurrency(total?.supplies || 0),
@@ -195,7 +279,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 4) / 100 > total?.supplies || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.supplies || 0) - (this.collections * 4) / 100,
@@ -207,7 +291,8 @@ class Report extends Component {
         field: 'Admin',
         percentage_col: (
           data?.report?.total_collections_for_spending_report /
-          total?.adminServices
+          total?.adminServices /
+          100
         ).toFixed(2),
         target: '6%',
         practice_amount: formatCurrency(total?.adminServices || 0),
@@ -217,7 +302,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 6) / 100 > total?.adminServices || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.adminServices || 0) - (this.collections * 6) / 100,
@@ -228,7 +313,9 @@ class Report extends Component {
         key: 'marketing',
         field: 'Marketing',
         percentage_col: (
-          data?.report?.total_collections_for_spending_report / total?.marketing
+          data?.report?.total_collections_for_spending_report /
+          total?.marketing /
+          100
         ).toFixed(2),
         target: '1%',
         practice_amount: formatCurrency(total?.marketing || 0),
@@ -238,7 +325,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 1) / 100 > total?.marketing || 0) {
-            return 0;
+            return '_';
           }
           return formatCurrency(
             (total?.marketing || 0) - (this.collections * 1) / 100,
@@ -259,19 +346,21 @@ class Report extends Component {
         key: 'overhead',
         field: 'OVERHEAD',
         percentage_col: (
-          data?.report?.total_collections_for_spending_report /
+          (data?.report?.total_collections_for_spending_report /
             total?.staffCompensation +
-          data?.report?.total_collections_for_spending_report /
-            total?.occupancy +
-          data?.report?.total_collections_for_spending_report /
-            total?.resourceDev +
-          data?.report?.total_collections_for_spending_report /
-            total?.laboratory +
-          data?.report?.total_collections_for_spending_report /
-            total?.supplies +
-          data?.report?.total_collections_for_spending_report /
-            total?.adminServices +
-          data?.report?.total_collections_for_spending_report / total?.marketing
+            data?.report?.total_collections_for_spending_report /
+              total?.occupancy +
+            data?.report?.total_collections_for_spending_report /
+              total?.resourceDev +
+            data?.report?.total_collections_for_spending_report /
+              total?.laboratory +
+            data?.report?.total_collections_for_spending_report /
+              total?.supplies +
+            data?.report?.total_collections_for_spending_report /
+              total?.adminServices +
+            data?.report?.total_collections_for_spending_report /
+              total?.marketing) /
+          100
         ).toFixed(2),
         target: '52%',
         practice_amount: formatCurrency(
@@ -378,7 +467,8 @@ class Report extends Component {
         field: 'Dr.Salary',
         percentage_col: (
           data?.report?.total_collections_for_spending_report /
-          total?.doctorComp
+          total?.doctorComp /
+          100
         ).toFixed(2),
         target: '24%',
         practice_amount: formatCurrency(total?.doctorComp || 0),
@@ -388,7 +478,7 @@ class Report extends Component {
         ),
         variance: (() => {
           if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
-            return 0;
+            return '-';
           }
           return formatCurrency(
             (total?.doctorComp || 0) - (this.collections * 24) / 100,
@@ -398,129 +488,22 @@ class Report extends Component {
       {
         key: 'redline',
         field: 'REDLINE',
-        percentage_col: (
-          data?.report?.total_collections_for_spending_report /
-            total?.staffCompensation +
-          data?.report?.total_collections_for_spending_report /
-            total?.occupancy +
-          data?.report?.total_collections_for_spending_report /
-            total?.resourceDev +
-          data?.report?.total_collections_for_spending_report /
-            total?.laboratory +
-          data?.report?.total_collections_for_spending_report /
-            total?.supplies +
-          data?.report?.total_collections_for_spending_report /
-            total?.adminServices +
-          data?.report?.total_collections_for_spending_report /
-            total?.marketing +
-          data?.report?.total_collections_for_spending_report /
-            total?.doctorComp
-        ).toFixed(2),
+        percentage_col: (this.redlinePercentageCol() / 100).toFixed(2),
         target: '76%',
-        practice_amount: formatCurrency(
-          total?.staffCompensation ||
-            0 + total?.occupancy ||
-            0 + total?.resourceDev ||
-            0 + total?.laboratory ||
-            0 + total?.supplies ||
-            0 + total?.adminServices ||
-            0 + total?.marketing ||
-            0 + total?.doctorComp ||
-            0,
-        ),
-        cpd_amount: formatCurrency(
-          (this.collections * 20) / 100 +
-            (this.collections * 6) / 100 +
-            (this.collections * 5) / 100 +
-            (this.collections * 10) / 100 +
-            (this.collections * 4) / 100 +
-            (this.collections * 6) / 100 +
-            (this.collections * 1) / 100 +
-            (this.collections * 24) / 100,
-        ),
-        variance_amount: formatCurrency(
-          (total?.staffCompensation ||
-            0 + total?.occupancy ||
-            0 + total?.resourceDev ||
-            0 + total?.laboratory ||
-            0 + total?.supplies ||
-            0 + total?.adminServices ||
-            0 + total?.marketing ||
-            0) -
-            ((this.collections * 20) / 100 +
-              (this.collections * 6) / 100 +
-              (this.collections * 5) / 100 +
-              (this.collections * 10) / 100 +
-              (this.collections * 4) / 100 +
-              (this.collections * 6) / 100 +
-              (this.collections * 1) / 100) +
-            ((total?.doctorComp || 0) - (this.collections * 24) / 100),
-        ),
-        variance: (() => {
-          let a = 0;
-          if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
-            a = 0;
-          } else {
-            a = (total?.staffCompensation || 0) - (this.collections * 20) / 100;
-          }
-
-          let b = 0;
-          if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
-            b = 0;
-          } else {
-            b = (total?.occupancy || 0) - (this.collections * 6) / 100;
-          }
-
-          let c = 0;
-          if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
-            c = 0;
-          } else {
-            c = (total?.resourceDev || 0) - (this.collections * 5) / 100;
-          }
-
-          let d = 0;
-          if ((this.collections * 10) / 100 > total?.laboratory || 0) {
-            d = 0;
-          } else {
-            d = (total?.laboratory || 0) - (this.collections * 10) / 100;
-          }
-
-          let e = 0;
-          if ((this.collections * 4) / 100 > total?.supplies || 0) {
-            e = 0;
-          } else {
-            e = (total?.supplies || 0) - (this.collections * 4) / 100;
-          }
-
-          let f = 0;
-          if ((this.collections * 6) / 100 > total?.adminServices || 0) {
-            f = 0;
-          } else {
-            f = (total?.adminServices || 0) - (this.collections * 6) / 100;
-          }
-
-          let g = 0;
-          if ((this.collections * 1) / 100 > total?.marketing || 0) {
-            g = 0;
-          } else {
-            g = (total?.marketing || 0) - (this.collections * 1) / 100;
-          }
-
-          let h = 0;
-          if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
-            h = 0;
-          } else {
-            h = (total?.doctorComp || 0) - (this.collections * 24) / 100;
-          }
-
-          return formatCurrency(a + b + c + d + e + f + g + h);
-        })(),
+        practice_amount: formatCurrency(this.redlinePracticeAmount()),
+        cpd_amount: formatCurrency(this.redlineCpdAmount()),
+        variance_amount: formatCurrency(this.redlineVarianceAmount()),
+        variance: this.redlineVariance()
+          ? formatCurrency(this.redlineVariance())
+          : '-',
       },
       {
         key: 'solvency',
         field: 'Solvency',
         percentage_col: (
-          data?.report?.total_collections_for_spending_report / total?.solvency
+          data?.report?.total_collections_for_spending_report /
+          total?.solvency /
+          100
         ).toFixed(2),
         target: '24%',
         practice_amount: formatCurrency(total?.solvency || 0),
@@ -528,20 +511,17 @@ class Report extends Component {
         variance_amount: formatCurrency(
           (total?.solvency || 0) - (this.collections * 24) / 100,
         ),
-        variance: (() => {
-          if ((this.collections * 24) / 100 > total?.solvency || 0) {
-            return 0;
-          }
-          return formatCurrency(
-            (total?.solvency || 0) - (this.collections * 24) / 100,
-          );
-        })(),
+        variance: this.solvencyVariance()
+          ? formatCurrency(this.solvencyVariance())
+          : '-',
       },
       {
         key: 'roi',
         field: 'ROI',
         percentage_col: (
-          data?.report?.total_collections_for_spending_report / total?.roi
+          data?.report?.total_collections_for_spending_report /
+          total?.roi /
+          100
         ).toFixed(2),
         target: '24%',
         practice_amount: formatCurrency(total?.roi || 0),
@@ -549,162 +529,19 @@ class Report extends Component {
         variance_amount: formatCurrency(
           (total?.roi || 0) - (this.collections * 10) / 100,
         ),
-        variance: (() => {
-          if ((this.collections * 10) / 100 > total?.roi || 0) {
-            return 0;
-          }
-          return formatCurrency(
-            (total?.roi || 0) - (this.collections * 10) / 100,
-          );
-        })(),
+        variance: this.roiVariance() ? formatCurrency(this.roiVariance()) : '-',
       },
       {
         key: 'add_profit',
         field: 'Add.Profit',
-        percentage_col: (
-          1 -
-          (data?.report?.total_collections_for_spending_report /
-            total?.staffCompensation +
-            data?.report?.total_collections_for_spending_report /
-              total?.occupancy +
-            data?.report?.total_collections_for_spending_report /
-              total?.resourceDev +
-            data?.report?.total_collections_for_spending_report /
-              total?.laboratory +
-            data?.report?.total_collections_for_spending_report /
-              total?.supplies +
-            data?.report?.total_collections_for_spending_report /
-              total?.adminServices +
-            data?.report?.total_collections_for_spending_report /
-              total?.marketing +
-            data?.report?.total_collections_for_spending_report /
-              total?.doctorComp) -
-          data?.report?.total_collections_for_spending_report /
-            total?.solvency -
-          data?.report?.total_collections_for_spending_report / total?.roi
-        ).toFixed(2),
-        target: '76%',
-        practice_amount: formatCurrency(
-          1 -
-            (total?.staffCompensation ||
-              0 + total?.occupancy ||
-              0 + total?.resourceDev ||
-              0 + total?.laboratory ||
-              0 + total?.supplies ||
-              0 + total?.adminServices ||
-              0 + total?.marketing ||
-              0 + total?.doctorComp ||
-              0) -
-            (total?.solvency || 0) -
-            (total?.roi || 0),
-        ),
-        cpd_amount: formatCurrency(
-          1 -
-            ((this.collections * 20) / 100 +
-              (this.collections * 6) / 100 +
-              (this.collections * 5) / 100 +
-              (this.collections * 10) / 100 +
-              (this.collections * 4) / 100 +
-              (this.collections * 6) / 100 +
-              (this.collections * 1) / 100 +
-              (this.collections * 24) / 100) -
-            (this.collections * 10) / 100 -
-            (this.collections * 10) / 100,
-        ),
-        variance_amount: formatCurrency(
-          1 -
-            ((total?.staffCompensation ||
-              0 + total?.occupancy ||
-              0 + total?.resourceDev ||
-              0 + total?.laboratory ||
-              0 + total?.supplies ||
-              0 + total?.adminServices ||
-              0 + total?.marketing ||
-              0) -
-              ((this.collections * 20) / 100 +
-                (this.collections * 6) / 100 +
-                (this.collections * 5) / 100 +
-                (this.collections * 10) / 100 +
-                (this.collections * 4) / 100 +
-                (this.collections * 6) / 100 +
-                (this.collections * 1) / 100) +
-              ((total?.doctorComp || 0) - (this.collections * 24) / 100) -
-              ((total?.solvency || 0) - (this.collections * 24) / 100)) -
-            ((total?.roi || 0) - (this.collections * 10) / 100),
-        ),
-        variance: (() => {
-          let a = 0;
-          if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
-            a = 0;
-          } else {
-            a = (total?.staffCompensation || 0) - (this.collections * 20) / 100;
-          }
-
-          let b = 0;
-          if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
-            b = 0;
-          } else {
-            b = (total?.occupancy || 0) - (this.collections * 6) / 100;
-          }
-
-          let c = 0;
-          if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
-            c = 0;
-          } else {
-            c = (total?.resourceDev || 0) - (this.collections * 5) / 100;
-          }
-
-          let d = 0;
-          if ((this.collections * 10) / 100 > total?.laboratory || 0) {
-            d = 0;
-          } else {
-            d = (total?.laboratory || 0) - (this.collections * 10) / 100;
-          }
-
-          let e = 0;
-          if ((this.collections * 4) / 100 > total?.supplies || 0) {
-            e = 0;
-          } else {
-            e = (total?.supplies || 0) - (this.collections * 4) / 100;
-          }
-
-          let f = 0;
-          if ((this.collections * 6) / 100 > total?.adminServices || 0) {
-            f = 0;
-          } else {
-            f = (total?.adminServices || 0) - (this.collections * 6) / 100;
-          }
-
-          let g = 0;
-          if ((this.collections * 1) / 100 > total?.marketing || 0) {
-            g = 0;
-          } else {
-            g = (total?.marketing || 0) - (this.collections * 1) / 100;
-          }
-
-          let h = 0;
-          if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
-            h = 0;
-          } else {
-            h = (total?.doctorComp || 0) - (this.collections * 24) / 100;
-          }
-
-          let y = 0;
-          if ((this.collections * 10) / 100 > total?.roi || 0) {
-            y = 0;
-          } else {
-            y = (total?.roi || 0) - (this.collections * 10) / 100;
-          }
-
-          let l = 0;
-          if ((this.collections * 24) / 100 > total?.solvency || 0) {
-            l = 0;
-          } else {
-            l = (total?.solvency || 0) - (this.collections * 24) / 100;
-          }
-
-          return formatCurrency(1 - (a + b + c + d + e + f + g + h) - y - l);
-        })(),
+        percentage_col: (this.profitPercentageCol() / 100).toFixed(2),
+        target: '4%',
+        practice_amount: formatCurrency(this.profitPracticeAmount()),
+        cpd_amount: formatCurrency(this.profitCpdAmount()),
+        variance_amount: formatCurrency(this.profitVarianceAmount()),
+        variance: this.profitVariance
+          ? formatCurrency(this.profitVariance())
+          : '-',
       },
       {
         key: 'empty_3',
@@ -719,12 +556,38 @@ class Report extends Component {
       {
         key: 'total',
         field: 'TOTAL',
-        percentage_col: '100%',
+        percentage_col: (
+          (this.redlinePercentageCol() +
+            data?.report?.total_collections_for_spending_report /
+              total?.solvency +
+            data?.report?.total_collections_for_spending_report / total?.roi +
+            this.profitPercentageCol()) /
+          100
+        ).toFixed(2),
         target: '100%',
-        practice_amount: '',
-        cpd_amount: '0',
-        variance_amount: '',
-        variance: '',
+        practice_amount: formatCurrency(
+          this.redlinePracticeAmount() + total?.solvency ||
+            0 + total?.solvency ||
+            0 + this.profitPracticeAmount(),
+        ),
+        cpd_amount: formatCurrency(
+          this.redlineCpdAmount() +
+            (this.collections * 24) / 100 +
+            (this.collections * 10) / 100 +
+            this.profitCpdAmount(),
+        ),
+        variance_amount: formatCurrency(
+          this.redlineVarianceAmount() +
+            ((total?.solvency || 0) - (this.collections * 24) / 100) +
+            ((total?.roi || 0) - (this.collections * 10) / 100) +
+            this.profitVarianceAmount(),
+        ),
+        variance: formatCurrency(
+          this.redlineVariance() +
+            this.roiVariance() +
+            this.solvencyVariance() +
+            this.profitVariance(),
+        ),
       },
       {
         key: 'yr_one_roi',
@@ -744,9 +607,196 @@ class Report extends Component {
     });
   };
 
+  redlinePercentageCol() {
+    const { data } = this.props;
+    const total = data?.total || {};
+
+    return (
+      data?.report?.total_collections_for_spending_report /
+        total?.staffCompensation +
+      data?.report?.total_collections_for_spending_report / total?.occupancy +
+      data?.report?.total_collections_for_spending_report / total?.resourceDev +
+      data?.report?.total_collections_for_spending_report / total?.laboratory +
+      data?.report?.total_collections_for_spending_report / total?.supplies +
+      data?.report?.total_collections_for_spending_report /
+        total?.adminServices +
+      data?.report?.total_collections_for_spending_report / total?.marketing +
+      data?.report?.total_collections_for_spending_report / total?.doctorComp
+    );
+  }
+
+  redlinePracticeAmount() {
+    const { data } = this.props;
+    const total = data?.total || {};
+
+    return (
+      total?.staffCompensation ||
+      0 + total?.occupancy ||
+      0 + total?.resourceDev ||
+      0 + total?.laboratory ||
+      0 + total?.supplies ||
+      0 + total?.adminServices ||
+      0 + total?.marketing ||
+      0 + total?.doctorComp ||
+      0
+    );
+  }
+
+  redlineCpdAmount() {
+    return (
+      (this.collections * 20) / 100 +
+      (this.collections * 6) / 100 +
+      (this.collections * 5) / 100 +
+      (this.collections * 10) / 100 +
+      (this.collections * 4) / 100 +
+      (this.collections * 6) / 100 +
+      (this.collections * 1) / 100 +
+      (this.collections * 24) / 100
+    );
+  }
+
+  redlineVarianceAmount() {
+    const { data } = this.props;
+    const total = data?.total || {};
+    return (
+      (total?.staffCompensation ||
+        0 + total?.occupancy ||
+        0 + total?.resourceDev ||
+        0 + total?.laboratory ||
+        0 + total?.supplies ||
+        0 + total?.adminServices ||
+        0 + total?.marketing ||
+        0) -
+      ((this.collections * 20) / 100 +
+        (this.collections * 6) / 100 +
+        (this.collections * 5) / 100 +
+        (this.collections * 10) / 100 +
+        (this.collections * 4) / 100 +
+        (this.collections * 6) / 100 +
+        (this.collections * 1) / 100) +
+      ((total?.doctorComp || 0) - (this.collections * 24) / 100)
+    );
+  }
+
+  redlineVariance() {
+    const { data } = this.props;
+    const total = data?.total || {};
+
+    let a = 0;
+    if ((this.collections * 20) / 100 > total?.staffCompensation || 0) {
+      a = 0;
+    } else {
+      a = (total?.staffCompensation || 0) - (this.collections * 20) / 100;
+    }
+
+    let b = 0;
+    if ((this.occupancy * 6) / 100 > total?.occupancy || 0) {
+      b = 0;
+    } else {
+      b = (total?.occupancy || 0) - (this.collections * 6) / 100;
+    }
+
+    let c = 0;
+    if ((this.collections * 5) / 100 > total?.resourceDev || 0) {
+      c = 0;
+    } else {
+      c = (total?.resourceDev || 0) - (this.collections * 5) / 100;
+    }
+
+    let d = 0;
+    if ((this.collections * 10) / 100 > total?.laboratory || 0) {
+      d = 0;
+    } else {
+      d = (total?.laboratory || 0) - (this.collections * 10) / 100;
+    }
+
+    let e = 0;
+    if ((this.collections * 4) / 100 > total?.supplies || 0) {
+      e = 0;
+    } else {
+      e = (total?.supplies || 0) - (this.collections * 4) / 100;
+    }
+
+    let f = 0;
+    if ((this.collections * 6) / 100 > total?.adminServices || 0) {
+      f = 0;
+    } else {
+      f = (total?.adminServices || 0) - (this.collections * 6) / 100;
+    }
+
+    let g = 0;
+    if ((this.collections * 1) / 100 > total?.marketing || 0) {
+      g = 0;
+    } else {
+      g = (total?.marketing || 0) - (this.collections * 1) / 100;
+    }
+
+    let h = 0;
+    if ((this.collections * 24) / 100 > total?.doctorComp || 0) {
+      h = 0;
+    } else {
+      h = (total?.doctorComp || 0) - (this.collections * 24) / 100;
+    }
+
+    return a + b + c + d + e + f + g + h;
+  }
+
+  profitPercentageCol() {
+    const { data } = this.props;
+    const total = data?.total || {};
+
+    return (
+      1 -
+      this.redlinePercentageCol() -
+      data?.report?.total_collections_for_spending_report /
+        (total?.solvency || 0) -
+      data?.report?.total_collections_for_spending_report / (total?.roi || 0)
+    );
+  }
+
+  profitPracticeAmount() {
+    return (4 * (this.profitPercentageCol() || 0)) / 100;
+  }
+
+  profitCpdAmount() {
+    return (4 * this.collections) / 100;
+  }
+
+  profitVarianceAmount() {
+    return (this.profitCpdAmount() || 0) - (this.profitPracticeAmount() || 0);
+  }
+
+  profitVariance() {
+    if (this.profitPracticeAmount() < this.profitCpdAmount()) {
+      return 0;
+    }
+    return this.profitVarianceAmount();
+  }
+
+  roiVariance() {
+    const { data } = this.props;
+    const total = data?.total || {};
+
+    if ((this.collections * 10) / 100 > total?.roi || 0) {
+      return 0;
+    }
+    return (total?.roi || 0) - (this.collections * 10) / 100;
+  }
+
+  solvencyVariance() {
+    const { data } = this.props;
+    const total = data?.total || {};
+
+    if ((this.collections * 24) / 100 > total?.solvency || 0) {
+      return 0;
+    }
+    return (total?.solvency || 0) - (this.collections * 24) / 100;
+  }
+
   render() {
     const { data } = this.props;
     const { dataSource } = this.state;
+    console.log(data);
 
     return (
       <>
@@ -759,25 +809,31 @@ class Report extends Component {
             {moment().format('MM/DD/YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label="Collections">
-            {formatCurrency(
-              (data?.report?.total_collections_for_spending_report /
-                data?.student?.spending_report_months) *
-                12,
-            )}
-          </Descriptions.Item>
-          <Descriptions.Item label="Production">0</Descriptions.Item>
-          <Descriptions.Item label="" />
-          <Descriptions.Item label="Model Collections">
             {formatCurrency(this.collections)}
           </Descriptions.Item>
-          <Descriptions.Item label="Model ExpenseReduction" />
+          <Descriptions.Item label="Production">
+            {formatCurrency(this.production)}
+          </Descriptions.Item>
           <Descriptions.Item label="" />
-          <Descriptions.Item label="Collections/Hr" />
-          <Descriptions.Item label="Prod/Pt" />
+          <Descriptions.Item label="Model Collections">
+            {formatCurrency(this.modelCollections)}
+          </Descriptions.Item>
+          <Descriptions.Item label="Model ExpenseReduction">
+            {this.modelExpenseReduction.toFixed(2)}%
+          </Descriptions.Item>
           <Descriptions.Item label="" />
-          <Descriptions.Item label="Yr 1 Collections" />
+          <Descriptions.Item label="Collections/Hr">
+            {formatCurrency(this.collectionsHr)}
+          </Descriptions.Item>
+          <Descriptions.Item label="Prod/Pt">
+            {formatCurrency(this.prodPt)}
+          </Descriptions.Item>
+          <Descriptions.Item label="" />
+          <Descriptions.Item label="Yr 1 Collections">
+            {formatCurrency(this.year1Collections)}
+          </Descriptions.Item>
           <Descriptions.Item label="Yr 1 Expense Reduction">
-            0
+            {this.year1ExpenseReduction.toFixed(2)}%
           </Descriptions.Item>
         </Descriptions>
         <Table
