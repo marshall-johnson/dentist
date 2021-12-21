@@ -11,22 +11,47 @@ import {
   InputNumber,
   Select,
 } from 'antd';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.scss';
 import { formatCurrency } from '@/utils/helpers';
 
 const INITIAL_VALUE = 'initial';
 const { Option } = Select;
 
-class ChartAudit extends Component {
-  identifySource = [
+const ChartAudit = (props) => {
+  const { fetchStudents, students } = props;
+  const [loading, setLoading] = useState(true);
+  const [studentInfo, setStudentInfo] = useState({});
+  const [dataSource, setDataSource] = useState([{ key: INITIAL_VALUE }]);
+
+  const identifySource = [
     { text: 'Source A', value: 'a' },
     { text: 'Source B', value: 'b' },
   ];
 
-  formRef = React.createRef();
+  const formRef = React.createRef();
 
-  columns = [
+  const columns = [
+    {
+      title: 'New Patient Initials',
+      dataIndex: 'patient',
+      sorter: (a, b) => a.patient.length - b.patient.length,
+      render: (value, record) => {
+        if (record.key === INITIAL_VALUE) {
+          return (
+            <Form.Item
+              className="input-item"
+              name="patient"
+              rules={[{ required: true, message: 'Required' }]}
+            >
+              <Input />
+            </Form.Item>
+          );
+        }
+
+        return value;
+      },
+    },
     {
       title: 'New Patient Initials',
       dataIndex: 'patient',
@@ -209,7 +234,7 @@ class ChartAudit extends Component {
       title: 'Identify Referral Source',
       dataIndex: 'referral_source',
       sorter: (a, b) => a.referral_source - b.referral_source,
-      filters: this.identifySource,
+      filters: identifySource,
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -219,7 +244,7 @@ class ChartAudit extends Component {
               rules={[{ required: true, message: 'Required' }]}
             >
               <Select>
-                {this.identifySource.map((data) => (
+                {identifySource.map((data) => (
                   <Option value={data.value}>{data.text}</Option>
                 ))}
               </Select>
@@ -277,7 +302,7 @@ class ChartAudit extends Component {
               icon={<DeleteOutlined />}
               shape="circle"
               type="danger"
-              onClick={() => this.removeItem(record.id)}
+              onClick={() => removeItem(record.id)}
             />
           )}
         </>
@@ -285,112 +310,116 @@ class ChartAudit extends Component {
     },
   ];
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      loading: true,
-      studentInfo: {},
-      dataSource: [
-        {
-          key: INITIAL_VALUE,
-        },
-      ],
-    };
-  }
+  //   this.state = {
+  //     loading: true,
+  //     studentInfo: {},
+  //     dataSource: [
+  //       {
+  //         key: INITIAL_VALUE,
+  //       },
+  //     ],
+  //   };
+  // }
 
-  componentDidMount() {
-    const { fetchStudents } = this.props;
-
-    fetchStudents();
-
+  useEffect(() => {
+    fetchStudents(studentInfo);
     setTimeout(() => {
-      this.setState({
-        loading: false,
-      });
+      setLoading(false);
     }, 1000);
-  }
+  }, [fetchStudents, studentInfo]);
 
-  addItem = (data) => {
-    this.setState((prevState) => ({
-      dataSource: [
-        ...prevState.dataSource,
-        { ...data, id: prevState.dataSource.length },
-      ],
-    }));
-    this.formRef.current.resetFields();
+  // componentDidMount() {
+  //   const { fetchStudents } = this.props;
+
+  //   fetchStudents();
+
+  //   setTimeout(() => {
+  //     this.setState({
+  //       loading: false,
+  //     });
+  //   }, 1000);
+  // }
+
+  const addItem = (data) => {
+    // this.setState((prevState) => ({
+    //   dataSource: [
+    //     ...prevState.dataSource,
+    //     { ...data, id: prevState.dataSource.length },
+    //   ],
+    // }));
+    // this.formRef.current.resetFields();
   };
 
-  removeItem = (id) => {
-    this.setState((prevState) => ({
-      dataSource: prevState.dataSource.filter((value) => value.id !== id),
-    }));
+  const removeItem = (id) => {
+    // this.setState((prevState) => ({
+    //   dataSource: prevState.dataSource.filter((value) => value.id !== id),
+    // }));
   };
 
-  render() {
-    const { loading, dataSource, studentInfo } = this.state;
-    const { students } = this.props;
+  // const { loading, dataSource, studentInfo } = this.state;
+  // const { students } = this.props;
 
-    return (
-      <>
-        <div
-          style={{
-            marginBottom: 20,
-            width: 'auto',
+  return (
+    <>
+      <div
+        style={{
+          marginBottom: 20,
+          width: 'auto',
+        }}
+      >
+        <Descriptions title="Doctor's Personal Information" column={12}>
+          <Descriptions.Item span={12} label="First Name">
+            {studentInfo?.first_name}
+          </Descriptions.Item>
+          <Descriptions.Item span={12} label="Last Name">
+            {studentInfo?.last_name}
+          </Descriptions.Item>
+          <Descriptions.Item span={12} label="Degree">
+            {studentInfo?.degree?.toUpperCase()}
+          </Descriptions.Item>
+        </Descriptions>
+
+        <span>Student:</span>
+        <Select
+          style={{ width: 200, marginLeft: 10 }}
+          onChange={async (id) => {
+            setLoading(true);
+            setStudentInfo(students.find((student) => student.id === id));
+            setTimeout(() => {
+              setLoading(false);
+            }, 1000);
           }}
         >
-          <Descriptions title="Doctor's Personal Information" column={12}>
-            <Descriptions.Item span={12} label="First Name">
-              {studentInfo?.first_name}
-            </Descriptions.Item>
-            <Descriptions.Item span={12} label="Last Name">
-              {studentInfo?.last_name}
-            </Descriptions.Item>
-            <Descriptions.Item span={12} label="Degree">
-              {studentInfo?.degree?.toUpperCase()}
-            </Descriptions.Item>
-          </Descriptions>
+          {students.map((student, index) => (
+            <Option value={student.id} key={index.toString()}>
+              {`${student.first_name} ${student.last_name}`}
+            </Option>
+          ))}
+        </Select>
+      </div>
 
-          <span>Student:</span>
-          <Select
-            style={{ width: 200, marginLeft: 10 }}
-            onChange={async (id) => {
-              this.setState({
-                loading: true,
-                studentInfo: students.find((student) => student.id === id),
-              });
-              setTimeout(() => {
-                this.setState({
-                  loading: false,
-                });
-              }, 1000);
-            }}
-          >
-            {students.map((student, index) => (
-              <Option value={student.id} key={index.toString()}>
-                {`${student.first_name} ${student.last_name}`}
-              </Option>
-            ))}
-          </Select>
-        </div>
-
-        <Form
-          ref={this.formRef}
-          className="form-wrapper"
-          name="data"
-          autoComplete="off"
-          onFinish={this.addItem}
-        >
+      <Form
+        ref={formRef}
+        className="form-wrapper"
+        name="data"
+        autoComplete="off"
+        onFinish={addItem}
+      >
+        <div style={{ overflowY: 'scroll' }}>
           <Table
             dataSource={dataSource}
-            columns={this.columns}
+            columns={columns}
             loading={loading}
+            pagination={{ position: ['bottomLeft'] }}
           />
-        </Form>
-      </>
-    );
-  }
-}
+        </div>
+      </Form>
+    </>
+  );
+};
 
 ChartAudit.propTypes = {
   students: PropTypes.array,
