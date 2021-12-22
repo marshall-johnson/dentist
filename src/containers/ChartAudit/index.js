@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import './index.scss';
 import { formatCurrency } from '@/utils/helpers';
+import { fetchDoctorPI } from '@/services/chartAudit.service';
 
 const INITIAL_VALUE = 'initial';
 const { Option } = Select;
@@ -325,11 +326,17 @@ const ChartAudit = (props) => {
   // }
 
   useEffect(() => {
-    fetchStudents(studentInfo);
+    fetchStudents();
+    fetchDoctorData();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }, [fetchStudents, studentInfo]);
+  }, []);
+
+  const fetchDoctorData = async () => {
+    const res = await fetchDoctorPI();
+    console.log(res);
+  };
 
   // componentDidMount() {
   //   const { fetchStudents } = this.props;
