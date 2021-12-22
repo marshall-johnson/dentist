@@ -151,9 +151,7 @@ class AppContainer extends Component {
                       key="energy-conversion"
                       title="Energy Conversion"
                       onTitleClick={() => {
-                        if (
-                          openKeys[1] !== 'energy-conversion'
-                        ) {
+                        if (openKeys[1] !== 'energy-conversion') {
                           this.setState({
                             openKeys: ['registration', 'energy-conversion'],
                           });
@@ -272,11 +270,9 @@ class AppContainer extends Component {
                   </Menu.Item>
                 </SubMenu>
               )}
-              {[
-                UserAccountType.ADMIN,
-                UserAccountType.STUDENT_ADMIN,
-                UserAccountType.COACH,
-              ].includes(currentUser?.account_type) && (
+              {[UserAccountType.ADMIN, UserAccountType.COACH].includes(
+                currentUser?.account_type,
+              ) && (
                 <SubMenu
                   key="coaching"
                   icon={<UserOutlined />}
