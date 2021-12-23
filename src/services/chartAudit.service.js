@@ -12,7 +12,9 @@ export const fetchChartAudit = async (args = {}) => {
 };
 export const postChartAudit = async (args = {}) => {
   const { payload } = args;
-  const res = await api.post('/api/v1/patient_chart_audits', payload);
+  const res = await api.post('/api/v1/patient_chart_audits', {
+    patient_chart_audit: payload,
+  });
   if (!res) {
     return {
       error: 'Error',
