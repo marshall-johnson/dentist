@@ -22,22 +22,75 @@ import {
 } from '@/services/chartAudit.service';
 
 const INITIAL_VALUE = 'initial';
+const INIT_FORM_VALUE = {
+  new_patient_initials: null,
+  completed_total_amount: null,
+  total_amount_diagnosed: null,
+  total_treatment_completed: null,
+  case: null,
+  chart: null,
+  completed: null,
+  diagnosed: null,
+  dr_appt_scheduled: null,
+  dr: null,
+  has_dr_appt: false,
+  has_has_appt: false,
+  hyg: null,
+  hygiene_appt: null,
+  patient: null,
+  proposed: null,
+  identify_referral_source: null,
+  scheduled: null,
+  unscheduled: null,
+  remaining_unscheduled_treatment: null,
+  // Test
+  test_insurance: null,
+  test_marketing: null,
+  test_other: null,
+  test_outside_dr: null,
+  test_patient: null,
+  test_unknown: null,
+  test_walk_in: null,
+  test_yellow_pages: null,
+  // Proposed
+  proposed_insurance: null,
+  proposed_marketing: null,
+  proposed_other: null,
+  proposed_outside_dr: null,
+  proposed_patient: null,
+  proposed_unknown: null,
+  proposed_walk_in: null,
+  proposed_yellow_pages: null,
+  // Completed
+  completed_insurance: null,
+  completed_marketing: null,
+  completed_other: null,
+  completed_outside_dr: null,
+  completed_patient: null,
+  completed_unknown: null,
+  completed_walk_in: null,
+  completed_yellow_pages: null,
+};
 const { Option } = Select;
 
 const ChartAudit = (props) => {
   const { fetchStudents, students } = props;
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(true);
   const [studentInfo, setStudentInfo] = useState({});
   const [dataSource, setDataSource] = useState([{ key: INITIAL_VALUE }]);
+  const [formData, setFormData] = useState(INIT_FORM_VALUE);
 
   const identifySource = [
     { text: 'Source A', value: 'a' },
     { text: 'Source B', value: 'b' },
   ];
 
-  const formRef = React.createRef();
+  useEffect(() => {
+    console.log('formData', formData);
+  }, [formData]);
 
-  const columns = [
+  const initColumns = [
     {
       title: 'New Patient Initials',
       dataIndex: 'new_patient_initials',
@@ -50,7 +103,15 @@ const ChartAudit = (props) => {
               name="new_patient_initials"
               rules={[{ required: true, message: 'Required' }]}
             >
-              <Input />
+              <Input
+                value={formData.new_patient_initials}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    new_patient_initials: e.target.value,
+                  });
+                }}
+              />
             </Form.Item>
           );
         }
@@ -77,6 +138,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.amount_diagnosed}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    amount_diagnosed: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -104,6 +172,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.amount_treatment}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    amount_treatment: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -131,6 +206,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_total_amount}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_total_amount: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -151,7 +233,15 @@ const ChartAudit = (props) => {
               name="hygiene_appt"
               rules={[{ required: true, message: 'Required' }]}
             >
-              <Select>
+              <Select
+                value={formData.hygiene_appt}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    hygiene_appt: e,
+                  });
+                }}
+              >
                 {[true, false].map((value, index) => (
                   <Option key={index.toString()} value={value}>
                     {value ? 'Yes' : 'No'}
@@ -177,7 +267,15 @@ const ChartAudit = (props) => {
               name="doctor_appt"
               rules={[{ required: true, message: 'Required' }]}
             >
-              <Select>
+              <Select
+                value={formData.doctor_appt}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    doctor_appt: e,
+                  });
+                }}
+              >
                 {[true, false].map((value, index) => (
                   <Option key={index.toString()} value={value}>
                     {value ? 'Yes' : 'No'}
@@ -208,6 +306,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.scheduled}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    scheduled: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -229,7 +334,15 @@ const ChartAudit = (props) => {
               name="identify_referral_source"
               rules={[{ required: true, message: 'Required' }]}
             >
-              <Select>
+              <Select
+                value={formData.identify_referral_source}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    identify_referral_source: e,
+                  });
+                }}
+              >
                 {identifySource?.map((data) => (
                   <Option value={data.value}>{data.text}</Option>
                 ))}
@@ -260,6 +373,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.unscheduled_remaining}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    unscheduled_remaining: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -288,6 +408,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.chart}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    chart: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -314,6 +441,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.diagnosed}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    diagnosed: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -340,6 +474,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -366,6 +507,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -391,6 +539,13 @@ const ChartAudit = (props) => {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.case}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    case: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -416,6 +571,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.hyg}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    hyg: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -441,6 +603,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.dr}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    dr: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -467,6 +636,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.has_appt}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    has_appt: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -493,6 +669,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.dr_appt}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    dr_appt: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -519,6 +702,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.unscheduled}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    unscheduled: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -541,6 +731,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_patient}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_patient: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -565,6 +762,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_outside_dr}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_outside_dr: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -590,6 +794,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_marketing}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_marketing: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -614,6 +825,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_yellow_pages}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_yellow_pages: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -639,6 +857,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_insurance}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_insurance: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -662,6 +887,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_walk_in}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_walk_in: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -685,6 +917,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_unknown}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_unknown: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -708,6 +947,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.test_other}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    test_other: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -731,12 +977,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_patient}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_patient: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedPatient =
-          record.attributes.patient_chart_audit_extras[0].patient;
+          record.attributes.patient_chart_audit_extras[1].patient;
         return proposedPatient;
       },
     },
@@ -755,12 +1008,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_outside_dr}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_outside_dr: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedOutsideDr =
-          record.attributes.patient_chart_audit_extras[0].outside_dr;
+          record.attributes.patient_chart_audit_extras[1].outside_dr;
 
         return proposedOutsideDr;
       },
@@ -780,12 +1040,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_marketing}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_marketing: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedMarketing =
-          record.attributes.patient_chart_audit_extras[0].marketing;
+          record.attributes.patient_chart_audit_extras[1].marketing;
         return proposedMarketing;
       },
     },
@@ -804,12 +1071,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_yellow_pages}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_yellow_pages: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedYellowPages =
-          record.attributes.patient_chart_audit_extras[0].yellow_pages;
+          record.attributes.patient_chart_audit_extras[1].yellow_pages;
 
         return proposedYellowPages;
       },
@@ -829,12 +1103,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_insurance}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_insurance: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedInsurance =
-          record.attributes.patient_chart_audit_extras[0].yellow_pages;
+          record.attributes.patient_chart_audit_extras[1].yellow_pages;
         return proposedInsurance;
       },
     },
@@ -853,12 +1134,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_walk_in}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_walk_in: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedWalkIn =
-          record.attributes.patient_chart_audit_extras[0].walk_in;
+          record.attributes.patient_chart_audit_extras[1].walk_in;
         return proposedWalkIn;
       },
     },
@@ -877,12 +1165,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_unknown}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_unknown: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedUnknown =
-          record.attributes.patient_chart_audit_extras[0].unknown;
+          record.attributes.patient_chart_audit_extras[1].unknown;
         return proposedUnknown;
       },
     },
@@ -901,12 +1196,19 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.proposed_other}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    proposed_other: e,
+                  });
+                }}
               />
             </Form.Item>
           );
         }
         const proposedOther =
-          record.attributes.patient_chart_audit_extras[0].other;
+          record.attributes.patient_chart_audit_extras[1].other;
         return proposedOther;
       },
     },
@@ -925,6 +1227,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_patient}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_patient: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -949,6 +1258,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_outside_dr}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_outside_dr: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -974,6 +1290,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_marketing}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_marketing: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -998,6 +1321,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_yellow_pages}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_yellow_pages: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -1023,6 +1353,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_insurance}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_insurance: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -1047,6 +1384,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_walk_in}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_walk_in: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -1071,6 +1415,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_unknown}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_unknown: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -1095,6 +1446,13 @@ const ChartAudit = (props) => {
                   `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                value={formData.completed_other}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    completed_other: e,
+                  });
+                }}
               />
             </Form.Item>
           );
@@ -1132,6 +1490,7 @@ const ChartAudit = (props) => {
       ),
     },
   ];
+  const [columns, setColumns] = useState(initColumns);
 
   useEffect(() => {
     fetchStudents();
@@ -1152,8 +1511,8 @@ const ChartAudit = (props) => {
         const data = res;
         if (data) {
           const temp = [...data, { key: INITIAL_VALUE }];
-          console.log('tempo', temp);
           setDataSource(temp);
+          console.log(columns);
         }
       }
     }
@@ -1167,69 +1526,68 @@ const ChartAudit = (props) => {
     return { error: 'no id' };
   };
 
-  const addItem = async (data) => {
+  const addItem = async () => {
     const { id } = studentInfo;
     if (!id) {
       notification.error({
         message: 'Please choose student before add data',
       });
     }
-    console.log(data);
     const temp = {
       user_id: id,
-      new_patient_initials: data.new_patient_initials,
-      completed_total_amount: data.completed_total_amount,
-      total_amount_diagnosed: data.amount_diagnosed,
-      total_treatment_completed: data.amount_treatment,
-      case: data.case,
-      chart: data.chart,
-      completed: data.completed,
-      diagnosed: data.diagnosed,
-      dr_appt_scheduled: data.doctor_appt,
-      dr: data.dr,
-      has_dr_appt: data.has_dr_appt,
-      has_has_appt: data.has_has_appt,
-      hyg: data.hyg,
-      hygiene_appt: data.hygiene_appt,
-      patient: data.patient,
-      proposed: data.proposed,
-      identify_referral_source: data.identify_referral_source,
-      scheduled: data.scheduled,
-      unscheduled: data.unscheduled,
-      remaining_unscheduled_treatment: data.unscheduled_remaining,
+      new_patient_initials: formData.new_patient_initials,
+      completed_total_amount: formData.completed_total_amount,
+      total_amount_diagnosed: formData.amount_diagnosed,
+      total_treatment_completed: formData.amount_treatment,
+      case: formData.case,
+      chart: formData.chart,
+      completed: formData.completed,
+      diagnosed: formData.diagnosed,
+      dr_appt_scheduled: formData.doctor_appt,
+      dr: formData.dr,
+      has_dr_appt: formData.has_dr_appt,
+      has_has_appt: formData.has_has_appt,
+      hyg: formData.hyg,
+      hygiene_appt: formData.hygiene_appt,
+      patient: formData.patient,
+      proposed: formData.proposed,
+      identify_referral_source: formData.identify_referral_source,
+      scheduled: formData.scheduled,
+      unscheduled: formData.unscheduled,
+      remaining_unscheduled_treatment: formData.unscheduled_remaining,
       patient_chart_audit_extras_attributes: [
         {
           section: 'tests',
-          insurance: data.test_patient,
-          marketing: data.test_marketing,
-          other: data.test_other,
-          outside_dr: data.test_outside_dr,
-          patient: data.test_patient,
-          unknown: data.test_unknown,
-          walk_in: data.test_walk_in,
-          yellow_pages: data.test_yellow_pages,
+          insurance: formData.test_patient,
+          marketing: formData.test_marketing,
+          other: formData.test_other,
+          outside_dr: formData.test_outside_dr,
+          patient: formData.test_patient,
+          unknown: formData.test_unknown,
+          walk_in: formData.test_walk_in,
+          yellow_pages: formData.test_yellow_pages,
         },
         {
           section: 'proposed',
-          insurance: data.proposed_insurance,
-          marketing: data.proposed_marketing,
-          other: data.proposed_other,
-          outside_dr: data.proposed_outside_dr,
-          patient: data.proposed_patient,
-          unknown: data.proposed_unknown,
-          walk_in: data.proposed_walk_in,
-          yellow_pages: data.proposed_yellow_pages,
+          insurance: formData.proposed_insurance,
+          marketing: formData.proposed_marketing,
+          other: formData.proposed_other,
+          outside_dr: formData.proposed_outside_dr,
+          patient: formData.proposed_patient,
+          unknown: formData.proposed_unknown,
+          walk_in: formData.proposed_walk_in,
+          yellow_pages: formData.proposed_yellow_pages,
         },
         {
           section: 'completed',
-          insurance: data.completed_insurance,
-          marketing: data.completed_marketing,
-          other: data.completed_other,
-          outside_dr: data.completed_outside_dr,
-          patient: data.completed_patient,
-          unknown: data.completed_unknown,
-          walk_in: data.completed_walk_in,
-          yellow_pages: data.completed_yellow_pages,
+          insurance: formData.completed_insurance,
+          marketing: formData.completed_marketing,
+          other: formData.completed_other,
+          outside_dr: formData.completed_outside_dr,
+          patient: formData.completed_patient,
+          unknown: formData.completed_unknown,
+          walk_in: formData.completed_walk_in,
+          yellow_pages: formData.completed_yellow_pages,
         },
       ],
     };
@@ -1238,6 +1596,9 @@ const ChartAudit = (props) => {
       payload: temp,
     });
     if (res) {
+      setFormData(INIT_FORM_VALUE);
+      form.resetFields();
+      setColumns(initColumns);
       fetchChartAuditList();
     }
   };
@@ -1294,7 +1655,8 @@ const ChartAudit = (props) => {
       </div>
 
       <Form
-        ref={formRef}
+        form={form}
+        value={formData}
         className="form-wrapper"
         name="data"
         autoComplete="off"
