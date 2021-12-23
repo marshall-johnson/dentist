@@ -229,7 +229,7 @@ const ChartAudit = (props) => {
               rules={[{ required: true, message: 'Required' }]}
             >
               <Select>
-                {identifySource.map((data) => (
+                {identifySource?.map((data) => (
                   <Option value={data.value}>{data.text}</Option>
                 ))}
               </Select>
@@ -237,7 +237,7 @@ const ChartAudit = (props) => {
           );
         }
 
-        return `Source ${record.attributes.identify_referral_source.toUpperCase()}`;
+        return `Source ${record.attributes?.identify_referral_source?.toUpperCase()}`;
       },
     },
     {
@@ -1185,7 +1185,7 @@ const ChartAudit = (props) => {
     }
 
     const temp = {
-      userId: id,
+      user_id: id,
       amount: data.amount,
       amount_diagnosed: data.amount_diagnosed,
       amount_treatment: data.amount_treatment,
@@ -1207,7 +1207,7 @@ const ChartAudit = (props) => {
       unscheduled_remaining: data.unscheduled_remaining,
       patient_chart_audit_extras_attributes: [
         {
-          section: 'test',
+          section: 'tests',
           insurance: data.test_patient,
           marketing: data.test_marketing,
           other: data.test_other,
