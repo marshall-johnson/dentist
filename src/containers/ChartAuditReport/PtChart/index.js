@@ -1,10 +1,53 @@
-import React, { Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { Component, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import './index.scss';
-import { formatCurrency, generateRandomNumber } from '@/utils/helpers';
+import { formatCurrency } from '@/utils/helpers';
 
-class PtChart extends Component {
-  columns = [
+const PtChart = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { data = {} } = props;
+  const [dataSource, setDataSource] = useState([
+    {
+      key: '1',
+      ptChart: 'Total $ Amount',
+      diagnosed: formatCurrency(0),
+      proposed: formatCurrency(0),
+      treatmentCompleted: formatCurrency(0),
+      caseCompleted: formatCurrency(0),
+    },
+    {
+      key: '2',
+      ptChart: 'Total # Patients',
+      diagnosed: 0,
+      proposed: 0,
+      treatmentCompleted: 0,
+      caseCompleted: 0,
+    },
+  ]);
+
+  useEffect(() => {
+    setDataSource([
+      {
+        key: '1',
+        ptChart: 'Total $ Amount',
+        diagnosed: formatCurrency(data.total_amount_diagnosed),
+        proposed: formatCurrency(data.total_amount_proposed),
+        treatmentCompleted: formatCurrency(data.total_amount_completed),
+        caseCompleted: formatCurrency(data.total_amount_case),
+      },
+      {
+        key: '2',
+        ptChart: 'Total # Patients',
+        diagnosed: data.total_patient_diagnosed,
+        proposed: data.total_patient_proposed,
+        treatmentCompleted: data.total_patient_completed,
+        caseCompleted: data.total_patient_case,
+      },
+    ]);
+  }, [data]);
+
+  const columns = [
     {
       title: 'Total Pt Charts',
       dataIndex: 'ptChart',
@@ -50,39 +93,16 @@ class PtChart extends Component {
     },
   ];
 
-  data = [
-    {
-      key: '1',
-      ptChart: 'Total $ Amount',
-      diagnosed: formatCurrency(generateRandomNumber()),
-      proposed: formatCurrency(generateRandomNumber()),
-      treatmentCompleted: formatCurrency(generateRandomNumber()),
-      caseCompleted: formatCurrency(generateRandomNumber()),
-    },
-    {
-      key: '2',
-      ptChart: 'Total # Patients',
-      diagnosed: generateRandomNumber(),
-      proposed: generateRandomNumber(),
-      treatmentCompleted: generateRandomNumber(),
-      caseCompleted: generateRandomNumber(),
-    },
-  ];
-
-  render() {
-    return (
-      <Table
-        className="pt-chart"
-        columns={this.columns}
-        size="small"
-        dataSource={this.data}
-        bordered
-        pagination={false}
-      />
-    );
-  }
-}
-
-PtChart.propTypes = {};
+  return (
+    <Table
+      className="pt-chart"
+      columns={columns}
+      size="small"
+      dataSource={dataSource}
+      bordered
+      pagination={false}
+    />
+  );
+};
 
 export default PtChart;
