@@ -10,6 +10,7 @@ import {
   Input,
   InputNumber,
   Select,
+  notification,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './index.scss';
@@ -39,14 +40,14 @@ const ChartAudit = (props) => {
   const columns = [
     {
       title: 'New Patient Initials',
-      dataIndex: 'patient',
-      sorter: (a, b) => a.patient.length - b.patient.length,
+      dataIndex: 'new_patient_initials',
+      // sorter: (a, b) => a.new_patient_initials.length - b.new_patient_initials.length,
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
             <Form.Item
               className="input-item"
-              name="patient"
+              name="new_patient_initials"
               rules={[{ required: true, message: 'Required' }]}
             >
               <Input />
@@ -60,9 +61,9 @@ const ChartAudit = (props) => {
     {
       title: 'Total $ Amount Diagnosed',
       dataIndex: 'amount_diagnosed',
-      sorter: (a, b) =>
-        Number(a.amount_diagnosed.match(/\d/)) -
-        Number(b.amount_diagnosed.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.amount_diagnosed.match(/\d/)) -
+      // Number(b.amount_diagnosed.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -87,9 +88,9 @@ const ChartAudit = (props) => {
     {
       title: 'Total $ Treatment Completed',
       dataIndex: 'amount_treatment',
-      sorter: (a, b) =>
-        Number(a.amount_treatment.match(/\d/)) -
-        Number(b.amount_treatment.match(/\d/)),
+      // sorter: (a, b) =>
+      //   Number(a.amount_treatment.match(/\d/)) -
+      //  //amount_treatment.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -113,15 +114,16 @@ const ChartAudit = (props) => {
     },
     {
       title: 'If Case Completed, Total $ Amount',
-      dataIndex: 'amount',
-      sorter: (a, b) =>
-        Number(a.amount.match(/\d/)) - Number(b.amount.match(/\d/)),
+      dataIndex: 'completed_total_amount',
+      // sorter: (a, b) =>
+      //   Number(a.completed_total_amount.match(/\d/)) -
+      //  //completed_total_amount.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
             <Form.Item
               className="input-item"
-              name="amount"
+              name="completed_total_amount"
               rules={[{ required: true, message: 'Required' }]}
             >
               <InputNumber
@@ -140,7 +142,7 @@ const ChartAudit = (props) => {
     {
       title: 'Has Hygiene Appt?',
       dataIndex: 'hygiene_appt',
-      sorter: (a, b) => a.hygiene_appt.length - b.hygiene_appt.length,
+      // sorter: (a, b) => a.hygiene_appt.length - b.hygiene_appt.length,
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -166,7 +168,7 @@ const ChartAudit = (props) => {
     {
       title: 'Has Doctor Appt?',
       dataIndex: 'doctor_appt',
-      sorter: (a, b) => a.doctor_appt.length - b.doctor_appt.length,
+      // sorter: (a, b) => a.doctor_appt.length - b.doctor_appt.length,
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -192,8 +194,7 @@ const ChartAudit = (props) => {
     {
       title: 'If Dr.Appt, $ Scheduled',
       dataIndex: 'scheduled',
-      sorter: (a, b) =>
-        Number(a.scheduled.match(/\d/)) - Number(b.scheduled.match(/\d/)),
+      // sorter: (a, b) =>  Number(a.scheduled.match(/\d/)) -//scheduled.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -217,15 +218,15 @@ const ChartAudit = (props) => {
     },
     {
       title: 'Identify Referral Source',
-      dataIndex: 'referral_source',
-      sorter: (a, b) => a.referral_source - b.referral_source,
+      dataIndex: 'identify_referral_source',
+      // sorter: (a, b) => a.identify_referral_source - b.identify_referral_source,
       filters: identifySource,
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
             <Form.Item
               className="input-item"
-              name="referral_source"
+              name="identify_referral_source"
               rules={[{ required: true, message: 'Required' }]}
             >
               <Select>
@@ -243,9 +244,9 @@ const ChartAudit = (props) => {
     {
       title: 'Remaining Unscheduled $ Treatment',
       dataIndex: 'unscheduled_remaining',
-      sorter: (a, b) =>
-        Number(a.unscheduled_remaining.match(/\d/)) -
-        Number(b.unscheduled_remaining.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.unscheduled_remaining.match(/\d/)) -
+      // //unscheduled_remaining.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -272,8 +273,8 @@ const ChartAudit = (props) => {
     {
       title: 'Chart',
       dataIndex: 'chart',
-      sorter: (a, b) =>
-        Number(a.chart.match(/\d/)) - Number(b.chart.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.chart.match(/\d/)) - Number(b.chart.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -298,8 +299,8 @@ const ChartAudit = (props) => {
     {
       title: 'Diagnosed',
       dataIndex: 'diagnosed',
-      sorter: (a, b) =>
-        Number(a.diagnosed.match(/\d/)) - Number(b.diagnosed.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.diagnosed.match(/\d/)) - Number(b.diagnosed.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -324,8 +325,8 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed',
       dataIndex: 'proposed',
-      sorter: (a, b) =>
-        Number(a.proposed.match(/\d/)) - Number(b.proposed.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed.match(/\d/)) - Number(b.proposed.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -350,8 +351,8 @@ const ChartAudit = (props) => {
     {
       title: 'Completed',
       dataIndex: 'completed',
-      sorter: (a, b) =>
-        Number(a.completed.match(/\d/)) - Number(b.completed.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.completed.match(/\d/)) - Number(b.completed.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -376,7 +377,7 @@ const ChartAudit = (props) => {
     {
       title: 'Case',
       dataIndex: 'case',
-      sorter: (a, b) => Number(a.case.match(/\d/)) - Number(b.case.match(/\d/)),
+      // sorter: (a, b) => Number(a.case.match(/\d/)) - Number(b.case.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -401,7 +402,7 @@ const ChartAudit = (props) => {
     {
       title: 'Hyg',
       dataIndex: 'hyg',
-      sorter: (a, b) => Number(a.hyg.match(/\d/)) - Number(b.hyg.match(/\d/)),
+      // sorter: (a, b) => Number(a.hyg.match(/\d/)) - Number(b.hyg.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -426,7 +427,7 @@ const ChartAudit = (props) => {
     {
       title: 'Dr',
       dataIndex: 'dr',
-      sorter: (a, b) => Number(a.dr.match(/\d/)) - Number(b.dr.match(/\d/)),
+      minWidth: 120, // sorter: (a, b) => Number(a.dr.match(/\d/)) - Number(b.dr.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -451,8 +452,8 @@ const ChartAudit = (props) => {
     {
       title: 'Has Appt',
       dataIndex: 'has_appt',
-      sorter: (a, b) =>
-        Number(a.has_appt.match(/\d/)) - Number(b.has_appt.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.has_appt.match(/\d/)) - Number(b.has_appt.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -477,8 +478,8 @@ const ChartAudit = (props) => {
     {
       title: 'Dr Appt',
       dataIndex: 'dr_appt',
-      sorter: (a, b) =>
-        Number(a.dr_appt.match(/\d/)) - Number(b.dr_appt.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.dr_appt.match(/\d/)) - Number(b.dr_appt.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -503,8 +504,8 @@ const ChartAudit = (props) => {
     {
       title: 'Unscheduled',
       dataIndex: 'unscheduled',
-      sorter: (a, b) =>
-        Number(a.unscheduled.match(/\d/)) - Number(b.unscheduled.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.unscheduled.match(/\d/)) - Number(b.unscheduled.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -529,8 +530,8 @@ const ChartAudit = (props) => {
     {
       title: 'Test Patient',
       dataIndex: 'test_patient',
-      sorter: (a, b) =>
-        Number(a.test_patient.match(/\d/)) - Number(b.test_patient.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.test_patient.match(/\d/)) - Number(b.test_patient.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -552,9 +553,9 @@ const ChartAudit = (props) => {
     {
       title: 'Test Outside Dr.',
       dataIndex: 'test_outside_dr',
-      sorter: (a, b) =>
-        Number(a.test_outside_dr.match(/\d/)) -
-        Number(b.test_outside_dr.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.test_outside_dr.match(/\d/)) -
+      //  Number(b.test_outside_dr.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -577,9 +578,9 @@ const ChartAudit = (props) => {
     {
       title: 'Test Marketing',
       dataIndex: 'test_marketing',
-      sorter: (a, b) =>
-        Number(a.test_marketing.match(/\d/)) -
-        Number(b.test_marketing.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.test_marketing.match(/\d/)) -
+      //  Number(b.test_marketing.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -601,9 +602,9 @@ const ChartAudit = (props) => {
     {
       title: 'Test Yellow Pages',
       dataIndex: 'test_yellow_pages',
-      sorter: (a, b) =>
-        Number(a.test_yellow_pages.match(/\d/)) -
-        Number(b.test_yellow_pages.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.test_yellow_pages.match(/\d/)) -
+      //  Number(b.test_yellow_pages.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -626,9 +627,9 @@ const ChartAudit = (props) => {
     {
       title: 'Test Insurance',
       dataIndex: 'test_insurance',
-      sorter: (a, b) =>
-        Number(a.test_insurance.match(/\d/)) -
-        Number(b.test_insurance.match(/\d/)),
+      // sorter: (a, b) =>
+      //  Number(a.test_insurance.match(/\d/)) -
+      //  Number(b.test_insurance.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -650,8 +651,8 @@ const ChartAudit = (props) => {
     {
       title: 'Test Walk-in',
       dataIndex: 'test_walk_in',
-      sorter: (a, b) =>
-        Number(a.test_walk_in.match(/\d/)) - Number(b.test_walk_in.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.test_walk_in.match(/\d/)) - Number(b.test_walk_in.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -673,8 +674,8 @@ const ChartAudit = (props) => {
     {
       title: 'Test Unknown',
       dataIndex: 'test_unknown',
-      sorter: (a, b) =>
-        Number(a.test_unknown.match(/\d/)) - Number(b.test_unknown.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.test_unknown.match(/\d/)) - Number(b.test_unknown.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -696,8 +697,8 @@ const ChartAudit = (props) => {
     {
       title: 'Test Other',
       dataIndex: 'test_other',
-      sorter: (a, b) =>
-        Number(a.test_other.match(/\d/)) - Number(b.test_other.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.test_other.match(/\d/)) - Number(b.test_other.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -718,9 +719,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Patient',
       dataIndex: 'proposed_patient',
-      sorter: (a, b) =>
-        Number(a.proposed_patient.match(/\d/)) -
-        Number(b.proposed_patient.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_patient.match(/\d/)) -
+      // Number(b.proposed_patient.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -742,9 +743,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Outside Dr.',
       dataIndex: 'proposed_outside_dr',
-      sorter: (a, b) =>
-        Number(a.proposed_outside_dr.match(/\d/)) -
-        Number(b.proposed_outside_dr.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_outside_dr.match(/\d/)) -
+      // Number(b.proposed_outside_dr.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -767,9 +768,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Marketing',
       dataIndex: 'proposed_marketing',
-      sorter: (a, b) =>
-        Number(a.proposed_marketing.match(/\d/)) -
-        Number(b.proposed_marketing.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_marketing.match(/\d/)) -
+      // Number(b.proposed_marketing.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -791,9 +792,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Yellow Pages',
       dataIndex: 'proposed_yellow_pages',
-      sorter: (a, b) =>
-        Number(a.proposed_yellow_pages.match(/\d/)) -
-        Number(b.proposed_yellow_pages.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_yellow_pages.match(/\d/)) -
+      // Number(b.proposed_yellow_pages.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -816,9 +817,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Insurance',
       dataIndex: 'proposed_insurance',
-      sorter: (a, b) =>
-        Number(a.proposed_insurance.match(/\d/)) -
-        Number(b.proposed_insurance.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_insurance.match(/\d/)) -
+      // Number(b.proposed_insurance.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -840,9 +841,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Walk-in',
       dataIndex: 'proposed_walk_in',
-      sorter: (a, b) =>
-        Number(a.proposed_walk_in.match(/\d/)) -
-        Number(b.proposed_walk_in.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_walk_in.match(/\d/)) -
+      // Number(b.proposed_walk_in.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -864,9 +865,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Unknown',
       dataIndex: 'proposed_unknown',
-      sorter: (a, b) =>
-        Number(a.proposed_unknown.match(/\d/)) -
-        Number(b.proposed_unknown.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_unknown.match(/\d/)) -
+      // Number(b.proposed_unknown.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -888,9 +889,9 @@ const ChartAudit = (props) => {
     {
       title: 'Proposed Other',
       dataIndex: 'proposed_other',
-      sorter: (a, b) =>
-        Number(a.proposed_other.match(/\d/)) -
-        Number(b.proposed_other.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.proposed_other.match(/\d/)) -
+      // Number(b.proposed_other.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -912,9 +913,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Patient',
       dataIndex: 'completed_patient',
-      sorter: (a, b) =>
-        Number(a.completed_patient.match(/\d/)) -
-        Number(b.completed_patient.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_patient.match(/\d/)) -
+      // Number(b.completed_patient.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -936,9 +937,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Outside Dr.',
       dataIndex: 'completed_outside_dr',
-      sorter: (a, b) =>
-        Number(a.completed_outside_dr.match(/\d/)) -
-        Number(b.completed_outside_dr.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_outside_dr.match(/\d/)) -
+      // Number(b.completed_outside_dr.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -961,9 +962,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Marketing',
       dataIndex: 'completed_marketing',
-      sorter: (a, b) =>
-        Number(a.completed_marketing.match(/\d/)) -
-        Number(b.completed_marketing.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_marketing.match(/\d/)) -
+      // Number(b.completed_marketing.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -985,9 +986,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Yellow Pages',
       dataIndex: 'completed_yellow_pages',
-      sorter: (a, b) =>
-        Number(a.completed_yellow_pages.match(/\d/)) -
-        Number(b.completed_yellow_pages.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_yellow_pages.match(/\d/)) -
+      // Number(b.completed_yellow_pages.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -1010,9 +1011,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Insurance',
       dataIndex: 'completed_insurance',
-      sorter: (a, b) =>
-        Number(a.completed_insurance.match(/\d/)) -
-        Number(b.completed_insurance.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_insurance.match(/\d/)) -
+      // Number(b.completed_insurance.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -1034,9 +1035,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Walk-in',
       dataIndex: 'completed_walk_in',
-      sorter: (a, b) =>
-        Number(a.completed_walk_in.match(/\d/)) -
-        Number(b.completed_walk_in.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_walk_in.match(/\d/)) -
+      // Number(b.completed_walk_in.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -1058,9 +1059,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Unknown',
       dataIndex: 'completed_unknown',
-      sorter: (a, b) =>
-        Number(a.completed_unknown.match(/\d/)) -
-        Number(b.completed_unknown.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_unknown.match(/\d/)) -
+      // Number(b.completed_unknown.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -1082,9 +1083,9 @@ const ChartAudit = (props) => {
     {
       title: 'Completed Other',
       dataIndex: 'completed_other',
-      sorter: (a, b) =>
-        Number(a.completed_other.match(/\d/)) -
-        Number(b.completed_other.match(/\d/)),
+      // sorter: (a, b) =>
+      // Number(a.completed_other.match(/\d/)) -
+      // Number(b.completed_other.match(/\d/)),
       render: (value, record) => {
         if (record.key === INITIAL_VALUE) {
           return (
@@ -1145,13 +1146,13 @@ const ChartAudit = (props) => {
 
   const fetchChartAuditList = async () => {
     const { id } = studentInfo;
-    console.log('iod ne', id);
     if (id) {
       const res = await fetchChartAudit({ id });
       if (res.length > 0) {
         const data = res;
         if (data) {
           const temp = [...data, { key: INITIAL_VALUE }];
+          console.log('tempo', temp);
           setDataSource(temp);
         }
       }
@@ -1166,45 +1167,36 @@ const ChartAudit = (props) => {
     return { error: 'no id' };
   };
 
-  // componentDidMount() {
-  //   const { fetchStudents } = this.props;
-
-  //   fetchStudents();
-
-  //   setTimeout(() => {
-  //     this.setState({
-  //       loading: false,
-  //     });
-  //   }, 1000);
-  // }
-
   const addItem = async (data) => {
     const { id } = studentInfo;
     if (!id) {
-      alert('Please choose student before add data');
+      notification.error({
+        message: 'Please choose student before add data',
+      });
     }
-
+    console.log(data);
     const temp = {
       user_id: id,
-      amount: data.amount,
-      amount_diagnosed: data.amount_diagnosed,
-      amount_treatment: data.amount_treatment,
+      new_patient_initials: data.new_patient_initials,
+      completed_total_amount: data.completed_total_amount,
+      total_amount_diagnosed: data.amount_diagnosed,
+      total_treatment_completed: data.amount_treatment,
       case: data.case,
       chart: data.chart,
       completed: data.completed,
       diagnosed: data.diagnosed,
-      doctor_appt: data.doctor_appt,
+      dr_appt_scheduled: data.doctor_appt,
       dr: data.dr,
-      dr_appt: data.dr_appt,
-      has_appt: data.has_appt,
+      has_dr_appt: data.has_dr_appt,
+      has_has_appt: data.has_has_appt,
       hyg: data.hyg,
       hygiene_appt: data.hygiene_appt,
       patient: data.patient,
       proposed: data.proposed,
-      referral_source: data.referral_source,
+      identify_referral_source: data.identify_referral_source,
       scheduled: data.scheduled,
       unscheduled: data.unscheduled,
-      unscheduled_remaining: data.unscheduled_remaining,
+      remaining_unscheduled_treatment: data.unscheduled_remaining,
       patient_chart_audit_extras_attributes: [
         {
           section: 'tests',

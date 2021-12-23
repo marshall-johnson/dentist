@@ -1,9 +1,15 @@
 .ant-table-thead {
   .ant-table-cell {
     background: #DEECFB;
+    min-width: 80px;
   }
 
   tr:hover {
     background: #DEECFB;
+  }
+}
+.ant-input-number-handler-wrap{
+  span{
+    display: none;
   }
 }
