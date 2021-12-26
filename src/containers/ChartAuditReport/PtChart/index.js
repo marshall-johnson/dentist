@@ -11,10 +11,10 @@ const PtChart = (props) => {
     {
       key: '1',
       ptChart: 'Total $ Amount',
-      diagnosed: formatCurrency(0),
-      proposed: formatCurrency(0),
-      treatmentCompleted: formatCurrency(0),
-      caseCompleted: formatCurrency(0),
+      diagnosed: 0,
+      proposed: 0,
+      treatmentCompleted: 0,
+      caseCompleted: 0,
     },
     {
       key: '2',
@@ -27,24 +27,28 @@ const PtChart = (props) => {
   ]);
 
   useEffect(() => {
-    setDataSource([
-      {
-        key: '1',
-        ptChart: 'Total $ Amount',
-        diagnosed: formatCurrency(data.total_amount_diagnosed),
-        proposed: formatCurrency(data.total_amount_proposed),
-        treatmentCompleted: formatCurrency(data.total_amount_completed),
-        caseCompleted: formatCurrency(data.total_amount_case),
-      },
-      {
-        key: '2',
-        ptChart: 'Total # Patients',
-        diagnosed: data.total_patient_diagnosed,
-        proposed: data.total_patient_proposed,
-        treatmentCompleted: data.total_patient_completed,
-        caseCompleted: data.total_patient_case,
-      },
-    ]);
+    if (data.total_amount_case) {
+      setDataSource([
+        {
+          key: '1',
+          ptChart: 'Total $ Amount',
+          diagnosed: data ? formatCurrency(data.total_amount_diagnosed) : null,
+          proposed: data ? formatCurrency(data.total_amount_proposed) : null,
+          treatmentCompleted: data
+            ? formatCurrency(data.total_amount_completed)
+            : null,
+          caseCompleted: data ? formatCurrency(data.total_amount_case) : null,
+        },
+        {
+          key: '2',
+          ptChart: 'Total # Patients',
+          diagnosed: data.total_patient_diagnosed,
+          proposed: data.total_patient_proposed,
+          treatmentCompleted: data.total_patient_completed,
+          caseCompleted: data.total_patient_case,
+        },
+      ]);
+    }
   }, [data]);
 
   const columns = [

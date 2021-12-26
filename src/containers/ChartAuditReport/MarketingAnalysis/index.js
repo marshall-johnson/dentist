@@ -49,7 +49,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Patient',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '30%',
+      percentage_completed: '0%',
     },
     {
       key: '2',
@@ -57,7 +57,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Dr.',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '40%',
+      percentage_completed: '0%',
     },
     {
       key: '3',
@@ -65,7 +65,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Marketing',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '55%',
+      percentage_completed: '0%',
     },
     {
       key: '4',
@@ -73,7 +73,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'YP Ad',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '80%',
+      percentage_completed: '0%',
     },
     {
       key: '5',
@@ -81,7 +81,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Insurance',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '90%',
+      percentage_completed: '0%',
     },
     {
       key: '6',
@@ -89,7 +89,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Walk-In',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '20%',
+      percentage_completed: '0%',
     },
     {
       key: '7',
@@ -97,7 +97,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Walk-In',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '5%',
+      percentage_completed: '0',
     },
     {
       key: '8',
@@ -105,7 +105,7 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Unknown',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '35%',
+      percentage_completed: '0%',
     },
     {
       key: '9',
@@ -113,77 +113,79 @@ const MarketingAnalysis = ({ data = {} } = {}) => {
       source: 'Other',
       average_presented: formatCurrency(0),
       ave: formatCurrency(0),
-      percentage_completed: '95%',
+      percentage_completed: '0%',
     },
   ]);
 
   useEffect(() => {
-    setDataSource([
-      {
-        key: '1',
-        lead_source: Math.round(data.lead_source?.patient * 100) / 100,
-        source: 'Patient',
-        average_presented: formatCurrency(data.ave_presented?.patient),
-        ave: formatCurrency(data.ave?.patient),
-        percentage_completed: data.percentage_completed?.patient,
-      },
-      {
-        key: '2',
-        lead_source: Math.round(data.lead_source?.outside_dr * 100) / 100,
-        source: 'Dr.',
-        average_presented: formatCurrency(data.ave_presented?.outside_dr),
-        ave: formatCurrency(data.ave?.outside_dr),
-        percentage_completed: data.percentage_completed?.outside_dr,
-      },
-      {
-        key: '3',
-        lead_source: Math.round(data.lead_source?.marketing * 100) / 100,
-        source: 'Marketing',
-        average_presented: formatCurrency(data.ave_presented?.marketing),
-        ave: formatCurrency(data.ave?.marketing),
-        percentage_completed: data.percentage_completed?.marketing,
-      },
-      {
-        key: '4',
-        lead_source: Math.round(data.lead_source?.yellow_pages * 100) / 100,
-        source: 'YP Ad',
-        average_presented: formatCurrency(data.ave_presented?.yellow_pages),
-        ave: formatCurrency(data.ave?.yellow_pages),
-        percentage_completed: data.percentage_completed?.yellow_pages,
-      },
-      {
-        key: '5',
-        lead_source: Math.round(data.lead_source?.insurance * 100) / 100,
-        source: 'Insurance',
-        average_presented: formatCurrency(data.ave_presented?.insurance),
-        ave: formatCurrency(data.ave?.insurance),
-        percentage_completed: data.percentage_completed?.insurance,
-      },
-      {
-        key: '6',
-        lead_source: Math.round(data.lead_source?.walk_in * 100) / 100,
-        source: 'Walk-In',
-        average_presented: formatCurrency(data.ave_presented?.walk_in),
-        ave: formatCurrency(data.ave?.walk_in),
-        percentage_completed: data.percentage_completed?.walk_in,
-      },
-      {
-        key: '7',
-        lead_source: Math.round(data.lead_source?.unknown * 100) / 100,
-        source: 'Unknown',
-        average_presented: formatCurrency(data.ave_presented?.unknown),
-        ave: formatCurrency(data.ave?.unknown),
-        percentage_completed: data.percentage_completed?.unknown,
-      },
-      {
-        key: '8',
-        lead_source: Math.round(data.lead_source?.other * 100) / 100,
-        source: 'Other',
-        average_presented: formatCurrency(data.ave_presented?.other),
-        ave: formatCurrency(data.ave?.other),
-        percentage_completed: data.percentage_completed?.other,
-      },
-    ]);
+    if (data.lead_source) {
+      setDataSource([
+        {
+          key: '1',
+          lead_source: Math.round(data.lead_source?.patient * 100) / 100,
+          source: 'Patient',
+          average_presented: formatCurrency(data.ave_presented?.patient),
+          ave: formatCurrency(data.ave?.patient),
+          percentage_completed: `${data.percentage_completed?.patient}%`,
+        },
+        {
+          key: '2',
+          lead_source: Math.round(data.lead_source?.outside_dr * 100) / 100,
+          source: 'Dr.',
+          average_presented: formatCurrency(data.ave_presented?.outside_dr),
+          ave: formatCurrency(data.ave?.outside_dr),
+          percentage_completed: `${data.percentage_completed?.outside_dr}%`,
+        },
+        {
+          key: '3',
+          lead_source: Math.round(data.lead_source?.marketing * 100) / 100,
+          source: 'Marketing',
+          average_presented: formatCurrency(data.ave_presented?.marketing),
+          ave: formatCurrency(data.ave?.marketing),
+          percentage_completed: `${data.percentage_completed?.marketing}%`,
+        },
+        {
+          key: '4',
+          lead_source: Math.round(data.lead_source?.yellow_pages * 100) / 100,
+          source: 'YP Ad',
+          average_presented: formatCurrency(data.ave_presented?.yellow_pages),
+          ave: formatCurrency(data.ave?.yellow_pages),
+          percentage_completed: `${data.percentage_completed?.yellow_pages}%`,
+        },
+        {
+          key: '5',
+          lead_source: Math.round(data.lead_source?.insurance * 100) / 100,
+          source: 'Insurance',
+          average_presented: formatCurrency(data.ave_presented?.insurance),
+          ave: formatCurrency(data.ave?.insurance),
+          percentage_completed: `${data.percentage_completed?.insurance}%`,
+        },
+        {
+          key: '6',
+          lead_source: Math.round(data.lead_source?.walk_in * 100) / 100,
+          source: 'Walk-In',
+          average_presented: formatCurrency(data.ave_presented?.walk_in),
+          ave: formatCurrency(data.ave?.walk_in),
+          percentage_completed: `${data.percentage_completed?.walk_in}%`,
+        },
+        {
+          key: '7',
+          lead_source: Math.round(data.lead_source?.unknown * 100) / 100,
+          source: 'Unknown',
+          average_presented: formatCurrency(data.ave_presented?.unknown),
+          ave: formatCurrency(data.ave?.unknown),
+          percentage_completed: `${data.percentage_completed?.unknown}%`,
+        },
+        {
+          key: '8',
+          lead_source: Math.round(data.lead_source?.other * 100) / 100,
+          source: 'Other',
+          average_presented: formatCurrency(data.ave_presented?.other),
+          ave: formatCurrency(data.ave?.other),
+          percentage_completed: `${data.percentage_completed?.other}%`,
+        },
+      ]);
+    }
   }, [data]);
 
   return (
