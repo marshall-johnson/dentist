@@ -84,88 +84,90 @@ const MoneyAnalysis = ({ data = {} } = {}) => {
     {
       key: '12',
       field: 'Average $ Loss Per New Patients Monthly',
-      value: formatCurrency(),
+      value: formatCurrency(0),
       fieldBold: true,
     },
     {
       key: '13',
       field: 'Average $ Loss Per New Patients Yearly',
-      value: formatCurrency(),
+      value: formatCurrency(0),
       fieldBold: true,
     },
   ]);
   useEffect(() => {
-    setDataSource([
-      {
-        key: '1',
-        field: 'Ave. $ Treatment Diagnosed',
-        value: formatCurrency(data.ave_treatment_diagnosed),
-      },
-      {
-        key: '2',
-        field: 'Ave. $ Treatment Proposed',
-        value: formatCurrency(data.ave_treatment_proposed),
-      },
-      {
-        key: '3',
-        field: 'Ave. $ Treatment Completed',
-        value: formatCurrency(data.ave_treatment_completed),
-      },
-      {
-        key: '4',
-        field: 'Ave. $  Case Completed',
-        value: formatCurrency(data.ave_case_completed),
-      },
-      {
-        key: '5',
-        field: 'Ave. $ Scheduled w/Doctor',
-        value: formatCurrency(data.amount_scheduled_doctor),
-      },
-      {
-        key: '6',
-        field: 'Amount $ Scheduled w/Doctor',
-        value: formatCurrency(data.amount_scheduled_doctor),
-      },
-      {
-        key: '7',
-        field: '% Unscheduled Diagnosed Tx',
-        value: formatCurrency(data.percentage_unscheduled_diagnosed),
-      },
-      {
-        key: '8',
-        field: '% Unscheduled Proposed Tx',
-        value: formatCurrency(data.percentage_unscheduled_proposed),
-      },
-      {
-        key: '9',
-        field: 'Amount $ Unscheduled',
-        value: formatCurrency(data.amount_unscheduled),
-      },
-      {
-        key: '10.',
-        field: 'Average Diff Proposed vs. Completed',
-        value: formatCurrency(data.average_diff_proposed_vs_completed),
-        fieldBold: true,
-      },
-      {
-        key: '11',
-        field: 'Average Number of New Patients a Month',
-        value: formatCurrency(data.average_number_of_new_patients_a_month),
-        fieldBold: true,
-      },
-      {
-        key: '12',
-        field: 'Average $ Loss Per New Patients Monthly',
-        value: formatCurrency(data.average_loss_per_new_patients_monthly),
-        fieldBold: true,
-      },
-      {
-        key: '13',
-        field: 'Average $ Loss Per New Patients Yearly',
-        value: formatCurrency(data.average_loss_per_new_patients_yearly),
-        fieldBold: true,
-      },
-    ]);
+    if (data.ave_treatment_completed) {
+      setDataSource([
+        {
+          key: '1',
+          field: 'Ave. $ Treatment Diagnosed',
+          value: formatCurrency(data.ave_treatment_diagnosed),
+        },
+        {
+          key: '2',
+          field: 'Ave. $ Treatment Proposed',
+          value: formatCurrency(data.ave_treatment_proposed),
+        },
+        {
+          key: '3',
+          field: 'Ave. $ Treatment Completed',
+          value: formatCurrency(data.ave_treatment_completed),
+        },
+        {
+          key: '4',
+          field: 'Ave. $  Case Completed',
+          value: formatCurrency(data.ave_case_completed),
+        },
+        {
+          key: '5',
+          field: 'Ave. $ Scheduled w/Doctor',
+          value: formatCurrency(data.amount_scheduled_doctor),
+        },
+        {
+          key: '6',
+          field: 'Amount $ Scheduled w/Doctor',
+          value: formatCurrency(data.amount_scheduled_doctor),
+        },
+        {
+          key: '7',
+          field: '% Unscheduled Diagnosed Tx',
+          value: formatCurrency(data.percentage_unscheduled_diagnosed),
+        },
+        {
+          key: '8',
+          field: '% Unscheduled Proposed Tx',
+          value: formatCurrency(data.percentage_unscheduled_proposed),
+        },
+        {
+          key: '9',
+          field: 'Amount $ Unscheduled',
+          value: formatCurrency(data.amount_unscheduled),
+        },
+        {
+          key: '10.',
+          field: 'Average Diff Proposed vs. Completed',
+          value: formatCurrency(data.average_diff_proposed_vs_completed),
+          fieldBold: true,
+        },
+        {
+          key: '11',
+          field: 'Average Number of New Patients a Month',
+          value: formatCurrency(data.average_number_of_new_patients_a_month),
+          fieldBold: true,
+        },
+        {
+          key: '12',
+          field: 'Average $ Loss Per New Patients Monthly',
+          value: formatCurrency(data.average_loss_per_new_patients_monthly),
+          fieldBold: true,
+        },
+        {
+          key: '13',
+          field: 'Average $ Loss Per New Patients Yearly',
+          value: formatCurrency(data.average_loss_per_new_patients_yearly),
+          fieldBold: true,
+        },
+      ]);
+    }
   }, [data]);
 
   return (
