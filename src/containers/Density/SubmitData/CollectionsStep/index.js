@@ -14,6 +14,7 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 import camelcaseKeys from 'camelcase-keys';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -69,6 +70,19 @@ class CollectionsStep extends Component {
       }
     }
   }
+
+  handleTotal = (_, value) => {
+    const total = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (currentKey !== 'total' && currentKey !== 'unpaidBillsDueThisMonth') {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+
+      return previousValue;
+    }, 0);
+    this.formRef.current.setFieldsValue({
+      total,
+    });
+  };
 
   onBack = () => {
     const {
@@ -133,6 +147,7 @@ class CollectionsStep extends Component {
           ref={this.formRef}
           layout="vertical"
           onFinish={this.onFinish}
+          onValuesChange={this.handleTotal}
           initialValues={initialValues}
           validateMessages={validateMessages}
         >
@@ -273,7 +288,7 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input />
+                <Input disabled />
               </Form.Item>
               <Form.Item
                 label="Unpaid Bills Due This Month"

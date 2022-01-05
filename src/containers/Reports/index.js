@@ -65,18 +65,9 @@ const data = [
     cpdTarget: 0,
     cpdVariance: 12.35,
   },
+
   {
     key: '3',
-    category: 'Overhead Total',
-    totalAmount: 47225.52,
-    collectionsPercent: 0,
-    interimBudget: 0,
-    innterimVariance: 104.08,
-    cpdTarget: 0,
-    cpdVariance: 104.08,
-  },
-  {
-    key: '4',
     category: 'Occupancy',
     totalAmount: 6083.55,
     collectionsPercent: 0,
@@ -86,7 +77,7 @@ const data = [
     cpdVariance: 13.41,
   },
   {
-    key: '5',
+    key: '4',
     category: 'Mktng/Sales',
     totalAmount: 90.12,
     collectionsPercent: 0,
@@ -96,7 +87,7 @@ const data = [
     cpdVariance: 0.2,
   },
   {
-    key: '6',
+    key: '5',
     category: 'Laboratory',
     totalAmount: 2157.62,
     collectionsPercent: 0,
@@ -106,7 +97,7 @@ const data = [
     cpdVariance: 4.76,
   },
   {
-    key: '7',
+    key: '6',
     category: 'H&P Resources',
     totalAmount: 6294.97,
     collectionsPercent: 0,
@@ -114,6 +105,16 @@ const data = [
     innterimVariance: 13.87,
     cpdTarget: 0,
     cpdVariance: 13.87,
+  },
+  {
+    key: '7',
+    category: 'Overhead Total',
+    totalAmount: 47225.52,
+    collectionsPercent: 0,
+    interimBudget: 0,
+    innterimVariance: 104.08,
+    cpdTarget: 0,
+    cpdVariance: 104.08,
   },
   {
     key: '8',
@@ -219,12 +220,16 @@ class ReportingContainer extends Component {
       },
     ];
 
+    const onFilterChange = (data) => {
+      console.log(data);
+    };
+
     return (
       <div className="reporting-container">
         <PageHeader className="site-page-header" title="Reporting" />
         <Divider />
 
-        <FilterForm />
+        <FilterForm onSubmitCallback={onFilterChange} />
         <Divider />
 
         <Row>
