@@ -18,6 +18,7 @@ import queryString from 'query-string';
 
 import AppConfig from '@/constants/AppConfig';
 import { dentistrySubmitData } from '@/actions/dentistryActions';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -77,6 +78,28 @@ class SolvencySavingsROIFundsStep extends Component {
       }
     }
   }
+
+  handleTotal = (_, value) => {
+    const total = Object.keys(value).reduce((previousValue, currentKey) => {
+      // if (currentKey !== 'total') {
+      //   return previousValue + (parseInt(value[currentKey]) || 0);
+      // }
+      if (currentKey === 'deposit') {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+      if (currentKey === 'retiringPastDueDebt') {
+        return previousValue - (parseInt(value[currentKey]) || 0);
+      }
+      if (currentKey === 'transferredOutOfSolvencyAcct') {
+        return previousValue - (parseInt(value[currentKey]) || 0);
+      }
+
+      return previousValue;
+    }, 0);
+    this.formRef.current.setFieldsValue({
+      total,
+    });
+  };
 
   onBack = () => {
     const {
@@ -173,6 +196,7 @@ class SolvencySavingsROIFundsStep extends Component {
           ref={this.formRef}
           layout="vertical"
           onFinish={this.onFinish}
+          onValuesChange={this.handleTotal}
           initialValues={initialValues}
           validateMessages={validateMessages}
         >
@@ -234,6 +258,7 @@ pay the current month’s expenses."
                   ]}
                 >
                   <InputNumber
+                    disabled
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
