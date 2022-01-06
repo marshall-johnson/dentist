@@ -73,10 +73,17 @@ class CollectionsStep extends Component {
 
   handleTotal = (_, value) => {
     const total = Object.keys(value).reduce((previousValue, currentKey) => {
-      if (currentKey !== 'total' && currentKey !== 'unpaidBillsDueThisMonth') {
+      // if (currentKey !== 'total' && currentKey !== 'unpaidBillsDueThisMonth') {
+      //   return previousValue + (parseInt(value[currentKey]) || 0);
+      // }
+      if (
+        currentKey === 'zeroToThirtyDays' ||
+        currentKey === 'thirtyOneToSixtyDays' ||
+        currentKey === 'sixtyOneToNinetyDays' ||
+        currentKey === 'ninetyOneToMoreDays'
+      ) {
         return previousValue + (parseInt(value[currentKey]) || 0);
       }
-
       return previousValue;
     }, 0);
     this.formRef.current.setFieldsValue({
