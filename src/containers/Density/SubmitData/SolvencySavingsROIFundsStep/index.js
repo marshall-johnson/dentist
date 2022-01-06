@@ -88,7 +88,7 @@ class SolvencySavingsROIFundsStep extends Component {
         return previousValue + (parseInt(value[currentKey]) || 0);
       }
       if (currentKey === 'retiringPastDueDebt') {
-        return previousValue - (parseInt(value[currentKey]) || 0);
+        return previousValue + (parseInt(value[currentKey]) || 0);
       }
       if (currentKey === 'transferredOutOfSolvencyAcct') {
         return previousValue - (parseInt(value[currentKey]) || 0);
