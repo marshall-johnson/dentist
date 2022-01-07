@@ -492,7 +492,7 @@ const ReportingContainer = () => {
                   <Text>Actual Bal</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.actual_bal}</Text>
+                  <Text>{reportData.actual.bal}</Text>
                 </Col>
               </Row>
             </Col>
