@@ -294,6 +294,11 @@ class AppContainer extends Component {
                       Review submitted
                     </Link>
                   </Menu.Item>
+                  <Menu.Item key="interimBudget">
+                    <Link to={`${AppConfig.ROUTES.INTERIM_BUDGET}`}>
+                      Interim Budget
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item key="13">
                     <Link to={`${AppConfig.ROUTES.COACHING_PPP}`}>PPP</Link>
                   </Menu.Item>
