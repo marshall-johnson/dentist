@@ -66,6 +66,7 @@ const AppConfig = {
     PROFIT_SCAN: '/profit-scan',
     CHART_AUDIT: '/chart-audit',
     CHART_AUDIT_REPORT: '/chart-audit-report',
+    INTERIM_BUDGET: '/interim-budget',
     LOGIN: '/login',
   },
 };

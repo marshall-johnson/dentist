@@ -24,11 +24,13 @@ import StructureAndSystemsContainer from '@/containers/EnergyConversion/Structur
 import CommunicationAndCoordinationContainer from '@/containers/EnergyConversion/CommunicationAndCoordinationContainer';
 import ChartAudit from '@/containers/ChartAudit';
 import CoachingPPP from '@/containers/Coaching/CoachingPPP';
+// eslint-disable-next-line import/no-named-as-default
 import ChartAuditReport from '@/containers/ChartAuditReport';
 import ReviewSubmittedContainer from '@/containers/Students/ReviewSubmittedContainer';
 import CreateUserContainer from '@/containers/RegistrationContainer/CreateUserContainer';
 import StudentManagement from '@/containers/Management/StudentContainer';
 import DetailStudentContainer from '@/containers/Management/DetailStudent';
+import InterimBudget from '@/containers/InterimBudget';
 
 function Routes() {
   return (
@@ -150,6 +152,16 @@ function Routes() {
         component={ChartAudit}
       />
 
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.COACHING_PPP}`}
+        component={CoachingPPP}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.INTERIM_BUDGET}`}
+        component={InterimBudget}
+      />
       <Route
         exact
         path={`${AppConfig.ROUTES.COACHING_PPP}`}
