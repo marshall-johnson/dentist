@@ -30,7 +30,7 @@ const category = [
   },
   {
     name: 'H&P Resources',
-    value: 'h_and_p_resources',
+    value: 'hp_resource',
   },
   {
     name: 'Supplies',
@@ -46,11 +46,11 @@ const category = [
   },
   {
     name: 'Mktng/Sales',
-    value: 'mktng_sales',
+    value: 'marketing_sales',
   },
   {
-    name: 'Overhead Total',
-    value: 'overhead_total',
+    name: 'DRS Salaries',
+    value: 'dr_salaries',
   },
 ];
 
