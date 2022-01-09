@@ -107,7 +107,7 @@ const InterimBudget = (props) => {
 
   return (
     <div className="submit-data-container">
-      <PageHeader className="site-page-header" title="Review Submitted" />
+      <PageHeader className="site-page-header" title="Interim Budget" />
 
       <Divider />
 

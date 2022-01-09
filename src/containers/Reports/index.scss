@@ -25,3 +25,19 @@
     margin-bottom: 10px;
   }
 }
+
+.ae_style{
+  color: orange;
+  background-color: #dddddd;
+  // outline:1px dashed #000;
+  // outline-offset:-5px;
+  td{
+    border-top: 1px dashed #000 !important;
+    border-bottom: 1px dashed #000 !important;
+  }
+}
+.dashed_row{
+  td{
+    border-top: 1px dashed #000 !important;
+  }
+}

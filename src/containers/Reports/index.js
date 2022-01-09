@@ -63,17 +63,6 @@ const ReportingContainer = () => {
       },
       {
         key: '2',
-        category: 'Services',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-
-      {
-        key: '3',
         category: 'Occupancy',
         totalAmount: 0,
         collectionsPercent: 0,
@@ -83,8 +72,18 @@ const ReportingContainer = () => {
         cpdVariance: 0,
       },
       {
+        key: '3',
+        category: 'H&P Resources',
+        totalAmount: 0,
+        collectionsPercent: 0,
+        interimBudget: 0,
+        interimVariance: 0,
+        cpdTarget: 0,
+        cpdVariance: 0,
+      },
+      {
         key: '4',
-        category: 'Mktng/Sales',
+        category: 'Supplies',
         totalAmount: 0,
         collectionsPercent: 0,
         interimBudget: 0,
@@ -94,16 +93,6 @@ const ReportingContainer = () => {
       },
       {
         key: '5',
-        category: 'Supplies',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '6',
         category: 'Laboratory',
         totalAmount: 0,
         collectionsPercent: 0,
@@ -113,8 +102,8 @@ const ReportingContainer = () => {
         cpdVariance: 0,
       },
       {
-        key: '7',
-        category: 'Supplies',
+        key: '6',
+        category: 'Services',
         totalAmount: 0,
         collectionsPercent: 0,
         interimBudget: 0,
@@ -122,6 +111,17 @@ const ReportingContainer = () => {
         cpdTarget: 0,
         cpdVariance: 0,
       },
+      {
+        key: '7',
+        category: 'Mktng/Sales',
+        totalAmount: 0,
+        collectionsPercent: 0,
+        interimBudget: 0,
+        interimVariance: 0,
+        cpdTarget: 0,
+        cpdVariance: 0,
+      },
+
       {
         key: '8',
         category: 'Overhead Total',
@@ -201,6 +201,7 @@ const ReportingContainer = () => {
       dataIndex: 'collectionsPercent',
       key: 'collectionsPercent',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
     {
       title: 'INTERIM BUDGET',
@@ -213,18 +214,21 @@ const ReportingContainer = () => {
       dataIndex: 'interimVariance',
       key: 'interimVariance',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
     {
       title: 'CPD TARGET',
       dataIndex: 'cpdTarget',
       key: 'cpdTarget',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
     {
       title: 'CPD VARIANCE',
       dataIndex: 'cpdVariance',
       key: 'cpdVariance',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
   ];
 
@@ -244,17 +248,6 @@ const ReportingContainer = () => {
       },
       {
         key: '2',
-        category: 'Services',
-        totalAmount: temp.total_amount.services,
-        collectionsPercent: temp.percentage_of_collections.services,
-        interimBudget: temp.interim_budget.services,
-        interimVariance: temp.interim_budget_variance.services,
-        cpdTarget: temp.cpd_target.services,
-        cpdVariance: temp.cpd_variance.services,
-      },
-
-      {
-        key: '3',
         category: 'Occupancy',
         totalAmount: temp.total_amount.occupancy,
         collectionsPercent: temp.percentage_of_collections.occupancy,
@@ -264,17 +257,17 @@ const ReportingContainer = () => {
         cpdVariance: temp.cpd_variance.occupancy,
       },
       {
-        key: '4',
-        category: 'Mktng/Sales',
-        totalAmount: temp.total_amount.marketing_sales,
-        collectionsPercent: temp.percentage_of_collections.marketing_sales,
-        interimBudget: temp.interim_budget.marketing_sales,
-        interimVariance: temp.interim_budget_variance.marketing_sales,
-        cpdTarget: temp.cpd_target.marketing_sales,
-        cpdVariance: temp.cpd_variance.marketing_sales,
+        key: '3',
+        category: 'H&P Resources',
+        totalAmount: temp.total_amount.hp_resource,
+        collectionsPercent: temp.percentage_of_collections.hp_resource,
+        interimBudget: temp.interim_budget.hp_resource,
+        interimVariance: temp.interim_budget_variance.hp_resource,
+        cpdTarget: temp.cpd_target.hp_resource,
+        cpdVariance: temp.cpd_variance.hp_resource,
       },
       {
-        key: '5',
+        key: '4',
         category: 'Supplies',
         totalAmount: temp.total_amount.supplies,
         collectionsPercent: temp.percentage_of_collections.supplies,
@@ -284,7 +277,7 @@ const ReportingContainer = () => {
         cpdVariance: temp.cpd_variance.supplies,
       },
       {
-        key: '6',
+        key: '5',
         category: 'Laboratory',
         totalAmount: temp.total_amount.laboratory,
         collectionsPercent: temp.percentage_of_collections.laboratory,
@@ -294,14 +287,24 @@ const ReportingContainer = () => {
         cpdVariance: temp.cpd_variance.laboratory,
       },
       {
+        key: '6',
+        category: 'Services',
+        totalAmount: temp.total_amount.services,
+        collectionsPercent: temp.percentage_of_collections.services,
+        interimBudget: temp.interim_budget.services,
+        interimVariance: temp.interim_budget_variance.services,
+        cpdTarget: temp.cpd_target.services,
+        cpdVariance: temp.cpd_variance.services,
+      },
+      {
         key: '7',
-        category: 'Supplies',
-        totalAmount: temp.total_amount.supplies,
-        collectionsPercent: temp.percentage_of_collections.supplies,
-        interimBudget: temp.interim_budget.supplies,
-        interimVariance: temp.interim_budget_variance.supplies,
-        cpdTarget: temp.cpd_target.supplies,
-        cpdVariance: temp.cpd_variance.supplies,
+        category: 'Mktng/Sales',
+        totalAmount: temp.total_amount.marketing_sales,
+        collectionsPercent: temp.percentage_of_collections.marketing_sales,
+        interimBudget: temp.interim_budget.marketing_sales,
+        interimVariance: temp.interim_budget_variance.marketing_sales,
+        cpdTarget: temp.cpd_target.marketing_sales,
+        cpdVariance: temp.cpd_variance.marketing_sales,
       },
       {
         key: '8',
@@ -343,6 +346,20 @@ const ReportingContainer = () => {
   const fetchReport = async (args) => {
     const res = await getReporting(args);
     return res;
+  };
+
+  const renderStyleRow = (record, index) => {
+    console.log(index, record);
+    if (index == 7) {
+      return 'dashed_row';
+    }
+    if (index == 8) {
+      return 'dashed_row';
+    }
+    if (index == 9) {
+      return 'ae_style';
+    }
+    return '';
   };
 
   return (
@@ -398,6 +415,7 @@ const ReportingContainer = () => {
         <br />
 
         <Table
+          rowClassName={renderStyleRow}
           size="small"
           pagination={false}
           columns={columns}
