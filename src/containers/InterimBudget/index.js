@@ -19,41 +19,6 @@ import { postInterimBudget } from '@/services/interim.service';
 
 const { Option } = Select;
 
-const category = [
-  {
-    name: 'Staff',
-    value: 'staff',
-  },
-  {
-    name: 'Occupancy',
-    value: 'occupancy',
-  },
-  {
-    name: 'H&P Resources',
-    value: 'hp_resource',
-  },
-  {
-    name: 'Supplies',
-    value: 'supplies',
-  },
-  {
-    name: 'Laboratory',
-    value: 'laboratory',
-  },
-  {
-    name: 'Services',
-    value: 'services',
-  },
-  {
-    name: 'Mktng/Sales',
-    value: 'marketing_sales',
-  },
-  {
-    name: 'DRS Salaries',
-    value: 'dr_salaries',
-  },
-];
-
 const InterimBudget = (props) => {
   const { students, fetchStudents, loadingFetchStudent } = props;
   const [form, setForm] = useState({});
@@ -84,8 +49,16 @@ const InterimBudget = (props) => {
       payload: {
         month: form.dateMonth.month,
         year: form.dateMonth.year,
-        value: form.interimBudget,
-        category: form.category,
+        budgets: {
+          staff: form.staff,
+          occupancy: form.occupancy,
+          hp_resources: form.hp_resources,
+          supplies: form.supplies,
+          laboratory: form.laboratory,
+          services: form.services,
+          marketing_sales: form.marketing_sales,
+          drs_salaries: form.drs_salaries,
+        },
       },
     });
     if (res.success) {
@@ -158,24 +131,8 @@ const InterimBudget = (props) => {
                 alignItems: 'center',
               }}
             >
-              <div style={{ width: 100 }}>Interim Budget:</div>
-              <Select
-                style={{
-                  width: 200,
-                }}
-                onChange={(id) => {
-                  setForm({
-                    ...form,
-                    category: id,
-                  });
-                }}
-              >
-                {category.map((cate, index) => (
-                  <Option value={cate.value} key={index.toString()}>
-                    {`${cate.name}`}
-                  </Option>
-                ))}
-              </Select>
+              <div style={{ width: 100 }}>Category:</div>
+              <div style={{ width: 100 }}>Budget %:</div>
             </Row>
             <Row
               style={{
@@ -185,20 +142,202 @@ const InterimBudget = (props) => {
                 alignItems: 'center',
               }}
             >
-              <div style={{ width: 100 }}>Interim Budget:</div>
+              <div style={{ width: 100 }}>Staff:</div>
               <InputNumber
                 style={{
                   width: 200,
                 }}
                 formatter={(value) =>
-                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 }
-                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                value={form.interimBudget}
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.staff}
                 onChange={(e) => {
                   setForm({
                     ...form,
-                    interimBudget: e,
+                    staff: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Occupancy:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.occupancy}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    occupancy: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>HP Resources:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.hp_resources}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    hp_resources: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Supplies:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.supplies}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    supplies: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Laboratory:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.laboratory}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    laboratory: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Services:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.services}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    services: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Marketing Sales:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.marketing_sales}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    marketing_sales: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>DRS SALARIES:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.drs_salaries}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    drs_salaries: e,
                   });
                 }}
               />

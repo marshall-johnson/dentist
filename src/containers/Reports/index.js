@@ -208,6 +208,7 @@ const ReportingContainer = () => {
       dataIndex: 'interimBudget',
       key: 'interimBudget',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
     {
       title: 'INTERIM VARIANCE',
