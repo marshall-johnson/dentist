@@ -32,7 +32,7 @@ const Filter = (props) => {
     <Form name="advanced_search" className="ant-advanced-search-form">
       <Row gutter={24}>
         <Col span={8}>
-          {/* <Form.Item
+          <Form.Item
             label="Select Report"
             rules={[
               {
@@ -42,10 +42,9 @@ const Filter = (props) => {
           >
             <Select>
               <Option value="report 1">Report 1</Option>
-              <Option value="report 2">Report 2</Option>
-              <Option value="report 3">Report 3</Option>
+              <Option value="report 2">Report Hygiene</Option>
             </Select>
-          </Form.Item> */}
+          </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item label="DatePicker">
