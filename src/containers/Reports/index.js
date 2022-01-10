@@ -177,6 +177,12 @@ const ReportingContainer = () => {
         value: 0,
       },
     ],
+    debt_payments: 0,
+    net_solv: 0,
+    avg_prod_mo: 0,
+    avg_coll_mo: 0,
+    budgeted_bl: 0,
+    budgeted_balance: 0,
   });
 
   const handleChange = (pagination, filters, sorter) => {
@@ -339,6 +345,7 @@ const ReportingContainer = () => {
       },
     ];
     setReportData({
+      ...reportData,
       table: mapped,
       ...temp,
     });
@@ -433,7 +440,7 @@ const ReportingContainer = () => {
                   <Text>UNPAID BILLS</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.unpaid_bills}</Text>
+                  <Text>${reportData.unpaid_bills}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -441,7 +448,7 @@ const ReportingContainer = () => {
                   <Text>Production</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.production}</Text>
+                  <Text>${reportData.production}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -449,7 +456,7 @@ const ReportingContainer = () => {
                   <Text>Collections</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.collections}</Text>
+                  <Text>${reportData.collections}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -463,7 +470,7 @@ const ReportingContainer = () => {
                   <Text>Actual R/L</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.actual.rl}</Text>
+                  <Text>${reportData.actual.rl}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -471,7 +478,7 @@ const ReportingContainer = () => {
                   <Text>Actual B/L</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.actual.bl}</Text>
+                  <Text>${reportData.actual.bl}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -479,7 +486,7 @@ const ReportingContainer = () => {
                   <Text>Debt Payments</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.debt_payments}</Text>
+                  <Text>${reportData.debt_payments}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -487,7 +494,7 @@ const ReportingContainer = () => {
                   <Text>Net Solv</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.net_solv}</Text>
+                  <Text>{reportData.net_solv}%</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -495,7 +502,7 @@ const ReportingContainer = () => {
                   <Text>Actual G/L</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.actual.gl}</Text>
+                  <Text>${reportData.actual.gl}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -503,7 +510,7 @@ const ReportingContainer = () => {
                   <Text>Net ROI Funds</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.net_roi_funds}</Text>
+                  <Text>{reportData.net_roi_funds}%</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -511,7 +518,7 @@ const ReportingContainer = () => {
                   <Text>Actual Bal</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.actual.bal}</Text>
+                  <Text>${reportData.actual.bal}</Text>
                 </Col>
               </Row>
             </Col>
@@ -522,7 +529,7 @@ const ReportingContainer = () => {
                   <Text>TOTAL SHORT TERM DEBT:</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.total_short_term_debt}</Text>
+                  <Text>${reportData.total_short_term_debt}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -530,7 +537,7 @@ const ReportingContainer = () => {
                   <Text>Avg. Prod/Mo:</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.avg_prod_mo}</Text>
+                  <Text>${reportData.avg_prod_mo}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -538,7 +545,7 @@ const ReportingContainer = () => {
                   <Text>Avg Coll/Mo</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.avg_coll_mo}</Text>
+                  <Text>${reportData.avg_coll_mo}</Text>
                 </Col>
               </Row>
               <Row className="mb-15">
@@ -546,7 +553,7 @@ const ReportingContainer = () => {
                   <Text>Budgeted B/L</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.budgeted_bl}</Text>
+                  <Text>${reportData.budgeted_bl}</Text>
                 </Col>
               </Row>
 
@@ -555,7 +562,7 @@ const ReportingContainer = () => {
                   <Text>Budgeted Balance</Text>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <Text>{reportData.budgeted_balance}</Text>
+                  <Text>${reportData.budgeted_balance}</Text>
                 </Col>
               </Row>
             </Col>
@@ -587,6 +594,7 @@ const ReportingContainer = () => {
                     dataIndex: 'value',
                     key: 'value',
                     ellipsis: true,
+                    render: (text) => <span>{text}%</span>,
                   },
                 ]}
                 dataSource={reportData.prod_hour_scheduled}
@@ -618,6 +626,7 @@ const ReportingContainer = () => {
                     dataIndex: 'value',
                     key: 'value',
                     ellipsis: true,
+                    render: (text) => <span>{text}%</span>,
                   },
                 ]}
                 dataSource={reportData.prod_patient_visits}
