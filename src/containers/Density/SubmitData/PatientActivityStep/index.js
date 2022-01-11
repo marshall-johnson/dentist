@@ -233,7 +233,73 @@ group. "
               </Form.Item>
             </Col>
           </Row>
+          <Row gutter={[32, 16]}>
+            <Col span={8}>
+              <h3 className="ant-form-text">Referred By</h3>
+              <Form.Item
+                label="Patients of Record"
+                name="patientsOfRecord"
+                tooltip="Total number of New Patients joining the practice
+this month who were sent to the practice by a patient of record."
+                fieldKey="patientsOfRecord"
+                rules={[
+                  {
+                    validator: (_, value) =>
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Patients of Record is not a valid number',
+                            ),
+                          ),
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
 
+              <Form.Item label="Website" name="website" fieldKey="website">
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8} style={{ paddingTop: '33px' }}>
+              <Form.Item
+                label="Other Doctors"
+                tooltip="Total number of New Patients joining the practice this
+month who were sent to the practice by another healthcare professional."
+                name="otherDoctors"
+                fieldKey="otherDoctors"
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Team Members"
+                name="teamMembers"
+                fieldKey="teamMembers"
+                rules={[
+                  {
+                    validator: (_, value) =>
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Team Members is not a valid number'),
+                          ),
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8} style={{ paddingTop: '33px' }}>
+              <Form.Item label="Signage" name="signage" fieldKey="signage">
+                <Input />
+              </Form.Item>
+
+              <Form.Item label="Other" name="other" fieldKey="other">
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
           <Row gutter={[32, 16]}>
             <Col span={8}>
               <Form.Item
@@ -482,68 +548,6 @@ Hygiene Dept Department this month?"
           </Row>
 
           <Divider />
-
-          <Row gutter={[32, 16]}>
-            <Col span={8}>
-              <h3 className="ant-form-text">Referred By</h3>
-              <Form.Item
-                label="Patients of Record"
-                name="patientsOfRecord"
-                tooltip="Total number of New Patients joining the practice
-this month who were sent to the practice by a patient of record."
-                fieldKey="patientsOfRecord"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      !isNaN(value)
-                        ? Promise.resolve()
-                        : Promise.reject(
-                            new Error(
-                              'Patients of Record is not a valid number',
-                            ),
-                          ),
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Other Doctors"
-                tooltip="Total number of New Patients joining the practice this
-month who were sent to the practice by another healthcare professional."
-                name="otherDoctors"
-                fieldKey="otherDoctors"
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item label="Website" name="website" fieldKey="website">
-                <Input />
-              </Form.Item>
-              <Form.Item label="Signage" name="signage" fieldKey="signage">
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Team Members"
-                name="teamMembers"
-                fieldKey="teamMembers"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      !isNaN(value)
-                        ? Promise.resolve()
-                        : Promise.reject(
-                            new Error('Team Members is not a valid number'),
-                          ),
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item label="Other" name="other" fieldKey="other">
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
 
           <Divider />
 
