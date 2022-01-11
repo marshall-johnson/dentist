@@ -22,6 +22,7 @@ const { Option } = Select;
 const InterimBudget = (props) => {
   const { students, fetchStudents, loadingFetchStudent } = props;
   const [form, setForm] = useState({});
+
   useEffect(() => {
     fetchStudents();
   }, []);
@@ -38,7 +39,11 @@ const InterimBudget = (props) => {
     } else {
       setForm({
         ...form,
-        dateMonth: null,
+        dateMonth: {
+          month: null,
+          year: null,
+        },
+        date: value,
       });
     }
   };
@@ -70,12 +75,16 @@ const InterimBudget = (props) => {
         message: res.message,
       });
     }
-    // setForm({
-    //   studentId: null,
-    //   dateMonth: {},
-    //   category: null,
-    //   interimBudget: null,
-    // });
+    setForm({
+      studentId: null,
+      dateMonth: {
+        month: null,
+        year: null,
+      },
+      category: null,
+      interimBudget: null,
+      date: '',
+    });
   };
 
   return (
@@ -93,6 +102,7 @@ const InterimBudget = (props) => {
                 size="middle"
                 picker="month"
                 onChange={onDateSelect}
+                value={form.date}
               />
             </Row>
             <Row
@@ -109,6 +119,7 @@ const InterimBudget = (props) => {
                 style={{
                   width: 200,
                 }}
+                value={form.studentId}
                 onChange={(id) => {
                   setForm({
                     ...form,
@@ -343,7 +354,9 @@ const InterimBudget = (props) => {
               />
             </Row>
             <Row>
-              <Button onClick={onSubmit}>Submit</Button>
+              <Button type="primary" onClick={onSubmit}>
+                Submit
+              </Button>
             </Row>
           </Form>
         </Col>

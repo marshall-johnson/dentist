@@ -312,7 +312,10 @@ class AdministrativeServicesStep extends Component {
                   },
                 ]}
               >
-                <Input disabled />
+                <Input
+                  style={{ fontWeight: 'bold', color: 'black' }}
+                  disabled
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -333,7 +336,8 @@ class AdministrativeServicesStep extends Component {
                 }}
                 onClick={() =>
                   updateData({
-                    administrative_services: this.formRef.current.getFieldValue(),
+                    administrative_services:
+                      this.formRef.current.getFieldValue(),
                   })
                 }
               >

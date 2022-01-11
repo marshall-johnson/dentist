@@ -258,6 +258,7 @@ pay the current month’s expenses."
                   ]}
                 >
                   <InputNumber
+                    style={{ fontWeight: 'bold', color: 'black' }}
                     disabled
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')

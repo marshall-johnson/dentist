@@ -160,7 +160,10 @@ class LaboratoryStep extends Component {
                   },
                 ]}
               >
-                <Input disabled />
+                <Input
+                  style={{ fontWeight: 'bold', color: 'black' }}
+                  disabled
+                />
               </Form.Item>
             </Col>
           </Row>

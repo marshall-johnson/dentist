@@ -295,7 +295,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input disabled />
+                <Input
+                  style={{ fontWeight: 'bold', color: 'black' }}
+                  disabled
+                />
               </Form.Item>
               <Form.Item
                 label="Unpaid Bills Due This Month"
