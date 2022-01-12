@@ -183,6 +183,8 @@ const ReportingContainer = () => {
     avg_prod_mo: 0,
     avg_coll_mo: 0,
     budgeted_bl: 0,
+    budgeted_gl: 0,
+    budgeted_rl: 0,
     budgeted_balance: 0,
     average: {
       prod_per_month: 0,
@@ -657,10 +659,26 @@ const ReportingContainer = () => {
             </Row>
             <Row className="mb-15">
               <Col span={8}>
+                <Text>Budgeted R/L</Text>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <Text>${reportData.budgeted_rl}</Text>
+              </Col>
+            </Row>
+            <Row className="mb-15">
+              <Col span={8}>
                 <Text>Budgeted B/L</Text>
               </Col>
               <Col span={12} className="border-bottom">
                 <Text>${reportData.budgeted_bl}</Text>
+              </Col>
+            </Row>
+            <Row className="mb-15">
+              <Col span={8}>
+                <Text>Budgeted G/L</Text>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <Text>${reportData.budgeted_gl}</Text>
               </Col>
             </Row>
 
