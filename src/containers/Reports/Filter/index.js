@@ -18,6 +18,7 @@ const Filter = (props) => {
     month: null,
     year: null,
     studentId: null,
+    type: 'one',
   });
 
   useEffect(() => {
@@ -40,9 +41,17 @@ const Filter = (props) => {
               },
             ]}
           >
-            <Select>
-              <Option value="report 1">Report 1</Option>
-              <Option value="report 2">Report Hygiene</Option>
+            <Select
+              value={filterValue.type}
+              onChange={(value) => {
+                setFilterValue({
+                  ...filterValue,
+                  type: value,
+                });
+              }}
+            >
+              <Option value="one">Report 1</Option>
+              <Option value="two">Report Hygiene</Option>
             </Select>
           </Form.Item>
         </Col>
