@@ -196,7 +196,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 name="totalNet"
                 fieldKey="totalNet"
               >
-                <Input prefix="$" disabled />
+                <Input
+                  disabled
+                  style={{ fontWeight: 'bold', color: 'black' }}
+                />
               </Form.Item>
               <Form.Item
                 label="Collections at Time of Service"
