@@ -46,9 +46,9 @@ const dataFirst = [
 ];
 
 const ReportingContainer = () => {
-  const [filter, setFilter] = useState({ month: '', year: '', type: 'two' });
+  const [filter, setFilter] = useState({ month: '', year: '', type: 'one' });
   const [compRef, setCompRef] = useState({});
-  const [formStyle, setFormStyle] = useState('two');
+  const [formStyle, setFormStyle] = useState('one');
   const [reportData, setReportData] = useState({
     table: [
       {
