@@ -294,7 +294,10 @@ adjustment discounts. There is a formula in this cell so it will automatically c
                           },
                         ]}
                       >
-                        <Input prefix="$" disabled />
+                        <Input
+                          style={{ color: 'black', fontWeight: 'bold' }}
+                          disabled
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Dr Patient Hours Available"

@@ -5,7 +5,6 @@ import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
 import FilterForm from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
-import report from '../Coaching/CoachingPPP/report';
 
 const { Text, Title } = Typography;
 
@@ -47,9 +46,9 @@ const dataFirst = [
 ];
 
 const ReportingContainer = () => {
-  const [filter, setFilter] = useState({ month: '', year: '', type: 'one' });
+  const [filter, setFilter] = useState({ month: '', year: '', type: 'two' });
   const [compRef, setCompRef] = useState({});
-  const [formStyle, setFormStyle] = useState('one');
+  const [formStyle, setFormStyle] = useState('two');
   const [reportData, setReportData] = useState({
     table: [
       {
@@ -281,7 +280,6 @@ const ReportingContainer = () => {
     setFilter(data);
     setFormStyle(data.type);
     const temp = await fetchReport(data);
-    console.log(data.type);
     console.log('temo', temp);
     let mapped = [];
     if (data.type === 'one') {
@@ -395,81 +393,81 @@ const ReportingContainer = () => {
           key: '1',
           category: 'Staff',
           current_expenses: temp.current_expenses.staff,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.staff,
+          hygiene_target: temp.hygiene_target.staff,
+          variance: temp.variance.staff,
         },
         {
           key: '2',
           category: 'Occupancy',
           current_expenses: temp.current_expenses.occupancy,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.occupancy,
+          hygiene_target: temp.hygiene_target.occupancy,
+          variance: temp.variance.occupancy,
         },
         {
           key: '3',
           category: 'H&P Resources',
           current_expenses: temp.current_expenses.hp_resource,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.hp_resource,
+          hygiene_target: temp.hygiene_target.hp_resource,
+          variance: temp.variance.hp_resource,
         },
         {
           key: '4',
           category: 'Supplies',
           current_expenses: temp.current_expenses.supplies,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.supplies,
+          hygiene_target: temp.hygiene_target.supplies,
+          variance: temp.variance.supplies,
         },
         {
           key: '5',
           category: 'Products',
           current_expenses: temp.current_expenses.products,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.products,
+          hygiene_target: temp.hygiene_target.products,
+          variance: temp.variance.products,
         },
         {
           key: '6',
           category: 'Services',
           current_expenses: temp.current_expenses.services,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.services,
+          hygiene_target: temp.hygiene_target.services,
+          variance: temp.variance.services,
         },
         {
           key: '7',
           category: 'Mktng/Sales',
           current_expenses: temp.current_expenses.marketing_sales,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.marketing_sales,
+          hygiene_target: temp.hygiene_target.marketing_sales,
+          variance: temp.variance.marketing_sales,
         },
         {
           key: '8',
           category: 'Overhead Total',
           current_expenses: temp.current_expenses.overhead_total,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.overhead_total,
+          hygiene_target: temp.hygiene_target.overhead_total,
+          variance: temp.variance.overhead_total,
         },
         {
           key: '9',
           category: 'HYG Salaries',
           current_expenses: temp.current_expenses.hyg_salaries,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.hyg_salaries,
+          hygiene_target: temp.hygiene_target.hyg_salaries,
+          variance: temp.variance.hyg_salaries,
         },
         {
           key: '10',
           category: 'All Expenses',
           current_expenses: temp.current_expenses.all_expenses,
-          pct_of_production: 0,
-          hygiene_target: 0,
-          variance: 0,
+          pct_of_production: temp.percentage_of_production.all_expenses,
+          hygiene_target: temp.hygiene_target.all_expenses,
+          variance: temp.variance.all_expenses,
         },
       ];
     }
@@ -499,7 +497,6 @@ const ReportingContainer = () => {
     return '';
   };
 
-  console.log('oform', reportData);
   const renderFormType1 = () => (
     <div
       className="search-result-list"
@@ -544,150 +541,161 @@ const ReportingContainer = () => {
       <div style={{ padding: '0 8px' }}>
         <Row gutter={24}>
           <Col span={12}>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'purple' }}>
               <Col span={8}>
-                <Text>UNPAID BILLS</Text>
+                <p>UNPAID BILLS</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.unpaid_bills}</Text>
+                <p>${reportData.unpaid_bills}</p>
+              </Col>
+            </Row>
+            <Row className="mb-15" style={{ color: 'blue' }}>
+              <Col span={8}>
+                <p>Production</p>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <p>${reportData.production}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Production</Text>
+                <p>Collections</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.production}</Text>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Collections</Text>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <Text>${reportData.collections}</Text>
+                <p>${reportData.collections}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col offset={8} span={2} className="border-bottom">
-                <Text>{reportData.percentage_of_production}</Text>
+                <p>{reportData.percentage_of_production}</p>
               </Col>
-              <Text>% of Production</Text>
+              <p>% of Production</p>
             </Row>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'orange' }}>
               <Col span={8}>
-                <Text>Actual R/L</Text>
+                <p>Actual R/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.actual.rl}</Text>
+                <p>${reportData.actual.rl}</p>
               </Col>
             </Row>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'blue' }}>
               <Col span={8}>
-                <Text>Actual B/L</Text>
+                <p>Actual B/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.actual.bl}</Text>
+                <p>${reportData.actual.bl}</p>
               </Col>
             </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Debt Payments</Text>
+            <Row className="mb-15" style={{ color: 'blue' }}>
+              <Col offset="1" span={7}>
+                <p>Debt Payments</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.debt_payments}</Text>
+                <p>${reportData.debt_payments}</p>
               </Col>
             </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Net Solv</Text>
+            <Row className="mb-15" style={{ color: 'blue' }}>
+              <Col offset="1" span={7}>
+                <p>Net Solv</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>{reportData.net_solv}%</Text>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Actual G/L</Text>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <Text>${reportData.actual.gl}</Text>
+                <p>{reportData.net_solv}%</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Net ROI Funds</Text>
+                <p>Actual G/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>{reportData.net_roi_funds}%</Text>
+                <p>${reportData.actual.gl}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Actual Bal</Text>
+                <p>Net ROI Funds</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.actual.bal}</Text>
+                <p>{reportData.net_roi_funds}%</p>
+              </Col>
+            </Row>
+            <Row className="mb-15">
+              <Col span={8}>
+                <p>Actual Bal</p>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <p>${reportData.actual.bal}</p>
+              </Col>
+            </Row>
+            <Row className="mb-15">
+              <Col span={8}>
+                <p>Receivables</p>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <p>${reportData.receivables}</p>
               </Col>
             </Row>
           </Col>
 
           <Col span={12}>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'purple' }}>
               <Col span={8}>
-                <Text>TOTAL SHORT TERM DEBT:</Text>
+                <p>TOTAL SHORT TERM DEBT:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.total_short_term_debt}</Text>
+                <p>${reportData.total_short_term_debt}</p>
+              </Col>
+            </Row>
+            <Row className="mb-15" style={{ color: 'blue' }}>
+              <Col span={8}>
+                <p>Avg. Prod/Mo:</p>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <p>${reportData.average.prod_per_month}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Avg. Prod/Mo:</Text>
+                <p>Avg Coll/Mo</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.average.prod_per_month}</Text>
+                <p>${reportData.average.collections_per_month}</p>
+              </Col>
+            </Row>
+            <Row
+              className="mb-15"
+              style={{ color: 'orange', marginTop: '35px' }}
+            >
+              <Col span={8}>
+                <p>Budgeted R/L</p>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <p>${reportData.budgeted_rl}</p>
+              </Col>
+            </Row>
+            <Row className="mb-15" style={{ color: 'blue' }}>
+              <Col span={8}>
+                <p>Budgeted B/L</p>
+              </Col>
+              <Col span={12} className="border-bottom">
+                <p>${reportData.budgeted_bl}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Avg Coll/Mo</Text>
+                <p>Budgeted G/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.average.collections_per_month}</Text>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Budgeted R/L</Text>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <Text>${reportData.budgeted_rl}</Text>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Budgeted B/L</Text>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <Text>${reportData.budgeted_bl}</Text>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <Text>Budgeted G/L</Text>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <Text>${reportData.budgeted_gl}</Text>
+                <p>${reportData.budgeted_gl}</p>
               </Col>
             </Row>
 
             <Row className="mb-15" style={{ marginTop: '80px' }}>
               <Col span={8}>
-                <Text>Budgeted Balance</Text>
+                <p>Budgeted Balance</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.budgeted_balance}</Text>
+                <p>${reportData.budgeted_balance}</p>
               </Col>
             </Row>
           </Col>
@@ -713,13 +721,18 @@ const ReportingContainer = () => {
                   dataIndex: 'name',
                   key: 'name',
                   ellipsis: true,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>{text}</span>
+                  ),
                 },
                 {
                   title: '',
                   dataIndex: 'value',
                   key: 'value',
                   ellipsis: true,
-                  render: (text) => <span>{text}%</span>,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>${text}</span>
+                  ),
                 },
               ]}
               dataSource={reportData.prod_hour_scheduled}
@@ -745,13 +758,18 @@ const ReportingContainer = () => {
                   dataIndex: 'name',
                   key: 'name',
                   ellipsis: true,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>{text}</span>
+                  ),
                 },
                 {
                   title: '',
                   dataIndex: 'value',
                   key: 'value',
                   ellipsis: true,
-                  render: (text) => <span>{text}%</span>,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>${text}</span>
+                  ),
                 },
               ]}
               dataSource={reportData.prod_patient_visits}
@@ -779,7 +797,7 @@ const ReportingContainer = () => {
         </div>
         <br />
         <div>
-          <Text>FOR &nbsp;</Text>
+          <p>FOR &nbsp;</p>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
       </div>
@@ -800,80 +818,80 @@ const ReportingContainer = () => {
       <div style={{ padding: '0 8px' }}>
         <Row gutter={24}>
           <Col span={12}>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'blue ' }}>
               <Col span={8}>
-                <Text>Hyg. Prod/Mo:</Text>
+                <p>Hyg. Prod/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.hyg_prod_mo}</Text>
+                <p>${reportData.hyg_prod_mo}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Hyg Sales/Mo:</Text>
+                <p>Hyg Sales/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.hyg_sales_mo}</Text>
+                <p>${reportData.hyg_sales_mo}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Hyg Total/Mo:</Text>
+                <p>Hyg Total/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.hyg_total_mo}</Text>
+                <p>${reportData.hyg_total_mo}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>% of Total</Text>
+                <p>% of Total</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>{reportData.pct_of_total}</Text>
+                <p>{reportData.pct_of_total}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Profit</Text>
+                <p>Profit</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.profit}</Text>
+                <p>${reportData.profit}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>Patient</Text>
+                <p>Patient</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>{reportData.patient}%</Text>
+                <p>{reportData.patient}%</p>
               </Col>
             </Row>
           </Col>
 
           <Col span={12}>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'blue' }}>
               <Col span={8}>
-                <Text>Avg. Prod/Ytd:</Text>
+                <p>Avg. Prod/Ytd:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.avt_prod_ytd}</Text>
+                <p>${reportData.avt_prod_ytd}</p>
               </Col>
             </Row>
 
             <Row className="mb-15" style={{ marginTop: '80px' }}>
               <Col span={8}>
-                <Text>Avg. Total/Ytd</Text>
+                <p>Avg. Total/Ytd</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>${reportData.avg_total_ytd}</Text>
+                <p>${reportData.avg_total_ytd}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <Text>% of Total</Text>
+                <p>% of Total</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <Text>{reportData.pct_of_avg_ytd}</Text>
+                <p>{reportData.pct_of_avg_ytd}</p>
               </Col>
             </Row>
           </Col>
@@ -887,7 +905,7 @@ const ReportingContainer = () => {
                 alignItems: 'center',
               }}
             >
-              Prod/Hour Scheduled
+              Prod/Hour
             </div>
             <Table
               size="small"
@@ -899,16 +917,21 @@ const ReportingContainer = () => {
                   dataIndex: 'name',
                   key: 'name',
                   ellipsis: true,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>{text}</span>
+                  ),
                 },
                 {
                   title: '',
                   dataIndex: 'value',
                   key: 'value',
                   ellipsis: true,
-                  render: (text) => <span>{text}%</span>,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>${text}</span>
+                  ),
                 },
               ]}
-              dataSource={reportData.prod_hour_scheduled}
+              dataSource={reportData.prod_hour}
             />
           </Col>
           <Col span={12}>
@@ -931,16 +954,21 @@ const ReportingContainer = () => {
                   dataIndex: 'name',
                   key: 'name',
                   ellipsis: true,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>{text}</span>
+                  ),
                 },
                 {
                   title: '',
                   dataIndex: 'value',
                   key: 'value',
                   ellipsis: true,
-                  render: (text) => <span>{text}%</span>,
+                  render: (text) => (
+                    <span style={{ color: 'blue' }}>${text}</span>
+                  ),
                 },
               ]}
-              dataSource={reportData.prod_patient_visits}
+              dataSource={reportData.prod_patient}
             />
           </Col>
         </Row>

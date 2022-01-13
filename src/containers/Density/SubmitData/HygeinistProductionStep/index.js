@@ -290,7 +290,10 @@ hygienist’s statistics are placed in the same column every month."
                           },
                         ]}
                       >
-                        <Input prefix="$" disabled />
+                        <Input
+                          style={{ color: 'black', fontWeight: 'bold' }}
+                          disabled
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Hygiene Hours Available"
