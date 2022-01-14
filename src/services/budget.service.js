@@ -1,8 +1,8 @@
 import api from '@/api';
 
-export const postInterimBudget = async (args = {}) => {
+export const postBudget = async (args = {}) => {
   const { id, payload } = args;
-  const res = await api.post(`/api/v1/users/${id}/interim_budgets`, {
+  const res = await api.post(`/api/v1/users/${id}/budgets`, {
     data: payload,
   });
   if (!res) {

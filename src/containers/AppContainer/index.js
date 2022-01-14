@@ -299,6 +299,9 @@ class AppContainer extends Component {
                       Interim Budget
                     </Link>
                   </Menu.Item>
+                  <Menu.Item key="budget">
+                    <Link to={`${AppConfig.ROUTES.BUDGET}`}>Budget</Link>
+                  </Menu.Item>
                   <Menu.Item key="13">
                     <Link to={`${AppConfig.ROUTES.COACHING_PPP}`}>PPP</Link>
                   </Menu.Item>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
-
-import FilterForm from '@/containers/Reports/Filter';
+import { formatCurrency } from '@/utils/helpers';
+import Filter from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
 
@@ -45,151 +45,169 @@ const dataFirst = [
   },
 ];
 
+const DEFAULT_REPORT = {
+  table: [
+    {
+      key: '1',
+      category: 'Staff',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '2',
+      category: 'Occupancy',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '3',
+      category: 'H&P Resources',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '4',
+      category: 'Supplies',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '5',
+      category: 'Laboratory',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '6',
+      category: 'Services',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '7',
+      category: 'Mktng/Sales',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+
+    {
+      key: '8',
+      category: 'Overhead Total',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '9',
+      category: 'DRS Salaries',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '10',
+      category: 'All Expenses',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+  ],
+  unpaid_bills: 0,
+  production: 0,
+  collections: 0,
+  pct_of_production: 0,
+  actual: {
+    rl: 0,
+    bl: 0,
+    gl: 0,
+    bal: 0,
+  },
+  total_short_term_debt: 0,
+  net_roi_funds: 0,
+  prod_hour_scheduled: [
+    {
+      name: '',
+      value: 0,
+    },
+  ],
+  prod_patient_visits: [
+    {
+      name: '',
+      value: 0,
+    },
+  ],
+  receivables: 0,
+  debt_payments: 0,
+  net_solv: 0,
+  avg_prod_mo: 0,
+  avg_coll_mo: 0,
+  budgeted_bl: 0,
+  budgeted_gl: 0,
+  budgeted_rl: 0,
+  budgeted_balance: 0,
+  average: {
+    prod_per_month: 0,
+    collections_per_month: 0,
+  },
+  budget: {
+    blue_line: 0,
+    green_line: 0,
+    red_line: 0,
+  },
+  profit: 0,
+  avg_total_ytd: 0,
+  avg_prod_ytd: 0,
+  pct_of_avg_ytd: 0,
+  pct_of_total: 0,
+};
+
 const ReportingContainer = () => {
-  const [filter, setFilter] = useState({ month: '', year: '', type: 'one' });
+  const [filter, setFilter] = useState({
+    month: null,
+    year: null,
+    studentId: null,
+    type: 'one',
+  });
   const [compRef, setCompRef] = useState({});
   const [formStyle, setFormStyle] = useState('one');
-  const [reportData, setReportData] = useState({
-    table: [
-      {
-        key: '1',
-        category: 'Staff',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '2',
-        category: 'Occupancy',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '3',
-        category: 'H&P Resources',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '4',
-        category: 'Supplies',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '5',
-        category: 'Laboratory',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '6',
-        category: 'Services',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '7',
-        category: 'Mktng/Sales',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-
-      {
-        key: '8',
-        category: 'Overhead Total',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '9',
-        category: 'DRS Salaries',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-      {
-        key: '10',
-        category: 'All Expenses',
-        totalAmount: 0,
-        collectionsPercent: 0,
-        interimBudget: 0,
-        interimVariance: 0,
-        cpdTarget: 0,
-        cpdVariance: 0,
-      },
-    ],
-    unpaid_bills: 0,
-    production: 0,
-    collections: 0,
-    percentage_of_production: 0,
-    actual: {
-      rl: 0,
-      bl: 0,
-      gl: 0,
-      bal: 0,
-    },
-    total_short_term_debt: 0,
-    net_roi_funds: 0,
-    prod_hour_scheduled: [
-      {
-        name: '',
-        value: 0,
-      },
-    ],
-    prod_patient_visits: [
-      {
-        name: '',
-        value: 0,
-      },
-    ],
-    debt_payments: 0,
-    net_solv: 0,
-    avg_prod_mo: 0,
-    avg_coll_mo: 0,
-    budgeted_bl: 0,
-    budgeted_gl: 0,
-    budgeted_rl: 0,
-    budgeted_balance: 0,
-    average: {
-      prod_per_month: 0,
-      collections_per_month: 0,
-    },
-  });
+  const [reportData, setReportData] = useState(DEFAULT_REPORT);
 
   const handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
@@ -262,25 +280,27 @@ const ReportingContainer = () => {
       dataIndex: 'pct_of_production',
       key: 'pct_of_production',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
     {
       title: 'HYGIENE TARGET',
       dataIndex: 'hygiene_target',
       key: 'hygiene_target',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
     {
       title: 'VARIANCE',
       dataIndex: 'variance',
       key: 'variance',
       ellipsis: true,
+      render: (text) => <span>{text}%</span>,
     },
   ];
   const onFilterChange = async (data) => {
     setFilter(data);
     setFormStyle(data.type);
     const temp = await fetchReport(data);
-    console.log('temo', temp);
     let mapped = [];
     if (data.type === 'one') {
       mapped = [
@@ -473,9 +493,9 @@ const ReportingContainer = () => {
     }
 
     setReportData({
-      ...reportData,
-      table: data.type === 'one' ? mapped : mappedHygiene,
+      ...DEFAULT_REPORT,
       ...temp,
+      table: data.type === 'one' ? mapped : mappedHygiene,
     });
   };
 
@@ -546,7 +566,7 @@ const ReportingContainer = () => {
                 <p>UNPAID BILLS</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.unpaid_bills}</p>
+                <p>{formatCurrency(reportData.unpaid_bills)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
@@ -554,7 +574,7 @@ const ReportingContainer = () => {
                 <p>Production</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.production}</p>
+                <p>{formatCurrency(reportData.production)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -562,12 +582,12 @@ const ReportingContainer = () => {
                 <p>Collections</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.collections}</p>
+                <p>{formatCurrency(reportData.collections)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col offset={8} span={2} className="border-bottom">
-                <p>{reportData.percentage_of_production}</p>
+                <p>{reportData?.pct_of_production}</p>
               </Col>
               <p>% of Production</p>
             </Row>
@@ -576,7 +596,7 @@ const ReportingContainer = () => {
                 <p>Actual R/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.actual.rl}</p>
+                <p>{formatCurrency(reportData.actual.rl)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
@@ -584,7 +604,7 @@ const ReportingContainer = () => {
                 <p>Actual B/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.actual.bl}</p>
+                <p>{formatCurrency(reportData.actual.bl)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
@@ -592,7 +612,7 @@ const ReportingContainer = () => {
                 <p>Debt Payments</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.debt_payments}</p>
+                <p>{formatCurrency(reportData.debt_payments)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
@@ -600,7 +620,7 @@ const ReportingContainer = () => {
                 <p>Net Solv</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.net_solv}%</p>
+                <p>{reportData?.net_solv}%</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -608,7 +628,7 @@ const ReportingContainer = () => {
                 <p>Actual G/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.actual.gl}</p>
+                <p>{formatCurrency(reportData.actual.gl)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -616,7 +636,7 @@ const ReportingContainer = () => {
                 <p>Net ROI Funds</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.net_roi_funds}%</p>
+                <p>{reportData?.net_roi_funds}%</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -624,7 +644,7 @@ const ReportingContainer = () => {
                 <p>Actual Bal</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.actual.bal}</p>
+                <p>{formatCurrency(reportData.actual.bal)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -632,7 +652,7 @@ const ReportingContainer = () => {
                 <p>Receivables</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.receivables}</p>
+                <p>{formatCurrency(reportData.receivables)}</p>
               </Col>
             </Row>
           </Col>
@@ -643,7 +663,7 @@ const ReportingContainer = () => {
                 <p>TOTAL SHORT TERM DEBT:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.total_short_term_debt}</p>
+                <p>{formatCurrency(reportData.total_short_term_debt)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
@@ -651,7 +671,7 @@ const ReportingContainer = () => {
                 <p>Avg. Prod/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.average.prod_per_month}</p>
+                <p>{formatCurrency(reportData.average.prod_per_month)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -659,7 +679,9 @@ const ReportingContainer = () => {
                 <p>Avg Coll/Mo</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.average.collections_per_month}</p>
+                <p>
+                  {formatCurrency(reportData.average.collections_per_month)}
+                </p>
               </Col>
             </Row>
             <Row
@@ -670,7 +692,7 @@ const ReportingContainer = () => {
                 <p>Budgeted R/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.budgeted_rl}</p>
+                <p>{formatCurrency(reportData.budget.red_line)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
@@ -678,7 +700,7 @@ const ReportingContainer = () => {
                 <p>Budgeted B/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.budgeted_bl}</p>
+                <p>{formatCurrency(reportData.budget.blue_line)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -686,7 +708,7 @@ const ReportingContainer = () => {
                 <p>Budgeted G/L</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.budgeted_gl}</p>
+                <p>{formatCurrency(reportData.budget.green_line)}</p>
               </Col>
             </Row>
 
@@ -695,7 +717,7 @@ const ReportingContainer = () => {
                 <p>Budgeted Balance</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.budgeted_balance}</p>
+                <p>{formatCurrency(reportData.budgeted_balance)}</p>
               </Col>
             </Row>
           </Col>
@@ -731,7 +753,9 @@ const ReportingContainer = () => {
                   key: 'value',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>${text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {formatCurrency(text)}
+                    </span>
                   ),
                 },
               ]}
@@ -768,7 +792,9 @@ const ReportingContainer = () => {
                   key: 'value',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>${text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {formatCurrency(text)}
+                    </span>
                   ),
                 },
               ]}
@@ -792,7 +818,7 @@ const ReportingContainer = () => {
         </div>
         <div>
           <Text className="border-bottom">
-            {filter.month && filter.year && `${filter.month}-${filter.year}`}
+            {filter.month && filter.year && `${filter.month}/${filter.year}`}
           </Text>
         </div>
         <br />
@@ -823,7 +849,7 @@ const ReportingContainer = () => {
                 <p>Hyg. Prod/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.hyg_prod_mo}</p>
+                <p>{formatCurrency(reportData.hyg_prod_mo)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -831,7 +857,7 @@ const ReportingContainer = () => {
                 <p>Hyg Sales/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.hyg_sales_mo}</p>
+                <p>{formatCurrency(reportData.hyg_sales_mo)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -839,7 +865,7 @@ const ReportingContainer = () => {
                 <p>Hyg Total/Mo:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.hyg_total_mo}</p>
+                <p>{formatCurrency(reportData.hyg_total_mo)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -847,7 +873,7 @@ const ReportingContainer = () => {
                 <p>% of Total</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.pct_of_total}</p>
+                <p>{reportData.pct_of_total}%</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -855,7 +881,7 @@ const ReportingContainer = () => {
                 <p>Profit</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.profit}</p>
+                <p>{formatCurrency(reportData.profit)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -874,7 +900,7 @@ const ReportingContainer = () => {
                 <p>Avg. Prod/Ytd:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.avt_prod_ytd}</p>
+                <p>{formatCurrency(reportData.avg_prod_ytd)}</p>
               </Col>
             </Row>
 
@@ -883,7 +909,7 @@ const ReportingContainer = () => {
                 <p>Avg. Total/Ytd</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>${reportData.avg_total_ytd}</p>
+                <p>{formatCurrency(reportData.avg_total_ytd)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -891,7 +917,7 @@ const ReportingContainer = () => {
                 <p>% of Total</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.pct_of_avg_ytd}</p>
+                <p>{reportData.pct_of_avg_ytd}%</p>
               </Col>
             </Row>
           </Col>
@@ -992,7 +1018,7 @@ const ReportingContainer = () => {
       <PageHeader className="site-page-header" title="Reporting" />
       <Divider />
 
-      <FilterForm value={filter} onSubmitCallback={onFilterChange} />
+      <Filter value={filter} onSubmitCallback={onFilterChange} />
       <Divider />
 
       <Row>
