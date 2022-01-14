@@ -492,8 +492,6 @@ const ReportingContainer = () => {
       ];
     }
 
-    console.log('xxxx', temp, reportData);
-
     setReportData({
       ...DEFAULT_REPORT,
       ...temp,
