@@ -13,6 +13,7 @@ const Filter = (props) => {
     fetchStudents,
     loadingFetchStudent,
     students = [],
+    value,
   } = props;
   const [filterValue, setFilterValue] = useState({
     month: null,
@@ -51,7 +52,7 @@ const Filter = (props) => {
               }}
             >
               <Option value="one">Report 1</Option>
-              <Option value="two">Report Hygiene</Option>
+              <Option value="two">Report 2</Option>
             </Select>
           </Form.Item>
         </Col>

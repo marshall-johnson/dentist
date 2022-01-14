@@ -31,6 +31,7 @@ import CreateUserContainer from '@/containers/RegistrationContainer/CreateUserCo
 import StudentManagement from '@/containers/Management/StudentContainer';
 import DetailStudentContainer from '@/containers/Management/DetailStudent';
 import InterimBudget from '@/containers/InterimBudget';
+import Budget from '@/containers/Budget';
 
 function Routes() {
   return (
@@ -162,6 +163,7 @@ function Routes() {
         path={`${AppConfig.ROUTES.INTERIM_BUDGET}`}
         component={InterimBudget}
       />
+      <Route exact path={`${AppConfig.ROUTES.BUDGET}`} component={Budget} />
       <Route
         exact
         path={`${AppConfig.ROUTES.COACHING_PPP}`}
