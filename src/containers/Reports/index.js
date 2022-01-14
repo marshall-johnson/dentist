@@ -953,7 +953,9 @@ const ReportingContainer = () => {
                   key: 'value',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>${text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {formatCurrency(text)}
+                    </span>
                   ),
                 },
               ]}
@@ -990,7 +992,9 @@ const ReportingContainer = () => {
                   key: 'value',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>${text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {formatCurrency(text)}
+                    </span>
                   ),
                 },
               ]}
