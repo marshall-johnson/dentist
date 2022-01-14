@@ -57,7 +57,7 @@ const InterimBudget = (props) => {
         budgets: {
           staff: form.staff,
           occupancy: form.occupancy,
-          hp_resources: form.hp_resources,
+          hp_resource: form.hp_resources,
           supplies: form.supplies,
           laboratory: form.laboratory,
           services: form.services,
