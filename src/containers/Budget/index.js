@@ -82,7 +82,7 @@ const Budget = (props) => {
 
   return (
     <div className="submit-data-container">
-      <PageHeader className="site-page-header" title="Interim Budget" />
+      <PageHeader className="site-page-header" title="Budget" />
 
       <Divider />
 
