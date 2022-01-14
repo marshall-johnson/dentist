@@ -152,7 +152,7 @@ const DEFAULT_REPORT = {
   unpaid_bills: 0,
   production: 0,
   collections: 0,
-  pct_of_production: 0,
+  percentage_of_production: 0,
   actual: {
     rl: 0,
     bl: 0,
@@ -277,8 +277,8 @@ const ReportingContainer = () => {
     },
     {
       title: '% OF PRODUCTION',
-      dataIndex: 'pct_of_production',
-      key: 'pct_of_production',
+      dataIndex: 'pct_of_productions',
+      key: 'pct_of_productions',
       ellipsis: true,
       render: (text) => <span>{text}%</span>,
     },
@@ -413,7 +413,7 @@ const ReportingContainer = () => {
           key: '1',
           category: 'Staff',
           current_expenses: temp.current_expenses.staff,
-          pct_of_production: temp.percentage_of_production.staff,
+          pct_of_productions: temp.percentage_of_productions.staff,
           hygiene_target: temp.hygiene_target.staff,
           variance: temp.variance.staff,
         },
@@ -421,7 +421,7 @@ const ReportingContainer = () => {
           key: '2',
           category: 'Occupancy',
           current_expenses: temp.current_expenses.occupancy,
-          pct_of_production: temp.percentage_of_production.occupancy,
+          pct_of_productions: temp.percentage_of_productions.occupancy,
           hygiene_target: temp.hygiene_target.occupancy,
           variance: temp.variance.occupancy,
         },
@@ -429,7 +429,7 @@ const ReportingContainer = () => {
           key: '3',
           category: 'H&P Resources',
           current_expenses: temp.current_expenses.hp_resource,
-          pct_of_production: temp.percentage_of_production.hp_resource,
+          pct_of_productions: temp.percentage_of_productions.hp_resource,
           hygiene_target: temp.hygiene_target.hp_resource,
           variance: temp.variance.hp_resource,
         },
@@ -437,7 +437,7 @@ const ReportingContainer = () => {
           key: '4',
           category: 'Supplies',
           current_expenses: temp.current_expenses.supplies,
-          pct_of_production: temp.percentage_of_production.supplies,
+          pct_of_productions: temp.percentage_of_productions.supplies,
           hygiene_target: temp.hygiene_target.supplies,
           variance: temp.variance.supplies,
         },
@@ -445,7 +445,7 @@ const ReportingContainer = () => {
           key: '5',
           category: 'Products',
           current_expenses: temp.current_expenses.products,
-          pct_of_production: temp.percentage_of_production.products,
+          pct_of_productions: temp.percentage_of_productions.products,
           hygiene_target: temp.hygiene_target.products,
           variance: temp.variance.products,
         },
@@ -453,7 +453,7 @@ const ReportingContainer = () => {
           key: '6',
           category: 'Services',
           current_expenses: temp.current_expenses.services,
-          pct_of_production: temp.percentage_of_production.services,
+          pct_of_productions: temp.percentage_of_productions.services,
           hygiene_target: temp.hygiene_target.services,
           variance: temp.variance.services,
         },
@@ -461,7 +461,7 @@ const ReportingContainer = () => {
           key: '7',
           category: 'Mktng/Sales',
           current_expenses: temp.current_expenses.marketing_sales,
-          pct_of_production: temp.percentage_of_production.marketing_sales,
+          pct_of_productions: temp.percentage_of_productions.marketing_sales,
           hygiene_target: temp.hygiene_target.marketing_sales,
           variance: temp.variance.marketing_sales,
         },
@@ -469,7 +469,7 @@ const ReportingContainer = () => {
           key: '8',
           category: 'Overhead Total',
           current_expenses: temp.current_expenses.overhead_total,
-          pct_of_production: temp.percentage_of_production.overhead_total,
+          pct_of_productions: temp.percentage_of_productions.overhead_total,
           hygiene_target: temp.hygiene_target.overhead_total,
           variance: temp.variance.overhead_total,
         },
@@ -477,7 +477,7 @@ const ReportingContainer = () => {
           key: '9',
           category: 'HYG Salaries',
           current_expenses: temp.current_expenses.hyg_salaries,
-          pct_of_production: temp.percentage_of_production.hyg_salaries,
+          pct_of_productions: temp.percentage_of_productions.hyg_salaries,
           hygiene_target: temp.hygiene_target.hyg_salaries,
           variance: temp.variance.hyg_salaries,
         },
@@ -485,7 +485,7 @@ const ReportingContainer = () => {
           key: '10',
           category: 'All Expenses',
           current_expenses: temp.current_expenses.all_expenses,
-          pct_of_production: temp.percentage_of_production.all_expenses,
+          pct_of_productions: temp.percentage_of_productions.all_expenses,
           hygiene_target: temp.hygiene_target.all_expenses,
           variance: temp.variance.all_expenses,
         },
@@ -587,7 +587,7 @@ const ReportingContainer = () => {
             </Row>
             <Row className="mb-15">
               <Col offset={8} span={2} className="border-bottom">
-                <p>{reportData?.pct_of_production}</p>
+                <p>{reportData?.percentage_of_production}</p>
               </Col>
               <p>% of Production</p>
             </Row>
