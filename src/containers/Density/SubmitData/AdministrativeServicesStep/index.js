@@ -279,7 +279,7 @@ class AdministrativeServicesStep extends Component {
                 <Input />
               </Form.Item>
               <Form.Item
-                label="Personal Property Taxes"
+                label="Taxes (Personal Property OR Other)"
                 name="personalPropertyTaxes"
                 fieldKey="personalPropertyTaxes"
                 rules={[
@@ -289,7 +289,7 @@ class AdministrativeServicesStep extends Component {
                         ? Promise.resolve()
                         : Promise.reject(
                             new Error(
-                              'Personal Property Taxes is not a valid number',
+                              'Taxes (Personal Property OR Other) is not a valid number',
                             ),
                           ),
                   },
