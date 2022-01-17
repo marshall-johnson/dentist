@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Form,
-  Input,
-  Button,
-  Divider,
-  PageHeader,
-} from 'antd';
+import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -32,7 +24,7 @@ class DoctorSalaryStep extends Component {
         insurancePremiums: null,
         personalExpenses: null,
         other: null,
-      }
+      },
     };
   }
 
@@ -48,15 +40,19 @@ class DoctorSalaryStep extends Component {
 
   onBack = () => {
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.ADMINISTRATIVE_SERVICES}`,
+    );
+  };
 
-  onFinish = data => {
+  onFinish = (data) => {
     localStorage.setItem('orthoDoctorSalary', JSON.stringify(data));
 
     const { history } = this.props;
-    history.push(`${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.SOLVENCY_SAVINGS_ROI_FUNDS}`);
-  }
+    history.push(
+      `${AppConfig.ROUTES.ORTHO}/${AppConfig.ORTHO_SUBMIT_DATA_STEPS.SOLVENCY_SAVINGS_ROI_FUNDS}`,
+    );
+  };
 
   render() {
     const { initialValues } = this.state;
@@ -89,9 +85,11 @@ class DoctorSalaryStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Gross Salary is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error('Gross Salary is not a valid number'),
+                          ),
                   },
                 ]}
               >
@@ -131,9 +129,13 @@ class DoctorSalaryStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Insurance Premiums is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Insurance Premiums is not a valid number',
+                            ),
+                          ),
                   },
                 ]}
               >
@@ -149,9 +151,13 @@ class DoctorSalaryStep extends Component {
                   },
                   {
                     validator: (_, value) =>
-                      !isNaN(value) ?
-                        Promise.resolve() :
-                        Promise.reject(new Error('Personal Expenses Pd by Practice is not a valid number'))
+                      !isNaN(value)
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              'Personal Expenses Pd by Practice is not a valid number',
+                            ),
+                          ),
                   },
                 ]}
               >
@@ -181,10 +187,7 @@ class DoctorSalaryStep extends Component {
               >
                 Back
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Next
               </Button>
             </Col>
