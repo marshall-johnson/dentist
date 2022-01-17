@@ -90,7 +90,6 @@ class DoctorSalaryStep extends Component {
 
   onFinish = (data) => {
     localStorage.setItem('dentistryDoctorSalary', JSON.stringify(data));
-    console.log('data submit', data);
     const {
       history,
       match: {
