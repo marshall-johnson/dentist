@@ -717,7 +717,7 @@ const ReportingContainer = () => {
                 <p>Budgeted Balance</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.budgeted_balance)}</p>
+                <p>{formatCurrency(reportData.budget.balance)}</p>
               </Col>
             </Row>
           </Col>

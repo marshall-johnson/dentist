@@ -42,6 +42,8 @@ class AdministrativeServicesStep extends Component {
         personalPropertyTaxes: null,
         telephone: null,
         uniforms: null,
+        mealAndEntertainment: null,
+        printing: null,
         total: 0,
       },
     };
@@ -181,6 +183,16 @@ class AdministrativeServicesStep extends Component {
                 <Input />
               </Form.Item>
               <Form.Item label="Dues" name="dues" fieldKey="dues">
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Meal and Entertainment"
+                name="mealAndEntertainment"
+                fieldKey="mealAndEntertainment"
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item label="Printing" name="printing" fieldKey="printing">
                 <Input />
               </Form.Item>
               <Form.Item
