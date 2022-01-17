@@ -113,7 +113,6 @@ class DoctorProductionStep extends Component {
 
   onFinish = (data) => {
     localStorage.setItem('dentistryDoctorProduction', JSON.stringify(data));
-
     const {
       history,
       match: {

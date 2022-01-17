@@ -68,7 +68,6 @@ class DoctorSalaryStep extends Component {
     if (prevProps.data !== data) {
       const formatData = camelcaseKeys(data);
       if (formatData) {
-        // this.formRef.current.setFieldsValue(formatData);
         this.formRef.current.setFieldsValue({
           doctorSalary: formatData,
         });
@@ -99,6 +98,7 @@ class DoctorSalaryStep extends Component {
       },
       location,
     } = this.props;
+
     history.push(
       `/${studentId}${AppConfig.ROUTES.DENTISTRY}/${AppConfig.DENTISTRY_SUBMIT_DATA_STEPS.SOLVENCY_SAVINGS_ROI_FUNDS}${location.search}`,
     );
