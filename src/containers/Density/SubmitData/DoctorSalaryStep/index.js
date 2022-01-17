@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Button,
+  Divider,
+  PageHeader,
+} from 'antd';
 import camelcaseKeys from 'camelcase-keys';
+import { PlusOutlined } from '@ant-design/icons';
+import DebounceSelect from '@/components/DebounceSelect';
 
 import AppConfig from '@/constants/AppConfig';
 
@@ -19,24 +30,29 @@ class DoctorSalaryStep extends Component {
 
     this.state = {
       initialValues: {
-        grossSalary: null,
-        employerMatch: null,
-        drawsDividendsDistributions: null,
-        insurancePremiums: null,
-        personalExpenses: null,
-        other: null,
+        doctorSalary: [
+          {
+            grossSalary: null,
+            employerMatch: null,
+            drawsDividendsDistributions: null,
+            insurancePremiums: null,
+            personalExpenses: null,
+            other: null,
+          },
+        ],
       },
     };
   }
 
   componentDidMount() {
     const formData = JSON.parse(localStorage.getItem('dentistryDoctorSalary'));
-
     const { data } = this.props;
     const formatData = camelcaseKeys(data);
 
     if (formatData) {
-      this.formRef.current.setFieldsValue(formatData);
+      this.formRef.current.setFieldsValue({
+        doctorSalary: formatData,
+      });
     } else {
       this.formRef.current.setFieldsValue(formData);
     }
@@ -51,9 +67,11 @@ class DoctorSalaryStep extends Component {
 
     if (prevProps.data !== data) {
       const formatData = camelcaseKeys(data);
-
       if (formatData) {
-        this.formRef.current.setFieldsValue(formatData);
+        // this.formRef.current.setFieldsValue(formatData);
+        this.formRef.current.setFieldsValue({
+          doctorSalary: formatData,
+        });
       }
     }
   }
@@ -73,7 +91,7 @@ class DoctorSalaryStep extends Component {
 
   onFinish = (data) => {
     localStorage.setItem('dentistryDoctorSalary', JSON.stringify(data));
-
+    console.log('data submit', data);
     const {
       history,
       match: {
@@ -107,80 +125,119 @@ class DoctorSalaryStep extends Component {
           validateMessages={validateMessages}
         >
           <Row gutter={32}>
-            <Col span={12}>
-              <Form.Item
-                label="Gross Salary"
-                name="grossSalary"
-                fieldKey="grossSalary"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      !isNaN(value)
-                        ? Promise.resolve()
-                        : Promise.reject(
-                            new Error('Gross Salary is not a valid number'),
-                          ),
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Employer Match for Soc Sec, Medicare"
-                name="employerMatch"
-                fieldKey="employerMatch"
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Draws / Dividends / Distributions"
-                name="drawsDividendsDistributions"
-                fieldKey="drawsDividendsDistributions"
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Insurance Premiums"
-                name="insurancePremiums"
-                fieldKey="insurancePremiums"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      !isNaN(value)
-                        ? Promise.resolve()
-                        : Promise.reject(
-                            new Error(
-                              'Insurance Premiums is not a valid number',
-                            ),
-                          ),
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Personal Expenses Pd by Practice"
-                name="personalExpenses"
-                fieldKey="personalExpenses"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      !isNaN(value)
-                        ? Promise.resolve()
-                        : Promise.reject(
-                            new Error(
-                              'Personal Expenses Pd by Practice is not a valid number',
-                            ),
-                          ),
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item label="Other" name="other" fieldKey="other">
-                <Input />
-              </Form.Item>
-            </Col>
+            <Form.List name="doctorSalary">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <Col
+                      key={field.key}
+                      xl={{ span: 8 }}
+                      lg={{ span: 8 }}
+                      md={{ span: 8 }}
+                    >
+                      <Form.Item
+                        label="Gross Salary"
+                        name={[field.name, 'grossSalary']}
+                        fieldKey={[field.name, 'grossSalary']}
+                        rules={[
+                          {
+                            validator: (_, value) =>
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Gross Salary is not a valid number',
+                                    ),
+                                  ),
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Employer Match for Soc Sec, Medicare"
+                        name={[field.name, 'employerMatch']}
+                        fieldKey={[field.name, 'employerMatch']}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Draws / Dividends / Distributions"
+                        name={[field.name, 'drawsDividendsDistributions']}
+                        fieldKey={[field.name, 'drawsDividendsDistributions']}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Insurance Premiums"
+                        name={[field.name, 'insurancePremiums']}
+                        fieldKey={[field.name, 'insurancePremiums']}
+                        rules={[
+                          {
+                            validator: (_, value) =>
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Insurance Premiums is not a valid number',
+                                    ),
+                                  ),
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Personal Expenses Pd by Practice"
+                        name={[field.name, 'personalExpenses']}
+                        fieldKey={[field.name, 'personalExpenses']}
+                        rules={[
+                          {
+                            validator: (_, value) =>
+                              !isNaN(value)
+                                ? Promise.resolve()
+                                : Promise.reject(
+                                    new Error(
+                                      'Personal Expenses Pd by Practice is not a valid number',
+                                    ),
+                                  ),
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Other"
+                        name={[field.name, 'other']}
+                        fieldKey={[field.name, 'other']}
+                      >
+                        <Input />
+                      </Form.Item>
+                      {field.key > 0 && (
+                        <Form.Item style={{ textAlign: 'right' }}>
+                          <Button
+                            onClick={() => remove(field.name)}
+                            type="danger"
+                          >
+                            Remove
+                          </Button>
+                        </Form.Item>
+                      )}
+                    </Col>
+                  ))}
+
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      icon={<PlusOutlined />}
+                    >
+                      Add Doctor
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Row>
 
           {data && (
@@ -197,18 +254,14 @@ class DoctorSalaryStep extends Component {
                   background: '#13AF22',
                   color: 'white',
                 }}
-                onClick={() =>
-                  updateData({
-                    doctor_salary: this.formRef.current.getFieldValue(),
-                  })
-                }
+                onClick={() => updateData(this.formRef.current.getFieldValue())}
               >
                 Update
               </Button>
             </div>
           )}
 
-          <Row style={{ marginTop: 16 }}>
+          <Row style={{ marginTop: 8 }}>
             <Col>
               <Button
                 type="primary"
