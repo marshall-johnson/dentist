@@ -190,6 +190,7 @@ const DEFAULT_REPORT = {
     blue_line: 0,
     green_line: 0,
     red_line: 0,
+    balance: 0,
   },
   profit: 0,
   avg_total_ytd: 0,
