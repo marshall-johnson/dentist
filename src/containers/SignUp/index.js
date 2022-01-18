@@ -90,7 +90,17 @@ class SignUp extends Component {
           >
             <Input placeholder="Last Name" />
           </Form.Item>
-
+          <Form.Item
+            name="pacticeName"
+            className="input-item"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input placeholder="Pactice Name" />
+          </Form.Item>
           <Form.Item
             name="degree"
             className="input-item"
