@@ -290,8 +290,11 @@ hygienist’s statistics are placed in the same column every month."
                           },
                         ]}
                       >
-                        <Input
-                          style={{ color: 'black', fontWeight: 'bold' }}
+                        <InputNumber
+                          formatter={(value) =>
+                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          }
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           disabled
                         />
                       </Form.Item>

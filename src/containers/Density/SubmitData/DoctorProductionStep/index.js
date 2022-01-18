@@ -293,8 +293,11 @@ adjustment discounts. There is a formula in this cell so it will automatically c
                           },
                         ]}
                       >
-                        <Input
-                          style={{ color: 'black', fontWeight: 'bold' }}
+                        <InputNumber
+                          formatter={(value) =>
+                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          }
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           disabled
                         />
                       </Form.Item>

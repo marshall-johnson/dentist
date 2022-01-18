@@ -196,9 +196,12 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 name="totalNet"
                 fieldKey="totalNet"
               >
-                <Input
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
-                  style={{ fontWeight: 'bold', color: 'black' }}
                 />
               </Form.Item>
               <Form.Item
@@ -298,8 +301,11 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input
-                  style={{ fontWeight: 'bold', color: 'black' }}
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />
               </Form.Item>

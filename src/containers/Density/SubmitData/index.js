@@ -20,6 +20,7 @@ import {
   updateDentistryData,
 } from '@/actions/dentistryActions';
 import queryString from 'query-string';
+import './styles.scss';
 
 class DensitySubmitData extends Component {
   constructor(props) {

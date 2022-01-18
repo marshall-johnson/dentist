@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  Divider,
+  PageHeader,
+  InputNumber,
+} from 'antd';
 import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
@@ -160,8 +169,11 @@ class LaboratoryStep extends Component {
                   },
                 ]}
               >
-                <Input
-                  style={{ fontWeight: 'bold', color: 'black' }}
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />
               </Form.Item>
