@@ -77,7 +77,28 @@ class OccupanyAndHPStep extends Component {
 
   handleTotal = (_, value) => {
     const total = Object.keys(value).reduce((previousValue, currentKey) => {
-      if (currentKey !== 'total') {
+      if (
+        currentKey === 'mortgageOrRent' ||
+        currentKey === 'utilities' ||
+        currentKey === 'janitorial' ||
+        currentKey === 'repairs' ||
+        currentKey === 'facilitiesInsurance' ||
+        currentKey === 'securitySystem' ||
+        currentKey === 'propertyTax'
+      ) {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+
+      return previousValue;
+    }, 0);
+    const totalHP = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (
+        currentKey === 'officeFurnitureAndRepairs' ||
+        currentKey === 'equipType' ||
+        currentKey === 'icatExpenses' ||
+        currentKey === 'staffContinuingEducation' ||
+        currentKey === 'staffScpdTuitionOrTravel'
+      ) {
         return previousValue + (parseInt(value[currentKey]) || 0);
       }
 
@@ -85,6 +106,7 @@ class OccupanyAndHPStep extends Component {
     }, 0);
     this.formRef.current.setFieldsValue({
       total,
+      totalHP,
     });
   };
 
@@ -253,6 +275,15 @@ class OccupanyAndHPStep extends Component {
                   fieldKey="staffScpdTuitionOrTravel"
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item label="Total" name="totalHp" fieldKey="totalHp">
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
                 </Form.Item>
               </Card>
             </Col>

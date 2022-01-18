@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Card,
+  Input,
+  Button,
+  Divider,
+  PageHeader,
+  InputNumber,
+} from 'antd';
 import camelcaseKeys from 'camelcase-keys';
-
+import { parseInt } from 'lodash';
 import AppConfig from '@/constants/AppConfig';
 
 const validateMessages = {
@@ -74,6 +84,34 @@ class SuppliesAndMarketingStep extends Component {
     );
   };
 
+  handleTotal = (_, value) => {
+    const totalH = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (
+        currentKey === 'supplies' ||
+        currentKey === 'hygieneSupplies' ||
+        currentKey === 'sharedSupplies' ||
+        currentKey === 'hygieneProduct'
+      ) {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+      return previousValue;
+    }, 0);
+    const totalM = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (
+        currentKey === 'advertising' ||
+        currentKey === 'website' ||
+        currentKey === 'marketing'
+      ) {
+        return previousValue + (parseInt(value[currentKey]) || 0);
+      }
+      return previousValue;
+    }, 0);
+    this.formRef.current.setFieldsValue({
+      totalH,
+      totalM,
+    });
+  };
+
   onFinish = (data) => {
     localStorage.setItem('dentistrySuppliesAndMarketing', JSON.stringify(data));
 
@@ -105,6 +143,7 @@ class SuppliesAndMarketingStep extends Component {
         <Form
           ref={this.formRef}
           layout="vertical"
+          onValuesChange={this.handleTotal}
           onFinish={this.onFinish}
           initialValues={initialValues}
           validateMessages={validateMessages}
@@ -119,6 +158,7 @@ class SuppliesAndMarketingStep extends Component {
                 >
                   <Input />
                 </Form.Item>
+
                 <Form.Item
                   label="Hygiene Supplies"
                   name="hygieneSupplies"
@@ -139,6 +179,29 @@ class SuppliesAndMarketingStep extends Component {
                   fieldKey="hygieneProduct"
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Total"
+                  name="totalH"
+                  fieldKey="totalH"
+                  rules={[
+                    {
+                      validator: (_, value) =>
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Total is not a valid number'),
+                            ),
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
                 </Form.Item>
               </Card>
             </Col>
@@ -161,6 +224,29 @@ class SuppliesAndMarketingStep extends Component {
                 >
                   <Input />
                 </Form.Item>
+                <Form.Item
+                  label="Total"
+                  name="totalM"
+                  fieldKey="totalM"
+                  rules={[
+                    {
+                      validator: (_, value) =>
+                        !isNaN(value)
+                          ? Promise.resolve()
+                          : Promise.reject(
+                              new Error('Total is not a valid number'),
+                            ),
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
+                </Form.Item>
               </Card>
             </Col>
           </Row>
@@ -181,7 +267,8 @@ class SuppliesAndMarketingStep extends Component {
                 }}
                 onClick={() =>
                   updateData({
-                    supplies_and_marketing: this.formRef.current.getFieldValue(),
+                    supplies_and_marketing:
+                      this.formRef.current.getFieldValue(),
                   })
                 }
               >

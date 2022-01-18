@@ -257,13 +257,12 @@ pay the current month’s expenses."
                     },
                   ]}
                 >
-                  <Input
-                    disabled
-                    style={{ fontWeight: 'bold', color: 'black' }}
+                  <InputNumber
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
                   />
                 </Form.Item>
               </Card>

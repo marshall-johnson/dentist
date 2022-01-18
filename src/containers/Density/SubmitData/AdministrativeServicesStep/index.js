@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Form, Input, Button, Divider, PageHeader } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  Divider,
+  PageHeader,
+  InputNumber,
+} from 'antd';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import camelcaseKeys from 'camelcase-keys';
@@ -324,8 +333,11 @@ class AdministrativeServicesStep extends Component {
                   },
                 ]}
               >
-                <Input
-                  style={{ fontWeight: 'bold', color: 'black' }}
+                <InputNumber
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />
               </Form.Item>
