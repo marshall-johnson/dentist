@@ -901,7 +901,7 @@ const ReportingContainer = () => {
                 <p>Avg. Prod/Ytd:</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.avg_prod_ytd)}</p>
+                <p>{formatCurrency(reportData.average.prod_per_ytd)}</p>
               </Col>
             </Row>
 
