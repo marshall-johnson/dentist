@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Form, Card, Input, Button, Divider, PageHeader } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Card,
+  Input,
+  Button,
+  Divider,
+  PageHeader,
+  InputNumber,
+} from 'antd';
 
 import AppConfig from '@/constants/AppConfig';
 import camelcaseKeys from 'camelcase-keys';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -28,6 +39,7 @@ class StaffCompensationStep extends Component {
           bonus: null,
           otherBenefit: null,
           workComp: null,
+          total: '0',
         },
         administrative: {
           grossSalary: null,
@@ -37,6 +49,7 @@ class StaffCompensationStep extends Component {
           pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
+          total: '0',
         },
         hygiene: {
           grossSalary: null,
@@ -46,6 +59,7 @@ class StaffCompensationStep extends Component {
           pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
+          total: '0',
         },
         hygieneAssistant: {
           grossSalary: null,
@@ -55,6 +69,7 @@ class StaffCompensationStep extends Component {
           pensionProfitSharing: null,
           bonus: null,
           otherBenefit: null,
+          total: '0',
         },
       },
     };
@@ -110,6 +125,105 @@ class StaffCompensationStep extends Component {
     );
   };
 
+  handleTotal = (_, value) => {
+    console.log('xxxvalue', value);
+    const totalAs = Object.keys(value.assistants).reduce(
+      (previousValue, currentKey) => {
+        if (
+          currentKey === 'grossSalary' ||
+          currentKey === 'employerMatching' ||
+          currentKey === 'futaSuta' ||
+          currentKey === 'medicalInsurance' ||
+          currentKey === 'pensionProfitSharing' ||
+          currentKey === 'bonus' ||
+          currentKey === 'otherBenefit' ||
+          currentKey === 'workComp'
+        ) {
+          return previousValue + (parseInt(value.assistants[currentKey]) || 0);
+        }
+
+        return previousValue;
+      },
+      0,
+    );
+    const totalAd = Object.keys(value.administrative).reduce(
+      (previousValue, currentKey) => {
+        if (
+          currentKey === 'grossSalary' ||
+          currentKey === 'employerMatching' ||
+          currentKey === 'futaSuta' ||
+          currentKey === 'medicalInsurance' ||
+          currentKey === 'pensionProfitSharing' ||
+          currentKey === 'bonus' ||
+          currentKey === 'otherBenefit'
+        ) {
+          return (
+            previousValue + (parseInt(value.administrative[currentKey]) || 0)
+          );
+        }
+
+        return previousValue;
+      },
+      0,
+    );
+    const totalH = Object.keys(value.hygiene).reduce(
+      (previousValue, currentKey) => {
+        if (
+          currentKey === 'grossSalary' ||
+          currentKey === 'employerMatching' ||
+          currentKey === 'futaSuta' ||
+          currentKey === 'medicalInsurance' ||
+          currentKey === 'pensionProfitSharing' ||
+          currentKey === 'bonus' ||
+          currentKey === 'otherBenefit'
+        ) {
+          return previousValue + (parseInt(value.hygiene[currentKey]) || 0);
+        }
+
+        return previousValue;
+      },
+      0,
+    );
+    const totalHA = Object.keys(value.hygieneAssistant).reduce(
+      (previousValue, currentKey) => {
+        if (
+          currentKey === 'grossSalary' ||
+          currentKey === 'employerMatching' ||
+          currentKey === 'futaSuta' ||
+          currentKey === 'medicalInsurance' ||
+          currentKey === 'pensionProfitSharing' ||
+          currentKey === 'bonus' ||
+          currentKey === 'otherBenefit'
+        ) {
+          return (
+            previousValue + (parseInt(value.hygieneAssistant[currentKey]) || 0)
+          );
+        }
+
+        return previousValue;
+      },
+      0,
+    );
+
+    console.log('total', totalAs);
+    this.formRef.current.setFieldsValue({
+      ...value,
+      administrative: {
+        total: totalAd,
+      },
+      assistants: {
+        ...value.assistants,
+        total: totalAs,
+      },
+      hygiene: {
+        total: totalH,
+      },
+      hygieneAssistant: {
+        total: totalHA,
+      },
+    });
+  };
+
   onFinish = (data) => {
     localStorage.setItem('dentistryStaffCompensation', JSON.stringify(data));
 
@@ -142,6 +256,7 @@ class StaffCompensationStep extends Component {
           ref={this.formRef}
           layout="vertical"
           onFinish={this.onFinish}
+          onValuesChange={this.handleTotal}
           initialValues={initialValues}
           validateMessages={validateMessages}
         >
@@ -224,6 +339,19 @@ class StaffCompensationStep extends Component {
                 >
                   <Input />
                 </Form.Item>
+                <Form.Item
+                  label="Total"
+                  name={['assistants', 'total']}
+                  fieldKey={['assistants', 'total']}
+                >
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
+                </Form.Item>
               </Card>
             </Col>
             <Col span={6}>
@@ -296,6 +424,19 @@ class StaffCompensationStep extends Component {
                   fieldKey={['administrative', 'otherBenefit']}
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Total"
+                  name={['administrative', 'total']}
+                  fieldKey={['administrative', 'total']}
+                >
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
                 </Form.Item>
               </Card>
             </Col>
@@ -370,6 +511,19 @@ class StaffCompensationStep extends Component {
                 >
                   <Input />
                 </Form.Item>
+                <Form.Item
+                  label="Total"
+                  name={['hygiene', 'total']}
+                  fieldKey={['hygiene', 'total']}
+                >
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
+                </Form.Item>
               </Card>
             </Col>
             <Col span={6}>
@@ -442,6 +596,19 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygieneAssistant', 'otherBenefit']}
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Total"
+                  name={['hygieneAssistant', 'total']}
+                  fieldKey={['hygieneAssistant', 'total']}
+                >
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
                 </Form.Item>
               </Card>
             </Col>
