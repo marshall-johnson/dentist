@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Select, Button, DatePicker } from 'antd';
+import { Row, Col, Form, Select, Button, DatePicker, notification } from 'antd';
 import student from '@/store/student';
 import { fetchStudents } from '@/actions/studentActions';
 import { connect } from 'react-redux';
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const Filter = (props) => {
   const {
@@ -47,29 +48,53 @@ const Filter = (props) => {
               onChange={(value) => {
                 setFilterValue({
                   ...filterValue,
+                  month: null,
+                  year: null,
                   type: value,
                 });
               }}
             >
               <Option value="one">Report 1</Option>
               <Option value="two">Report 2</Option>
+              <Option value="three">Report 3</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item label="DatePicker">
-            <DatePicker
-              style={{ width: '100%' }}
-              picker="month"
-              onChange={(date, dateString) => {
-                const temp = dateString.split('-');
-                setFilterValue({
-                  ...filterValue,
-                  month: temp[1],
-                  year: temp[0],
-                });
-              }}
-            />
+            {filterValue.type === 'three' ? (
+              <RangePicker
+                picker="month"
+                onChange={(date, dateString) => {
+                  const startDate = dateString[0].split('-');
+                  const endDate = dateString[1].split('-');
+                  if (endDate[0] !== startDate[0]) {
+                    notification.error({
+                      message: 'Start year and End year must be the same',
+                    });
+                  } else {
+                    setFilterValue({
+                      ...filterValue,
+                      month: [startDate[1], endDate[1]],
+                      year: startDate[0],
+                    });
+                  }
+                }}
+              />
+            ) : (
+              <DatePicker
+                style={{ width: '100%' }}
+                picker="month"
+                onChange={(date, dateString) => {
+                  const temp = dateString.split('-');
+                  setFilterValue({
+                    ...filterValue,
+                    month: [temp[1]],
+                    year: temp[0],
+                  });
+                }}
+              />
+            )}
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -109,7 +134,11 @@ const Filter = (props) => {
             textAlign: 'right',
           }}
         >
-          <Button type="primary" onClick={onSubmit}>
+          <Button
+            type="primary"
+            disabled={!filterValue.month}
+            onClick={onSubmit}
+          >
             Search
           </Button>
         </Col>

@@ -185,12 +185,17 @@ const DEFAULT_REPORT = {
   average: {
     prod_per_month: 0,
     collections_per_month: 0,
+    pct_collections_per_month: 0,
   },
   budget: {
     blue_line: 0,
     green_line: 0,
     red_line: 0,
     balance: 0,
+  },
+  total: {
+    coll_ytd: 0,
+    prod_ytd: 0,
   },
   profit: 0,
   avg_total_ytd: 0,
@@ -301,9 +306,10 @@ const ReportingContainer = () => {
   const onFilterChange = async (data) => {
     setFilter(data);
     setFormStyle(data.type);
+    console.log('xxxx', data);
     const temp = await fetchReport(data);
     let mapped = [];
-    if (data.type === 'one') {
+    if (data.type === 'one' || data.type === 'three') {
       mapped = [
         {
           key: '1',
@@ -406,6 +412,11 @@ const ReportingContainer = () => {
           cpdVariance: temp.cpd_variance.all_expenses,
         },
       ];
+      setReportData({
+        ...DEFAULT_REPORT,
+        ...temp,
+        table: mapped,
+      });
     }
     let mappedHygiene = [];
     if (data.type === 'two') {
@@ -491,13 +502,18 @@ const ReportingContainer = () => {
           variance: temp.variance.all_expenses,
         },
       ];
+      setReportData({
+        ...DEFAULT_REPORT,
+        ...temp,
+        table: mappedHygiene,
+      });
     }
 
-    setReportData({
-      ...DEFAULT_REPORT,
-      ...temp,
-      table: data.type === 'one' ? mapped : mappedHygiene,
-    });
+    // setReportData({
+    //   ...DEFAULT_REPORT,
+    //   ...temp,
+    //   table: data.type === 'one' ? mapped : mappedHygiene,
+    // });
   };
 
   const fetchReport = async (args) => {
@@ -570,28 +586,63 @@ const ReportingContainer = () => {
                 <p>{formatCurrency(reportData.unpaid_bills)}</p>
               </Col>
             </Row>
-            <Row className="mb-15" style={{ color: 'blue' }}>
-              <Col span={8}>
-                <p>Production</p>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.production)}</p>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <p>Collections</p>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.collections)}</p>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col offset={8} span={2} className="border-bottom">
-                <p>{reportData?.percentage_of_production}</p>
-              </Col>
-              <p>% of Production</p>
-            </Row>
+            {filter.type !== 'three' && (
+              <Row className="mb-15" style={{ color: 'blue' }}>
+                <Col span={8}>
+                  <p>Production</p>
+                </Col>
+                <Col span={12} className="border-bottom">
+                  <p>{formatCurrency(reportData.production)}</p>
+                </Col>
+              </Row>
+            )}
+            {filter.type === 'one' ? (
+              <>
+                <Row className="mb-15">
+                  <Col span={8}>
+                    <p>Collections</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>{formatCurrency(reportData.collections)}</p>
+                  </Col>
+                </Row>
+                <Row className="mb-15">
+                  <Col offset={8} span={2} className="border-bottom">
+                    <p>{reportData?.percentage_of_production}</p>
+                  </Col>
+                  <p>% of Production</p>
+                </Row>
+              </>
+            ) : (
+              <>
+                <Row className="mb-15" style={{ color: 'blue' }}>
+                  <Col span={8}>
+                    <p>Avg. Prod/Mo:</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>{formatCurrency(reportData.average.prod_per_month)}</p>
+                  </Col>
+                </Row>
+                <Row className="mb-15">
+                  <Col span={8}>
+                    <p>Avg Coll/Mo</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>
+                      {formatCurrency(reportData.average.collections_per_month)}
+                    </p>
+                  </Col>
+                </Row>
+                <Row className="mb-15">
+                  <Col offset={8} span={4} className="border-bottom">
+                    <p>{formatCurrency(0)}</p>
+                  </Col>
+                  <Col span={8}>
+                    <p>% of Production</p>
+                  </Col>
+                </Row>
+              </>
+            )}
             <Row className="mb-15" style={{ color: 'orange' }}>
               <Col span={8}>
                 <p>Actual R/L</p>
@@ -667,24 +718,48 @@ const ReportingContainer = () => {
                 <p>{formatCurrency(reportData.total_short_term_debt)}</p>
               </Col>
             </Row>
-            <Row className="mb-15" style={{ color: 'blue' }}>
-              <Col span={8}>
-                <p>Avg. Prod/Mo:</p>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.average.prod_per_month)}</p>
-              </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col span={8}>
-                <p>Avg Coll/Mo</p>
-              </Col>
-              <Col span={12} className="border-bottom">
-                <p>
-                  {formatCurrency(reportData.average.collections_per_month)}
-                </p>
-              </Col>
-            </Row>
+            {filter.type === 'one' ? (
+              <>
+                <Row className="mb-15" style={{ color: 'blue' }}>
+                  <Col span={8}>
+                    <p>Avg. Prod/Mo:</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>{formatCurrency(reportData.average.prod_per_month)}</p>
+                  </Col>
+                </Row>
+                <Row className="mb-15">
+                  <Col span={8}>
+                    <p>Avg Coll/Mo</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>
+                      {formatCurrency(reportData.average.collections_per_month)}
+                    </p>
+                    <p>% of Production</p>
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <>
+                <Row className="mb-15" style={{ color: 'blue' }}>
+                  <Col span={8}>
+                    <p>Total Prod. YTD:</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>{formatCurrency(reportData.total.prod_ytd)}</p>
+                  </Col>
+                </Row>
+                <Row className="mb-15">
+                  <Col span={8}>
+                    <p>Total Coll YTD</p>
+                  </Col>
+                  <Col span={12} className="border-bottom">
+                    <p>{formatCurrency(reportData.total.coll_ytd)}</p>
+                  </Col>
+                </Row>
+              </>
+            )}
             <Row
               className="mb-15"
               style={{ color: 'orange', marginTop: '35px' }}
@@ -1010,6 +1085,7 @@ const ReportingContainer = () => {
   const renderForm = () => {
     switch (formStyle) {
       case 'one':
+      case 'three':
         return renderFormType1();
       case 'two':
         return renderFormHygiene();
