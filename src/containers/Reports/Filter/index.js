@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Select, Button, DatePicker, notification } from 'antd';
-import student from '@/store/student';
 import { fetchStudents } from '@/actions/studentActions';
 import { connect } from 'react-redux';
 
@@ -14,12 +13,12 @@ const Filter = (props) => {
     fetchStudents,
     loadingFetchStudent,
     students = [],
-    value,
   } = props;
   const [filterValue, setFilterValue] = useState({
     month: null,
     year: null,
     studentId: null,
+    dateValue: null,
     type: 'one',
   });
 
@@ -51,6 +50,7 @@ const Filter = (props) => {
                   month: null,
                   year: null,
                   type: value,
+                  dateValue: null,
                 });
               }}
             >
@@ -64,6 +64,7 @@ const Filter = (props) => {
           <Form.Item label="DatePicker">
             {filterValue.type === 'three' ? (
               <RangePicker
+                value={filterValue.dateValue}
                 picker="month"
                 onChange={(date, dateString) => {
                   const startDate = dateString[0].split('-');
@@ -77,12 +78,14 @@ const Filter = (props) => {
                       ...filterValue,
                       month: [startDate[1], endDate[1]],
                       year: startDate[0],
+                      dateValue: date,
                     });
                   }
                 }}
               />
             ) : (
               <DatePicker
+                value={filterValue.dateValue}
                 style={{ width: '100%' }}
                 picker="month"
                 onChange={(date, dateString) => {
@@ -91,6 +94,7 @@ const Filter = (props) => {
                     ...filterValue,
                     month: [temp[1]],
                     year: temp[0],
+                    dateValue: date,
                   });
                 }}
               />
