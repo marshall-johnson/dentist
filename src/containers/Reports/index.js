@@ -308,7 +308,6 @@ const ReportingContainer = () => {
   const onFilterChange = async (data) => {
     setFilter(data);
     setFormStyle(data.type);
-    console.log('xxxx', data);
     const temp = await fetchReport(data);
     let mapped = [];
     if (data.type === 'one' || data.type === 'three') {
