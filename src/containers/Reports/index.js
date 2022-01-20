@@ -200,8 +200,10 @@ const DEFAULT_REPORT = {
   profit: 0,
   avg_total_ytd: 0,
   avg_prod_ytd: 0,
-  pct_of_avg_ytd: 0,
-  pct_of_total: 0,
+  percentage_of_total: {
+    month: 0,
+    ytd: 0,
+  },
 };
 
 const ReportingContainer = () => {
@@ -635,7 +637,7 @@ const ReportingContainer = () => {
                 </Row>
                 <Row className="mb-15">
                   <Col offset={8} span={4} className="border-bottom">
-                    <p>{formatCurrency(0)}</p>
+                    <p>{reportData.percentage_of_production}</p>
                   </Col>
                   <Col span={8}>
                     <p>% of Production</p>
@@ -733,9 +735,7 @@ const ReportingContainer = () => {
                     <p>Avg Coll/Mo</p>
                   </Col>
                   <Col span={12} className="border-bottom">
-                    <p>
-                      {formatCurrency(reportData.average.collections_per_month)}
-                    </p>
+                    <p>{reportData.average.collections_per_month}</p>
                     <p>% of Production</p>
                   </Col>
                 </Row>
@@ -949,7 +949,7 @@ const ReportingContainer = () => {
                 <p>% of Total</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.pct_of_total}%</p>
+                <p>{reportData.percentage_of_total.month}%</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -980,7 +980,7 @@ const ReportingContainer = () => {
               </Col>
             </Row>
 
-            <Row className="mb-15" style={{ marginTop: '80px' }}>
+            <Row className="mb-15" style={{ marginTop: '55px' }}>
               <Col span={8}>
                 <p>Avg. Total/Ytd</p>
               </Col>
@@ -993,7 +993,7 @@ const ReportingContainer = () => {
                 <p>% of Total</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.pct_of_avg_ytd}%</p>
+                <p>{reportData.percentage_of_total.ytd}%</p>
               </Col>
             </Row>
           </Col>
