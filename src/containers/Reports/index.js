@@ -5,6 +5,7 @@ import { formatCurrency } from '@/utils/helpers';
 import Filter from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
+import moment from 'moment';
 
 const { Text, Title } = Typography;
 
@@ -173,6 +174,12 @@ const DEFAULT_REPORT = {
       value: 0,
     },
   ],
+  prod_hour: [
+    {
+      name: '',
+      value: 0,
+    },
+  ],
   receivables: 0,
   debt_payments: 0,
   net_solv: 0,
@@ -211,6 +218,7 @@ const ReportingContainer = () => {
     month: null,
     year: null,
     studentId: null,
+    dateValue: null,
     type: 'one',
   });
   const [compRef, setCompRef] = useState({});
@@ -545,24 +553,47 @@ const ReportingContainer = () => {
         <div className="mb-10">
           <Title level={3}>PROFITABILITY MANAGEMENT CONTROLLER REPORT</Title>
         </div>
-        <div>
-          <Text className="border-bottom">
-            {filter.month && filter.year && `${filter.month}-${filter.year}`}
-          </Text>
-        </div>
         <br />
         <div>
-          <Text>FOR &nbsp;</Text>
+          <Text strong>
+            FOR: &nbsp; {reportData?.prod_hour_scheduled[0].name}
+          </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
+        {filter.type === 'one' ? (
+          <>
+            <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue).format('MMMM')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue).format('YYYY')}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
+              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+            </Row>
+          </>
+        ) : (
+          <>
+            <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
+              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+            </Row>
+          </>
+        )}
       </div>
-      <br />
-      <Table
-        size="small"
-        pagination={false}
-        columns={columnsFirst}
-        dataSource={dataFirst}
-      />
 
       <br />
 
@@ -898,10 +929,23 @@ const ReportingContainer = () => {
         </div>
         <br />
         <div>
-          <p>FOR &nbsp;</p>
+          <Text strong>FOR: &nbsp; {reportData?.prod_hour[0].name}</Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
+        <Row>
+          <Col span={12} style={{ color: 'orange' }}>
+            Period: &nbsp; {moment(filter.dateValue).format('MMMM')}
+          </Col>
+          <Col span={12} style={{ color: 'orange' }}>
+            Date: &nbsp; {moment(filter.dateValue).format('YYYY')}
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>Case Ratio: &nbsp; 0% </Col>
+          <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+        </Row>
       </div>
+
       <br />
 
       <br />
