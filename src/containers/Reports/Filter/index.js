@@ -57,12 +57,13 @@ const Filter = (props) => {
               <Option value="one">Report 1</Option>
               <Option value="two">Report 2</Option>
               <Option value="three">Report 3</Option>
+              <Option value="four">Report 4</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item label="DatePicker">
-            {filterValue.type === 'three' ? (
+            {filterValue.type === 'three' || filterValue.type === 'four' ? (
               <RangePicker
                 value={filterValue.dateValue}
                 picker="month"
