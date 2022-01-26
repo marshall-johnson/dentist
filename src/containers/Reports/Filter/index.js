@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Select, Button, DatePicker, notification } from 'antd';
 import { fetchStudents } from '@/actions/studentActions';
 import { connect } from 'react-redux';
+import { filter } from 'lodash';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -58,12 +59,15 @@ const Filter = (props) => {
               <Option value="two">Report 2</Option>
               <Option value="three">Report 3</Option>
               <Option value="four">Report 4</Option>
+              <Option value="five">Report 5</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item label="DatePicker">
-            {filterValue.type === 'three' || filterValue.type === 'four' ? (
+            {filterValue.type === 'three' ||
+            filterValue.type === 'four' ||
+            filterValue.type === 'five' ? (
               <RangePicker
                 value={filterValue.dateValue}
                 picker="month"
