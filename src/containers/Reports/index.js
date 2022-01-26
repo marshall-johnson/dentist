@@ -47,6 +47,37 @@ const dataFirst = [
 ];
 
 const DEFAULT_REPORT = {
+  reportFive: {
+    doctor_hours: [],
+    doctor_percentage_of_available_hrs_scheduled: [],
+    hygiene_hours: [],
+    doctor_percent: {
+      percentage_of_cancelled_hrs_recovered: {
+        current_month: 0,
+        ytd_avg_month: 0,
+      },
+      percentage_of_dr_capacity_used: { current_month: 0, ytd_avg_month: 0 },
+      percentage_of_scheduled_hrs_cancelled: {
+        current_month: 0,
+        ytd_avg_month: 0,
+      },
+    },
+    hygiene_percent: {
+      percentage_of_available_hrs_scheduled: {
+        current_month: 0,
+        ytd_avg_month: 0,
+      },
+      percentage_of_cancelled_hrs_recovered: {
+        current_month: 0,
+        ytd_avg_month: 0,
+      },
+      percentage_of_dr_capacity_used: { current_month: 0, ytd_avg_month: 0 },
+      percentage_of_scheduled_hrs_cancelled: {
+        current_month: 0,
+        ytd_avg_month: 0,
+      },
+    },
+  },
   table: [
     {
       key: '1',
@@ -222,7 +253,7 @@ const ReportingContainer = () => {
     month: null,
     year: null,
     studentId: null,
-    dateValue: null,
+    dateValue: [{}],
     type: 'one',
   });
   const [compRef, setCompRef] = useState({});
@@ -232,6 +263,167 @@ const ReportingContainer = () => {
   const handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
   };
+
+  const report5Cols = [
+    {
+      title: 'DOCTOR HOURS',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+    },
+    {
+      title: `CURRENT MONTH: ${moment(filter.dateValue[0]).format(
+        'MM---YYYY',
+      )}`,
+      children: [
+        {
+          title: 'AVAIL',
+          dataIndex: 'avail',
+          keu: 'avail',
+          ellipsis: true,
+        },
+        {
+          title: 'SCHED',
+          dataIndex: 'sched',
+          keu: 'sched',
+          ellipsis: true,
+        },
+        {
+          title: 'CANC',
+          dataIndex: 'canc',
+          keu: 'canc',
+          ellipsis: true,
+        },
+        {
+          title: 'RECOV',
+          dataIndex: 'recov',
+          keu: 'recov',
+          ellipsis: true,
+        },
+        {
+          title: 'WORKED',
+          dataIndex: 'worked',
+          keu: 'worked',
+          ellipsis: true,
+        },
+      ],
+    },
+    {
+      title: 'YTD AVG/MO',
+      children: [
+        {
+          title: 'AVAIL',
+          dataIndex: 'avg_avail',
+          keu: 'avg_avail',
+          ellipsis: true,
+        },
+        {
+          title: 'SCHED',
+          dataIndex: 'avg_sched',
+          keu: 'avg_sched',
+          ellipsis: true,
+        },
+        {
+          title: 'CANC',
+          dataIndex: 'avg_canc',
+          keu: 'avg_canc',
+          ellipsis: true,
+        },
+        {
+          title: 'RECOV',
+          dataIndex: 'avg_recov',
+          keu: 'avg_recov',
+          ellipsis: true,
+        },
+        {
+          title: 'WORKED',
+          dataIndex: 'avg_worked',
+          keu: 'avg_worked',
+          ellipsis: true,
+        },
+      ],
+    },
+  ];
+  const report5HygCols = [
+    {
+      title: 'HYGIENE HOURS',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+    },
+    {
+      title: `CURRENT MONTH: ${moment(filter.dateValue[0]).format(
+        'MM---YYYY',
+      )}`,
+      children: [
+        {
+          title: 'AVAIL',
+          dataIndex: 'avail',
+          keu: 'avail',
+          ellipsis: true,
+        },
+        {
+          title: 'SCHED',
+          dataIndex: 'sched',
+          keu: 'sched',
+          ellipsis: true,
+        },
+        {
+          title: 'CANC',
+          dataIndex: 'canc',
+          keu: 'canc',
+          ellipsis: true,
+        },
+        {
+          title: 'RECOV',
+          dataIndex: 'recov',
+          keu: 'recov',
+          ellipsis: true,
+        },
+        {
+          title: 'WORKED',
+          dataIndex: 'worked',
+          keu: 'worked',
+          ellipsis: true,
+        },
+      ],
+    },
+    {
+      title: 'YTD AVG/MO',
+      children: [
+        {
+          title: 'AVAIL',
+          dataIndex: 'avg_avail',
+          keu: 'avg_avail',
+          ellipsis: true,
+        },
+        {
+          title: 'SCHED',
+          dataIndex: 'avg_sched',
+          keu: 'avg_sched',
+          ellipsis: true,
+        },
+        {
+          title: 'CANC',
+          dataIndex: 'avg_canc',
+          keu: 'avg_canc',
+          ellipsis: true,
+        },
+        {
+          title: 'RECOV',
+          dataIndex: 'avg_recov',
+          keu: 'avg_recov',
+          ellipsis: true,
+        },
+        {
+          title: 'WORKED',
+          dataIndex: 'avg_worked',
+          keu: 'avg_worked',
+          ellipsis: true,
+        },
+      ],
+    },
+  ];
 
   const columns = [
     {
@@ -521,14 +713,13 @@ const ReportingContainer = () => {
         table: mappedHygiene,
       });
     }
-
-    // setReportData({
-    //   ...DEFAULT_REPORT,
-    //   ...temp,
-    //   table: data.type === 'one' ? mapped : mappedHygiene,
-    // });
+    if (data.type === 'five') {
+      setReportData({
+        ...DEFAULT_REPORT,
+        reportFive: temp,
+      });
+    }
   };
-
   const fetchReport = async (args) => {
     const res = await getReporting(args);
     return res;
@@ -1252,6 +1443,219 @@ const ReportingContainer = () => {
       </div>
     </div>
   );
+  const renderFormFive = () => (
+    <div
+      className="search-result-list"
+      // eslint-disable-next-line no-return-assign
+      ref={(el) => setCompRef(el)}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <div className="mb-10">
+          {filter.type === 'five' ? (
+            <Title style={{ color: 'blue' }} level={3}>
+              PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - STATISTICS
+            </Title>
+          ) : (
+            <>
+              {/* <Title style={{ color: 'blue' }} level={3}>
+                PROFITABILITY MANAGEMENT CONTROLLER REPORT
+              </Title>
+              <Title level={3}>YEAR TO DATE/Average Month</Title> */}
+            </>
+          )}
+        </div>
+        <br />
+        <div>
+          <Text strong>
+            FOR: &nbsp; {reportData?.reportFive?.doctor_hours[0]?.name}
+          </Text>
+          <Text className="border-bottom">&nbsp;</Text>
+        </div>
+        {filter.type === 'five' ? (
+          <>
+            <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MMMM')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <>
+            {/* <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
+              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+            </Row> */}
+          </>
+        )}
+        <br />
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={report5Cols}
+          dataSource={reportData.reportFive.doctor_hours}
+          onChange={handleChange}
+        />
+        <Row style={{ marginTop: '24px', textAlign: 'left' }}>
+          <Col span={8}>Percent of Available Hrs Scheduled:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percentage_of_available_hrs_scheduled
+                .current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percentage_of_available_hrs_scheduled
+                .ytd_avg_month
+            }
+            %
+          </Col>
+        </Row>
+        <Row style={{ textAlign: 'left' }}>
+          <Col span={8}>Percent of Scheduled Hrs Cancelled:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percent
+                .percentage_of_scheduled_hrs_cancelled.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percent
+                .percentage_of_scheduled_hrs_cancelled.ytd_avg_month
+            }
+            %
+          </Col>
+        </Row>
+        <Row style={{ textAlign: 'left' }}>
+          <Col span={8}>Percent of Cancelled Hrs Recovered:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percent
+                .percentage_of_cancelled_hrs_recovered.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percent
+                .percentage_of_cancelled_hrs_recovered.current_month
+            }
+            %
+          </Col>
+        </Row>
+        <Row style={{ marginBottom: '24px', textAlign: 'left' }}>
+          <Col span={8}>Percent of Dr. Capacity Used:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percent
+                .percentage_of_dr_capacity_used.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.doctor_percent
+                .percentage_of_dr_capacity_used.current_month
+            }
+            %
+          </Col>
+        </Row>
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={report5HygCols}
+          dataSource={reportData.reportFive.hygiene_hours}
+          onChange={handleChange}
+        />
+        <Row style={{ marginTop: '24px', textAlign: 'left' }}>
+          <Col span={8}>Percent of Available Hrs Scheduled:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_available_hrs_scheduled.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_available_hrs_scheduled.ytd_avg_month
+            }
+            %
+          </Col>
+        </Row>
+        <Row style={{ textAlign: 'left' }}>
+          <Col span={8}>Percent of Scheduled Hrs Cancelled:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_scheduled_hrs_cancelled.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_scheduled_hrs_cancelled.ytd_avg_month
+            }
+            %
+          </Col>
+        </Row>
+        <Row style={{ textAlign: 'left' }}>
+          <Col span={8}>Percent of Cancelled Hrs Recovered:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_cancelled_hrs_recovered.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_cancelled_hrs_recovered.current_month
+            }
+            %
+          </Col>
+        </Row>
+        <Row style={{ marginBottom: '24px', textAlign: 'left' }}>
+          <Col span={8}>Percent of Dr. Capacity Used:</Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_dr_capacity_used.current_month
+            }
+            %
+          </Col>
+          <Col span={8}>
+            {
+              reportData.reportFive.hygiene_percent
+                .percentage_of_dr_capacity_used.current_month
+            }
+            %
+          </Col>
+        </Row>
+      </div>
+    </div>
+  );
 
   const renderForm = () => {
     switch (formStyle) {
@@ -1261,6 +1665,9 @@ const ReportingContainer = () => {
       case 'two':
       case 'four':
         return renderFormHygiene();
+
+      case 'five':
+        return renderFormFive();
       default:
         return null;
     }
