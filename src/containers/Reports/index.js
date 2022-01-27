@@ -9,44 +9,51 @@ import moment from 'moment';
 
 const { Text, Title } = Typography;
 
-const columnsFirst = [
-  {
-    title: 'Period',
-    dataIndex: 'period',
-    key: 'period',
-    ellipsis: true,
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-    ellipsis: true,
-  },
-  {
-    title: 'Case ratio',
-    dataIndex: 'caseRatio',
-    key: 'caseRatio',
-    ellipsis: true,
-  },
-  {
-    title: 'Recare Ratio',
-    dataIndex: 'recareRatio',
-    key: 'recareRatio',
-    ellipsis: true,
-  },
-];
-
-const dataFirst = [
-  {
-    key: '1',
-    period: 'January',
-    date: 2022,
-    caseRatio: 50,
-    recareRatio: 0,
-  },
-];
-
 const DEFAULT_REPORT = {
+  reportSix: {
+    grand_total: {
+      avail: 0,
+      lost: 0,
+      prod: 0,
+      worked: 0,
+      wrkd: 0,
+      avg_avail: 0,
+      avg_lost: 0,
+      avg_prod: 0,
+      avg_worked: 0,
+      avg_wrkd: 0,
+    },
+    doctor_hours: [
+      {
+        name: '',
+        avail: 0,
+        lost: 0,
+        prod: 0,
+        worked: 0,
+        wrkd: 0,
+        avg_avail: 0,
+        avg_lost: 0,
+        avg_prod: 0,
+        avg_worked: 0,
+        avg_wrkd: 0,
+      },
+    ],
+    hygiene_hours: [
+      {
+        name: '',
+        avail: 0,
+        lost: 0,
+        prod: 0,
+        worked: 0,
+        wrkd: 0,
+        avg_avail: 0,
+        avg_lost: 0,
+        avg_prod: 0,
+        avg_worked: 0,
+        avg_wrkd: 0,
+      },
+    ],
+  },
   reportFive: {
     doctor_hours: [],
     doctor_percentage_of_available_hrs_scheduled: [],
@@ -263,7 +270,166 @@ const ReportingContainer = () => {
   const handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
   };
-
+  const report6Cols = [
+    {
+      title: 'DOCTOR HOURS',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+    },
+    {
+      title: `CURRENT MONTH: ${moment(filter.dateValue[0]).format(
+        'MM---YYYY',
+      )}`,
+      children: [
+        {
+          title: 'WORKED',
+          dataIndex: 'worked',
+          keu: 'worked',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$',
+          dataIndex: 'prod',
+          keu: 'prod',
+          ellipsis: true,
+        },
+        {
+          title: 'WRKD',
+          dataIndex: 'wrkd',
+          keu: 'wrkd',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD/HR AVAIL',
+          dataIndex: 'avail',
+          keu: 'avail',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$ LOST',
+          dataIndex: 'lost',
+          keu: 'lost',
+          ellipsis: true,
+        },
+      ],
+    },
+    {
+      title: 'YTD AVG/MO',
+      children: [
+        {
+          title: 'WORKED',
+          dataIndex: 'avg_worked',
+          keu: 'avg_worked',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$',
+          dataIndex: 'avg_prod',
+          keu: 'avg_prod',
+          ellipsis: true,
+        },
+        {
+          title: 'WRKD',
+          dataIndex: 'avg_wrkd',
+          keu: 'avg_wrkd',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD/HR AVAIL',
+          dataIndex: 'avg_avail',
+          keu: 'avg_avail',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$ LOST',
+          dataIndex: 'avg_lost',
+          keu: 'avg_lost',
+          ellipsis: true,
+        },
+      ],
+    },
+  ];
+  const report6HygCols = [
+    {
+      title: 'HYG HOURS',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+    },
+    {
+      title: `CURRENT MONTH: ${moment(filter.dateValue[0]).format(
+        'MM---YYYY',
+      )}`,
+      children: [
+        {
+          title: 'WORKED',
+          dataIndex: 'worked',
+          keu: 'worked',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$',
+          dataIndex: 'prod',
+          keu: 'prod',
+          ellipsis: true,
+        },
+        {
+          title: 'WRKD',
+          dataIndex: 'wrkd',
+          keu: 'wrkd',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD/HR AVAIL',
+          dataIndex: 'avail',
+          keu: 'avail',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$ LOST',
+          dataIndex: 'lost',
+          keu: 'lost',
+          ellipsis: true,
+        },
+      ],
+    },
+    {
+      title: 'YTD AVG/MO',
+      children: [
+        {
+          title: 'WORKED',
+          dataIndex: 'avg_worked',
+          keu: 'avg_worked',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$',
+          dataIndex: 'avg_prod',
+          keu: 'avg_prod',
+          ellipsis: true,
+        },
+        {
+          title: 'WRKD',
+          dataIndex: 'avg_wrkd',
+          keu: 'avg_wrkd',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD/HR AVAIL',
+          dataIndex: 'avg_avail',
+          keu: 'avg_avail',
+          ellipsis: true,
+        },
+        {
+          title: 'PROD$ LOST',
+          dataIndex: 'avg_lost',
+          keu: 'avg_lost',
+          ellipsis: true,
+        },
+      ],
+    },
+  ];
   const report5Cols = [
     {
       title: 'DOCTOR HOURS',
@@ -719,6 +885,12 @@ const ReportingContainer = () => {
         reportFive: temp,
       });
     }
+    if (data.type === 'six') {
+      setReportData({
+        ...DEFAULT_REPORT,
+        reportSix: temp,
+      });
+    }
   };
   const fetchReport = async (args) => {
     const res = await getReporting(args);
@@ -733,6 +905,9 @@ const ReportingContainer = () => {
       return 'dashed_row';
     }
     if (index == 9) {
+      return 'ae_style';
+    }
+    if (record.name == 'Total') {
       return 'ae_style';
     }
     return '';
@@ -1456,12 +1631,7 @@ const ReportingContainer = () => {
               PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - STATISTICS
             </Title>
           ) : (
-            <>
-              {/* <Title style={{ color: 'blue' }} level={3}>
-                PROFITABILITY MANAGEMENT CONTROLLER REPORT
-              </Title>
-              <Title level={3}>YEAR TO DATE/Average Month</Title> */}
-            </>
+            <></>
           )}
         </div>
         <br />
@@ -1483,22 +1653,7 @@ const ReportingContainer = () => {
             </Row>
           </>
         ) : (
-          <>
-            {/* <Row>
-              <Col span={12} style={{ color: 'orange' }}>
-                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
-                {' -> '}
-                {moment(filter.dateValue[1]).format('MM/YYYY')}
-              </Col>
-              <Col span={12} style={{ color: 'orange' }}>
-                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
-              </Col>
-            </Row>
-            <Row>
-              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
-              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
-            </Row> */}
-          </>
+          <></>
         )}
         <br />
         <Table
@@ -1656,7 +1811,174 @@ const ReportingContainer = () => {
       </div>
     </div>
   );
+  const renderFormSix = () => (
+    <div
+      className="search-result-list"
+      // eslint-disable-next-line no-return-assign
+      ref={(el) => setCompRef(el)}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <div className="mb-10">
+          {filter.type === 'six' ? (
+            <Title style={{ color: 'blue' }} level={3}>
+              PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - DOLLARS
+            </Title>
+          ) : (
+            <>
+              {/* <Title style={{ color: 'blue' }} level={3}>
+                PROFITABILITY MANAGEMENT CONTROLLER REPORT
+              </Title>
+              <Title level={3}>YEAR TO DATE/Average Month</Title> */}
+            </>
+          )}
+        </div>
+        <br />
+        <div>
+          <Text strong>
+            FOR: &nbsp; {reportData?.reportSix?.doctor_hours[0]?.name}
+          </Text>
+          <Text className="border-bottom">&nbsp;</Text>
+        </div>
+        {filter.type === 'six' ? (
+          <>
+            <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MMMM')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <>
+            {/* <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
+              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+            </Row> */}
+          </>
+        )}
+        <br />
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={report6Cols}
+          dataSource={reportData.reportSix.doctor_hours}
+          onChange={handleChange}
+        />
+        <div style={{ marginTop: '24px', textAlign: 'left' }} />
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={report6HygCols}
+          dataSource={reportData.reportSix.hygiene_hours}
+          onChange={handleChange}
+        />
+        <div
+          style={{
+            height: '10px',
+            marginTop: '24px',
+            textAlign: 'left',
+            borderTop: '2px dashed black',
+            borderBottom: '2px dashed black',
+          }}
+        />
+        <Table
+          size="small"
+          pagination={false}
+          columns={[
+            {
+              title: 'GRAND TOTAL',
+              dataIndex: 'name',
+              keu: 'name',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'worked',
+              keu: 'worked',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'prod',
+              keu: 'prod',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'wrkd',
+              keu: 'wrkd',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'avail',
+              keu: 'avail',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'lost',
+              keu: 'lost',
+              ellipsis: true,
+            },
 
+            {
+              title: '',
+              dataIndex: 'avg_worked',
+              keu: 'avg_worked',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'avg_prod',
+              keu: 'avg_prod',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'avg_wrkd',
+              keu: 'avg_wrkd',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'avg_avail',
+              keu: 'avg_avail',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              dataIndex: 'avg_lost',
+              keu: 'avg_lost',
+              ellipsis: true,
+            },
+          ]}
+          dataSource={[
+            {
+              name: 'GRAND TOTAL',
+              ...reportData.reportSix.grand_total,
+            },
+          ]}
+          onChange={handleChange}
+          showHeader={false}
+        />
+      </div>
+    </div>
+  );
   const renderForm = () => {
     switch (formStyle) {
       case 'one':
@@ -1665,9 +1987,10 @@ const ReportingContainer = () => {
       case 'two':
       case 'four':
         return renderFormHygiene();
-
       case 'five':
         return renderFormFive();
+      case 'six':
+        return renderFormSix();
       default:
         return null;
     }
