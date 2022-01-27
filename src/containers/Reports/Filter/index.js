@@ -60,6 +60,7 @@ const Filter = (props) => {
               <Option value="three">Report 3</Option>
               <Option value="four">Report 4</Option>
               <Option value="five">Report 5</Option>
+              <Option value="six">Report 6</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -67,7 +68,8 @@ const Filter = (props) => {
           <Form.Item label="DatePicker">
             {filterValue.type === 'three' ||
             filterValue.type === 'four' ||
-            filterValue.type === 'five' ? (
+            filterValue.type === 'five' ||
+            filterValue.type === 'six' ? (
               <RangePicker
                 value={filterValue.dateValue}
                 picker="month"
