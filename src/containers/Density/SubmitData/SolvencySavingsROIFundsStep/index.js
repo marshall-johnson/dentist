@@ -137,6 +137,7 @@ class SolvencySavingsROIFundsStep extends Component {
     const dentistryHygienistProduction = JSON.parse(
       localStorage.getItem('dentistryHygienistProduction'),
     );
+    const doctSal = JSON.parse(localStorage.getItem('dentistryDoctorSalary'));
 
     const params = {
       dentistry: {
@@ -148,6 +149,7 @@ class SolvencySavingsROIFundsStep extends Component {
         hygienistProduction: dentistryHygienistProduction
           ? dentistryHygienistProduction.hygienistProduction
           : [],
+        doctorSalary: doctSal ? doctSal.doctorSalary : [],
         patientActivity:
           JSON.parse(localStorage.getItem('dentistryPatientActivity')) || {},
         collections:
@@ -164,8 +166,6 @@ class SolvencySavingsROIFundsStep extends Component {
         administrativeServices:
           JSON.parse(localStorage.getItem('dentistryAdministrativeServices')) ||
           {},
-        doctorSalary:
-          JSON.parse(localStorage.getItem('dentistryDoctorSalary')) || {},
         solvencySavingsROIFunds:
           JSON.parse(
             localStorage.getItem('dentistrySolvencySavingsROIFunds'),

@@ -180,21 +180,7 @@ class SuppliesAndMarketingStep extends Component {
                 >
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Total"
-                  name="totalH"
-                  fieldKey="totalH"
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        !isNaN(value)
-                          ? Promise.resolve()
-                          : Promise.reject(
-                              new Error('Total is not a valid number'),
-                            ),
-                    },
-                  ]}
-                >
+                <Form.Item label="Total" name="totalH" fieldKey="totalH">
                   <InputNumber
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -224,21 +210,7 @@ class SuppliesAndMarketingStep extends Component {
                 >
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Total"
-                  name="totalM"
-                  fieldKey="totalM"
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        !isNaN(value)
-                          ? Promise.resolve()
-                          : Promise.reject(
-                              new Error('Total is not a valid number'),
-                            ),
-                    },
-                  ]}
-                >
+                <Form.Item label="Total" name="totalM" fieldKey="totalM">
                   <InputNumber
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')

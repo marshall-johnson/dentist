@@ -258,11 +258,17 @@ class AppContainer extends Component {
                       Schedule
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="10">
-                    <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>
-                      Submit Data
-                    </Link>
-                  </Menu.Item>
+                  {[
+                    UserAccountType.ADMIN,
+                    UserAccountType.STUDENT_ADMIN,
+                  ].includes(currentUser?.account_type) && (
+                    <Menu.Item key="10">
+                      <Link to={`${AppConfig.ROUTES.STUDENTS_SUBMIT_DATA}`}>
+                        Submit Data
+                      </Link>
+                    </Menu.Item>
+                  )}
+
                   <Menu.Item key="11">
                     <Link to={`${AppConfig.ROUTES.STUDENTS_PURCHASE_ITEMS}`}>
                       Purchase Items

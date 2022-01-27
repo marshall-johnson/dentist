@@ -48,7 +48,6 @@ class DoctorSalaryStep extends Component {
     const formData = JSON.parse(localStorage.getItem('dentistryDoctorSalary'));
     const { data } = this.props;
     const formatData = camelcaseKeys(data);
-
     if (formatData) {
       this.formRef.current.setFieldsValue({
         doctorSalary: formatData,
