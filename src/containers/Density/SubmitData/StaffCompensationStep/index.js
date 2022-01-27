@@ -136,8 +136,7 @@ class StaffCompensationStep extends Component {
           currentKey === 'medicalInsurance' ||
           currentKey === 'pensionProfitSharing' ||
           currentKey === 'bonus' ||
-          currentKey === 'otherBenefit' ||
-          currentKey === 'workComp'
+          currentKey === 'otherBenefit'
         ) {
           return previousValue + (parseInt(value.assistants[currentKey]) || 0);
         }
@@ -333,13 +332,6 @@ class StaffCompensationStep extends Component {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label="Work Comp - all"
-                  name={['assistants', 'workComp']}
-                  fieldKey={['assistants', 'workComp']}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
                   label="Total"
                   name={['assistants', 'total']}
                   fieldKey={['assistants', 'total']}
@@ -351,6 +343,13 @@ class StaffCompensationStep extends Component {
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
+                </Form.Item>
+                <Form.Item
+                  label="Work Comp - all"
+                  name={['assistants', 'workComp']}
+                  fieldKey={['assistants', 'workComp']}
+                >
+                  <Input />
                 </Form.Item>
               </Card>
             </Col>

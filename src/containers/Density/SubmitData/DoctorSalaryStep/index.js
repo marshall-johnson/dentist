@@ -13,9 +13,8 @@ import {
 } from 'antd';
 import camelcaseKeys from 'camelcase-keys';
 import { PlusOutlined } from '@ant-design/icons';
-import DebounceSelect from '@/components/DebounceSelect';
-
 import AppConfig from '@/constants/AppConfig';
+import { parseInt } from 'lodash';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -102,6 +101,24 @@ class DoctorSalaryStep extends Component {
     );
   };
 
+  handleTotal = (_, value) => {
+    const tempD = value.doctorSalary;
+    const res = tempD.map((obj) => {
+      const result = { ...obj };
+      const total = Object.keys(obj).reduce((previousValue, currentKey) => {
+        if (currentKey === 'grossSalary') {
+          return previousValue + (parseInt(obj[currentKey]) || 0);
+        }
+        return previousValue;
+      }, 0);
+      return { ...result, total };
+    });
+
+    this.formRef.current.setFieldsValue({
+      doctorSalary: res,
+    });
+  };
+
   render() {
     const { initialValues } = this.state;
     const { updateData, data } = this.props;
@@ -119,6 +136,7 @@ class DoctorSalaryStep extends Component {
           ref={this.formRef}
           layout="vertical"
           onFinish={this.onFinish}
+          onValuesChange={this.handleTotal}
           initialValues={initialValues}
           validateMessages={validateMessages}
         >
@@ -210,6 +228,19 @@ class DoctorSalaryStep extends Component {
                         fieldKey={[field.name, 'other']}
                       >
                         <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Total"
+                        name={[field.name, 'total']}
+                        fieldKey={[field.name, 'total']}
+                      >
+                        <InputNumber
+                          formatter={(value) =>
+                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          }
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                          disabled
+                        />
                       </Form.Item>
                       {field.key > 0 && (
                         <Form.Item style={{ textAlign: 'right' }}>

@@ -36,7 +36,7 @@ class SolvencySavingsROIFundsStep extends Component {
         deposit: null,
         retiringPastDueDebt: null,
         transferredOutOfSolvencyAcct: null,
-        total: null,
+        totalS: null,
         pension: null,
         drCe: null,
         draw: null,
@@ -44,6 +44,7 @@ class SolvencySavingsROIFundsStep extends Component {
         distributions: null,
         profitabilityPayForTeam: null,
         otherShortTermDebt: null,
+        totalRoi: null,
       },
     };
   }
@@ -80,24 +81,32 @@ class SolvencySavingsROIFundsStep extends Component {
   }
 
   handleTotal = (_, value) => {
-    const total = Object.keys(value).reduce((previousValue, currentKey) => {
-      // if (currentKey !== 'total') {
-      //   return previousValue + (parseInt(value[currentKey]) || 0);
-      // }
-      if (currentKey === 'deposit') {
+    const totalRoi = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (
+        currentKey === 'pension' ||
+        currentKey === 'drCe' ||
+        currentKey === 'draw' ||
+        currentKey === 'dividend' ||
+        currentKey === 'distributions' ||
+        currentKey === 'profitabilityPayForTeam'
+      ) {
         return previousValue + (parseInt(value[currentKey]) || 0);
       }
-      if (currentKey === 'retiringPastDueDebt') {
+      return previousValue;
+    }, 0);
+    const totalS = Object.keys(value).reduce((previousValue, currentKey) => {
+      if (
+        currentKey === 'deposit' ||
+        currentKey === 'retiringPastDueDebt' ||
+        currentKey === 'transferredOutOfSolvencyAcct'
+      ) {
         return previousValue + (parseInt(value[currentKey]) || 0);
       }
-      if (currentKey === 'transferredOutOfSolvencyAcct') {
-        return previousValue - (parseInt(value[currentKey]) || 0);
-      }
-
       return previousValue;
     }, 0);
     this.formRef.current.setFieldsValue({
-      total,
+      totalS,
+      totalRoi,
     });
   };
 
@@ -240,23 +249,14 @@ pay the current month’s expenses."
                   name="transferredOutOfSolvencyAcct"
                   fieldKey="transferredOutOfSolvencyAcct"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
-                <Form.Item
-                  label="Total"
-                  name="total"
-                  fieldKey="total"
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        !isNaN(value)
-                          ? Promise.resolve()
-                          : Promise.reject(
-                              new Error('Total is not a valid number'),
-                            ),
-                    },
-                  ]}
-                >
+                <Form.Item label="Total" name="totalS" fieldKey="totalS">
                   <InputNumber
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -298,6 +298,15 @@ pay the current month’s expenses."
                   fieldKey="profitabilityPayForTeam"
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item label="Total" name="totalRoi" fieldKey="totalRoi">
+                  <InputNumber
+                    formatter={(value) =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                    disabled
+                  />
                 </Form.Item>
               </Card>
             </Col>
