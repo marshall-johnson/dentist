@@ -15,6 +15,7 @@ import camelcaseKeys from 'camelcase-keys';
 import { PlusOutlined } from '@ant-design/icons';
 import AppConfig from '@/constants/AppConfig';
 import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -106,8 +107,15 @@ class DoctorSalaryStep extends Component {
     const res = tempD.map((obj) => {
       const result = { ...obj };
       const total = Object.keys(obj).reduce((previousValue, currentKey) => {
-        if (currentKey === 'grossSalary') {
-          return previousValue + (parseInt(obj[currentKey]) || 0);
+        if (
+          currentKey === 'grossSalary' ||
+          currentKey === 'employerMatch' ||
+          currentKey === 'drawsDividendsDistributions' ||
+          currentKey === 'insurancePremiums' ||
+          currentKey === 'personalExpenses' ||
+          currentKey === 'other'
+        ) {
+          return previousValue + (Number(obj[currentKey]) || 0);
         }
         return previousValue;
       }, 0);
@@ -168,21 +176,30 @@ class DoctorSalaryStep extends Component {
                           },
                         ]}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) => decFormatter(value)}
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Employer Match for Soc Sec, Medicare"
                         name={[field.name, 'employerMatch']}
                         fieldKey={[field.name, 'employerMatch']}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) => decFormatter(value)}
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Draws / Dividends / Distributions"
                         name={[field.name, 'drawsDividendsDistributions']}
                         fieldKey={[field.name, 'drawsDividendsDistributions']}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) => decFormatter(value)}
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Insurance Premiums"
@@ -201,7 +218,10 @@ class DoctorSalaryStep extends Component {
                           },
                         ]}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) => decFormatter(value)}
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Personal Expenses Pd by Practice"
@@ -220,14 +240,20 @@ class DoctorSalaryStep extends Component {
                           },
                         ]}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) => decFormatter(value)}
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Other"
                         name={[field.name, 'other']}
                         fieldKey={[field.name, 'other']}
                       >
-                        <Input />
+                        <InputNumber
+                          formatter={(value) => decFormatter(value)}
+                          parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Total"
@@ -235,9 +261,7 @@ class DoctorSalaryStep extends Component {
                         fieldKey={[field.name, 'total']}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatterTotal(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           disabled
                         />

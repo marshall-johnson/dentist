@@ -20,6 +20,7 @@ import api from '@/api';
 import DebounceSelect from '@/components/DebounceSelect';
 import AppConfig from '@/constants/AppConfig';
 import { fetchHygienists } from '@/actions/hygienistActions';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -237,9 +238,7 @@ hygienist’s statistics are placed in the same column every month."
                         fieldKey={[field.fieldKey, 'production']}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatter(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           onChange={(value) =>
                             this.setProduction(field.key, value)
@@ -264,9 +263,7 @@ hygienist’s statistics are placed in the same column every month."
                         ]}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatter(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           onChange={(value) =>
                             this.setDiscount(field.key, value)
@@ -277,23 +274,9 @@ hygienist’s statistics are placed in the same column every month."
                         label="Net Production"
                         name={[field.name, 'netProduction']}
                         fieldKey={[field.fieldKey, 'netProduction']}
-                        rules={[
-                          {
-                            validator: (_, value) =>
-                              !isNaN(value)
-                                ? Promise.resolve()
-                                : Promise.reject(
-                                    new Error(
-                                      'Net Production is not a valid number',
-                                    ),
-                                  ),
-                          },
-                        ]}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatterTotal(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           disabled
                         />

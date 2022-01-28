@@ -18,7 +18,7 @@ import queryString from 'query-string';
 
 import AppConfig from '@/constants/AppConfig';
 import { dentistrySubmitData } from '@/actions/dentistryActions';
-import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -90,7 +90,7 @@ class SolvencySavingsROIFundsStep extends Component {
         currentKey === 'distributions' ||
         currentKey === 'profitabilityPayForTeam'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
       return previousValue;
     }, 0);
@@ -100,7 +100,7 @@ class SolvencySavingsROIFundsStep extends Component {
         currentKey === 'retiringPastDueDebt' ||
         currentKey === 'transferredOutOfSolvencyAcct'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
       return previousValue;
     }, 0);
@@ -220,9 +220,7 @@ the purpose of solvency."
                   fieldKey="deposit"
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatter(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   />
                 </Form.Item>
@@ -236,9 +234,7 @@ due business taxes."
                   fieldKey="retiringPastDueDebt"
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatter(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   />
                 </Form.Item>
@@ -250,17 +246,13 @@ pay the current month’s expenses."
                   fieldKey="transferredOutOfSolvencyAcct"
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatter(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   />
                 </Form.Item>
                 <Form.Item label="Total" name="totalS" fieldKey="totalS">
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -274,36 +266,52 @@ pay the current month’s expenses."
                   name="pension"
                   fieldKey="pension"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Dr. CE" name="drCe" fieldKey="drCe">
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Draw" name="draw" fieldKey="draw">
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Dividend" name="dividend" fieldKey="dividend">
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Distributions"
                   name="distributions"
                   fieldKey="distributions"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Profitability Pay for Team"
                   name="profitabilityPayForTeam"
                   fieldKey="profitabilityPayForTeam"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Total" name="totalRoi" fieldKey="totalRoi">
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -316,7 +324,10 @@ pay the current month’s expenses."
                 name="otherShortTermDebt"
                 fieldKey="otherShortTermDebt"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>

@@ -15,6 +15,7 @@ import {
 import AppConfig from '@/constants/AppConfig';
 import camelcaseKeys from 'camelcase-keys';
 import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -82,7 +83,7 @@ class CollectionsStep extends Component {
         currentKey === 'sixtyOneToNinetyDays' ||
         currentKey === 'ninetyOneToMoreDays'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
       return previousValue;
     }, 0);
@@ -167,9 +168,7 @@ class CollectionsStep extends Component {
                 fieldKey="totalGross"
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatter(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   onChange={(value) => this.setTotalGross(value)}
                 />
@@ -182,9 +181,7 @@ considered collection adjustments."
                 fieldKey="refunds"
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatter(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   onChange={(value) => this.setTotalRefund(value)}
                 />
@@ -197,9 +194,7 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 fieldKey="totalNet"
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatterTotal(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />
@@ -210,7 +205,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 tooltip="Revenue collected from patients at their appointment"
                 fieldKey="collectionsAtTos"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -233,7 +231,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="31 to 60 Days"
@@ -250,7 +251,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="61 to 90 Days"
@@ -267,7 +271,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="91+ Days"
@@ -284,7 +291,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Total"
@@ -302,9 +312,7 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatterTotal(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />
@@ -326,7 +334,10 @@ There is a formula in this cell so the spreadsheet will automatically compute th
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
           </Row>

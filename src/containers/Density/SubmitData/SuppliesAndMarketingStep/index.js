@@ -13,8 +13,8 @@ import {
   InputNumber,
 } from 'antd';
 import camelcaseKeys from 'camelcase-keys';
-import { parseInt } from 'lodash';
 import AppConfig from '@/constants/AppConfig';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -92,7 +92,7 @@ class SuppliesAndMarketingStep extends Component {
         currentKey === 'sharedSupplies' ||
         currentKey === 'hygieneProduct'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
       return previousValue;
     }, 0);
@@ -102,7 +102,7 @@ class SuppliesAndMarketingStep extends Component {
         currentKey === 'website' ||
         currentKey === 'marketing'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
       return previousValue;
     }, 0);
@@ -156,7 +156,10 @@ class SuppliesAndMarketingStep extends Component {
                   name="supplies"
                   fieldKey="supplies"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
 
                 <Form.Item
@@ -164,27 +167,34 @@ class SuppliesAndMarketingStep extends Component {
                   name="hygieneSupplies"
                   fieldKey="hygieneSupplies"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Shared Supplies"
                   name="sharedSupplies"
                   fieldKey="sharedSupplies"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Hygiene Product"
                   name="hygieneProduct"
                   fieldKey="hygieneProduct"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Total" name="totalH" fieldKey="totalH">
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -194,27 +204,34 @@ class SuppliesAndMarketingStep extends Component {
             <Col span={12}>
               <Card title="Marketing">
                 <Form.Item label="Website" name="website" fieldKey="website">
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Marketing"
                   name="marketing"
                   fieldKey="marketing"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Advertising"
                   name="advertising"
                   fieldKey="advertising"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Total" name="totalM" fieldKey="totalM">
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />

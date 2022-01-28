@@ -14,7 +14,7 @@ import {
 import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
-import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -69,7 +69,7 @@ class LaboratoryStep extends Component {
   handleTotal = (_, value) => {
     const total = Object.keys(value).reduce((previousValue, currentKey) => {
       if (currentKey !== 'total') {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
 
       return previousValue;
@@ -135,24 +135,36 @@ class LaboratoryStep extends Component {
                 name="restoriveLab"
                 fieldKey="restoriveLab"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Aligners / Ortho Lab"
                 name="alignersOrthoLab"
                 fieldKey="alignersOrthoLab"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Implant Supplies"
                 name="implantSupplies"
                 fieldKey="implantSupplies"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item label="Cerec" name="cerec" fieldKey="cerec">
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Total"
@@ -170,9 +182,7 @@ class LaboratoryStep extends Component {
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatterTotal(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />

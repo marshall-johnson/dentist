@@ -17,6 +17,7 @@ import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
 import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -92,7 +93,7 @@ class AdministrativeServicesStep extends Component {
   handleTotal = (_, value) => {
     const total = Object.keys(value).reduce((previousValue, currentKey) => {
       if (currentKey !== 'total') {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
 
       return previousValue;
@@ -161,72 +162,108 @@ class AdministrativeServicesStep extends Component {
                 name="administrativeOfficeSupplies"
                 fieldKey="administrativeOfficeSupplies"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Bank & CC Services Charges"
                 name="bankCcServicesCharges"
                 fieldKey="bankCcServicesCharges"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Business Equipment Purchases"
                 name="businessEquipmentPurchases"
                 fieldKey="businessEquipmentPurchases"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Business Equipment Repair / Main"
                 name="businessEquipmentRepair"
                 fieldKey="businessEquipmentRepair"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Collection Cost"
                 name="collectionCost"
                 fieldKey="collectionCost"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item label="Dues" name="dues" fieldKey="dues">
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Meal and Entertainment"
                 name="mealAndEntertainment"
                 fieldKey="mealAndEntertainment"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item label="Printing" name="printing" fieldKey="printing">
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Laundry / Towel Services"
                 name="laundryOrTowelServices"
                 fieldKey="laundryOrTowelServices"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Prof fees / Legal / Acct"
                 name="prof"
                 fieldKey="prof"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item label="Licenses" name="licenses" fieldKey="licenses">
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="CRM Software"
                 name="crmSoftware"
                 fieldKey="crmSoftware"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -235,24 +272,36 @@ class AdministrativeServicesStep extends Component {
                 name="malpracticeInsurance"
                 fieldKey="malpracticeInsurance"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item label="Other" name="other" fieldKey="other">
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Overhead Insurance"
                 name="overheadInsurance"
                 fieldKey="overheadInsurance"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Cell Phone"
                 name="cellPhone"
                 fieldKey="cellPhone"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Payroll Services Fee"
@@ -271,21 +320,30 @@ class AdministrativeServicesStep extends Component {
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Postage and Freight"
                 name="postageAndFreight"
                 fieldKey="postageAndFreight"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Subscriptions"
                 name="subscriptions"
                 fieldKey="subscriptions"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Taxes (Personal Property OR Other)"
@@ -304,17 +362,26 @@ class AdministrativeServicesStep extends Component {
                   },
                 ]}
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item
                 label="Telephone"
                 name="telephone"
                 fieldKey="telephone"
               >
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
               <Form.Item label="Uniforms" name="uniforms" fieldKey="uniforms">
-                <Input />
+                <InputNumber
+                  formatter={(value) => decFormatter(value)}
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -334,9 +401,7 @@ class AdministrativeServicesStep extends Component {
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatterTotal(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                   disabled
                 />

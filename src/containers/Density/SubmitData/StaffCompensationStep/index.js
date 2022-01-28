@@ -15,7 +15,7 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 import camelcaseKeys from 'camelcase-keys';
-import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -126,7 +126,6 @@ class StaffCompensationStep extends Component {
   };
 
   handleTotal = (_, value) => {
-    console.log('xxxvalue', value);
     const totalAs = Object.keys(value.assistants).reduce(
       (previousValue, currentKey) => {
         if (
@@ -138,7 +137,7 @@ class StaffCompensationStep extends Component {
           currentKey === 'bonus' ||
           currentKey === 'otherBenefit'
         ) {
-          return previousValue + (parseInt(value.assistants[currentKey]) || 0);
+          return previousValue + (Number(value.assistants[currentKey]) || 0);
         }
 
         return previousValue;
@@ -157,7 +156,7 @@ class StaffCompensationStep extends Component {
           currentKey === 'otherBenefit'
         ) {
           return (
-            previousValue + (parseInt(value.administrative[currentKey]) || 0)
+            previousValue + (Number(value.administrative[currentKey]) || 0)
           );
         }
 
@@ -176,7 +175,7 @@ class StaffCompensationStep extends Component {
           currentKey === 'bonus' ||
           currentKey === 'otherBenefit'
         ) {
-          return previousValue + (parseInt(value.hygiene[currentKey]) || 0);
+          return previousValue + (Number(value.hygiene[currentKey]) || 0);
         }
 
         return previousValue;
@@ -195,7 +194,7 @@ class StaffCompensationStep extends Component {
           currentKey === 'otherBenefit'
         ) {
           return (
-            previousValue + (parseInt(value.hygieneAssistant[currentKey]) || 0)
+            previousValue + (Number(value.hygieneAssistant[currentKey]) || 0)
           );
         }
 
@@ -204,7 +203,6 @@ class StaffCompensationStep extends Component {
       0,
     );
 
-    console.log('total', totalAs);
     this.formRef.current.setFieldsValue({
       ...value,
       administrative: {
@@ -277,35 +275,50 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Employer Matching SocSec, Medicare"
                   name={['assistants', 'employerMatching']}
                   fieldKey={['assistants', 'employerMatching']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="FUTA, SUTA"
                   name={['assistants', 'futaSuta']}
                   fieldKey={['assistants', 'futaSuta']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Medical Insurance"
                   name={['assistants', 'medicalInsurance']}
                   fieldKey={['assistants', 'medicalInsurance']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
                   name={['assistants', 'pensionProfitSharing']}
                   fieldKey={['assistants', 'pensionProfitSharing']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Bonus"
@@ -322,14 +335,20 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Other Benefit"
                   name={['assistants', 'otherBenefit']}
                   fieldKey={['assistants', 'otherBenefit']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Total"
@@ -337,9 +356,7 @@ class StaffCompensationStep extends Component {
                   fieldKey={['assistants', 'total']}
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -349,7 +366,10 @@ class StaffCompensationStep extends Component {
                   name={['assistants', 'workComp']}
                   fieldKey={['assistants', 'workComp']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
               </Card>
             </Col>
@@ -370,35 +390,50 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Employer Matching SocSec, Medicare"
                   name={['administrative', 'employerMatching']}
                   fieldKey={['administrative', 'employerMatching']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="FUTA, SUTA"
                   name={['administrative', 'futaSuta']}
                   fieldKey={['administrative', 'futaSuta']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Medical Insurance"
                   name={['administrative', 'medicalInsurance']}
                   fieldKey={['administrative', 'medicalInsurance']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
                   name={['administrative', 'pensionProfitSharing']}
                   fieldKey={['administrative', 'pensionProfitSharing']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Bonus"
@@ -415,14 +450,20 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Other Benefit"
                   name={['administrative', 'otherBenefit']}
                   fieldKey={['administrative', 'otherBenefit']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Total"
@@ -430,9 +471,7 @@ class StaffCompensationStep extends Component {
                   fieldKey={['administrative', 'total']}
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -456,35 +495,50 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Employer Matching SocSec, Medicare"
                   name={['hygiene', 'employerMatching']}
                   fieldKey={['hygiene', 'employerMatching']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="FUTA, SUTA"
                   name={['hygiene', 'futaSuta']}
                   fieldKey={['hygiene', 'futaSuta']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Medical Insurance"
                   name={['hygiene', 'medicalInsurance']}
                   fieldKey={['hygiene', 'medicalInsurance']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
                   name={['hygiene', 'pensionProfitSharing']}
                   fieldKey={['hygiene', 'pensionProfitSharing']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Bonus"
@@ -501,14 +555,20 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Other Benefit"
                   name={['hygiene', 'otherBenefit']}
                   fieldKey={['hygiene', 'otherBenefit']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Total"
@@ -516,9 +576,7 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygiene', 'total']}
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -542,35 +600,50 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Employer Matching SocSec, Medicare"
                   name={['hygieneAssistant', 'employerMatching']}
                   fieldKey={['hygieneAssistant', 'employerMatching']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="FUTA, SUTA"
                   name={['hygieneAssistant', 'futaSuta']}
                   fieldKey={['hygieneAssistant', 'futaSuta']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Medical Insurance"
                   name={['hygieneAssistant', 'medicalInsurance']}
                   fieldKey={['hygieneAssistant', 'medicalInsurance']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Pension / Profit Sharing"
                   name={['hygieneAssistant', 'pensionProfitSharing']}
                   fieldKey={['hygieneAssistant', 'pensionProfitSharing']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Bonus"
@@ -587,14 +660,20 @@ class StaffCompensationStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Other Benefit"
                   name={['hygieneAssistant', 'otherBenefit']}
                   fieldKey={['hygieneAssistant', 'otherBenefit']}
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Total"
@@ -602,9 +681,7 @@ class StaffCompensationStep extends Component {
                   fieldKey={['hygieneAssistant', 'total']}
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
