@@ -314,6 +314,7 @@ const ReportingContainer = () => {
         },
       ],
     },
+    { title: '', dataIndex: '', key: '' },
     {
       title: 'YTD AVG/MO',
       children: [
@@ -394,6 +395,7 @@ const ReportingContainer = () => {
         },
       ],
     },
+    { title: '', dataIndex: '', key: '' },
     {
       title: 'YTD AVG/MO',
       children: [
@@ -474,6 +476,7 @@ const ReportingContainer = () => {
         },
       ],
     },
+    { title: '', dataIndex: '', key: '' },
     {
       title: 'YTD AVG/MO',
       children: [
@@ -554,6 +557,7 @@ const ReportingContainer = () => {
         },
       ],
     },
+    { title: '', dataIndex: '', key: '' },
     {
       title: 'YTD AVG/MO',
       children: [
@@ -908,7 +912,10 @@ const ReportingContainer = () => {
       return 'ae_style';
     }
     if (record.name == 'Total') {
-      return 'ae_style';
+      return 'bluerow_style';
+    }
+    if (record.grand_total == 'GRAND TOTAL') {
+      return 'bluerow_style';
     }
     return '';
   };
@@ -937,7 +944,7 @@ const ReportingContainer = () => {
         <br />
         <div>
           <Text strong>
-            FOR: &nbsp; {reportData?.prod_hour_scheduled[0].name}
+            FOR: &nbsp; {reportData?.prod_hour_scheduled[0]?.name}
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
@@ -1322,7 +1329,7 @@ const ReportingContainer = () => {
         </div>
         <br />
         <div>
-          <Text strong>FOR: &nbsp; {reportData?.prod_hour[0].name}</Text>
+          <Text strong>FOR: &nbsp; {reportData?.prod_hour[0]?.name}</Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
         {filter.type === 'two' ? (
@@ -1645,7 +1652,9 @@ const ReportingContainer = () => {
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
-                Period: &nbsp; {moment(filter.dateValue[0]).format('MMMM')}
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
               <Col span={12} style={{ color: 'orange' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
@@ -1843,7 +1852,9 @@ const ReportingContainer = () => {
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
-                Period: &nbsp; {moment(filter.dateValue[0]).format('MMMM')}
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
               <Col span={12} style={{ color: 'orange' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
@@ -1892,17 +1903,17 @@ const ReportingContainer = () => {
             marginTop: '24px',
             textAlign: 'left',
             borderTop: '2px dashed black',
-            borderBottom: '2px dashed black',
           }}
         />
         <Table
+          rowClassName={renderStyleRow}
           size="small"
           pagination={false}
           columns={[
             {
               title: 'GRAND TOTAL',
-              dataIndex: 'name',
-              keu: 'name',
+              dataIndex: 'grand_total',
+              keu: 'grand_total',
               ellipsis: true,
             },
             {
@@ -1935,7 +1946,7 @@ const ReportingContainer = () => {
               keu: 'lost',
               ellipsis: true,
             },
-
+            { title: '', dataIndex: '', key: '' },
             {
               title: '',
               dataIndex: 'avg_worked',
@@ -1969,12 +1980,195 @@ const ReportingContainer = () => {
           ]}
           dataSource={[
             {
-              name: 'GRAND TOTAL',
+              grand_total: 'GRAND TOTAL',
               ...reportData.reportSix.grand_total,
             },
           ]}
           onChange={handleChange}
           showHeader={false}
+        />
+        <div style={{ marginTop: '24px', textAlign: 'left' }} />
+        <Table
+          size="small"
+          pagination={false}
+          columns={[
+            {
+              title: 'CATEGORY NAME',
+              dataIndex: 'categoryName',
+              keu: 'categoryName',
+              ellipsis: true,
+            },
+            {
+              title: 'CURRENT $',
+              dataIndex: 'current',
+              keu: 'current',
+              ellipsis: true,
+            },
+            {
+              title: '%',
+              dataIndex: 'percentageCurrent',
+              keu: 'percentageCurrent',
+              ellipsis: true,
+            },
+            {
+              title: 'AVG/YTD $',
+              dataIndex: 'avg',
+              keu: 'avg',
+              ellipsis: true,
+            },
+            {
+              title: '%',
+              dataIndex: 'percentageAvg',
+              keu: 'percentageAvg',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              key: '',
+              dataIndex: '',
+            },
+            {
+              title: 'ACCOUNT REC',
+              dataIndex: 'accountRec',
+              keu: 'accountRec',
+              ellipsis: true,
+            },
+            {
+              title: 'CURRENT %',
+              dataIndex: 'curPercentage',
+              keu: 'curPercentage',
+              ellipsis: true,
+            },
+            {
+              title: 'YTD %',
+              dataIndex: 'ytdPercentage',
+              keu: 'ytdPercentage',
+              ellipsis: true,
+            },
+          ]}
+          dataSource={[
+            {
+              categoryName: '',
+              current: '',
+              percentageCurrent: '0',
+              avg: '',
+              percentageAvg: '0',
+              accountRec: '0 - 30',
+              curPercentage: '',
+              ytdPercentage: '',
+            },
+            {
+              categoryName: '',
+              current: '',
+              percentageCurrent: '0',
+              avg: '',
+              percentageAvg: '0',
+              accountRec: '31 - 60',
+              curPercentage: '',
+              ytdPercentage: '',
+            },
+            {
+              categoryName: '',
+              current: '',
+              percentageCurrent: '0',
+              avg: '',
+              percentageAvg: '0',
+              accountRec: '61 - 90',
+              curPercentage: '',
+              ytdPercentage: '',
+            },
+            {
+              categoryName: '',
+              current: '',
+              percentageCurrent: '0',
+              avg: '',
+              percentageAvg: '0',
+              accountRec: '>90',
+              curPercentage: '',
+              ytdPercentage: '',
+            },
+          ]}
+        />
+        <div
+          style={{
+            height: '10px',
+            marginTop: '24px',
+            textAlign: 'left',
+            borderTop: '2px dashed black',
+            borderBottom: '2px dashed black',
+          }}
+        />
+        <Table
+          size="small"
+          pagination={false}
+          showHeader={false}
+          columns={[
+            {
+              title: 'CATEGORY NAME',
+              dataIndex: 'categoryName',
+              keu: 'categoryName',
+              ellipsis: true,
+            },
+            {
+              title: 'CURRENT $',
+              dataIndex: 'current',
+              keu: 'current',
+              ellipsis: true,
+            },
+            {
+              title: '%',
+              dataIndex: 'percentageCurrent',
+              keu: 'percentageCurrent',
+              ellipsis: true,
+            },
+            {
+              title: 'AVG/YTD $',
+              dataIndex: 'avg',
+              keu: 'avg',
+              ellipsis: true,
+            },
+            {
+              title: '%',
+              dataIndex: 'percentageAvg',
+              keu: 'percentageAvg',
+              ellipsis: true,
+            },
+            {
+              title: '',
+              key: '',
+              dataIndex: '',
+            },
+            {
+              title: 'ACCOUNT REC',
+              dataIndex: 'accountRec',
+              keu: 'accountRec',
+              ellipsis: true,
+            },
+            {
+              title: 'CURRENT %',
+              dataIndex: 'curPercentage',
+              keu: 'curPercentage',
+              ellipsis: true,
+            },
+            {
+              title: 'YTD %',
+              dataIndex: 'ytdPercentage',
+              keu: 'ytdPercentage',
+              ellipsis: true,
+            },
+          ]}
+          dataSource={[
+            {
+              categoryName: '',
+              current: '',
+              percentageCurrent: '0',
+              avg: '',
+              percentageAvg: '0',
+              accountRec: 'FRONT DESK COLL.',
+              curPercentage: '',
+              ytdPercentage: '',
+            },
+          ]}
         />
       </div>
     </div>
