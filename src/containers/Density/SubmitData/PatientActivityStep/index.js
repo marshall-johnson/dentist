@@ -14,6 +14,7 @@ import {
 
 import AppConfig from '@/constants/AppConfig';
 import camelcaseKeys from 'camelcase-keys';
+import { decFormatter } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -348,9 +349,7 @@ track the total dollars presented for informal presentations."
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatter(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                 />
               </Form.Item>
@@ -399,9 +398,7 @@ separately from informal presentations. "
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatter(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                 />
               </Form.Item>
@@ -446,9 +443,7 @@ separately from informal presentations. "
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatter(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                 />
               </Form.Item>
@@ -493,9 +488,7 @@ scheduled their next appointment before leaving the office? "
                 ]}
               >
                 <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                  }
+                  formatter={(value) => decFormatter(value)}
                   parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                 />
               </Form.Item>

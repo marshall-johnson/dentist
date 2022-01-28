@@ -20,6 +20,7 @@ import api from '@/api';
 import DebounceSelect from '@/components/DebounceSelect';
 import AppConfig from '@/constants/AppConfig';
 import { fetchDoctors } from '@/actions/doctorActions';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -234,9 +235,7 @@ every patient paid the private fee for service fee."
                         fieldKey={[field.fieldKey, 'production']}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatter(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           onChange={(value) =>
                             this.setProduction(field.key, value)
@@ -265,9 +264,7 @@ hygiene production belong under the hygiene adjustments colum"
                         ]}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatter(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           onChange={(value) =>
                             this.setDiscount(field.key, value)
@@ -294,9 +291,7 @@ adjustment discounts. There is a formula in this cell so it will automatically c
                         ]}
                       >
                         <InputNumber
-                          formatter={(value) =>
-                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          }
+                          formatter={(value) => decFormatterTotal(value)}
                           parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                           disabled
                         />

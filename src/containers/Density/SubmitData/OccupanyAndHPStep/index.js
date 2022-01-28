@@ -15,7 +15,7 @@ import {
 import camelcaseKeys from 'camelcase-keys';
 
 import AppConfig from '@/constants/AppConfig';
-import { parseInt } from 'lodash';
+import { decFormatter, decFormatterTotal } from '@/utils/helpers';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -86,12 +86,12 @@ class OccupanyAndHPStep extends Component {
         currentKey === 'securitySystem' ||
         currentKey === 'propertyTax'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
 
       return previousValue;
     }, 0);
-    const totalHP = Object.keys(value).reduce((previousValue, currentKey) => {
+    const totalHp = Object.keys(value).reduce((previousValue, currentKey) => {
       if (
         currentKey === 'officeFurnitureAndRepairs' ||
         currentKey === 'equipType' ||
@@ -99,14 +99,14 @@ class OccupanyAndHPStep extends Component {
         currentKey === 'staffContinuingEducation' ||
         currentKey === 'staffScpdTuitionOrTravel'
       ) {
-        return previousValue + (parseInt(value[currentKey]) || 0);
+        return previousValue + (Number(value[currentKey]) || 0);
       }
 
       return previousValue;
     }, 0);
     this.formRef.current.setFieldsValue({
       total,
-      totalHP,
+      totalHp,
     });
   };
 
@@ -167,42 +167,60 @@ class OccupanyAndHPStep extends Component {
                   name="mortgageOrRent"
                   fieldKey="mortgageOrRent"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Utilities"
                   name="utilities"
                   fieldKey="utilities"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Janitorial"
                   name="janitorial"
                   fieldKey="janitorial"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Repairs / Maintenance / Leasehold Improv"
                   name="repairs"
                   fieldKey="repairs"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Facilities Insurance"
                   name="facilitiesInsurance"
                   fieldKey="facilitiesInsurance"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Security System"
                   name="securitySystem"
                   fieldKey="securitySystem"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Property Tax"
@@ -219,27 +237,14 @@ class OccupanyAndHPStep extends Component {
                     },
                   ]}
                 >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  label="Total"
-                  name="total"
-                  fieldKey="total"
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        !isNaN(value)
-                          ? Promise.resolve()
-                          : Promise.reject(
-                              new Error('Total is not a valid number'),
-                            ),
-                    },
-                  ]}
-                >
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
+                </Form.Item>
+                <Form.Item label="Total" name="total" fieldKey="total">
+                  <InputNumber
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
@@ -253,34 +258,44 @@ class OccupanyAndHPStep extends Component {
                   name="equipType"
                   fieldKey="equipType"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Office Furniture and Repairs"
                   name="officeFurnitureAndRepairs"
                   fieldKey="officeFurnitureAndRepairs"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Staff Continuing Education"
                   name="staffContinuingEducation"
                   fieldKey="staffContinuingEducation"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Staff SCPD Tuition / Travel"
                   name="staffScpdTuitionOrTravel"
                   fieldKey="staffScpdTuitionOrTravel"
                 >
-                  <Input />
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
                 </Form.Item>
                 <Form.Item label="Total" name="totalHp" fieldKey="totalHp">
                   <InputNumber
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
+                    formatter={(value) => decFormatterTotal(value)}
                     parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                     disabled
                   />
