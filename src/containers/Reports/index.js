@@ -10,6 +10,110 @@ import moment from 'moment';
 const { Text, Title } = Typography;
 
 const DEFAULT_REPORT = {
+  reportSeven: {
+    new_patients: [
+      {
+        age: '6-20',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
+      },
+      {
+        age: '21-40',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
+      },
+      {
+        age: '45+',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
+      },
+      {
+        age: 'Total New',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
+      },
+    ],
+    patient_referrals: [
+      {
+        title: 'Referred by Pts.',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+      },
+      {
+        title: 'Referred by Drs.',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+      },
+      {
+        title: 'Total Referrals',
+        current_mo: 0,
+        percentage_of_current_mo: 0,
+        ytd: 0,
+        percentage_of_ytd: 0,
+      },
+    ],
+    case_presentation: [
+      {
+        title: 'Case Ratio',
+        current_percentage_cases: 0,
+        current_percentage_dollars: 0,
+        percentage_of_ytd_cases: 0,
+        percentage_of_ytd_dollars: 0,
+      },
+      {
+        title: 'Informal Ratio',
+        current_percentage_cases: 0,
+        current_percentage_dollars: 0,
+        percentage_of_ytd_cases: 0,
+        percentage_of_ytd_dollars: 0,
+      },
+      {
+        title: 'Recare Ratio',
+        current_percentage_cases: 0,
+        current_percentage_dollars: 0,
+        percentage_of_ytd_cases: 0,
+        percentage_of_ytd_dollars: 0,
+      },
+    ],
+    patient_visits: {
+      doctor: [
+        {
+          name: 'Total Dr. Visits',
+          current_mo: 0,
+          percentage_of_current_mo: 0,
+          ytd: 0,
+          percentage_of_ytd: 0,
+          avg_per_month: 0,
+        },
+      ],
+      hygiene: [
+        {
+          name: 'Total Hyg Visits',
+          current_mo: 0,
+          percentage_of_current_mo: 0,
+          ytd: 0,
+          percentage_of_ytd: 0,
+          avg_per_month: 0,
+        },
+      ],
+    },
+  },
   reportSix: {
     grand_total: {
       avail: 0,
@@ -270,6 +374,220 @@ const ReportingContainer = () => {
   const handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
   };
+
+  const reportSevenColNewPatients = [
+    {
+      title: 'AGE',
+      dataIndex: 'age',
+      keu: 'age',
+      ellipsis: true,
+      render: (value) => {
+        switch (value) {
+          case '6_to_20':
+            return '6-20';
+          case '21_to_40':
+            return '21-40';
+          case '41_to_more':
+            return '45+';
+          case 'total':
+            return 'Total New';
+          default:
+            return '';
+        }
+      },
+    },
+    {
+      title: 'Current Mo.',
+      dataIndex: 'current_mo',
+      keu: 'current_mo',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'YTD',
+      dataIndex: 'ytd',
+      keu: 'ytd',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'AVG/Mo',
+      dataIndex: 'avg_per_month',
+      keu: 'avg_per_month',
+      ellipsis: true,
+    },
+  ];
+  const reportSevenColPatientRef = [
+    {
+      name: '',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+      render: (value) => {
+        switch (value) {
+          case 'referred_by_pts':
+            return 'Referred by Pts.';
+          case 'referred_by_drs':
+            return 'Referred by Drs.';
+          case 'total':
+            return 'Total Referrals';
+          default:
+            return '';
+        }
+      },
+    },
+    {
+      title: 'Current Mo.',
+      dataIndex: 'current_mo',
+      keu: 'current_mo',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'YTD',
+      dataIndex: 'ytd',
+      keu: 'ytd',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
+      ellipsis: true,
+      width: '80px',
+    },
+  ];
+  const reportSevenColCasePresent = [
+    {
+      title: '',
+      dataIndex: 'title',
+      key: 'title',
+      ellipsis: true,
+    },
+    {
+      title: 'Current % Cases',
+      dataIndex: 'current_percentage_cases',
+      key: 'current_percentage_cases',
+      ellipsis: true,
+    },
+    {
+      title: 'Current % Dollars',
+      dataIndex: 'current_percentage_dollars',
+      key: 'current_percentage_dollars',
+      ellipsis: true,
+    },
+    {
+      title: 'YTD % Cases',
+      dataIndex: 'percentage_of_ytd_cases',
+      key: 'percentage_of_ytd_cases',
+      ellipsis: true,
+    },
+    {
+      title: 'YTD % Dollars',
+      dataIndex: 'percentage_of_ytd_dollars',
+      key: 'percentage_of_ytd_dollars',
+      ellipsis: true,
+    },
+  ];
+  const reportSevenColPatientVisitDoc = [
+    {
+      title: 'Doctors',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+    },
+    {
+      title: 'Current Mo.',
+      dataIndex: 'current_mo',
+      keu: 'current_mo',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'YTD',
+      dataIndex: 'ytd',
+      keu: 'ytd',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'AVG/Mo',
+      dataIndex: 'avg_per_month',
+      keu: 'avg_per_month',
+      ellipsis: true,
+    },
+  ];
+  const reportSevenColPatientVisitHyg = [
+    {
+      title: 'Hygienist',
+      dataIndex: 'name',
+      keu: 'name',
+      ellipsis: true,
+    },
+    {
+      title: 'Current Mo.',
+      dataIndex: 'current_mo',
+      keu: 'current_mo',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'YTD',
+      dataIndex: 'ytd',
+      keu: 'ytd',
+      ellipsis: true,
+    },
+    {
+      title: '%',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
+      ellipsis: true,
+      width: '80px',
+    },
+    {
+      title: 'AVG/Mo',
+      dataIndex: 'avg_per_month',
+      keu: 'avg_per_month',
+      ellipsis: true,
+    },
+  ];
+
   const report6Cols = [
     {
       title: 'DOCTOR HOURS',
@@ -895,6 +1213,12 @@ const ReportingContainer = () => {
         reportSix: temp,
       });
     }
+    if (data.type === 'seven') {
+      setReportData({
+        ...DEFAULT_REPORT,
+        reportSeven: temp,
+      });
+    }
   };
   const fetchReport = async (args) => {
     const res = await getReporting(args);
@@ -916,6 +1240,16 @@ const ReportingContainer = () => {
     }
     if (record.grand_total == 'GRAND TOTAL') {
       return 'bluerow_style';
+    }
+
+    if (
+      record.age == 'total' ||
+      record.name == 'total' ||
+      record.title == 'Total Referrals' ||
+      record.doctors == 'Total Dr. Visits' ||
+      record.hygienist == 'Total Hyg Visits'
+    ) {
+      return 'dashed_row';
     }
     return '';
   };
@@ -2173,6 +2507,218 @@ const ReportingContainer = () => {
       </div>
     </div>
   );
+  const renderFormSeven = () => (
+    <div
+      className="search-result-list"
+      // eslint-disable-next- line no-return-assign
+      ref={(el) => setCompRef(el)}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <div className="mb-10">
+          {filter.type === 'seven' ? (
+            <Title style={{ color: 'blue' }} level={3}>
+              PRODUCTIVITY ANALYSIS - PATIENT ACTIVITY - STATISTICS
+            </Title>
+          ) : (
+            <>
+              {/* <Title style={{ color: 'blue' }} level={3}>
+                PROFITABILITY MANAGEMENT CONTROLLER REPORT
+              </Title>
+              <Title level={3}>YEAR TO DATE/Average Month</Title> */}
+            </>
+          )}
+        </div>
+        <br />
+        <div>
+          <Text strong>
+            FOR: &nbsp;
+            {reportData?.reportSeven?.patient_visits?.doctor[0]?.name}
+          </Text>
+          <Text className="border-bottom">&nbsp;</Text>
+        </div>
+        {filter.type === 'seven' ? (
+          <>
+            <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <>
+            {/* <Row>
+              <Col span={12} style={{ color: 'orange' }}>
+                Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
+                {' -> '}
+                {moment(filter.dateValue[1]).format('MM/YYYY')}
+              </Col>
+              <Col span={12} style={{ color: 'orange' }}>
+                Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
+              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+            </Row> */}
+          </>
+        )}
+        <br />
+        <h4
+          style={{ color: 'blue', textAlign: 'center', marginBottom: '12px' }}
+        >
+          New Patients
+        </h4>
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={reportSevenColNewPatients}
+          dataSource={reportData.reportSeven.new_patients}
+          onChange={handleChange}
+        />
+        <h4
+          style={{
+            color: 'blue',
+            textAlign: 'center',
+            marginBottom: '12px',
+            marginTop: '12px',
+          }}
+        >
+          Patient Referrals
+        </h4>
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={reportSevenColPatientRef}
+          dataSource={reportData.reportSeven.patient_referrals}
+          onChange={handleChange}
+        />
+        <h4
+          style={{
+            color: 'blue',
+            textAlign: 'center',
+            marginBottom: '12px',
+            marginTop: '12px',
+          }}
+        >
+          Case Presentation
+        </h4>
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={reportSevenColCasePresent}
+          dataSource={reportData.reportSeven.case_presentation}
+          onChange={handleChange}
+        />
+        <h4
+          style={{
+            color: 'blue',
+            textAlign: 'center',
+            marginBottom: '12px',
+            marginTop: '12px',
+          }}
+        >
+          Patients Visits
+        </h4>
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={reportSevenColPatientVisitDoc}
+          dataSource={reportData.reportSeven?.patient_visits?.doctor}
+          onChange={handleChange}
+        />
+        <h4
+          style={{
+            color: 'blue',
+            textAlign: 'center',
+            marginBottom: '12px',
+            marginTop: '12px',
+          }}
+        >
+          New Patients
+        </h4>
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={reportSevenColPatientVisitHyg}
+          dataSource={reportData.reportSeven?.patient_visits?.hygiene}
+          onChange={handleChange}
+        />
+        <div
+          style={{
+            height: '10px',
+            marginTop: '24px',
+            textAlign: 'left',
+            borderTop: '2px dashed black',
+          }}
+        />
+        <Table
+          rowClassName={renderStyleRow}
+          size="small"
+          pagination={false}
+          columns={[
+            {
+              title: 'GRAND TOTAL',
+              dataIndex: 'grand_total',
+              keu: 'grand_total',
+              ellipsis: true,
+            },
+            {
+              title: 'Current Mo.',
+              dataIndex: 'current_mo',
+              keu: 'current_mo',
+              ellipsis: true,
+            },
+            {
+              title: '%',
+              dataIndex: 'percentage_of_current_mo',
+              keu: 'percentage_of_current_mo',
+              ellipsis: true,
+              width: '80px',
+            },
+            {
+              title: 'YTD',
+              dataIndex: 'ytd',
+              keu: 'ytd',
+              ellipsis: true,
+            },
+            {
+              title: '%',
+              dataIndex: 'percentage_of_ytd',
+              keu: 'percentage_of_ytd',
+              ellipsis: true,
+              width: '80px',
+            },
+            {
+              title: 'AVG/Mo',
+              dataIndex: 'avg_per_month',
+              keu: 'avg_per_month',
+              ellipsis: true,
+            },
+          ]}
+          dataSource={[
+            {
+              grand_total: 'GRAND TOTAL',
+              ...reportData.reportSeven?.patient_visits?.grand_total,
+            },
+          ]}
+          onChange={handleChange}
+          showHeader={false}
+        />
+        <div style={{ marginTop: '24px', textAlign: 'left' }} />
+      </div>
+    </div>
+  );
+
   const renderForm = () => {
     switch (formStyle) {
       case 'one':
@@ -2185,6 +2731,8 @@ const ReportingContainer = () => {
         return renderFormFive();
       case 'six':
         return renderFormSix();
+      case 'seven':
+        return renderFormSeven();
       default:
         return null;
     }

@@ -61,6 +61,7 @@ const Filter = (props) => {
               <Option value="four">Report 4</Option>
               <Option value="five">Report 5</Option>
               <Option value="six">Report 6</Option>
+              <Option value="seven">Report 7</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -69,6 +70,7 @@ const Filter = (props) => {
             {filterValue.type === 'three' ||
             filterValue.type === 'four' ||
             filterValue.type === 'five' ||
+            filterValue.type === 'seven' ||
             filterValue.type === 'six' ? (
               <RangePicker
                 value={filterValue.dateValue}
