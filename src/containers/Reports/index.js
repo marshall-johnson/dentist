@@ -15,57 +15,57 @@ const DEFAULT_REPORT = {
       {
         age: '6-20',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
-        avg_mo: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
       },
       {
         age: '21-40',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
-        avg_mo: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
       },
       {
         age: '45+',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
-        avg_mo: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
       },
       {
         age: 'Total New',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
-        avg_mo: 0,
+        percentage_of_ytd: 0,
+        avg_per_month: 0,
       },
     ],
     patient_referrals: [
       {
         title: 'Referred by Pts.',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
+        percentage_of_ytd: 0,
       },
       {
         title: 'Referred by Drs.',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
+        percentage_of_ytd: 0,
       },
       {
         title: 'Total Referrals',
         current_mo: 0,
-        current_mo_percentage: 0,
+        percentage_of_current_mo: 0,
         ytd: 0,
-        ytd_percentage: 0,
+        percentage_of_ytd: 0,
       },
     ],
     case_presentation: [
@@ -73,44 +73,46 @@ const DEFAULT_REPORT = {
         title: 'Case Ratio',
         current_percentage_cases: 0,
         current_percentage_dollars: 0,
-        ytd_percentage_cases: 0,
-        ytd_percentage_dollars: 0,
+        percentage_of_ytd_cases: 0,
+        percentage_of_ytd_dollars: 0,
       },
       {
         title: 'Informal Ratio',
         current_percentage_cases: 0,
         current_percentage_dollars: 0,
-        ytd_percentage_cases: 0,
-        ytd_percentage_dollars: 0,
+        percentage_of_ytd_cases: 0,
+        percentage_of_ytd_dollars: 0,
       },
       {
         title: 'Recare Ratio',
         current_percentage_cases: 0,
         current_percentage_dollars: 0,
-        ytd_percentage_cases: 0,
-        ytd_percentage_dollars: 0,
+        percentage_of_ytd_cases: 0,
+        percentage_of_ytd_dollars: 0,
       },
     ],
-    patient_visit_doctors: [
-      {
-        doctors: 'Total Dr. Visits',
-        current_mo: 0,
-        current_mo_percentage: 0,
-        ytd: 0,
-        ytd_percentage: 0,
-        avg_mo: 0,
-      },
-    ],
-    patient_visit_hyg: [
-      {
-        hygienist: 'Total Hyg Visits',
-        current_mo: 0,
-        current_mo_percentage: 0,
-        ytd: 0,
-        ytd_percentage: 0,
-        avg_mo: 0,
-      },
-    ],
+    patient_visits: {
+      doctor: [
+        {
+          name: 'Total Dr. Visits',
+          current_mo: 0,
+          percentage_of_current_mo: 0,
+          ytd: 0,
+          percentage_of_ytd: 0,
+          avg_per_month: 0,
+        },
+      ],
+      hygiene: [
+        {
+          name: 'Total Hyg Visits',
+          current_mo: 0,
+          percentage_of_current_mo: 0,
+          ytd: 0,
+          percentage_of_ytd: 0,
+          avg_per_month: 0,
+        },
+      ],
+    },
   },
   reportSix: {
     grand_total: {
@@ -379,6 +381,20 @@ const ReportingContainer = () => {
       dataIndex: 'age',
       keu: 'age',
       ellipsis: true,
+      render: (value) => {
+        switch (value) {
+          case '6_to_20':
+            return '6-20';
+          case '21_to_40':
+            return '21-40';
+          case '41_to_more':
+            return '45+';
+          case 'total':
+            return 'Total New';
+          default:
+            return '';
+        }
+      },
     },
     {
       title: 'Current Mo.',
@@ -388,8 +404,8 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'current_mo_percentage',
-      keu: 'current_mo_percentage',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
       ellipsis: true,
       width: '80px',
     },
@@ -401,24 +417,36 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'ytd_percentage',
-      keu: 'ytd_percentage',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'AVG/Mo',
-      dataIndex: 'avh_mo',
-      keu: 'avh_mo',
+      dataIndex: 'avg_per_month',
+      keu: 'avg_per_month',
       ellipsis: true,
     },
   ];
   const reportSevenColPatientRef = [
     {
-      title: '',
-      dataIndex: 'title',
-      keu: 'title',
+      name: '',
+      dataIndex: 'name',
+      keu: 'name',
       ellipsis: true,
+      render: (value) => {
+        switch (value) {
+          case 'referred_by_pts':
+            return 'Referred by Pts.';
+          case 'referred_by_drs':
+            return 'Referred by Drs.';
+          case 'total':
+            return 'Total Referrals';
+          default:
+            return '';
+        }
+      },
     },
     {
       title: 'Current Mo.',
@@ -428,8 +456,8 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'current_mo_percentage',
-      keu: 'current_mo_percentage',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
       ellipsis: true,
       width: '80px',
     },
@@ -441,8 +469,8 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'ytd_percentage',
-      keu: 'ytd_percentage',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
       ellipsis: true,
       width: '80px',
     },
@@ -468,22 +496,22 @@ const ReportingContainer = () => {
     },
     {
       title: 'YTD % Cases',
-      dataIndex: 'ytd_percentage_cases',
-      key: 'ytd_percentage_cases',
+      dataIndex: 'percentage_of_ytd_cases',
+      key: 'percentage_of_ytd_cases',
       ellipsis: true,
     },
     {
       title: 'YTD % Dollars',
-      dataIndex: 'ytd_percentage_dollars',
-      key: 'ytd_percentage_dollars',
+      dataIndex: 'percentage_of_ytd_dollars',
+      key: 'percentage_of_ytd_dollars',
       ellipsis: true,
     },
   ];
   const reportSevenColPatientVisitDoc = [
     {
       title: 'Doctors',
-      dataIndex: 'doctors',
-      keu: 'doctors',
+      dataIndex: 'name',
+      keu: 'name',
       ellipsis: true,
     },
     {
@@ -494,8 +522,8 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'current_mo_percentage',
-      keu: 'current_mo_percentage',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
       ellipsis: true,
       width: '80px',
     },
@@ -507,23 +535,23 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'ytd_percentage',
-      keu: 'ytd_percentage',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'AVG/Mo',
-      dataIndex: 'avh_mo',
-      keu: 'avh_mo',
+      dataIndex: 'avg_per_month',
+      keu: 'avg_per_month',
       ellipsis: true,
     },
   ];
   const reportSevenColPatientVisitHyg = [
     {
       title: 'Hygienist',
-      dataIndex: 'hygienist',
-      keu: 'hygienist',
+      dataIndex: 'name',
+      keu: 'name',
       ellipsis: true,
     },
     {
@@ -534,8 +562,8 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'current_mo_percentage',
-      keu: 'current_mo_percentage',
+      dataIndex: 'percentage_of_current_mo',
+      keu: 'percentage_of_current_mo',
       ellipsis: true,
       width: '80px',
     },
@@ -547,15 +575,15 @@ const ReportingContainer = () => {
     },
     {
       title: '%',
-      dataIndex: 'ytd_percentage',
-      keu: 'ytd_percentage',
+      dataIndex: 'percentage_of_ytd',
+      keu: 'percentage_of_ytd',
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'AVG/Mo',
-      dataIndex: 'avh_mo',
-      keu: 'avh_mo',
+      dataIndex: 'avg_per_month',
+      keu: 'avg_per_month',
       ellipsis: true,
     },
   ];
@@ -1185,6 +1213,12 @@ const ReportingContainer = () => {
         reportSix: temp,
       });
     }
+    if (data.type === 'seven') {
+      setReportData({
+        ...DEFAULT_REPORT,
+        reportSeven: temp,
+      });
+    }
   };
   const fetchReport = async (args) => {
     const res = await getReporting(args);
@@ -1209,7 +1243,8 @@ const ReportingContainer = () => {
     }
 
     if (
-      record.age == 'Total New' ||
+      record.age == 'total' ||
+      record.name == 'total' ||
       record.title == 'Total Referrals' ||
       record.doctors == 'Total Dr. Visits' ||
       record.hygienist == 'Total Hyg Visits'
@@ -2475,14 +2510,14 @@ const ReportingContainer = () => {
   const renderFormSeven = () => (
     <div
       className="search-result-list"
-      // eslint-disable-next-line no-return-assign
+      // eslint-disable-next- line no-return-assign
       ref={(el) => setCompRef(el)}
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'six' ? (
+          {filter.type === 'seven' ? (
             <Title style={{ color: 'blue' }} level={3}>
-              PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - DOLLARS
+              PRODUCTIVITY ANALYSIS - PATIENT ACTIVITY - STATISTICS
             </Title>
           ) : (
             <>
@@ -2496,11 +2531,12 @@ const ReportingContainer = () => {
         <br />
         <div>
           <Text strong>
-            FOR: &nbsp; {reportData?.reportSix?.doctor_hours[0]?.name}
+            FOR: &nbsp;
+            {reportData?.reportSeven?.patient_visits?.doctor[0]?.name}
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'six' ? (
+        {filter.type === 'seven' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -2596,7 +2632,7 @@ const ReportingContainer = () => {
           size="small"
           pagination={false}
           columns={reportSevenColPatientVisitDoc}
-          dataSource={reportData.reportSeven.patient_visit_doctors}
+          dataSource={reportData.reportSeven?.patient_visits?.doctor}
           onChange={handleChange}
         />
         <h4
@@ -2614,7 +2650,7 @@ const ReportingContainer = () => {
           size="small"
           pagination={false}
           columns={reportSevenColPatientVisitHyg}
-          dataSource={reportData.reportSeven.patient_visit_hyg}
+          dataSource={reportData.reportSeven?.patient_visits?.hygiene}
           onChange={handleChange}
         />
         <div
@@ -2644,8 +2680,8 @@ const ReportingContainer = () => {
             },
             {
               title: '%',
-              dataIndex: 'current_mo_percentage',
-              keu: 'current_mo_percentage',
+              dataIndex: 'percentage_of_current_mo',
+              keu: 'percentage_of_current_mo',
               ellipsis: true,
               width: '80px',
             },
@@ -2657,22 +2693,22 @@ const ReportingContainer = () => {
             },
             {
               title: '%',
-              dataIndex: 'ytd_percentage',
-              keu: 'ytd_percentage',
+              dataIndex: 'percentage_of_ytd',
+              keu: 'percentage_of_ytd',
               ellipsis: true,
               width: '80px',
             },
             {
               title: 'AVG/Mo',
-              dataIndex: 'avh_mo',
-              keu: 'avh_mo',
+              dataIndex: 'avg_per_month',
+              keu: 'avg_per_month',
               ellipsis: true,
             },
           ]}
           dataSource={[
             {
               grand_total: 'GRAND TOTAL',
-              ...reportData.reportSix.grand_total,
+              ...reportData.reportSeven?.patient_visits?.grand_total,
             },
           ]}
           onChange={handleChange}
