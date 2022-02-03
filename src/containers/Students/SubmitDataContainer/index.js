@@ -198,12 +198,12 @@ class SubmitDataContainer extends Component {
                 currentUser?.account_type,
               ) && (
                 <Form.Item
-                  label="Student"
+                  label="Hygienist(s)"
                   name="student"
                   rules={[
                     {
                       required: true,
-                      message: 'Please pick a Student!',
+                      message: 'Please pick a Hygienist(s)!',
                     },
                   ]}
                 >
