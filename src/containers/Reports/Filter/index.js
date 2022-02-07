@@ -55,13 +55,13 @@ const Filter = (props) => {
                 });
               }}
             >
-              <Option value="one">Report 1</Option>
-              <Option value="two">Report 2</Option>
-              <Option value="three">Report 3</Option>
-              <Option value="four">Report 4</Option>
-              <Option value="five">Report 5</Option>
-              <Option value="six">Report 6</Option>
-              <Option value="seven">Report 7</Option>
+              <Option value="one">PMCR - Curent Mo.</Option>
+              <Option value="two">PMCR - Hygiene Curent Mo.</Option>
+              <Option value="three">PMCR - YTD Avg Month</Option>
+              <Option value="four">PMCR - Hygiene YTD Avg Month</Option>
+              <Option value="five">PROD. ANALYSIS-TIME.STATS</Option>
+              <Option value="six">PROD. ANALYSIS-TIME.DOLLARS</Option>
+              <Option value="seven">PROD. ANALYSIS-PT.ACTIVITY</Option>
             </Select>
           </Form.Item>
         </Col>
