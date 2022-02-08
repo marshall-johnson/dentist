@@ -365,10 +365,10 @@ const ReportingContainer = () => {
     year: null,
     studentId: null,
     dateValue: [{}],
-    type: 'one',
+    type: 'pmcr_current_month',
   });
   const [compRef, setCompRef] = useState({});
-  const [formStyle, setFormStyle] = useState('one');
+  const [formStyle, setFormStyle] = useState('pmcr_current_month');
   const [reportData, setReportData] = useState(DEFAULT_REPORT);
 
   const handleChange = (pagination, filters, sorter) => {
@@ -1002,7 +1002,10 @@ const ReportingContainer = () => {
     setFormStyle(data.type);
     const temp = await fetchReport(data);
     let mapped = [];
-    if (data.type === 'one' || data.type === 'three') {
+    if (
+      data.type === 'pmcr_current_month' ||
+      data.type === 'pmcr_ytd_avg_month'
+    ) {
       mapped = [
         {
           key: '1',
@@ -1112,7 +1115,10 @@ const ReportingContainer = () => {
       });
     }
     let mappedHygiene = [];
-    if (data.type === 'two' || data.type === 'four') {
+    if (
+      data.type === 'pmcr_hygiene_current_month' ||
+      data.type === 'pmcr_hygiene_ytd_avg_month'
+    ) {
       mappedHygiene = [
         {
           key: '1',
@@ -1201,19 +1207,19 @@ const ReportingContainer = () => {
         table: mappedHygiene,
       });
     }
-    if (data.type === 'five') {
+    if (data.type === 'prod_analysis_time_stats') {
       setReportData({
         ...DEFAULT_REPORT,
         reportFive: temp,
       });
     }
-    if (data.type === 'six') {
+    if (data.type === 'prod_analysis_time_dollars') {
       setReportData({
         ...DEFAULT_REPORT,
         reportSix: temp,
       });
     }
-    if (data.type === 'seven') {
+    if (data.type === 'prod_analysis_pt_activity') {
       setReportData({
         ...DEFAULT_REPORT,
         reportSeven: temp,
@@ -1222,6 +1228,11 @@ const ReportingContainer = () => {
   };
   const fetchReport = async (args) => {
     const res = await getReporting(args);
+    return res;
+  };
+
+  const renderName = (arr) => {
+    const res = arr.reduce((prev, acc) => `${prev} ${acc.name}`, '');
     return res;
   };
 
@@ -1262,7 +1273,7 @@ const ReportingContainer = () => {
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'one' ? (
+          {filter.type === 'pmcr_current_month' ? (
             <Title style={{ color: 'blue' }} level={3}>
               PROFITABILITY MANAGEMENT CONTROLLER REPORT
             </Title>
@@ -1278,11 +1289,11 @@ const ReportingContainer = () => {
         <br />
         <div>
           <Text strong>
-            FOR: &nbsp; {reportData?.prod_hour_scheduled[0]?.name}
+            FOR: &nbsp; {renderName(reportData?.prod_hour_scheduled)}
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'one' ? (
+        {filter.type === 'pmcr_current_month' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -1340,7 +1351,7 @@ const ReportingContainer = () => {
                 <p>{formatCurrency(reportData.unpaid_bills)}</p>
               </Col>
             </Row>
-            {filter.type !== 'three' && (
+            {filter.type !== 'pmcr_ytd_avg_month' && (
               <Row className="mb-15" style={{ color: 'blue' }}>
                 <Col span={8}>
                   <p>Production</p>
@@ -1350,7 +1361,7 @@ const ReportingContainer = () => {
                 </Col>
               </Row>
             )}
-            {filter.type === 'one' ? (
+            {filter.type === 'pmcr_current_month' ? (
               <>
                 <Row className="mb-15">
                   <Col span={8}>
@@ -1472,7 +1483,7 @@ const ReportingContainer = () => {
                 <p>{formatCurrency(reportData.total_short_term_debt)}</p>
               </Col>
             </Row>
-            {filter.type === 'one' ? (
+            {filter.type === 'pmcr_current_month' ? (
               <>
                 <Row className="mb-15" style={{ color: 'blue' }}>
                   <Col span={8}>
@@ -1572,7 +1583,9 @@ const ReportingContainer = () => {
                   key: 'name',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>{text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {text && `Dr. ${text}`}
+                    </span>
                   ),
                 },
                 {
@@ -1611,7 +1624,9 @@ const ReportingContainer = () => {
                   key: 'name',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>{text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {text && `Dr. ${text}`}
+                    </span>
                   ),
                 },
                 {
@@ -1640,7 +1655,7 @@ const ReportingContainer = () => {
       ref={(el) => setCompRef(el)}
     >
       <div style={{ textAlign: 'center' }}>
-        {filter.type === 'two' ? (
+        {filter.type === 'pmcr_hygiene_current_month' ? (
           <div className="mb-10">
             <Title style={{ color: 'blue' }} level={3}>
               PROFITABILITY MANAGEMENT CONTROLLER REPORT
@@ -1663,10 +1678,11 @@ const ReportingContainer = () => {
         </div>
         <br />
         <div>
-          <Text strong>FOR: &nbsp; {reportData?.prod_hour[0]?.name}</Text>
+          {/* <Text strong>FOR: &nbsp; {reportData?.prod_hour[0]?.name}</Text> */}
+          <Text strong>FOR: &nbsp; {renderName(reportData?.prod_hour)}</Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'two' ? (
+        {filter.type === 'pmcr_hygiene_current_month' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -1719,7 +1735,7 @@ const ReportingContainer = () => {
       <div style={{ padding: '0 8px' }}>
         <Row gutter={24}>
           <Col span={12}>
-            {filter.type === 'two' ? (
+            {filter.type === 'pmcr_hygiene_current_month' ? (
               <Row className="mb-15" style={{ color: 'blue ' }}>
                 <Col span={8}>
                   <p>Hyg. Prod/Mo:</p>
@@ -1738,7 +1754,7 @@ const ReportingContainer = () => {
                 </Col>
               </Row>
             )}
-            {filter.type === 'two' ? (
+            {filter.type === 'pmcr_hygiene_current_month' ? (
               <Row className="mb-15">
                 <Col span={8}>
                   <p>Hyg Sales/Mo:</p>
@@ -1763,7 +1779,7 @@ const ReportingContainer = () => {
                 </Col>
               </Row>
             )}
-            {filter.type === 'two' ? (
+            {filter.type === 'pmcr_hygiene_current_month' ? (
               <Row className="mb-15">
                 <Col span={8}>
                   <p>Hyg Total/Mo:</p>
@@ -1815,7 +1831,7 @@ const ReportingContainer = () => {
           </Col>
 
           <Col span={12}>
-            {filter.type === 'two' ? (
+            {filter.type === 'pmcr_hygiene_current_month' ? (
               <Row className="mb-15" style={{ color: 'blue' }}>
                 <Col span={8}>
                   <p>Avg. Prod/Ytd:</p>
@@ -1847,7 +1863,7 @@ const ReportingContainer = () => {
               </Row>
             )}
 
-            {filter.type === 'two' ? (
+            {filter.type === 'pmcr_hygiene_current_month' ? (
               <Row className="mb-15" style={{ marginTop: '55px' }}>
                 <Col span={8}>
                   <p>Avg. Total/Ytd</p>
@@ -1898,7 +1914,9 @@ const ReportingContainer = () => {
                   key: 'name',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>{text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {text && `Dr. ${text}`}
+                    </span>
                   ),
                 },
                 {
@@ -1937,7 +1955,9 @@ const ReportingContainer = () => {
                   key: 'name',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>{text}</span>
+                    <span style={{ color: 'blue' }}>
+                      {text && `Dr. ${text}`}
+                    </span>
                   ),
                 },
                 {
@@ -1967,7 +1987,7 @@ const ReportingContainer = () => {
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'five' ? (
+          {filter.type === 'prod_analysis_time_stats' ? (
             <Title style={{ color: 'blue' }} level={3}>
               PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - STATISTICS
             </Title>
@@ -1982,7 +2002,7 @@ const ReportingContainer = () => {
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'five' ? (
+        {filter.type === 'prod_analysis_time_stats' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -2162,7 +2182,7 @@ const ReportingContainer = () => {
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'six' ? (
+          {filter.type === 'prod_analysis_time_dollars' ? (
             <Title style={{ color: 'blue' }} level={3}>
               PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - DOLLARS
             </Title>
@@ -2182,7 +2202,7 @@ const ReportingContainer = () => {
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'six' ? (
+        {filter.type === 'prod_analysis_time_dollars' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -2515,7 +2535,7 @@ const ReportingContainer = () => {
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'seven' ? (
+          {filter.type === 'prod_analysis_pt_activity' ? (
             <Title style={{ color: 'blue' }} level={3}>
               PRODUCTIVITY ANALYSIS - PATIENT ACTIVITY - STATISTICS
             </Title>
@@ -2536,7 +2556,7 @@ const ReportingContainer = () => {
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'seven' ? (
+        {filter.type === 'prod_analysis_pt_activity' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -2721,17 +2741,17 @@ const ReportingContainer = () => {
 
   const renderForm = () => {
     switch (formStyle) {
-      case 'one':
-      case 'three':
+      case 'pmcr_current_month':
+      case 'pmcr_ytd_avg_month':
         return renderFormType1();
-      case 'two':
-      case 'four':
+      case 'pmcr_hygiene_current_month':
+      case 'pmcr_hygiene_ytd_avg_month':
         return renderFormHygiene();
-      case 'five':
+      case 'prod_analysis_time_stats':
         return renderFormFive();
-      case 'six':
+      case 'prod_analysis_time_dollars':
         return renderFormSix();
-      case 'seven':
+      case 'prod_analysis_pt_activity':
         return renderFormSeven();
       default:
         return null;

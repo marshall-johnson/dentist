@@ -55,23 +55,33 @@ const Filter = (props) => {
                 });
               }}
             >
-              <Option value="one">PMCR - Curent Mo.</Option>
-              <Option value="two">PMCR - Hygiene Curent Mo.</Option>
-              <Option value="three">PMCR - YTD Avg Month</Option>
-              <Option value="four">PMCR - Hygiene YTD Avg Month</Option>
-              <Option value="five">PROD. ANALYSIS-TIME.STATS</Option>
-              <Option value="six">PROD. ANALYSIS-TIME.DOLLARS</Option>
-              <Option value="seven">PROD. ANALYSIS-PT.ACTIVITY</Option>
+              <Option value="pmcr_current_month">PMCR - Curent Mo.</Option>
+              <Option value="pmcr_hygiene_current_month">
+                PMCR - Hygiene Curent Mo.
+              </Option>
+              <Option value="pmcr_ytd_avg_month">PMCR - YTD Avg Month</Option>
+              <Option value="pmcr_hygiene_ytd_avg_month">
+                PMCR - Hygiene YTD Avg Month
+              </Option>
+              <Option value="prod_analysis_time_stats">
+                PROD. ANALYSIS-TIME.STATS
+              </Option>
+              <Option value="prod_analysis_time_dollars">
+                PROD. ANALYSIS-TIME.DOLLARS
+              </Option>
+              <Option value="prod_analysis_pt_activity">
+                PROD. ANALYSIS-PT.ACTIVITY
+              </Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item label="DatePicker">
-            {filterValue.type === 'three' ||
-            filterValue.type === 'four' ||
-            filterValue.type === 'five' ||
-            filterValue.type === 'seven' ||
-            filterValue.type === 'six' ? (
+            {filterValue.type === 'pmcr_ytd_avg_month' ||
+            filterValue.type === 'pmcr_hygiene_ytd_avg_month' ||
+            filterValue.type === 'prod_analysis_time_stats' ||
+            filterValue.type === 'prod_analysis_pt_activity' ||
+            filterValue.type === 'prod_analysis_time_dollars' ? (
               <RangePicker
                 value={filterValue.dateValue}
                 picker="month"
