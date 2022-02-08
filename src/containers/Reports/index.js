@@ -1213,13 +1213,13 @@ const ReportingContainer = () => {
         reportFive: temp,
       });
     }
-    if (data.type === 'six') {
+    if (data.type === 'prod_analysis_time_dollars') {
       setReportData({
         ...DEFAULT_REPORT,
         reportSix: temp,
       });
     }
-    if (data.type === 'seven') {
+    if (data.type === 'prod_analysis_pt_activity') {
       setReportData({
         ...DEFAULT_REPORT,
         reportSeven: temp,
@@ -2182,7 +2182,7 @@ const ReportingContainer = () => {
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'six' ? (
+          {filter.type === 'prod_analysis_time_dollars' ? (
             <Title style={{ color: 'blue' }} level={3}>
               PRODUCTIVITY ANALYSIS - TIME MANAGEMENT - DOLLARS
             </Title>
@@ -2202,7 +2202,7 @@ const ReportingContainer = () => {
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'six' ? (
+        {filter.type === 'prod_analysis_time_dollars' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -2535,7 +2535,7 @@ const ReportingContainer = () => {
     >
       <div style={{ textAlign: 'center' }}>
         <div className="mb-10">
-          {filter.type === 'seven' ? (
+          {filter.type === 'prod_analysis_pt_activity' ? (
             <Title style={{ color: 'blue' }} level={3}>
               PRODUCTIVITY ANALYSIS - PATIENT ACTIVITY - STATISTICS
             </Title>
@@ -2556,7 +2556,7 @@ const ReportingContainer = () => {
           </Text>
           <Text className="border-bottom">&nbsp;</Text>
         </div>
-        {filter.type === 'seven' ? (
+        {filter.type === 'prod_analysis_pt_activity' ? (
           <>
             <Row>
               <Col span={12} style={{ color: 'orange' }}>
@@ -2749,9 +2749,9 @@ const ReportingContainer = () => {
         return renderFormHygiene();
       case 'prod_analysis_time_stats':
         return renderFormFive();
-      case 'six':
+      case 'prod_analysis_time_dollars':
         return renderFormSix();
-      case 'seven':
+      case 'prod_analysis_pt_activity':
         return renderFormSeven();
       default:
         return null;
