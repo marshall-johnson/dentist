@@ -20,7 +20,7 @@ const Filter = (props) => {
     year: null,
     studentId: null,
     dateValue: null,
-    type: 'one',
+    type: 'pmcr_current_month',
   });
 
   useEffect(() => {
@@ -134,12 +134,22 @@ const Filter = (props) => {
               style={{
                 width: 200,
               }}
+              showSearch
+              optionFilterProp="children"
               onChange={(id) => {
                 setFilterValue({
                   ...filterValue,
                   studentId: id,
                 });
               }}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+              filterSort={(optionA, optionB) =>
+                optionA.children
+                  .toLowerCase()
+                  .localeCompare(optionB.children.toLowerCase())
+              }
             >
               {students.map((student, index) => (
                 <Option value={student.id} key={index.toString()}>
