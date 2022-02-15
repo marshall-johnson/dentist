@@ -15,6 +15,7 @@ export const decFormatter = (value) => {
   };
   return `$ ${val1}${renderVal2()}`;
 };
+
 export const decFormatterTotal = (value) => {
   const rounded = Math.round(value * 100) / 100;
   const part = rounded.toString().split('.');
@@ -28,17 +29,42 @@ export const decFormatterTotal = (value) => {
   };
   return `$ ${val1}${renderVal2()}`;
 };
+
+export const decFormatterNumber = (value) => {
+  if (!value) {
+    return '0';
+  }
+  const part = value.toString().split('.');
+  const val1 = part[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const val2 = part[1];
+  const renderVal2 = () => {
+    if (val2 > 0) {
+      return `.${val2}`;
+    }
+    return '';
+  };
+  return `${val1}${renderVal2()}`;
+};
+
 export const generateRandomNumber = () => {
   const randomNum = 1000 + Math.random() * 1000;
   return Math.round(randomNum / 100) * 100;
 };
 
-export const formatCurrency = (amount) =>
-  new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount) => {
+  if (!amount) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      currencyDisplay: 'narrowSymbol',
+    }).format(0);
+  }
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     currencyDisplay: 'narrowSymbol',
   }).format(amount);
+};
 
 export const capitalizeFirstLetter = (string) => {
   if (!string) return '';
