@@ -2,19 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Select, Button, DatePicker, notification } from 'antd';
 import { fetchStudents } from '@/actions/studentActions';
+import { fetchDoctors } from '@/actions/doctorActions';
 import { connect } from 'react-redux';
-import { filter } from 'lodash';
+import api from '@/api';
+import DebounceSelect from '@/components/DebounceSelect';
+import camelcaseKeys from 'camelcase-keys';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const Filter = (props) => {
-  const {
-    onSubmitCallback,
-    fetchStudents,
-    loadingFetchStudent,
-    students = [],
-  } = props;
+  const { onSubmitCallback, fetchStudents, students = [] } = props;
   const [filterValue, setFilterValue] = useState({
     month: null,
     year: null,
@@ -22,14 +20,51 @@ const Filter = (props) => {
     dateValue: null,
     type: 'pmcr_current_month',
   });
+  const [doctors, setDoctor] = useState([]);
 
   useEffect(() => {
     fetchStudents();
+    fetchDoctorList();
   }, []);
 
   const onSubmit = () => {
     onSubmitCallback(filterValue);
   };
+  const optionInit = () => {
+    console.log('xxx', props);
+    const { items = [] } = props;
+
+    const data = [];
+
+    items.forEach((item) => {
+      const { fullname } = item.attributes;
+
+      data.push({
+        label: fullname,
+        value: item.id,
+      });
+    });
+
+    return data;
+  };
+  const fetchDoctorList = (keyword) =>
+    api
+      .get('/api/v1/doctors', { params: { search: keyword } })
+      .then(({ data: response }) => camelcaseKeys(response, { deep: true }))
+      .then(({ result }) => {
+        const temp = result.data.map((item) => ({
+          label: item.attributes.fullname,
+          value: item.id,
+        }));
+        setDoctor(temp);
+        return result.data.map((item) => ({
+          label: item.attributes.fullname,
+          value: item.id,
+        }));
+      })
+      .catch((error) => {
+        throw error;
+      });
 
   return (
     <Form name="advanced_search" className="ant-advanced-search-form">
@@ -122,15 +157,22 @@ const Filter = (props) => {
         </Col>
         <Col span={8}>
           <Form.Item
-            label="Select Student"
+            label="Doctor Name"
             rules={[
               {
                 required: true,
               },
             ]}
           >
+            {/* <DebounceSelect
+              showSearch
+              optionInit={doctors}
+              placeholder="Select Doctor"
+              fetchOptions={fetchDoctorList}
+              style={{ width: '100%' }}
+            /> */}
             <Select
-              loading={loadingFetchStudent}
+              // loading={loadingFetchStudent}
               style={{
                 width: 200,
               }}
@@ -151,9 +193,9 @@ const Filter = (props) => {
                   .localeCompare(optionB.children.toLowerCase())
               }
             >
-              {students.map((student, index) => (
-                <Option value={student.id} key={index.toString()}>
-                  {`${student.first_name} ${student.last_name}`}
+              {doctors.map((doctor, index) => (
+                <Option value={doctor.value} key={index.toString()}>
+                  {`${doctor?.label}`}
                 </Option>
               ))}
             </Select>
@@ -187,4 +229,5 @@ const mapStateToProps = ({ student }) => ({
 
 export default connect(mapStateToProps, {
   fetchStudents,
+  fetchDoctors,
 })(Filter);

@@ -51,12 +51,20 @@ export const generateRandomNumber = () => {
   return Math.round(randomNum / 100) * 100;
 };
 
-export const formatCurrency = (amount) =>
-  new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount) => {
+  if (!amount) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      currencyDisplay: 'narrowSymbol',
+    }).format(0);
+  }
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     currencyDisplay: 'narrowSymbol',
   }).format(amount);
+};
 
 export const capitalizeFirstLetter = (string) => {
   if (!string) return '';
