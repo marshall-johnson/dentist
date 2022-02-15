@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
-import { formatCurrency } from '@/utils/helpers';
+import { formatCurrency, decFormatterNumber } from '@/utils/helpers';
 import Filter from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
@@ -379,7 +379,7 @@ const ReportingContainer = () => {
     {
       title: 'AGE',
       dataIndex: 'age',
-      keu: 'age',
+      key: 'age',
       ellipsis: true,
       render: (value) => {
         switch (value) {
@@ -399,33 +399,38 @@ const ReportingContainer = () => {
     {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
-      keu: 'current_mo',
+      key: 'current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
-      keu: 'percentage_of_current_mo',
+      key: 'percentage_of_current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'YTD',
       dataIndex: 'ytd',
-      keu: 'ytd',
+      key: 'ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
-      keu: 'percentage_of_ytd',
+      key: 'percentage_of_ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
-      keu: 'avg_per_month',
+      key: 'avg_per_month',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
   ];
@@ -433,7 +438,7 @@ const ReportingContainer = () => {
     {
       name: '',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
       render: (value) => {
         switch (value) {
@@ -451,26 +456,30 @@ const ReportingContainer = () => {
     {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
-      keu: 'current_mo',
+      key: 'current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
-      keu: 'percentage_of_current_mo',
+      key: 'percentage_of_current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'YTD',
       dataIndex: 'ytd',
-      keu: 'ytd',
+      key: 'ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
-      keu: 'percentage_of_ytd',
+      key: 'percentage_of_ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
@@ -486,24 +495,28 @@ const ReportingContainer = () => {
       title: 'Current % Cases',
       dataIndex: 'current_percentage_cases',
       key: 'current_percentage_cases',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: 'Current % Dollars',
       dataIndex: 'current_percentage_dollars',
       key: 'current_percentage_dollars',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: 'YTD % Cases',
       dataIndex: 'percentage_of_ytd_cases',
       key: 'percentage_of_ytd_cases',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: 'YTD % Dollars',
       dataIndex: 'percentage_of_ytd_dollars',
       key: 'percentage_of_ytd_dollars',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
   ];
@@ -511,39 +524,43 @@ const ReportingContainer = () => {
     {
       title: 'Doctors',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
     },
     {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
-      keu: 'current_mo',
+      key: 'current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
-      keu: 'percentage_of_current_mo',
+      key: 'percentage_of_current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'YTD',
       dataIndex: 'ytd',
-      keu: 'ytd',
+      key: 'ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
-      keu: 'percentage_of_ytd',
+      key: 'percentage_of_ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
-      keu: 'avg_per_month',
+      key: 'avg_per_month',
       ellipsis: true,
     },
   ];
@@ -551,39 +568,44 @@ const ReportingContainer = () => {
     {
       title: 'Hygienist',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
     },
     {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
-      keu: 'current_mo',
+      key: 'current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
-      keu: 'percentage_of_current_mo',
+      key: 'percentage_of_current_mo',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'YTD',
       dataIndex: 'ytd',
-      keu: 'ytd',
+      key: 'ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
-      keu: 'percentage_of_ytd',
+      key: 'percentage_of_ytd',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
-      keu: 'avg_per_month',
+      key: 'avg_per_month',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
   ];
@@ -592,7 +614,7 @@ const ReportingContainer = () => {
     {
       title: 'DOCTOR HOURS',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
     },
     {
@@ -603,31 +625,36 @@ const ReportingContainer = () => {
         {
           title: 'WORKED',
           dataIndex: 'worked',
-          keu: 'worked',
+          key: 'worked',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'PROD$',
           dataIndex: 'prod',
-          keu: 'prod',
+          key: 'prod',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'WRKD',
           dataIndex: 'wrkd',
-          keu: 'wrkd',
+          key: 'wrkd',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avail',
-          keu: 'avail',
+          key: 'avail',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'lost',
-          keu: 'lost',
+          key: 'lost',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
       ],
@@ -639,31 +666,31 @@ const ReportingContainer = () => {
         {
           title: 'WORKED',
           dataIndex: 'avg_worked',
-          keu: 'avg_worked',
+          key: 'avg_worked',
           ellipsis: true,
         },
         {
           title: 'PROD$',
           dataIndex: 'avg_prod',
-          keu: 'avg_prod',
+          key: 'avg_prod',
           ellipsis: true,
         },
         {
           title: 'WRKD',
           dataIndex: 'avg_wrkd',
-          keu: 'avg_wrkd',
+          key: 'avg_wrkd',
           ellipsis: true,
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avg_avail',
-          keu: 'avg_avail',
+          key: 'avg_avail',
           ellipsis: true,
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'avg_lost',
-          keu: 'avg_lost',
+          key: 'avg_lost',
           ellipsis: true,
         },
       ],
@@ -673,7 +700,7 @@ const ReportingContainer = () => {
     {
       title: 'HYG HOURS',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
     },
     {
@@ -684,31 +711,36 @@ const ReportingContainer = () => {
         {
           title: 'WORKED',
           dataIndex: 'worked',
-          keu: 'worked',
+          key: 'worked',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'PROD$',
           dataIndex: 'prod',
-          keu: 'prod',
+          key: 'prod',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'WRKD',
           dataIndex: 'wrkd',
-          keu: 'wrkd',
+          key: 'wrkd',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avail',
-          keu: 'avail',
+          key: 'avail',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'lost',
-          keu: 'lost',
+          key: 'lost',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
       ],
@@ -720,31 +752,31 @@ const ReportingContainer = () => {
         {
           title: 'WORKED',
           dataIndex: 'avg_worked',
-          keu: 'avg_worked',
+          key: 'avg_worked',
           ellipsis: true,
         },
         {
           title: 'PROD$',
           dataIndex: 'avg_prod',
-          keu: 'avg_prod',
+          key: 'avg_prod',
           ellipsis: true,
         },
         {
           title: 'WRKD',
           dataIndex: 'avg_wrkd',
-          keu: 'avg_wrkd',
+          key: 'avg_wrkd',
           ellipsis: true,
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avg_avail',
-          keu: 'avg_avail',
+          key: 'avg_avail',
           ellipsis: true,
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'avg_lost',
-          keu: 'avg_lost',
+          key: 'avg_lost',
           ellipsis: true,
         },
       ],
@@ -754,7 +786,7 @@ const ReportingContainer = () => {
     {
       title: 'DOCTOR HOURS',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
     },
     {
@@ -765,31 +797,36 @@ const ReportingContainer = () => {
         {
           title: 'AVAIL',
           dataIndex: 'avail',
-          keu: 'avail',
+          key: 'avail',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'SCHED',
           dataIndex: 'sched',
-          keu: 'sched',
+          key: 'sched',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'CANC',
           dataIndex: 'canc',
-          keu: 'canc',
+          key: 'canc',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'RECOV',
           dataIndex: 'recov',
-          keu: 'recov',
+          key: 'recov',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'WORKED',
           dataIndex: 'worked',
-          keu: 'worked',
+          key: 'worked',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
       ],
@@ -801,31 +838,36 @@ const ReportingContainer = () => {
         {
           title: 'AVAIL',
           dataIndex: 'avg_avail',
-          keu: 'avg_avail',
+          key: 'avg_avail',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'SCHED',
           dataIndex: 'avg_sched',
-          keu: 'avg_sched',
+          key: 'avg_sched',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'CANC',
           dataIndex: 'avg_canc',
-          keu: 'avg_canc',
+          key: 'avg_canc',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'RECOV',
           dataIndex: 'avg_recov',
-          keu: 'avg_recov',
+          key: 'avg_recov',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'WORKED',
           dataIndex: 'avg_worked',
-          keu: 'avg_worked',
+          key: 'avg_worked',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
       ],
@@ -835,7 +877,7 @@ const ReportingContainer = () => {
     {
       title: 'HYGIENE HOURS',
       dataIndex: 'name',
-      keu: 'name',
+      key: 'name',
       ellipsis: true,
     },
     {
@@ -846,31 +888,36 @@ const ReportingContainer = () => {
         {
           title: 'AVAIL',
           dataIndex: 'avail',
-          keu: 'avail',
+          key: 'avail',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'SCHED',
           dataIndex: 'sched',
-          keu: 'sched',
+          key: 'sched',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'CANC',
           dataIndex: 'canc',
-          keu: 'canc',
+          key: 'canc',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'RECOV',
           dataIndex: 'recov',
-          keu: 'recov',
+          key: 'recov',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'WORKED',
           dataIndex: 'worked',
-          keu: 'worked',
+          key: 'worked',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
       ],
@@ -882,31 +929,36 @@ const ReportingContainer = () => {
         {
           title: 'AVAIL',
           dataIndex: 'avg_avail',
-          keu: 'avg_avail',
+          key: 'avg_avail',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'SCHED',
           dataIndex: 'avg_sched',
-          keu: 'avg_sched',
+          key: 'avg_sched',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'CANC',
           dataIndex: 'avg_canc',
-          keu: 'avg_canc',
+          key: 'avg_canc',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'RECOV',
           dataIndex: 'avg_recov',
-          keu: 'avg_recov',
+          key: 'avg_recov',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
         {
           title: 'WORKED',
           dataIndex: 'avg_worked',
-          keu: 'avg_worked',
+          key: 'avg_worked',
+          render: (value) => decFormatterNumber(value),
           ellipsis: true,
         },
       ],
@@ -924,6 +976,7 @@ const ReportingContainer = () => {
       title: 'TOTAL AMOUNT',
       dataIndex: 'totalAmount',
       key: 'totalAmount',
+      render: (value) => decFormatterNumber(value),
       ellipsis: true,
     },
     {
@@ -931,35 +984,35 @@ const ReportingContainer = () => {
       dataIndex: 'collectionsPercent',
       key: 'collectionsPercent',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
     {
       title: 'INTERIM BUDGET',
       dataIndex: 'interimBudget',
       key: 'interimBudget',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
     {
       title: 'INTERIM VARIANCE',
       dataIndex: 'interimVariance',
       key: 'interimVariance',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
     {
       title: 'CPD TARGET',
       dataIndex: 'cpdTarget',
       key: 'cpdTarget',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
     {
       title: 'CPD VARIANCE',
       dataIndex: 'cpdVariance',
       key: 'cpdVariance',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
   ];
   const columnsHygiene = [
@@ -973,6 +1026,7 @@ const ReportingContainer = () => {
       title: 'CURRENT EXPENSES',
       dataIndex: 'current_expenses',
       key: 'current_expenses',
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
       ellipsis: true,
     },
     {
@@ -980,21 +1034,21 @@ const ReportingContainer = () => {
       dataIndex: 'pct_of_productions',
       key: 'pct_of_productions',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
     {
       title: 'HYGIENE TARGET',
       dataIndex: 'hygiene_target',
       key: 'hygiene_target',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
     {
       title: 'VARIANCE',
       dataIndex: 'variance',
       key: 'variance',
       ellipsis: true,
-      render: (text) => <span>{text}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}%</span>,
     },
   ];
   const onFilterChange = async (data) => {
@@ -1582,11 +1636,19 @@ const ReportingContainer = () => {
                   dataIndex: 'name',
                   key: 'name',
                   ellipsis: true,
-                  render: (text) => (
-                    <span style={{ color: 'blue' }}>
-                      {text && `Dr. ${text}`}
-                    </span>
-                  ),
+                  render: (text) => {
+                    if (text) {
+                      return (
+                        <span style={{ color: 'blue' }}>
+                          {filter.type === 'pmcr_current_month' ||
+                          filter.type === 'pmcr_ytd_avg_month'
+                            ? `Dr. ${text}`
+                            : text}
+                        </span>
+                      );
+                    }
+                    return '';
+                  },
                 },
                 {
                   title: '',
@@ -1623,11 +1685,19 @@ const ReportingContainer = () => {
                   dataIndex: 'name',
                   key: 'name',
                   ellipsis: true,
-                  render: (text) => (
-                    <span style={{ color: 'blue' }}>
-                      {text && `Dr. ${text}`}
-                    </span>
-                  ),
+                  render: (text) => {
+                    if (text) {
+                      return (
+                        <span style={{ color: 'blue' }}>
+                          {filter.type === 'pmcr_current_month' ||
+                          filter.type === 'pmcr_ytd_avg_month'
+                            ? `Dr. ${text}`
+                            : text}
+                        </span>
+                      );
+                    }
+                    return '';
+                  },
                 },
                 {
                   title: '',
@@ -1914,9 +1984,7 @@ const ReportingContainer = () => {
                   key: 'name',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>
-                      {text && `Dr. ${text}`}
-                    </span>
+                    <span style={{ color: 'blue' }}>{text}</span>
                   ),
                 },
                 {
@@ -1955,9 +2023,7 @@ const ReportingContainer = () => {
                   key: 'name',
                   ellipsis: true,
                   render: (text) => (
-                    <span style={{ color: 'blue' }}>
-                      {text && `Dr. ${text}`}
-                    </span>
+                    <span style={{ color: 'blue' }}>{text}</span>
                   ),
                 },
                 {
@@ -2267,68 +2333,68 @@ const ReportingContainer = () => {
             {
               title: 'GRAND TOTAL',
               dataIndex: 'grand_total',
-              keu: 'grand_total',
+              key: 'grand_total',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'worked',
-              keu: 'worked',
+              key: 'worked',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'prod',
-              keu: 'prod',
+              key: 'prod',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'wrkd',
-              keu: 'wrkd',
+              key: 'wrkd',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'avail',
-              keu: 'avail',
+              key: 'avail',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'lost',
-              keu: 'lost',
+              key: 'lost',
               ellipsis: true,
             },
             { title: '', dataIndex: '', key: '' },
             {
               title: '',
               dataIndex: 'avg_worked',
-              keu: 'avg_worked',
+              key: 'avg_worked',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'avg_prod',
-              keu: 'avg_prod',
+              key: 'avg_prod',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'avg_wrkd',
-              keu: 'avg_wrkd',
+              key: 'avg_wrkd',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'avg_avail',
-              keu: 'avg_avail',
+              key: 'avg_avail',
               ellipsis: true,
             },
             {
               title: '',
               dataIndex: 'avg_lost',
-              keu: 'avg_lost',
+              key: 'avg_lost',
               ellipsis: true,
             },
           ]}
@@ -2349,31 +2415,31 @@ const ReportingContainer = () => {
             {
               title: 'CATEGORY NAME',
               dataIndex: 'categoryName',
-              keu: 'categoryName',
+              key: 'categoryName',
               ellipsis: true,
             },
             {
               title: 'CURRENT $',
               dataIndex: 'current',
-              keu: 'current',
+              key: 'current',
               ellipsis: true,
             },
             {
               title: '%',
               dataIndex: 'percentageCurrent',
-              keu: 'percentageCurrent',
+              key: 'percentageCurrent',
               ellipsis: true,
             },
             {
               title: 'AVG/YTD $',
               dataIndex: 'avg',
-              keu: 'avg',
+              key: 'avg',
               ellipsis: true,
             },
             {
               title: '%',
               dataIndex: 'percentageAvg',
-              keu: 'percentageAvg',
+              key: 'percentageAvg',
               ellipsis: true,
             },
             {
@@ -2384,19 +2450,19 @@ const ReportingContainer = () => {
             {
               title: 'ACCOUNT REC',
               dataIndex: 'accountRec',
-              keu: 'accountRec',
+              key: 'accountRec',
               ellipsis: true,
             },
             {
               title: 'CURRENT %',
               dataIndex: 'curPercentage',
-              keu: 'curPercentage',
+              key: 'curPercentage',
               ellipsis: true,
             },
             {
               title: 'YTD %',
               dataIndex: 'ytdPercentage',
-              keu: 'ytdPercentage',
+              key: 'ytdPercentage',
               ellipsis: true,
             },
           ]}
@@ -2460,31 +2526,31 @@ const ReportingContainer = () => {
             {
               title: 'CATEGORY NAME',
               dataIndex: 'categoryName',
-              keu: 'categoryName',
+              key: 'categoryName',
               ellipsis: true,
             },
             {
               title: 'CURRENT $',
               dataIndex: 'current',
-              keu: 'current',
+              key: 'current',
               ellipsis: true,
             },
             {
               title: '%',
               dataIndex: 'percentageCurrent',
-              keu: 'percentageCurrent',
+              key: 'percentageCurrent',
               ellipsis: true,
             },
             {
               title: 'AVG/YTD $',
               dataIndex: 'avg',
-              keu: 'avg',
+              key: 'avg',
               ellipsis: true,
             },
             {
               title: '%',
               dataIndex: 'percentageAvg',
-              keu: 'percentageAvg',
+              key: 'percentageAvg',
               ellipsis: true,
             },
             {
@@ -2495,19 +2561,19 @@ const ReportingContainer = () => {
             {
               title: 'ACCOUNT REC',
               dataIndex: 'accountRec',
-              keu: 'accountRec',
+              key: 'accountRec',
               ellipsis: true,
             },
             {
               title: 'CURRENT %',
               dataIndex: 'curPercentage',
-              keu: 'curPercentage',
+              key: 'curPercentage',
               ellipsis: true,
             },
             {
               title: 'YTD %',
               dataIndex: 'ytdPercentage',
-              keu: 'ytdPercentage',
+              key: 'ytdPercentage',
               ellipsis: true,
             },
           ]}
@@ -2689,39 +2755,39 @@ const ReportingContainer = () => {
             {
               title: 'GRAND TOTAL',
               dataIndex: 'grand_total',
-              keu: 'grand_total',
+              key: 'grand_total',
               ellipsis: true,
             },
             {
               title: 'Current Mo.',
               dataIndex: 'current_mo',
-              keu: 'current_mo',
+              key: 'current_mo',
               ellipsis: true,
             },
             {
               title: '%',
               dataIndex: 'percentage_of_current_mo',
-              keu: 'percentage_of_current_mo',
+              key: 'percentage_of_current_mo',
               ellipsis: true,
               width: '80px',
             },
             {
               title: 'YTD',
               dataIndex: 'ytd',
-              keu: 'ytd',
+              key: 'ytd',
               ellipsis: true,
             },
             {
               title: '%',
               dataIndex: 'percentage_of_ytd',
-              keu: 'percentage_of_ytd',
+              key: 'percentage_of_ytd',
               ellipsis: true,
               width: '80px',
             },
             {
               title: 'AVG/Mo',
               dataIndex: 'avg_per_month',
-              keu: 'avg_per_month',
+              key: 'avg_per_month',
               ellipsis: true,
             },
           ]}

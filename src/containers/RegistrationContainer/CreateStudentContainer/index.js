@@ -88,6 +88,16 @@ class CreateStudentContainer extends Component {
             }}
           >
             <Row gutter={24}>
+              <Col span={24}>
+                <Form.Item
+                  label="Practice Name"
+                  name={['student', 'practiceName']}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={24}>
               <Col span={8}>
                 <Form.Item
                   label="First Name"
