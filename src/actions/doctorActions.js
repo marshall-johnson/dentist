@@ -1,25 +1,23 @@
 import api from '@/api';
-import {
-  setLoading,
-  doctorsFetched,
-} from '@/store/doctor';
+import { setLoading, doctorsFetched } from '@/store/doctor';
 
 const camelcaseKeys = require('camelcase-keys');
 
-export const fetchDoctors = ({ page }) => async (dispatch) => {
-  dispatch(setLoading(true));
+export const fetchDoctors =
+  ({ page = undefined } = {}) =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
 
-  return api
-    .get('/api/v1/doctors', { params: { page } })
-    .then(
-      ({ data: response }) => {
+    return api
+      .get('/api/v1/doctors', { params: { page } })
+      .then(({ data: response }) => {
         const {
           result: { data: items },
           pagy: {
             currentPage,
             totalItems,
             // totalPages,
-          }
+          },
         } = camelcaseKeys(response, { deep: true });
 
         dispatch(
@@ -29,12 +27,11 @@ export const fetchDoctors = ({ page }) => async (dispatch) => {
             totalCount: totalItems,
           }),
         );
-      },
-    )
-    .catch((error) => {
-      throw error;
-    })
-    .finally(() => {
-      dispatch(setLoading(false));
-    });
-};
+      })
+      .catch((error) => {
+        throw error;
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };

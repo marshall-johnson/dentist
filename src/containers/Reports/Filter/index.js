@@ -5,7 +5,6 @@ import { fetchStudents } from '@/actions/studentActions';
 import { fetchDoctors } from '@/actions/doctorActions';
 import { connect } from 'react-redux';
 import api from '@/api';
-import DebounceSelect from '@/components/DebounceSelect';
 import camelcaseKeys from 'camelcase-keys';
 
 const { Option } = Select;
@@ -29,23 +28,6 @@ const Filter = (props) => {
 
   const onSubmit = () => {
     onSubmitCallback(filterValue);
-  };
-  const optionInit = () => {
-    console.log('xxx', props);
-    const { items = [] } = props;
-
-    const data = [];
-
-    items.forEach((item) => {
-      const { fullname } = item.attributes;
-
-      data.push({
-        label: fullname,
-        value: item.id,
-      });
-    });
-
-    return data;
   };
   const fetchDoctorList = (keyword) =>
     api
@@ -157,7 +139,7 @@ const Filter = (props) => {
         </Col>
         <Col span={8}>
           <Form.Item
-            label="Doctor Name"
+            label="Dr/Practice"
             rules={[
               {
                 required: true,
@@ -172,7 +154,6 @@ const Filter = (props) => {
               style={{ width: '100%' }}
             /> */}
             <Select
-              // loading={loadingFetchStudent}
               style={{
                 width: 200,
               }}
