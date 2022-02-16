@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -14,10 +15,14 @@ import {
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { fetchStudents } from '@/actions/studentActions';
-
+import { fetchDoctors } from '@/actions/doctorActions';
+import { forEach } from 'lodash';
 import AppConfig from '@/constants/AppConfig';
 import { connect } from 'react-redux';
 import { UserAccountType } from '@/constants';
+import api from '@/api';
+import camelcaseKeys from 'camelcase-keys';
+import DebounceSelect from '@/components/DebounceSelect';
 
 const { Option } = Select;
 
@@ -40,7 +45,7 @@ class SubmitDataContainer extends Component {
   }
 
   componentDidMount() {
-    const { fetchStudents, currentUser } = this.props;
+    const { fetchStudents, fetchDoctors, currentUser } = this.props;
 
     if (
       [UserAccountType.ADMIN, UserAccountType.STUDENT_ADMIN].includes(
@@ -50,6 +55,7 @@ class SubmitDataContainer extends Component {
       fetchStudents({
         filter: UserAccountType.STUDENT_STAFF,
       });
+      fetchDoctors();
     }
 
     window.onbeforeunload = (e) => {
@@ -128,8 +134,40 @@ class SubmitDataContainer extends Component {
     );
   };
 
+  fetchDoctorList = (keyword) =>
+    api
+      .get('/api/v1/doctors', { params: { search: keyword } })
+      .then(({ data: response }) => camelcaseKeys(response, { deep: true }))
+      .then(({ result }) =>
+        result.data.map((item) => ({
+          label: item.attributes.fullname,
+          value: item.id,
+        })),
+      )
+      .catch((error) => {
+        throw error;
+      });
+
   onChangePracticeType = (e) => {
     this.setState({ practiceType: e.target.value });
+  };
+
+  optionInit = () => {
+    // eslint-disable-next-line react/prop-types
+    const { items } = this.props;
+
+    const data = [];
+
+    forEach(items, (item) => {
+      const { fullname } = item.attributes;
+
+      data.push({
+        label: fullname,
+        value: item.id,
+      });
+    });
+
+    return data;
   };
 
   onDateSelect = (value) => {
@@ -148,7 +186,7 @@ class SubmitDataContainer extends Component {
   };
 
   render() {
-    const { students, loadingFetchStudent, currentUser } = this.props;
+    const { doctors, currentUser } = this.props;
     return (
       <div className="submit-data-container">
         <PageHeader className="site-page-header" title="Submit Data Page" />
@@ -198,16 +236,16 @@ class SubmitDataContainer extends Component {
                 currentUser?.account_type,
               ) && (
                 <Form.Item
-                  label="Hygienist(s)"
+                  label="Dr/Practice"
                   name="student"
                   rules={[
                     {
                       required: true,
-                      message: 'Please pick a Hygienist(s)!',
+                      message: 'Please pick a Dr/Practice!',
                     },
                   ]}
                 >
-                  <Select
+                  {/* <Select
                     loading={loadingFetchStudent}
                     style={{
                       width: 200,
@@ -224,7 +262,49 @@ class SubmitDataContainer extends Component {
                         {`${student.first_name} ${student.last_name}`}
                       </Option>
                     ))}
+                  </Select> */}
+                  <Select
+                    style={{
+                      width: 200,
+                    }}
+                    showSearch
+                    optionFilterProp="children"
+                    onChange={(id) => {
+                      this.setState({
+                        studentId: id,
+                      });
+                      localStorage.setItem('studentsSubmitDataStudentId', id);
+                    }}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                    filterSort={(optionA, optionB) =>
+                      optionA.children
+                        .toLowerCase()
+                        .localeCompare(optionB.children.toLowerCase())
+                    }
+                  >
+                    {this.optionInit().map((doctor, index) => (
+                      <Option value={doctor.value} key={index.toString()}>
+                        {`${doctor?.label}`}
+                      </Option>
+                    ))}
                   </Select>
+                  {/* <DebounceSelect
+                    showSearch
+                    optionInit={this.optionInit()}
+                    placeholder="Select Doctor"
+                    fetchOptions={this.fetchDoctorList}
+                    onChange={(id) => {
+                      this.setState({
+                        studentId: id,
+                      });
+                      localStorage.setItem('studentsSubmitDataStudentId', id);
+                    }}
+                    style={{ width: '100%' }}
+                  /> */}
                 </Form.Item>
               )}
 
@@ -262,18 +342,19 @@ class SubmitDataContainer extends Component {
 }
 
 SubmitDataContainer.propTypes = {
-  students: PropTypes.array,
-  loadingFetchStudent: PropTypes.bool,
+  doctors: PropTypes.array,
   fetchStudents: PropTypes.func,
   currentUser: PropTypes.object,
 };
 
-const mapStateToProps = ({ student, auth }) => ({
+const mapStateToProps = ({ student, doctor, auth }) => ({
   students: student.items,
+  items: doctor.items,
   loadingFetchStudent: student.loading,
   currentUser: auth.currentUser,
 });
 
 export default connect(mapStateToProps, {
   fetchStudents,
+  fetchDoctors,
 })(SubmitDataContainer);
