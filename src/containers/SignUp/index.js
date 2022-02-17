@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import {
   Button,
   Form,
@@ -8,7 +11,7 @@ import {
   Radio,
 } from 'antd';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppConfig from '@/constants/AppConfig';
 import { connect } from 'react-redux';
@@ -16,39 +19,43 @@ import { signUp } from '@/actions/authActions';
 import './index.scss';
 import { STUDENT_DEGREES, UserAccountType } from '@/constants';
 import PhoneInput from 'react-phone-input-2';
+import { getStudentAdmin } from '@/services/report.service';
 
 const { Option } = Select;
 
-class SignUp extends Component {
-  formRef = React.createRef();
+const SignUp = (props) => {
+  const formRef = React.createRef();
+  const [currentAccountType, setCurrentAccountType] = useState(
+    UserAccountType.STUDENT_ADMIN,
+  );
+  const [studentAdmins, setStudentAdmins] = useState([]);
+  const { errorMessage, currentUser, history } = props;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentAccountType: UserAccountType.STUDENT_ADMIN,
-    };
-  }
-
-  componentDidMount() {
-    const { currentUser, history } = this.props;
+  useEffect(async () => {
     if (currentUser) {
       history.push({
         pathname: AppConfig.ROUTES.MAIN,
       });
     }
-  }
+    const temp = await getStudentAdmin();
 
-  componentDidUpdate() {
-    const { errorMessage } = this.props;
+    if (temp) {
+      setStudentAdmins(temp);
+    }
+  }, []);
+
+  useEffect(() => {
     if (errorMessage) {
       notification.error({
         message: errorMessage,
       });
     }
-  }
+  }, [errorMessage]);
 
-  onSignUp = async (data) => {
-    const { signUp, history } = this.props;
+  useEffect(() => {}, [currentAccountType]);
+
+  const onSignUp = async (data) => {
+    const { signUp, history } = props;
     const isSuccess = await signUp(data);
 
     if (isSuccess) {
@@ -61,9 +68,7 @@ class SignUp extends Component {
     }
   };
 
-  renderStudentItem() {
-    const { currentAccountType } = this.state;
-
+  const renderStudentItem = () => {
     if (currentAccountType === UserAccountType.STUDENT_ADMIN) {
       return (
         <>
@@ -91,7 +96,7 @@ class SignUp extends Component {
             <Input placeholder="Last Name" />
           </Form.Item>
           <Form.Item
-            name="pacticeName"
+            name="practiceName"
             className="input-item"
             rules={[
               {
@@ -99,7 +104,7 @@ class SignUp extends Component {
               },
             ]}
           >
-            <Input placeholder="Pactice Name" />
+            <Input placeholder="Practice Name" />
           </Form.Item>
           <Form.Item
             name="degree"
@@ -251,12 +256,10 @@ class SignUp extends Component {
     }
 
     return null;
-  }
+  };
 
-  render() {
-    const { loading } = this.props;
-    const { currentAccountType } = this.state;
-
+  const render = () => {
+    const { loading } = props;
     return (
       <div
         className="container"
@@ -273,12 +276,12 @@ class SignUp extends Component {
       >
         <h1 className="sign-up-header">Sign Up</h1>
         <Form
-          ref={this.formRef}
+          ref={formRef}
           className="form-wrapper"
           name="user"
           initialValues={{ accountType: currentAccountType }}
           autoComplete="off"
-          onFinish={this.onSignUp}
+          onFinish={onSignUp}
         >
           <Form.Item
             className="input-item"
@@ -322,15 +325,13 @@ class SignUp extends Component {
             <Input.Password placeholder="Confirm password" />
           </Form.Item>
 
-          {this.renderStudentItem()}
+          {renderStudentItem()}
 
           <Form.Item className="input-item" name="accountType">
             <Select
               className="selector"
               onSelect={(value) => {
-                this.setState({
-                  currentAccountType: value,
-                });
+                setCurrentAccountType(value);
               }}
             >
               {[
@@ -349,6 +350,20 @@ class SignUp extends Component {
               ))}
             </Select>
           </Form.Item>
+          <Form.Item className="input-item" name="studentAdminId">
+            <Select
+              className="selector"
+              onSelect={(value) => {
+                setCurrentAccountType(value);
+              }}
+            >
+              {studentAdmins?.map((value, index) => (
+                <Option value={value.id} key={value.id}>
+                  {value.attributes.fullname}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item className="submit-btn-wrapper">
             <Button loading={loading} type="primary" htmlType="submit">
               Sign Up
@@ -360,8 +375,9 @@ class SignUp extends Component {
         </span>
       </div>
     );
-  }
-}
+  };
+  return render();
+};
 
 SignUp.propTypes = {
   signUp: PropTypes.func.isRequired,

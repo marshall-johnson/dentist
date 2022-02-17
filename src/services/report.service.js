@@ -7,8 +7,17 @@ export const getReporting = async (args = {}) => {
   );
   if (!res) {
     return {
-      errur: 'Error',
+      error: 'Error',
     };
   }
   return res.data.data;
+};
+export const getStudentAdmin = async () => {
+  const res = await api.get('api/v1/student_admins');
+  if (!res) {
+    return {
+      error: 'Error',
+    };
+  }
+  return res.data.result.data;
 };

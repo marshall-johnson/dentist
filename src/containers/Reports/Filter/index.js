@@ -34,15 +34,18 @@ const Filter = (props) => {
       .get('/api/v1/doctors', { params: { search: keyword } })
       .then(({ data: response }) => camelcaseKeys(response, { deep: true }))
       .then(({ result }) => {
-        const temp = result.data.map((item) => ({
-          label: item.attributes.fullname,
-          value: item.id,
-        }));
-        setDoctor(temp);
-        return result.data.map((item) => ({
-          label: item.attributes.fullname,
-          value: item.id,
-        }));
+        if (result) {
+          const temp = result.data.map((item) => ({
+            label: item.attributes.fullname,
+            value: item.id,
+          }));
+          setDoctor(temp);
+          return result.data.map((item) => ({
+            label: item.attributes.fullname,
+            value: item.id,
+          }));
+        }
+        return [];
       })
       .catch((error) => {
         throw error;
