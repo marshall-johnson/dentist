@@ -11,7 +11,7 @@ import {
   Radio,
 } from 'antd';
 import PropTypes from 'prop-types';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppConfig from '@/constants/AppConfig';
 import { connect } from 'react-redux';
@@ -56,6 +56,9 @@ const SignUp = (props) => {
 
   const onSignUp = async (data) => {
     const { signUp, history } = props;
+    if (currentAccountType === UserAccountType.STUDENT_ADMIN) {
+      delete data.studentAdminId;
+    }
     const isSuccess = await signUp(data);
 
     if (isSuccess) {
@@ -350,20 +353,17 @@ const SignUp = (props) => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item className="input-item" name="studentAdminId">
-            <Select
-              className="selector"
-              onSelect={(value) => {
-                setCurrentAccountType(value);
-              }}
-            >
-              {studentAdmins?.map((value, index) => (
-                <Option value={value.id} key={value.id}>
-                  {value.attributes.fullname}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+          {currentAccountType === UserAccountType.COACH && (
+            <Form.Item className="input-item" name="studentAdminId">
+              <Select className="selector">
+                {studentAdmins?.map((value, index) => (
+                  <Option value={value.id} key={value.id}>
+                    {value.attributes.fullname}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
           <Form.Item className="submit-btn-wrapper">
             <Button loading={loading} type="primary" htmlType="submit">
               Sign Up

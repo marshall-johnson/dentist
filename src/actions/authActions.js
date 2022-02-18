@@ -17,28 +17,33 @@ import {
 } from '@/utils/authUtils';
 import snakecaseKeys from 'snakecase-keys';
 
-export const login = ({ email, password }) => async (dispatch) => {
-  dispatch(loginRequest());
+export const login =
+  ({ email, password }) =>
+  async (dispatch) => {
+    dispatch(loginRequest());
 
-  try {
-    const response = await api.post('/users/sign_in', {
-      user: {
-        email,
-        password,
-      },
-    });
-    const user = response?.data?.user;
-    user.token = response.headers.authorization.replace('Bearer ', '');
+    try {
+      const response = await api.post('/users/sign_in', {
+        user: {
+          email,
+          password,
+        },
+      });
+      const user = response?.data?.user;
+      user.token = response.headers.authorization.replace('Bearer ', '');
 
-    setUserToLocalStorage(user);
-    dispatch(loginSuccess({ user: response.data?.user }));
-  } catch (error) {
-    dispatch(loginFail({ error: error.response?.data?.error }));
-    console.error(error);
-  }
-};
+      setUserToLocalStorage(user);
+      dispatch(loginSuccess({ user: response.data?.user }));
+    } catch (error) {
+      dispatch(loginFail({ error: error.response?.data?.error }));
+      console.error(error);
+    }
+  };
 
 export const signUp = (data) => async (dispatch) => {
+  console.log('xxxx', data);
+  console.log('snak', snakecaseKeys(data, { keepCase: true }));
+
   dispatch(signUpRequest());
 
   try {
