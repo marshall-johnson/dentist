@@ -355,7 +355,7 @@ const SignUp = (props) => {
           </Form.Item>
           {currentAccountType === UserAccountType.COACH && (
             <Form.Item className="input-item" name="studentAdminId">
-              <Select className="selector">
+              <Select className="selector" placeholder="Select Practice">
                 {studentAdmins?.map((value, index) => (
                   <Option value={value.id} key={value.id}>
                     {value.attributes.fullname}

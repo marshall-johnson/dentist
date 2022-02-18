@@ -245,24 +245,6 @@ class SubmitDataContainer extends Component {
                     },
                   ]}
                 >
-                  {/* <Select
-                    loading={loadingFetchStudent}
-                    style={{
-                      width: 200,
-                    }}
-                    onChange={(id) => {
-                      this.setState({
-                        studentId: id,
-                      });
-                      localStorage.setItem('studentsSubmitDataStudentId', id);
-                    }}
-                  >
-                    {students.map((student, index) => (
-                      <Option value={student.id} key={index.toString()}>
-                        {`${student.first_name} ${student.last_name}`}
-                      </Option>
-                    ))}
-                  </Select> */}
                   <Select
                     style={{
                       width: 200,

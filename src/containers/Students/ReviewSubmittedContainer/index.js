@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -12,7 +13,8 @@ import {
   Select,
 } from 'antd';
 import { fetchStudents } from '@/actions/studentActions';
-
+import { fetchDoctors } from '@/actions/doctorActions';
+import { forEach } from 'lodash';
 import AppConfig from '@/constants/AppConfig';
 import { connect } from 'react-redux';
 import { UserAccountType } from '@/constants';
@@ -31,10 +33,11 @@ class ReviewSubmittedContainer extends Component {
   }
 
   componentDidMount() {
-    const { fetchStudents } = this.props;
+    const { fetchStudents, fetchDoctors } = this.props;
     fetchStudents({
       filter: UserAccountType.STUDENT_STAFF,
     });
+    fetchDoctors();
   }
 
   normFile = (e) => {
@@ -93,6 +96,24 @@ class ReviewSubmittedContainer extends Component {
     }
   };
 
+  optionInit = () => {
+    // eslint-disable-next-line react/prop-types
+    const { items } = this.props;
+
+    const data = [];
+
+    forEach(items, (item) => {
+      const { fullname } = item.attributes;
+
+      data.push({
+        label: fullname,
+        value: item.id,
+      });
+    });
+
+    return data;
+  };
+
   render() {
     const { students, loadingFetchStudent } = this.props;
     return (
@@ -134,8 +155,8 @@ class ReviewSubmittedContainer extends Component {
                   alignItems: 'center',
                 }}
               >
-                <div style={{ width: 100 }}>Hygienist(s):</div>
-                <Select
+                <div style={{ width: 100 }}>Dr/Practice:</div>
+                {/* <Select
                   loading={loadingFetchStudent}
                   style={{
                     width: 200,
@@ -149,6 +170,35 @@ class ReviewSubmittedContainer extends Component {
                   {students.map((student, index) => (
                     <Option value={student.id} key={index.toString()}>
                       {`${student.first_name} ${student.last_name}`}
+                    </Option>
+                  ))}
+                </Select> */}
+
+                <Select
+                  style={{
+                    width: 200,
+                  }}
+                  showSearch
+                  optionFilterProp="children"
+                  onChange={(id) => {
+                    this.setState({
+                      studentId: id,
+                    });
+                  }}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                  filterSort={(optionA, optionB) =>
+                    optionA.children
+                      .toLowerCase()
+                      .localeCompare(optionB.children.toLowerCase())
+                  }
+                >
+                  {this.optionInit().map((doctor, index) => (
+                    <Option value={doctor.value} key={index.toString()}>
+                      {`${doctor?.label}`}
                     </Option>
                   ))}
                 </Select>
@@ -174,13 +224,16 @@ ReviewSubmittedContainer.propTypes = {
   students: PropTypes.array,
   loadingFetchStudent: PropTypes.bool,
   fetchStudents: PropTypes.func,
+  fetchDoctors: PropTypes.func,
 };
 
-const mapStateToProps = ({ student }) => ({
+const mapStateToProps = ({ doctor, student }) => ({
   students: student.items,
+  items: doctor.items,
   loadingFetchStudent: student.loading,
 });
 
 export default connect(mapStateToProps, {
   fetchStudents,
+  fetchDoctors,
 })(ReviewSubmittedContainer);
