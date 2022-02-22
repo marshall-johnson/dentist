@@ -1026,7 +1026,7 @@ const ReportingContainer = () => {
       title: 'CURRENT EXPENSES',
       dataIndex: 'current_expenses',
       key: 'current_expenses',
-      render: (text) => <span>{decFormatterNumber(text)}%</span>,
+      render: (text) => <span>{decFormatterNumber(text)}</span>,
       ellipsis: true,
     },
     {
@@ -1401,7 +1401,7 @@ const ReportingContainer = () => {
               <Col span={8}>
                 <p>UNPAID BILLS</p>
               </Col>
-              <Col span={12} className="border-bottom">
+              <Col span={15} className="border-bottom">
                 <p>{formatCurrency(reportData.unpaid_bills)}</p>
               </Col>
             </Row>
@@ -1530,8 +1530,8 @@ const ReportingContainer = () => {
 
           <Col span={12}>
             <Row className="mb-15" style={{ color: 'purple' }}>
-              <Col span={8}>
-                <p>TOTAL SHORT TERM DEBT:</p>
+              <Col span={12} style={{ textAlign: 'center' }}>
+                <p>TOTAL SHORT TERM DEBT</p>
               </Col>
               <Col span={12} className="border-bottom">
                 <p>{formatCurrency(reportData.total_short_term_debt)}</p>
@@ -1540,38 +1540,38 @@ const ReportingContainer = () => {
             {filter.type === 'pmcr_current_month' ? (
               <>
                 <Row className="mb-15" style={{ color: 'blue' }}>
-                  <Col span={8}>
-                    <p>Avg. Prod/Mo:</p>
+                  <Col style={{ textAlign: 'right' }} span={10}>
+                    <p>Avg. Prod/Mo</p>
                   </Col>
-                  <Col span={12} className="border-bottom">
+                  <Col span={12} offset={2} className="border-bottom">
                     <p>{formatCurrency(reportData.average.prod_per_month)}</p>
                   </Col>
                 </Row>
                 <Row className="mb-15">
-                  <Col span={8}>
+                  <Col style={{ textAlign: 'right' }} span={10}>
                     <p>Avg Coll/Mo</p>
                   </Col>
-                  <Col span={12} className="border-bottom">
+                  <Col span={12} offset={2} className="border-bottom">
                     <p>{reportData.average.collections_per_month}</p>
-                    <p>% of Production</p>
+                    {/* <p>% of Production</p> */}
                   </Col>
                 </Row>
               </>
             ) : (
               <>
                 <Row className="mb-15" style={{ color: 'blue' }}>
-                  <Col span={8}>
+                  <Col style={{ textAlign: 'right' }} span={10}>
                     <p>Total Prod. YTD:</p>
                   </Col>
-                  <Col span={12} className="border-bottom">
+                  <Col span={12} offset={2} className="border-bottom">
                     <p>{formatCurrency(reportData.total.prod_ytd)}</p>
                   </Col>
                 </Row>
                 <Row className="mb-15">
-                  <Col span={8}>
+                  <Col style={{ textAlign: 'right' }} span={10}>
                     <p>Total Coll YTD</p>
                   </Col>
-                  <Col span={12} className="border-bottom">
+                  <Col span={12} offset={2} className="border-bottom">
                     <p>{formatCurrency(reportData.total.coll_ytd)}</p>
                   </Col>
                 </Row>
@@ -1579,37 +1579,37 @@ const ReportingContainer = () => {
             )}
             <Row
               className="mb-15"
-              style={{ color: 'orange', marginTop: '35px' }}
+              style={{ color: 'orange', marginTop: '25px' }}
             >
-              <Col span={8}>
+              <Col style={{ textAlign: 'right' }} span={10}>
                 <p>Budgeted R/L</p>
               </Col>
-              <Col span={12} className="border-bottom">
+              <Col span={12} offset={2} className="border-bottom">
                 <p>{formatCurrency(reportData.budget.red_line)}</p>
               </Col>
             </Row>
             <Row className="mb-15" style={{ color: 'blue' }}>
-              <Col span={8}>
+              <Col style={{ textAlign: 'right' }} span={10}>
                 <p>Budgeted B/L</p>
               </Col>
-              <Col span={12} className="border-bottom">
+              <Col span={12} offset={2} className="border-bottom">
                 <p>{formatCurrency(reportData.budget.blue_line)}</p>
               </Col>
             </Row>
             <Row className="mb-15">
-              <Col span={8}>
+              <Col style={{ textAlign: 'right' }} span={10}>
                 <p>Budgeted G/L</p>
               </Col>
-              <Col span={12} className="border-bottom">
+              <Col span={12} offset={2} className="border-bottom">
                 <p>{formatCurrency(reportData.budget.green_line)}</p>
               </Col>
             </Row>
 
-            <Row className="mb-15" style={{ marginTop: '80px' }}>
-              <Col span={8}>
+            <Row className="mb-15">
+              <Col style={{ textAlign: 'right' }} span={10}>
                 <p>Budgeted Balance</p>
               </Col>
-              <Col span={12} className="border-bottom">
+              <Col span={12} offset={2} className="border-bottom">
                 <p>{formatCurrency(reportData.budget.balance)}</p>
               </Col>
             </Row>
@@ -1817,7 +1817,7 @@ const ReportingContainer = () => {
             ) : (
               <Row className="mb-15" style={{ color: 'blue ' }}>
                 <Col span={8}>
-                  <p>Avg. Prod/Mo:</p>
+                  <p>Avg. Prod/Mo</p>
                 </Col>
                 <Col span={12} className="border-bottom">
                   <p>{formatCurrency(reportData.hyg_prod_mo)}</p>
@@ -2842,6 +2842,7 @@ const ReportingContainer = () => {
           <ReactToPrint
             trigger={() => <Button type="primary">Print</Button>}
             content={() => compRef}
+            bodyClass="print-window"
           />
         </Col>
       </Row>
