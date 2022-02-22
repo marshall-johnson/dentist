@@ -357,6 +357,7 @@ const DEFAULT_REPORT = {
     month: 0,
     ytd: 0,
   },
+  hyg_prod_mo: 0,
 };
 
 const ReportingContainer = () => {
@@ -1745,7 +1746,7 @@ const ReportingContainer = () => {
                   <p>Hyg. Prod/Mo:</p>
                 </Col>
                 <Col span={12} className="border-bottom">
-                  <p>{formatCurrency(reportData.average.prod_per_month)}</p>
+                  <p>{formatCurrency(reportData.hyg_prod_mo)}</p>
                 </Col>
               </Row>
             ) : (
