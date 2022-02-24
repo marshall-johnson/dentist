@@ -1259,20 +1259,24 @@ const ReportingContainer = () => {
   };
 
   const renderStyleRow = (record, index) => {
-    if (index == 7) {
-      return 'dashed_row';
-    }
     if (index == 8) {
       return 'dashed_row';
-    }
-    if (index == 9) {
-      return 'ae_style';
     }
     if (record.name == 'Total') {
       return 'bluerow_style';
     }
     if (record.grand_total == 'GRAND TOTAL') {
       return 'bluerow_style';
+    }
+
+    if (
+      record.category == 'Overhead Total' ||
+      record.category == 'DRS Salaries'
+    ) {
+      return 'dashed_row';
+    }
+    if (record.category == 'All Expenses') {
+      return 'ae_style';
     }
 
     if (
