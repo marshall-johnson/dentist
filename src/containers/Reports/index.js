@@ -232,17 +232,7 @@ const DEFAULT_REPORT = {
     },
     {
       key: '5',
-      category: 'Laboratory',
-      totalAmount: 0,
-      collectionsPercent: 0,
-      interimBudget: 0,
-      interimVariance: 0,
-      cpdTarget: 0,
-      cpdVariance: 0,
-    },
-    {
-      key: '6',
-      category: 'Services',
+      category: 'Meal & Entertainment',
       totalAmount: 0,
       collectionsPercent: 0,
       interimBudget: 0,
@@ -252,6 +242,26 @@ const DEFAULT_REPORT = {
     },
     {
       key: '7',
+      category: 'Laboratory',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '8',
+      category: 'Services',
+      totalAmount: 0,
+      collectionsPercent: 0,
+      interimBudget: 0,
+      interimVariance: 0,
+      cpdTarget: 0,
+      cpdVariance: 0,
+    },
+    {
+      key: '9',
       category: 'Mktng/Sales',
       totalAmount: 0,
       collectionsPercent: 0,
@@ -262,7 +272,7 @@ const DEFAULT_REPORT = {
     },
 
     {
-      key: '8',
+      key: '10',
       category: 'Overhead Total',
       totalAmount: 0,
       collectionsPercent: 0,
@@ -272,7 +282,7 @@ const DEFAULT_REPORT = {
       cpdVariance: 0,
     },
     {
-      key: '9',
+      key: '11',
       category: 'DRS Salaries',
       totalAmount: 0,
       collectionsPercent: 0,
@@ -282,7 +292,7 @@ const DEFAULT_REPORT = {
       cpdVariance: 0,
     },
     {
-      key: '10',
+      key: '12',
       category: 'All Expenses',
       totalAmount: 0,
       collectionsPercent: 0,
@@ -292,6 +302,11 @@ const DEFAULT_REPORT = {
       cpdVariance: 0,
     },
   ],
+  header_info: {
+    recare_ratio: 0,
+    case_ratio: 0,
+  },
+
   unpaid_bills: 0,
   production: 0,
   collections: 0,
@@ -301,6 +316,10 @@ const DEFAULT_REPORT = {
     bl: 0,
     gl: 0,
     bal: 0,
+    bl_detail: {
+      net_solv: 0,
+      percentage_of_net_solv: 0,
+    },
   },
   total_short_term_debt: 0,
   net_roi_funds: 0,
@@ -322,7 +341,6 @@ const DEFAULT_REPORT = {
       value: 0,
     },
   ],
-  receivables: 0,
   debt_payments: 0,
   net_solv: 0,
   avg_prod_mo: 0,
@@ -358,6 +376,10 @@ const DEFAULT_REPORT = {
     ytd: 0,
   },
   hyg_prod_mo: 0,
+  receivables: {
+    amount: 0,
+    percentage_of_production: 0,
+  },
 };
 
 const ReportingContainer = () => {
@@ -1038,6 +1060,17 @@ const ReportingContainer = () => {
         },
         {
           key: '5',
+          category: 'Meal & Entertainment',
+          totalAmount: temp?.total_amount.meal_and_entertainment,
+          collectionsPercent:
+            temp?.percentage_of_collections.meal_and_entertainment,
+          interimBudget: temp?.interim_budget.meal_and_entertainment,
+          interimVariance: temp?.interim_budget_variance.meal_and_entertainment,
+          cpdTarget: temp?.cpd_target.meal_and_entertainment,
+          cpdVariance: temp?.cpd_variance.meal_and_entertainment,
+        },
+        {
+          key: '6',
           category: 'Laboratory',
           totalAmount: temp?.total_amount.laboratory,
           collectionsPercent: temp?.percentage_of_collections.laboratory,
@@ -1047,7 +1080,7 @@ const ReportingContainer = () => {
           cpdVariance: temp?.cpd_variance.laboratory,
         },
         {
-          key: '6',
+          key: '7',
           category: 'Services',
           totalAmount: temp?.total_amount.services,
           collectionsPercent: temp?.percentage_of_collections.services,
@@ -1057,7 +1090,7 @@ const ReportingContainer = () => {
           cpdVariance: temp?.cpd_variance.services,
         },
         {
-          key: '7',
+          key: '8',
           category: 'Mktng/Sales',
           totalAmount: temp?.total_amount.marketing_sales,
           collectionsPercent: temp?.percentage_of_collections.marketing_sales,
@@ -1067,7 +1100,7 @@ const ReportingContainer = () => {
           cpdVariance: temp?.cpd_variance.marketing_sales,
         },
         {
-          key: '8',
+          key: '9',
           category: 'Overhead Total',
           totalAmount: temp?.total_amount.overhead_total,
           collectionsPercent: temp?.percentage_of_collections.overhead_total,
@@ -1077,7 +1110,7 @@ const ReportingContainer = () => {
           cpdVariance: temp?.cpd_variance.overhead_total,
         },
         {
-          key: '9',
+          key: '10',
           category: 'DRS Salaries',
           totalAmount: temp?.total_amount.drs_salaries,
           collectionsPercent: temp?.percentage_of_collections.drs_salaries,
@@ -1087,7 +1120,7 @@ const ReportingContainer = () => {
           cpdVariance: temp?.cpd_variance.drs_salaries,
         },
         {
-          key: '10',
+          key: '11',
           category: 'All Expenses',
           totalAmount: temp?.total_amount.all_expenses,
           collectionsPercent: temp?.percentage_of_collections.all_expenses,
@@ -1293,8 +1326,12 @@ const ReportingContainer = () => {
               </Col>
             </Row>
             <Row>
-              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
-              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+              <Col span={12}>
+                Case Ratio: &nbsp; {reportData?.header_info?.case_ratio}%{' '}
+              </Col>
+              <Col span={12}>
+                Recare Ratio: &nbsp; {reportData?.header_info?.recare_ratio}%{' '}
+              </Col>
             </Row>
           </>
         ) : (
@@ -1425,8 +1462,11 @@ const ReportingContainer = () => {
               <Col offset="1" span={7}>
                 <p>Net Solv</p>
               </Col>
-              <Col span={12} className="border-bottom">
-                <p>{reportData?.net_solv}%</p>
+              <Col span={5} className="border-bottom">
+                <p>{formatCurrency(reportData?.actual?.bl_detail?.amount)}</p>{' '}
+              </Col>
+              <Col span={5} className="border-bottom">
+                <p>{reportData?.actual?.bl_detail?.percentage_of_net_solv}%</p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -1458,7 +1498,15 @@ const ReportingContainer = () => {
                 <p>Receivables</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.receivables)}</p>
+                <p>{formatCurrency(reportData?.receivables?.amount)}</p>
+              </Col>
+            </Row>
+            <Row className="mb-15">
+              <Col offset={8} span={4} className="border-bottom">
+                <p>{reportData?.receivables?.percentage_of_production}</p>
+              </Col>
+              <Col span={8}>
+                <p>% of Production</p>
               </Col>
             </Row>
           </Col>
@@ -1698,8 +1746,9 @@ const ReportingContainer = () => {
               </Col>
             </Row>
             <Row>
-              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
-              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+              <Col offset={12} span={12}>
+                Recare Ratio: &nbsp; {reportData.header_info.recare_ratio}%{' '}
+              </Col>
             </Row>
           </>
         ) : (
