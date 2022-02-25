@@ -4,7 +4,6 @@ import {
   Row,
   Col,
   Form,
-  Radio,
   Button,
   Divider,
   PageHeader,
@@ -61,6 +60,7 @@ const InterimBudget = (props) => {
           supplies: form.supplies,
           laboratory: form.laboratory,
           services: form.services,
+          meal_and_entertainment: form.meal_and_entertainment,
           marketing_sales: form.marketing_sales,
           drs_salaries: form.drs_salaries,
         },
@@ -245,6 +245,32 @@ const InterimBudget = (props) => {
                   setForm({
                     ...form,
                     supplies: e,
+                  });
+                }}
+              />
+            </Row>
+            <Row
+              style={{
+                marginBottom: 30,
+                marginTop: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Meal and Entertainment:</div>
+              <InputNumber
+                style={{
+                  width: 200,
+                }}
+                formatter={(value) =>
+                  `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                }
+                parser={(value) => value.replace(/\%\s?|(,*)/g, '')}
+                value={form.meal_and_entertainment}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    meal_and_entertainment: e,
                   });
                 }}
               />
