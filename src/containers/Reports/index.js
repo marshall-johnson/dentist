@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
-import { formatCurrency, decFormatterNumber } from '@/utils/helpers';
+import {
+  formatCurrency,
+  decFormatterNumber,
+  decFormatterTotal,
+  decFormatterNumberInput,
+} from '@/utils/helpers';
 import Filter from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
@@ -510,26 +515,26 @@ const ReportingContainer = () => {
     },
     {
       title: 'Current % Cases',
-      dataIndex: 'current_percentage_cases',
-      key: 'current_percentage_cases',
+      dataIndex: 'current_percentage_of_cases',
+      key: 'current_percentage_of_cases',
       render: (value) => decFormatterNumber(value),
     },
     {
       title: 'Current % Dollars',
-      dataIndex: 'current_percentage_dollars',
-      key: 'current_percentage_dollars',
+      dataIndex: 'current_percentage_of_dollars',
+      key: 'current_percentage_of_dollars',
       render: (value) => decFormatterNumber(value),
     },
     {
       title: 'YTD % Cases',
-      dataIndex: 'percentage_of_ytd_cases',
-      key: 'percentage_of_ytd_cases',
+      dataIndex: 'ytd_percentage_of_cases',
+      key: 'ytd_percentage_of_cases',
       render: (value) => decFormatterNumber(value),
     },
     {
       title: 'YTD % Dollars',
-      dataIndex: 'percentage_of_ytd_dollars',
-      key: 'percentage_of_ytd_dollars',
+      dataIndex: 'ytd_percentage_of_dollars',
+      key: 'ytd_percentage_of_dollars',
       render: (value) => decFormatterNumber(value),
     },
   ];
@@ -543,13 +548,13 @@ const ReportingContainer = () => {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
       key: 'current_mo',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
       key: 'percentage_of_current_mo',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
 
       width: '80px',
     },
@@ -557,20 +562,20 @@ const ReportingContainer = () => {
       title: 'YTD',
       dataIndex: 'ytd',
       key: 'ytd',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
       key: 'percentage_of_ytd',
-      render: (value) => decFormatterNumber(value),
-
+      render: (value) => decFormatterNumberInput(value),
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
       key: 'avg_per_month',
+      render: (value) => decFormatterNumberInput(value),
     },
   ];
   const reportSevenColPatientVisitHyg = [
@@ -583,13 +588,13 @@ const ReportingContainer = () => {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
       key: 'current_mo',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
       key: 'percentage_of_current_mo',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
 
       width: '80px',
     },
@@ -597,21 +602,20 @@ const ReportingContainer = () => {
       title: 'YTD',
       dataIndex: 'ytd',
       key: 'ytd',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
       key: 'percentage_of_ytd',
-      render: (value) => decFormatterNumber(value),
-
+      render: (value) => decFormatterNumberInput(value),
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
       key: 'avg_per_month',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => decFormatterNumberInput(value),
     },
   ];
 
@@ -1402,10 +1406,10 @@ const ReportingContainer = () => {
                   </Col>
                 </Row>
                 <Row className="mb-15">
-                  <Col offset={8} span={2} className="border-bottom">
+                  <Col offset={8} span={4} className="border-bottom">
                     <p>{reportData?.percentage_of_production}</p>
                   </Col>
-                  <p>% of Production</p>
+                  <p style={{ marginLeft: '8px' }}>% of Production</p>
                 </Row>
               </>
             ) : (
@@ -1466,8 +1470,8 @@ const ReportingContainer = () => {
               <Col offset="1" span={7}>
                 <p>Net Solv</p>
               </Col>
-              <Col span={5} className="border-bottom">
-                <p>{formatCurrency(reportData?.actual?.bl_detail?.amount)}</p>{' '}
+              <Col span={8} className="border-bottom">
+                <p>{formatCurrency(reportData?.actual?.bl_detail?.net_solv)}</p>
               </Col>
               <Col span={5} className="border-bottom">
                 <p>{reportData?.actual?.bl_detail?.percentage_of_net_solv}%</p>
@@ -1485,16 +1489,29 @@ const ReportingContainer = () => {
               <Col span={8}>
                 <p>Net ROI Funds</p>
               </Col>
-              <Col span={12} className="border-bottom">
-                <p>{reportData?.net_roi_funds}%</p>
+              <Col span={8} className="border-bottom">
+                <p>{reportData?.net_roi_funds}</p>
+              </Col>
+              <Col span={8} className="border-bottom">
+                <p>
+                  {decFormatterNumber(
+                    reportData.actual.percentage_of_net_roi_funds,
+                  )}
+                  %
+                </p>
               </Col>
             </Row>
             <Row className="mb-15">
               <Col span={8}>
                 <p>Actual Bal</p>
               </Col>
-              <Col span={12} className="border-bottom">
-                <p>{formatCurrency(reportData.actual.bal)}</p>
+              <Col span={8} className="border-bottom">
+                <p>({formatCurrency(reportData.actual.bal)})</p>
+              </Col>
+              <Col span={8} className="border-bottom">
+                <p>
+                  {decFormatterNumber(reportData.actual.percentage_of_bal)} %
+                </p>
               </Col>
             </Row>
             <Row className="mb-15">
@@ -2625,7 +2642,7 @@ const ReportingContainer = () => {
           size="small"
           pagination={false}
           columns={reportSevenColNewPatients}
-          dataSource={reportData.reportSeven.new_patients}
+          dataSource={reportData.reportSeven?.new_patients}
           onChange={handleChange}
         />
         <h4
@@ -2643,7 +2660,7 @@ const ReportingContainer = () => {
           size="small"
           pagination={false}
           columns={reportSevenColPatientRef}
-          dataSource={reportData.reportSeven.patient_referrals}
+          dataSource={reportData.reportSeven?.patient_referrals}
           onChange={handleChange}
         />
         <h4
@@ -2661,7 +2678,7 @@ const ReportingContainer = () => {
           size="small"
           pagination={false}
           columns={reportSevenColCasePresent}
-          dataSource={reportData.reportSeven.case_presentation}
+          dataSource={reportData.reportSeven?.case_presentation}
           onChange={handleChange}
         />
         <h4
