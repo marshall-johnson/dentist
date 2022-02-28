@@ -1494,10 +1494,7 @@ const ReportingContainer = () => {
               </Col>
               <Col span={8} className="border-bottom">
                 <p>
-                  {decFormatterNumber(
-                    reportData.actual.percentage_of_net_roi_funds,
-                  )}
-                  %
+                  {decFormatterNumber(reportData.net_roi_funds_percentage)}%
                 </p>
               </Col>
             </Row>
@@ -1509,9 +1506,7 @@ const ReportingContainer = () => {
                 <p>({formatCurrency(reportData.actual.bal)})</p>
               </Col>
               <Col span={8} className="border-bottom">
-                <p>
-                  {decFormatterNumber(reportData.actual.percentage_of_bal)} %
-                </p>
+                <p>{decFormatterNumber(reportData.actual.bal_percentages)} %</p>
               </Col>
             </Row>
             <Row className="mb-15">
