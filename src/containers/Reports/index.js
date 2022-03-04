@@ -1442,7 +1442,7 @@ const ReportingContainer = () => {
                 </Row>
               </>
             )}
-            <Row className="mb-15" style={{ color: 'orange' }}>
+            <Row className="mb-15" style={{ color: 'red' }}>
               <Col span={8}>
                 <p>Actual R/L</p>
               </Col>
@@ -1576,10 +1576,7 @@ const ReportingContainer = () => {
                 </Row>
               </>
             )}
-            <Row
-              className="mb-15"
-              style={{ color: 'orange', marginTop: '25px' }}
-            >
+            <Row className="mb-15" style={{ color: 'red', marginTop: '25px' }}>
               <Col style={{ textAlign: 'right' }} span={10}>
                 <p>Budgeted R/L</p>
               </Col>
@@ -1595,7 +1592,7 @@ const ReportingContainer = () => {
                 <p>{formatCurrency(reportData.budget.blue_line)}</p>
               </Col>
             </Row>
-            <Row className="mb-15">
+            <Row className="mb-15" style={{ color: 'green' }}>
               <Col style={{ textAlign: 'right' }} span={10}>
                 <p>Budgeted G/L</p>
               </Col>
@@ -1892,10 +1889,10 @@ const ReportingContainer = () => {
             </Row>
             <Row className="mb-15">
               <Col span={8}>
-                <p>Patient</p>
+                <p>Patient %</p>
               </Col>
               <Col span={12} className="border-bottom">
-                <p>{reportData.patient}%</p>
+                <p>{reportData.patient}</p>
               </Col>
             </Row>
           </Col>
