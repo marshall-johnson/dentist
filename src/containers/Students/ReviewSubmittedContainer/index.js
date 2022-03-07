@@ -98,7 +98,7 @@ class ReviewSubmittedContainer extends Component {
 
   optionInit = () => {
     // eslint-disable-next-line react/prop-types
-    const { items } = this.props;
+    const { items } = this.prop;
 
     const data = [];
 

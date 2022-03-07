@@ -32,6 +32,7 @@ import StudentManagement from '@/containers/Management/StudentContainer';
 import DetailStudentContainer from '@/containers/Management/DetailStudent';
 import InterimBudget from '@/containers/InterimBudget';
 import Budget from '@/containers/Budget';
+import Occupancy from '@/containers/Occupancy';
 
 function Routes() {
   return (
@@ -162,6 +163,11 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.INTERIM_BUDGET}`}
         component={InterimBudget}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.OCCUPANCY}`}
+        component={Occupancy}
       />
       <Route exact path={`${AppConfig.ROUTES.BUDGET}`} component={Budget} />
       <Route

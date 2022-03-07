@@ -7,7 +7,7 @@ export const postInterimBudget = async (args = {}) => {
   });
   if (!res) {
     return {
-      errur: 'Error',
+      error: 'Error',
     };
   }
   return res.data;
