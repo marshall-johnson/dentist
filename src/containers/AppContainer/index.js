@@ -300,6 +300,11 @@ class AppContainer extends Component {
                       Review submitted
                     </Link>
                   </Menu.Item>
+                  <Menu.Item key="occupancy">
+                    <Link to={`${AppConfig.ROUTES.OCCUPANCY}`}>
+                      Occupancy Form
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item key="interimBudget">
                     <Link to={`${AppConfig.ROUTES.INTERIM_BUDGET}`}>
                       Interim Budget
