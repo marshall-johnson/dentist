@@ -15,11 +15,12 @@ import { forEach } from 'lodash';
 import { fetchStudents } from '@/actions/studentActions';
 import { fetchDoctors } from '@/actions/doctorActions';
 import { connect } from 'react-redux';
-import { postOccupancy } from '@/services/occupancy.service';
+import { getOccupancy, updateOccupancy } from '@/services/occupancy.service';
+import { setLoading } from '@/store/student';
 
 const { Option } = Select;
 
-const Occupancy = (props) => {
+const ReviewOccupancy = (props) => {
   const { items, fetchDoctors } = props;
   const [form, setForm] = useState({});
 
@@ -28,7 +29,7 @@ const Occupancy = (props) => {
   }, []);
 
   const onSubmit = async () => {
-    const res = await postOccupancy({
+    const res = await updateOccupancy({
       id: form.user_id,
       payload: {
         occupancy_conversion: {
@@ -39,24 +40,22 @@ const Occupancy = (props) => {
         },
       },
     });
-
     if (res.success) {
       notification.success({
         message: res.result.message,
-      });
-
-      setForm({
-        user_id: null,
-        percent_clinical_space: null,
-        percent_non_clinical_space: null,
-        total_treatment_room: null,
-        total_used_hygiene_department: null,
       });
     } else {
       notification.error({
         message: res.result.message,
       });
     }
+    setForm({
+      user_id: null,
+      percent_clinical_space: null,
+      percent_non_clinical_space: null,
+      total_treatment_room: null,
+      total_used_hygiene_department: null,
+    });
   };
 
   const optionInit = () => {
@@ -75,9 +74,34 @@ const Occupancy = (props) => {
     return data;
   };
 
+  const fetchOccupancyById = async (id) => {
+    const res = await getOccupancy(id);
+    setLoading(true);
+    if (!res.message) {
+      setForm({
+        user_id: res.data.user_id,
+        percent_clinical_space: res.data.percent_clinical_space,
+        percent_non_clinical_space: res.data.percent_non_clinical_space,
+        total_treatment_room: res.data.total_treatment_room,
+        total_used_hygiene_department: res.data.total_used_hygiene_department,
+      });
+    } else {
+      notification.error({
+        message: res.message,
+      });
+      setForm({
+        user_id: null,
+        percent_clinical_space: null,
+        percent_non_clinical_space: null,
+        total_treatment_room: null,
+        total_used_hygiene_department: null,
+      });
+    }
+  };
+
   return (
     <div className="submit-data-container">
-      <PageHeader className="site-page-header" title="Occupancy" />
+      <PageHeader className="site-page-header" title="Review Occupancy" />
 
       <Divider />
 
@@ -98,13 +122,14 @@ const Occupancy = (props) => {
                   width: 200,
                 }}
                 showSearch
-                optionFilterProp="children"
                 value={form.user_id}
+                optionFilterProp="children"
                 onChange={(id) => {
                   setForm({
                     ...form,
                     user_id: id,
                   });
+                  fetchOccupancyById(id);
                 }}
                 filterOption={(input, option) =>
                   option.children.toLowerCase().indexOf(input.toLowerCase()) >=
@@ -233,7 +258,7 @@ const Occupancy = (props) => {
                 onClick={onSubmit}
                 disabled={!form.user_id}
               >
-                Submit
+                Update
               </Button>
             </Row>
           </Form>
@@ -252,4 +277,4 @@ const mapStateToProps = ({ student, doctor, error }) => ({
 export default connect(mapStateToProps, {
   fetchStudents,
   fetchDoctors,
-})(Occupancy);
+})(ReviewOccupancy);

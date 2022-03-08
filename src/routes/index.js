@@ -33,6 +33,7 @@ import DetailStudentContainer from '@/containers/Management/DetailStudent';
 import InterimBudget from '@/containers/InterimBudget';
 import Budget from '@/containers/Budget';
 import Occupancy from '@/containers/Occupancy';
+import ReviewOccupancy from '@/containers/ReviewOccupancy';
 
 function Routes() {
   return (
@@ -168,6 +169,11 @@ function Routes() {
         exact
         path={`${AppConfig.ROUTES.OCCUPANCY}`}
         component={Occupancy}
+      />
+      <Route
+        exact
+        path={`${AppConfig.ROUTES.REVIEW_OCCUPANCY}`}
+        component={ReviewOccupancy}
       />
       <Route exact path={`${AppConfig.ROUTES.BUDGET}`} component={Budget} />
       <Route
