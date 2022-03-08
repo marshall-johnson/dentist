@@ -68,6 +68,7 @@ const AppConfig = {
     CHART_AUDIT_REPORT: '/chart-audit-report',
     INTERIM_BUDGET: '/interim-budget',
     OCCUPANCY: '/occupancy',
+    REVIEW_OCCUPANCY: '/review-occupancy',
     BUDGET: '/budget',
     LOGIN: '/login',
   },

@@ -126,6 +126,16 @@ class AppContainer extends Component {
                     UserAccountType.STUDENT_ADMIN,
                   ].includes(currentUser?.account_type) && (
                     <Menu.Item key="2">
+                      <Link to={`${AppConfig.ROUTES.OCCUPANCY}`}>
+                        Occupancy Form
+                      </Link>
+                    </Menu.Item>
+                  )}
+                  {[
+                    UserAccountType.ADMIN,
+                    UserAccountType.STUDENT_ADMIN,
+                  ].includes(currentUser?.account_type) && (
+                    <Menu.Item key="3">
                       <Link to={`${AppConfig.ROUTES.PROFIT_AND_LOSS}`}>
                         PPP
                       </Link>
@@ -135,7 +145,7 @@ class AppContainer extends Component {
                     UserAccountType.ADMIN,
                     UserAccountType.STUDENT_ADMIN,
                   ].includes(currentUser?.account_type) && (
-                    <Menu.Item key="3">
+                    <Menu.Item key="4">
                       <Link to={`${AppConfig.ROUTES.CHART_AUDIT}`}>
                         Chart audit
                       </Link>
@@ -162,7 +172,7 @@ class AppContainer extends Component {
                         }
                       }}
                     >
-                      <Menu.Item key="4">
+                      <Menu.Item key="eng">
                         <Link
                           to={`${AppConfig.ROUTES.ENERGY_CONVERSION}/${AppConfig.ENERGY_CONVERSION.ENERGY}`}
                         >
@@ -300,9 +310,9 @@ class AppContainer extends Component {
                       Review submitted
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="occupancy">
-                    <Link to={`${AppConfig.ROUTES.OCCUPANCY}`}>
-                      Occupancy Form
+                  <Menu.Item key="review_occupancy">
+                    <Link to={`${AppConfig.ROUTES.REVIEW_OCCUPANCY}`}>
+                      Review Occupancy Form
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="interimBudget">
