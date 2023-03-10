@@ -44,9 +44,12 @@ export const decFormatterNumberInput = (value) => {
   return `${val1}${renderVal2()}`;
 };
 
-export const decFormatterNumber = (value) => {
+export const decFormatterNumber = (value, show = true) => {
+  if (show === false) {
+    return '';
+  }
   if (!value) {
-    return '0';
+    return '0.00';
   }
   const part = value.toString().split('.');
   const val1 = part[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');

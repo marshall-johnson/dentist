@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { fetchStudents } from '@/actions/studentActions';
