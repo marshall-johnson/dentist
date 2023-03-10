@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
-import {
-  formatCurrency,
-  decFormatterNumber,
-  decFormatterTotal,
-  decFormatterNumberInput,
-} from '@/utils/helpers';
+import { formatCurrency, decFormatterNumber } from '@/utils/helpers';
 import Filter from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
@@ -235,16 +230,16 @@ const DEFAULT_REPORT = {
       cpdTarget: 0,
       cpdVariance: 0,
     },
-    {
-      key: '5',
-      category: 'Meal & Entertainment',
-      totalAmount: 0,
-      collectionsPercent: 0,
-      interimBudget: 0,
-      interimVariance: 0,
-      cpdTarget: 0,
-      cpdVariance: 0,
-    },
+    // {
+    //   key: '5',
+    //   category: 'Meal & Entertainment',
+    //   totalAmount: 0,
+    //   collectionsPercent: 0,
+    //   interimBudget: 0,
+    //   interimVariance: 0,
+    //   cpdTarget: 0,
+    //   cpdVariance: 0,
+    // },
     {
       key: '7',
       category: 'Laboratory',
@@ -434,8 +429,7 @@ const ReportingContainer = () => {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
       key: 'percentage_of_current_mo',
-      render: (value) => decFormatterNumber(value),
-
+      render: (value, obj) => decFormatterNumber(value, obj.age !== 'total'),
       width: '80px',
     },
     {
@@ -448,8 +442,7 @@ const ReportingContainer = () => {
       title: '%',
       dataIndex: 'percentage_of_ytd',
       key: 'percentage_of_ytd',
-      render: (value) => decFormatterNumber(value),
-
+      render: (value, obj) => decFormatterNumber(value, obj.age !== 'total'),
       width: '80px',
     },
     {
@@ -464,7 +457,6 @@ const ReportingContainer = () => {
       name: '',
       dataIndex: 'name',
       key: 'name',
-
       render: (value) => {
         switch (value) {
           case 'referred_by_pts':
@@ -488,8 +480,7 @@ const ReportingContainer = () => {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
       key: 'percentage_of_current_mo',
-      render: (value) => decFormatterNumber(value),
-
+      render: (value, obj) => decFormatterNumber(value, obj.name !== 'total'),
       width: '80px',
     },
     {
@@ -502,16 +493,27 @@ const ReportingContainer = () => {
       title: '%',
       dataIndex: 'percentage_of_ytd',
       key: 'percentage_of_ytd',
-      render: (value) => decFormatterNumber(value),
-
+      render: (value, obj) => decFormatterNumber(value, obj.name !== 'total'),
       width: '80px',
     },
   ];
   const reportSevenColCasePresent = [
     {
       title: '',
-      dataIndex: 'title',
-      key: 'title',
+      dataIndex: 'name',
+      key: 'name',
+      render: (value) => {
+        switch (value) {
+          case 'case_ratio':
+            return 'Case Ratio';
+          case 'informal_ratio':
+            return 'Informal Ratio';
+          case 'recare_ratio':
+            return 'Recare Ratio';
+          default:
+            return '';
+        }
+      },
     },
     {
       title: 'Current % Cases',
@@ -548,34 +550,33 @@ const ReportingContainer = () => {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
       key: 'current_mo',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value) => decFormatterNumber(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
       key: 'percentage_of_current_mo',
-      render: (value) => decFormatterNumberInput(value),
-
+      render: (value, obj) => decFormatterNumber(value, obj.name !== 'Total'),
       width: '80px',
     },
     {
       title: 'YTD',
       dataIndex: 'ytd',
       key: 'ytd',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value) => decFormatterNumber(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
       key: 'percentage_of_ytd',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value, obj) => decFormatterNumber(value, obj.name !== 'Total'),
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
       key: 'avg_per_month',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value) => decFormatterNumber(value),
     },
   ];
   const reportSevenColPatientVisitHyg = [
@@ -583,39 +584,41 @@ const ReportingContainer = () => {
       title: 'Hygienist',
       dataIndex: 'name',
       key: 'name',
+      width: '25%',
     },
     {
       title: 'Current Mo.',
       dataIndex: 'current_mo',
       key: 'current_mo',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value) => decFormatterNumber(value),
+      width: '20%',
     },
     {
       title: '%',
       dataIndex: 'percentage_of_current_mo',
       key: 'percentage_of_current_mo',
-      render: (value) => decFormatterNumberInput(value),
-
+      render: (value, obj) => decFormatterNumber(value, obj.name !== 'Total'),
       width: '80px',
     },
     {
       title: 'YTD',
       dataIndex: 'ytd',
       key: 'ytd',
-      render: (value) => decFormatterNumberInput(value),
+      width: '20%',
+      render: (value) => decFormatterNumber(value),
     },
     {
       title: '%',
       dataIndex: 'percentage_of_ytd',
       key: 'percentage_of_ytd',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value, obj) => decFormatterNumber(value, obj.name !== 'Total'),
       width: '80px',
     },
     {
       title: 'AVG/Mo',
       dataIndex: 'avg_per_month',
       key: 'avg_per_month',
-      render: (value) => decFormatterNumberInput(value),
+      render: (value) => decFormatterNumber(value),
     },
   ];
 
@@ -1062,17 +1065,17 @@ const ReportingContainer = () => {
           cpdTarget: temp?.cpd_target.supplies,
           cpdVariance: temp?.cpd_variance.supplies,
         },
-        {
-          key: '5',
-          category: 'Meal & Entertainment',
-          totalAmount: temp?.total_amount.meal_and_entertainment,
-          collectionsPercent:
-            temp?.percentage_of_collections.meal_and_entertainment,
-          interimBudget: temp?.interim_budget.meal_and_entertainment,
-          interimVariance: temp?.interim_budget_variance.meal_and_entertainment,
-          cpdTarget: temp?.cpd_target.meal_and_entertainment,
-          cpdVariance: temp?.cpd_variance.meal_and_entertainment,
-        },
+        // {
+        //   key: '5',
+        //   category: 'Meal & Entertainment',
+        //   totalAmount: temp?.total_amount.meal_and_entertainment,
+        //   collectionsPercent:
+        //     temp?.percentage_of_collections.meal_and_entertainment,
+        //   interimBudget: temp?.interim_budget.meal_and_entertainment,
+        //   interimVariance: temp?.interim_budget_variance.meal_and_entertainment,
+        //   cpdTarget: temp?.cpd_target.meal_and_entertainment,
+        //   cpdVariance: temp?.cpd_variance.meal_and_entertainment,
+        // },
         {
           key: '6',
           category: 'Laboratory',
@@ -1326,10 +1329,10 @@ const ReportingContainer = () => {
         {filter.type === 'pmcr_current_month' ? (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue).format('MMMM')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue).format('YYYY')}
               </Col>
             </Row>
@@ -1345,12 +1348,12 @@ const ReportingContainer = () => {
         ) : (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -1751,10 +1754,10 @@ const ReportingContainer = () => {
         {filter.type === 'pmcr_hygiene_current_month' ? (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue).format('MMMM')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue).format('YYYY')}
               </Col>
             </Row>
@@ -1767,12 +1770,12 @@ const ReportingContainer = () => {
         ) : (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -2068,12 +2071,12 @@ const ReportingContainer = () => {
         {filter.type === 'prod_analysis_time_stats' ? (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -2091,15 +2094,15 @@ const ReportingContainer = () => {
           onChange={handleChange}
         />
         <Row style={{ marginTop: '24px', textAlign: 'left' }}>
-          <Col span={8}>Percent of Available Hrs Scheduled:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Available Hrs Scheduled:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.doctor_percentage_of_available_hrs_scheduled
                 .current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.doctor_percentage_of_available_hrs_scheduled
                 .ytd_avg_month
@@ -2108,15 +2111,15 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ textAlign: 'left' }}>
-          <Col span={8}>Percent of Scheduled Hrs Cancelled:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Scheduled Hrs Cancelled:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.doctor_percent
                 .percentage_of_scheduled_hrs_cancelled.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.doctor_percent
                 .percentage_of_scheduled_hrs_cancelled.ytd_avg_month
@@ -2125,15 +2128,15 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ textAlign: 'left' }}>
-          <Col span={8}>Percent of Cancelled Hrs Recovered:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Cancelled Hrs Recovered:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.doctor_percent
                 .percentage_of_cancelled_hrs_recovered.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.doctor_percent
                 .percentage_of_cancelled_hrs_recovered.current_month
@@ -2142,15 +2145,15 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: '24px', textAlign: 'left' }}>
-          <Col span={8}>Percent of Dr. Capacity Used:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Dr. Capacity Used:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.doctor_percent
                 .percentage_of_dr_capacity_used.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.doctor_percent
                 .percentage_of_dr_capacity_used.current_month
@@ -2167,15 +2170,15 @@ const ReportingContainer = () => {
           onChange={handleChange}
         />
         <Row style={{ marginTop: '24px', textAlign: 'left' }}>
-          <Col span={8}>Percent of Available Hrs Scheduled:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Available Hrs Scheduled:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_available_hrs_scheduled.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_available_hrs_scheduled.ytd_avg_month
@@ -2184,15 +2187,15 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ textAlign: 'left' }}>
-          <Col span={8}>Percent of Scheduled Hrs Cancelled:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Scheduled Hrs Cancelled:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_scheduled_hrs_cancelled.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_scheduled_hrs_cancelled.ytd_avg_month
@@ -2201,15 +2204,15 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ textAlign: 'left' }}>
-          <Col span={8}>Percent of Cancelled Hrs Recovered:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Cancelled Hrs Recovered:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_cancelled_hrs_recovered.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_cancelled_hrs_recovered.current_month
@@ -2218,15 +2221,15 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: '24px', textAlign: 'left' }}>
-          <Col span={8}>Percent of Dr. Capacity Used:</Col>
-          <Col span={8}>
+          <Col span={11}>Percent of Dr. Capacity Used:</Col>
+          <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_dr_capacity_used.current_month
             }
             %
           </Col>
-          <Col span={8}>
+          <Col span={4} style={{ textAlign: 'right', paddingRight: '34px' }}>
             {
               reportData.reportFive.hygiene_percent
                 .percentage_of_dr_capacity_used.current_month
@@ -2268,12 +2271,12 @@ const ReportingContainer = () => {
         {filter.type === 'prod_analysis_time_dollars' ? (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -2281,12 +2284,12 @@ const ReportingContainer = () => {
         ) : (
           <>
             {/* <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -2595,12 +2598,12 @@ const ReportingContainer = () => {
         {filter.type === 'prod_analysis_pt_activity' ? (
           <>
             <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -2608,12 +2611,12 @@ const ReportingContainer = () => {
         ) : (
           <>
             {/* <Row>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Period: &nbsp; {moment(filter.dateValue[0]).format('MM/YYYY')}
                 {' -> '}
                 {moment(filter.dateValue[1]).format('MM/YYYY')}
               </Col>
-              <Col span={12} style={{ color: 'orange' }}>
+              <Col span={12} style={{ color: 'red' }}>
                 Date: &nbsp; {moment(filter.dateValue[0]).format('YYYY')}
               </Col>
             </Row>
@@ -2726,30 +2729,35 @@ const ReportingContainer = () => {
               title: 'GRAND TOTAL',
               dataIndex: 'grand_total',
               key: 'grand_total',
+              width: '25%',
             },
             {
               title: 'Current Mo.',
               dataIndex: 'current_mo',
               key: 'current_mo',
+              width: '20%',
             },
             {
               title: '%',
               dataIndex: 'percentage_of_current_mo',
               key: 'percentage_of_current_mo',
-
               width: '80px',
+              render: (value, obj) =>
+                decFormatterNumber(value, obj.grand_total !== 'GRAND TOTAL'),
             },
             {
               title: 'YTD',
               dataIndex: 'ytd',
               key: 'ytd',
+              width: '20%',
             },
             {
               title: '%',
               dataIndex: 'percentage_of_ytd',
               key: 'percentage_of_ytd',
-
               width: '80px',
+              render: (value, obj) =>
+                decFormatterNumber(value, obj.grand_total !== 'GRAND TOTAL'),
             },
             {
               title: 'AVG/Mo',

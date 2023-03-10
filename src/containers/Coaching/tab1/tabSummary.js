@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import { Row, Col, Typography, Collapse, Form, InputNumber } from 'antd';
 import PropTypes from 'prop-types';

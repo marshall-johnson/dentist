@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-array-index-key */
 import React, {
   useRef,
   useState,
