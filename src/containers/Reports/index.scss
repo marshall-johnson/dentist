@@ -56,12 +56,12 @@ p {
   padding: 16px;
   font-size: 12px !important;
 
-  br {
-    display: none;
-  }
-
   h3 {
     font-size: 18px;
+  }
+
+  .ant-row {
+    margin-bottom: 10px !important;
   }
 
   .ant-table-thead {
