@@ -39,7 +39,7 @@ export const decFormatterNumberInput = (value) => {
     if (val2 > 0) {
       return `.${val2}`;
     }
-    return '';
+    return '.00';
   };
   return `${val1}${renderVal2()}`;
 };
@@ -58,7 +58,7 @@ export const decFormatterNumber = (value, show = true) => {
     if (val2 > 0) {
       return `.${val2}`;
     }
-    return '';
+    return '.00';
   };
   return `${val1}${renderVal2()}`;
 };

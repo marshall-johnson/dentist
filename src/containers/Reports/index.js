@@ -637,31 +637,31 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'worked',
           key: 'worked',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$',
           dataIndex: 'prod',
           key: 'prod',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'WRKD',
           dataIndex: 'wrkd',
           key: 'wrkd',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avail',
           key: 'avail',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'lost',
           key: 'lost',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
       ],
     },
@@ -673,26 +673,31 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'avg_worked',
           key: 'avg_worked',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$',
           dataIndex: 'avg_prod',
           key: 'avg_prod',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'WRKD',
           dataIndex: 'avg_wrkd',
           key: 'avg_wrkd',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avg_avail',
           key: 'avg_avail',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'avg_lost',
           key: 'avg_lost',
+          render: (value) => formatCurrency(value),
         },
       ],
     },
@@ -712,31 +717,31 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'worked',
           key: 'worked',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$',
           dataIndex: 'prod',
           key: 'prod',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'WRKD',
           dataIndex: 'wrkd',
           key: 'wrkd',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avail',
           key: 'avail',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'lost',
           key: 'lost',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
       ],
     },
@@ -748,26 +753,31 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'avg_worked',
           key: 'avg_worked',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$',
           dataIndex: 'avg_prod',
           key: 'avg_prod',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'WRKD',
           dataIndex: 'avg_wrkd',
           key: 'avg_wrkd',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD/HR AVAIL',
           dataIndex: 'avg_avail',
           key: 'avg_avail',
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$ LOST',
           dataIndex: 'avg_lost',
           key: 'avg_lost',
+          render: (value) => formatCurrency(value),
         },
       ],
     },
@@ -943,7 +953,7 @@ const ReportingContainer = () => {
       title: 'TOTAL AMOUNT',
       dataIndex: 'totalAmount',
       key: 'totalAmount',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => formatCurrency(value),
     },
     {
       title: '% OF COLLECTIONS',
@@ -991,7 +1001,7 @@ const ReportingContainer = () => {
       title: 'CURRENT EXPENSES',
       dataIndex: 'current_expenses',
       key: 'current_expenses',
-      render: (text) => <span>{decFormatterNumber(text)}</span>,
+      render: (text) => <span>{formatCurrency(text)}</span>,
     },
     {
       title: '% OF PRODUCTION',
@@ -1554,7 +1564,9 @@ const ReportingContainer = () => {
                     <p>Avg Coll/Mo</p>
                   </Col>
                   <Col span={12} offset={2} className="border-bottom">
-                    <p>{reportData.average.collections_per_month}</p>
+                    <p>
+                      {formatCurrency(reportData.average.collections_per_month)}
+                    </p>
                     {/* <p>% of Production</p> */}
                   </Col>
                 </Row>
@@ -2334,57 +2346,78 @@ const ReportingContainer = () => {
               title: 'GRAND TOTAL',
               dataIndex: 'grand_total',
               key: 'grand_total',
+              width: '11%',
             },
             {
               title: '',
               dataIndex: 'worked',
               key: 'worked',
+
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'prod',
               key: 'prod',
+              width: '8%',
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'wrkd',
               key: 'wrkd',
+              width: '8%',
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'avail',
               key: 'avail',
+              width: '10%',
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'lost',
               key: 'lost',
+              render: (value) => formatCurrency(value),
             },
-            { title: '', dataIndex: '', key: '' },
+
+            { title: '', dataIndex: '', key: '', width: '10%' },
             {
               title: '',
               dataIndex: 'avg_worked',
               key: 'avg_worked',
+
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'avg_prod',
               key: 'avg_prod',
+
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'avg_wrkd',
               key: 'avg_wrkd',
+
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'avg_avail',
               key: 'avg_avail',
+
+              render: (value) => formatCurrency(value),
             },
             {
               title: '',
               dataIndex: 'avg_lost',
               key: 'avg_lost',
+
+              render: (value) => formatCurrency(value),
             },
           ]}
           dataSource={[
@@ -2736,6 +2769,7 @@ const ReportingContainer = () => {
               dataIndex: 'current_mo',
               key: 'current_mo',
               width: '20%',
+              render: (value) => decFormatterNumber(value),
             },
             {
               title: '%',
