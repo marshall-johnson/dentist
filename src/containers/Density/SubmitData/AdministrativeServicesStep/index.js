@@ -368,7 +368,7 @@ class AdministrativeServicesStep extends Component {
                 />
               </Form.Item>
               <Form.Item
-                label="Telephone"
+                label="Telephone/Internet"
                 name="telephone"
                 fieldKey="telephone"
               >

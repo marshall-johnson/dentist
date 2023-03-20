@@ -29,6 +29,7 @@ class SuppliesAndMarketingStep extends Component {
 
     this.state = {
       initialValues: {
+        orthoSupplies: null,
         supplies: null,
         hygieneSupplies: null,
         sharedSupplies: null,
@@ -90,6 +91,7 @@ class SuppliesAndMarketingStep extends Component {
         currentKey === 'supplies' ||
         currentKey === 'hygieneSupplies' ||
         currentKey === 'sharedSupplies' ||
+        currentKey === 'orthoSupplies' ||
         currentKey === 'hygieneProduct'
       ) {
         return previousValue + (Number(value[currentKey]) || 0);
@@ -151,6 +153,17 @@ class SuppliesAndMarketingStep extends Component {
           <Row gutter={32}>
             <Col span={12}>
               <Card title="Supplies / Raw Materials">
+                <Form.Item
+                  label="Orthor Supplies"
+                  name="orthoSupplies"
+                  fieldKey="orthoSupplies"
+                >
+                  <InputNumber
+                    formatter={(value) => decFormatter(value)}
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                  />
+                </Form.Item>
+
                 <Form.Item
                   label="Dr. Supplies"
                   name="supplies"
