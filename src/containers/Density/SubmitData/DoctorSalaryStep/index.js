@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -14,8 +15,11 @@ import {
 import camelcaseKeys from 'camelcase-keys';
 import { PlusOutlined } from '@ant-design/icons';
 import AppConfig from '@/constants/AppConfig';
-import { parseInt } from 'lodash';
+import { forEach } from 'lodash';
 import { decFormatter, decFormatterTotal } from '@/utils/helpers';
+import DebounceSelect from '@/components/DebounceSelect';
+import { fetchDoctors } from '@/actions/doctorActions';
+import { connect } from 'react-redux';
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -32,6 +36,7 @@ class DoctorSalaryStep extends Component {
       initialValues: {
         doctorSalary: [
           {
+            doctorId: null,
             grossSalary: null,
             employerMatch: null,
             drawsDividendsDistributions: null,
@@ -46,8 +51,10 @@ class DoctorSalaryStep extends Component {
 
   componentDidMount() {
     const formData = JSON.parse(localStorage.getItem('dentistryDoctorSalary'));
-    const { data } = this.props;
+    const { fetchDoctors, page, data } = this.props;
     const formatData = camelcaseKeys(data);
+
+    fetchDoctors({ page });
     if (formatData) {
       this.formRef.current.setFieldsValue({
         doctorSalary: formatData,
@@ -102,10 +109,31 @@ class DoctorSalaryStep extends Component {
     );
   };
 
+  optionInit = () => {
+    const { items } = this.props;
+
+    const data = [];
+
+    forEach(items, (item) => {
+      const { fullname } = item.attributes;
+
+      data.push({
+        label: fullname,
+        value: item.id,
+      });
+    });
+
+    return data;
+  };
+
+
   handleTotal = (_, value) => {
     const tempD = value.doctorSalary;
     const res = tempD.map((obj) => {
       const result = { ...obj };
+      if (!obj) {
+        return 0;
+      }
       const total = Object.keys(obj).reduce((previousValue, currentKey) => {
         if (
           currentKey === 'grossSalary' ||
@@ -160,6 +188,19 @@ class DoctorSalaryStep extends Component {
                       md={{ span: 8 }}
                     >
                       <Form.Item
+                        label="Doctor Name"
+                        name={[field.name, 'userId']}
+                        fieldKey={[field.fieldKey, 'userId']}
+                      >
+                        <DebounceSelect
+                          showSearch
+                          optionInit={this.optionInit()}
+                          placeholder="Select Doctor"
+                          fetchOptions={this.fetchDoctorList}
+                          style={{ width: '100%' }}
+                        />
+                      </Form.Item>
+                      <Form.Item
                         label="Gross Salary"
                         name={[field.name, 'grossSalary']}
                         fieldKey={[field.name, 'grossSalary']}
@@ -169,10 +210,10 @@ class DoctorSalaryStep extends Component {
                               !isNaN(value)
                                 ? Promise.resolve()
                                 : Promise.reject(
-                                    new Error(
-                                      'Gross Salary is not a valid number',
-                                    ),
+                                  new Error(
+                                    'Gross Salary is not a valid number',
                                   ),
+                                ),
                           },
                         ]}
                       >
@@ -211,10 +252,10 @@ class DoctorSalaryStep extends Component {
                               !isNaN(value)
                                 ? Promise.resolve()
                                 : Promise.reject(
-                                    new Error(
-                                      'Insurance Premiums is not a valid number',
-                                    ),
+                                  new Error(
+                                    'Insurance Premiums is not a valid number',
                                   ),
+                                ),
                           },
                         ]}
                       >
@@ -233,10 +274,10 @@ class DoctorSalaryStep extends Component {
                               !isNaN(value)
                                 ? Promise.resolve()
                                 : Promise.reject(
-                                    new Error(
-                                      'Personal Expenses Pd by Practice is not a valid number',
-                                    ),
+                                  new Error(
+                                    'Personal Expenses Pd by Practice is not a valid number',
                                   ),
+                                ),
                           },
                         ]}
                       >
@@ -347,4 +388,16 @@ DoctorSalaryStep.propTypes = {
   updateData: PropTypes.func,
 };
 
-export default withRouter(DoctorSalaryStep);
+const mapStateToProps = ({ doctor, error }) => ({
+  items: doctor.items,
+  totalCount: doctor.totalCount,
+  page: doctor.page,
+  loading: doctor.loading,
+});
+
+
+export default withRouter(
+  connect(mapStateToProps, {
+    fetchDoctors,
+  })(DoctorSalaryStep),
+);
