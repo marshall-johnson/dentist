@@ -189,8 +189,8 @@ class DoctorSalaryStep extends Component {
                     >
                       <Form.Item
                         label="Doctor Name"
-                        name={[field.name, 'userId']}
-                        fieldKey={[field.fieldKey, 'userId']}
+                        name={[field.name, 'doctorId']}
+                        fieldKey={[field.fieldKey, 'doctorId']}
                       >
                         <DebounceSelect
                           showSearch
