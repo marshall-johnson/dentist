@@ -97,7 +97,7 @@ const Filter = (props) => {
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item label="DatePicker">
+          <Form.Item label="Date Range">
             {filterValue.type === 'pmcr_ytd_avg_month' ||
             filterValue.type === 'pmcr_hygiene_ytd_avg_month' ||
             filterValue.type === 'prod_analysis_time_stats' ||
