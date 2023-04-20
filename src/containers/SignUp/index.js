@@ -10,6 +10,7 @@ import {
   notification,
   InputNumber,
   Radio,
+  DatePicker,
 } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -21,14 +22,17 @@ import './index.scss';
 import { STUDENT_DEGREES, UserAccountType } from '@/constants';
 import PhoneInput from 'react-phone-input-2';
 import { getStudentAdmin } from '@/services/report.service';
+import moment from 'moment';
 
 const { Option } = Select;
 
 const SignUp = (props) => {
+
   const formRef = React.createRef();
   const [currentAccountType, setCurrentAccountType] = useState(
     UserAccountType.STUDENT_ADMIN,
   );
+
   const [studentAdmins, setStudentAdmins] = useState([]);
   const { errorMessage, currentUser, history } = props;
 
@@ -53,14 +57,19 @@ const SignUp = (props) => {
     }
   }, [errorMessage]);
 
-  useEffect(() => {}, [currentAccountType]);
+  useEffect(() => { }, [currentAccountType]);
 
   const onSignUp = async (data) => {
     const { signUp, history } = props;
     if (currentAccountType === UserAccountType.STUDENT_ADMIN) {
       delete data.studentAdminId;
     }
-    const isSuccess = await signUp(data);
+    const mappedData = {
+      ...data,
+      startDate: data.startDate.format('YYYY-MM-DD')
+    };
+
+    const isSuccess = await signUp(mappedData);
 
     if (isSuccess) {
       notification.success({
@@ -109,6 +118,22 @@ const SignUp = (props) => {
             ]}
           >
             <Input placeholder="Practice Name" />
+          </Form.Item>
+          <Form.Item
+            label="Month/Year:"
+            name="startDate"
+            rules={[
+              {
+                required: true,
+                message: 'Please pick a Month/Year!',
+              },
+            ]}
+          >
+            <DatePicker
+              size="middle"
+              picker="day"
+              format='YYYY-MM-DD'
+            />
           </Form.Item>
           <Form.Item
             name="degree"
