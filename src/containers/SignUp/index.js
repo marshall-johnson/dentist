@@ -120,22 +120,6 @@ const SignUp = (props) => {
             <Input placeholder="Practice Name" />
           </Form.Item>
           <Form.Item
-            label="Month/Year:"
-            name="startDate"
-            rules={[
-              {
-                required: true,
-                message: 'Please pick a Month/Year!',
-              },
-            ]}
-          >
-            <DatePicker
-              size="middle"
-              picker="day"
-              format='YYYY-MM-DD'
-            />
-          </Form.Item>
-          <Form.Item
             name="degree"
             className="input-item"
             fieldKey="degree"
@@ -390,6 +374,24 @@ const SignUp = (props) => {
               </Select>
             </Form.Item>
           )}
+          <Form.Item
+            label="Start Date:"
+            name="startDate"
+            className="input-item"
+            rules={[
+              {
+                required: true,
+                message: 'Please pick a Month/Year!',
+              },
+            ]}
+          >
+            <DatePicker
+              className="input-item"
+              size="middle"
+              picker="day"
+              format='YYYY-MM-DD'
+            />
+          </Form.Item>
           <Form.Item className="submit-btn-wrapper">
             <Button loading={loading} type="primary" htmlType="submit">
               Sign Up

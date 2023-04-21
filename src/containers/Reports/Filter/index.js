@@ -99,10 +99,10 @@ const Filter = (props) => {
         <Col span={8}>
           <Form.Item label="Date Range">
             {filterValue.type === 'pmcr_ytd_avg_month' ||
-            filterValue.type === 'pmcr_hygiene_ytd_avg_month' ||
-            filterValue.type === 'prod_analysis_time_stats' ||
-            filterValue.type === 'prod_analysis_pt_activity' ||
-            filterValue.type === 'prod_analysis_time_dollars' ? (
+              filterValue.type === 'pmcr_hygiene_ytd_avg_month' ||
+              filterValue.type === 'prod_analysis_time_stats' ||
+              filterValue.type === 'prod_analysis_pt_activity' ||
+              filterValue.type === 'prod_analysis_time_dollars' ? (
               <RangePicker
                 value={filterValue.dateValue}
                 picker="month"
@@ -163,10 +163,11 @@ const Filter = (props) => {
               }}
               showSearch
               optionFilterProp="children"
-              onChange={(id) => {
+              onChange={(id, value) => {
                 setFilterValue({
                   ...filterValue,
                   studentId: id,
+                  studentName: value?.children,
                 });
               }}
               filterOption={(input, option) =>

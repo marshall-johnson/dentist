@@ -1271,8 +1271,9 @@ const ReportingContainer = () => {
   };
 
   const renderName = (arr) => {
-    const res = arr.reduce((prev, acc) => `${prev} ${acc.name}`, '');
-    return res;
+    const { studentName } = filter;
+    // const res = arr.reduce((prev, acc) => `${prev} ${acc.name}`, '');
+    return studentName;
   };
 
   const renderStyleRow = (record, index) => {
@@ -1652,7 +1653,7 @@ const ReportingContainer = () => {
                       return (
                         <span style={{ color: 'blue' }}>
                           {filter.type === 'pmcr_current_month' ||
-                          filter.type === 'pmcr_ytd_avg_month'
+                            filter.type === 'pmcr_ytd_avg_month'
                             ? `Dr. ${text}`
                             : text}
                         </span>
@@ -1701,7 +1702,7 @@ const ReportingContainer = () => {
                       return (
                         <span style={{ color: 'blue' }}>
                           {filter.type === 'pmcr_current_month' ||
-                          filter.type === 'pmcr_ytd_avg_month'
+                            filter.type === 'pmcr_ytd_avg_month'
                             ? `Dr. ${text}`
                             : text}
                         </span>
