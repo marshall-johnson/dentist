@@ -27,7 +27,7 @@ class Login extends Component {
 
     if (currentUser) {
       notification.success({
-        message: 'Login Success',
+        message: 'Login Successful',
       });
       history.push({
         pathname: AppConfig.ROUTES.MAIN,
