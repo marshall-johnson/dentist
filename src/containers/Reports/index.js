@@ -1504,7 +1504,7 @@ const ReportingContainer = () => {
                 <p>Net ROI Funds</p>
               </Col>
               <Col span={8} className="border-bottom">
-                <p>{reportData?.net_roi_funds}</p>
+                <p>{formatCurrency(reportData?.net_roi_funds)}</p>
               </Col>
               <Col span={8} className="border-bottom">
                 <p>
@@ -1527,16 +1527,11 @@ const ReportingContainer = () => {
               <Col span={8}>
                 <p>Receivables</p>
               </Col>
-              <Col span={12} className="border-bottom">
+              <Col span={8} className="border-bottom">
                 <p>{formatCurrency(reportData?.receivables?.amount)}</p>
               </Col>
-            </Row>
-            <Row className="mb-15">
-              <Col offset={8} span={4} className="border-bottom">
-                <p>{reportData?.receivables?.percentage_of_production}</p>
-              </Col>
-              <Col span={8}>
-                <p>% of Production</p>
+              <Col span={8} className="border-bottom">
+                <p>{reportData?.receivables?.percentage_of_production} % of Production</p>
               </Col>
             </Row>
           </Col>
