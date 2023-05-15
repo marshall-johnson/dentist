@@ -45,7 +45,7 @@
     "lint": "eslint \"{src,test}/**/*{.js,.jsx}\"",
     "lint:fix": "eslint \"{src,test}/**/*{.js,.jsx}\" --fix",
     "prettify": "prettier --write **/*.{ts,tsx,js,jsx,json}",
-    "awseb:deploy": "npm run build && npm run serve",
+    "awseb:deploy": "npm run serve",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "prepare": "husky install"
   },
