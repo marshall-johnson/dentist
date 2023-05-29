@@ -637,7 +637,7 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'worked',
           key: 'worked',
-          render: (value) => formatCurrency(value),
+          render: (value) => decFormatterNumber(value),
         },
         {
           title: 'PROD$',
@@ -717,7 +717,7 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'worked',
           key: 'worked',
-          render: (value) => decFormatterNumber(value),
+          render: (value) => formatCurrency(value),
         },
         {
           title: 'PROD$',
