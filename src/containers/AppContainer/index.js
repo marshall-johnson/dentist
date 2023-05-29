@@ -34,8 +34,10 @@ class AppContainer extends Component {
   }
 
   componentDidMount() {
+    console.log('30/5/2023');
+    
     const { history, dispatchClearErrors, currentUser } = this.props;
-
+    
     if (!currentUser) {
       history.push('/login');
     }
@@ -65,6 +67,8 @@ class AppContainer extends Component {
       });
     }
   };
+
+
 
   render() {
     const { collapsed, openKeys } = this.state;
