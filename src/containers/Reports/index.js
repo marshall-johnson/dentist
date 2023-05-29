@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import { Row, Col, Table, Button, Divider, Typography, PageHeader } from 'antd';
-import { formatCurrency, decFormatterNumber } from '@/utils/helpers';
+import { formatCurrency, decFormatterNumber, nonDecRoundNumber } from '@/utils/helpers';
 import Filter from '@/containers/Reports/Filter';
 import './index.scss';
 import { getReporting } from '@/services/report.service';
@@ -525,7 +525,7 @@ const ReportingContainer = () => {
       title: 'Current % Dollars',
       dataIndex: 'current_percentage_of_dollars',
       key: 'current_percentage_of_dollars',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => nonDecRoundNumber(value),
     },
     {
       title: 'YTD % Cases',
@@ -537,7 +537,7 @@ const ReportingContainer = () => {
       title: 'YTD % Dollars',
       dataIndex: 'ytd_percentage_of_dollars',
       key: 'ytd_percentage_of_dollars',
-      render: (value) => decFormatterNumber(value),
+      render: (value) => nonDecRoundNumber(value),
     },
   ];
   const reportSevenColPatientVisitDoc = [
@@ -673,7 +673,7 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'avg_worked',
           key: 'avg_worked',
-          render: (value) => formatCurrency(value),
+          render: (value) => decFormatterNumber(value),
         },
         {
           title: 'PROD$',
@@ -717,7 +717,7 @@ const ReportingContainer = () => {
           title: 'WORKED',
           dataIndex: 'worked',
           key: 'worked',
-          render: (value) => formatCurrency(value),
+          render: (value) => decFormatterNumber(value),
         },
         {
           title: 'PROD$',
@@ -729,7 +729,7 @@ const ReportingContainer = () => {
           title: 'WRKD',
           dataIndex: 'wrkd',
           key: 'wrkd',
-          render: (value) => formatCurrency(value),
+          render: (value) => decFormatterNumber(value),
         },
         {
           title: 'PROD/HR AVAIL',
@@ -2153,7 +2153,7 @@ const ReportingContainer = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: '24px', textAlign: 'left' }}>
-          <Col span={11}>Percent of Dr. Capacity Used:</Col>
+          <Col span={11}>Percent of Hyg Capacity Used:</Col>
           <Col span={9} style={{ paddingRight: '5%' }}>
             {
               reportData.reportFive.doctor_percent

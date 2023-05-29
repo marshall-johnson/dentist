@@ -3,6 +3,14 @@ export const formatPrice = (price) =>
 export const roundNumber = (number, scale = 1) =>
   (Math.round(number * 100) / 100).toFixed(scale);
 
+export const nonDecRoundNumber = (number, scale = 1) => {
+  if (isNaN(number)) {
+    return 0;
+  }
+
+  return Math.round(number * Math.pow(10, scale)) / Math.pow(10, scale);
+};
+
 export const decFormatter = (value) => {
   const part = value.toString().split('.');
   const val1 = part[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
