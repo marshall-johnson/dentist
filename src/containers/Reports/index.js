@@ -1369,8 +1369,8 @@ const ReportingContainer = () => {
               </Col>
             </Row>
             <Row>
-              <Col span={12}>Case Ratio: &nbsp; 0% </Col>
-              <Col span={12}>Recare Ratio: &nbsp; 0% </Col>
+              <Col span={12}>Case Ratio: &nbsp; {reportData?.header_info?.case_ratio}% </Col>
+              <Col span={12}>Recare Ratio: &nbsp; {reportData?.header_info?.recare_ratio}% </Col>
             </Row>
           </>
         )}
@@ -1789,7 +1789,7 @@ const ReportingContainer = () => {
             </Row>
             <Row>
               <Col offset={12} span={12}>
-                Recare Ratio: &nbsp; 0%{' '}
+                Recare Ratio: &nbsp;{reportData?.header_info?.recare_ratio}%{' '}
               </Col>
             </Row>
           </>
