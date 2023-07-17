@@ -34,7 +34,7 @@ class AppContainer extends Component {
   }
 
   componentDidMount() {
-    console.log('30/5/2023');
+    console.log('7/18/23');
     
     const { history, dispatchClearErrors, currentUser } = this.props;
     
